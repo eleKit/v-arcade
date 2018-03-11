@@ -65,10 +65,10 @@ public class TrackScript : MonoBehaviour {
 
 	void FixedUpdate(){
 		if(start){
-			rigidbody.velocity = transform.TransformDirection(Vector3.up) * speed;
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.up) * speed;
 		}
 		else
-			rigidbody.velocity = transform.TransformDirection(Vector3.zero);
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.zero);
 	}
 
 	void CreateEmptyTrack(){

@@ -12,13 +12,13 @@ public class AudioScript : MonoBehaviour {
 	
 
 	public void PlayBadSound(){
-		audio.clip = badSound;
-		audio.Play ();
+		GetComponent<AudioSource>().clip = badSound;
+		GetComponent<AudioSource>().Play ();
 	}
 
 	public void PlayGoodSound(){
-		audio.clip = goodSound;
-		audio.Play ();
+		GetComponent<AudioSource>().clip = goodSound;
+		GetComponent<AudioSource>().Play ();
 	}
 
 }

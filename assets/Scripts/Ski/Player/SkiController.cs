@@ -47,7 +47,7 @@ public class SkiController : MonoBehaviour {
 					timer.SetActive(false);
 					time = 3;
 					SkiSaveData.skiData.SetStart(true);
-					player.audio.Play ();
+					player.GetComponent<AudioSource>().Play ();
 					startTime = Time.time;
 					if(!tracking)
 						tracking = true;
@@ -124,7 +124,7 @@ public class SkiController : MonoBehaviour {
 		inGame = true;
 		tracking = false;
 		SkiSaveData.skiData.SetStart(true);
-		player.audio.Play ();
+		player.GetComponent<AudioSource>().Play ();
 	}
 
 	public void SaveToXML(){

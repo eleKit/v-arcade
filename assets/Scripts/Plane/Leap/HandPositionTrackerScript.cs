@@ -56,18 +56,18 @@ public class HandPositionTrackerScript : MonoBehaviour {
 						UpdatePlaceholderPositions(startDistance, handDistance);
 					if(handDistance < minDistance){
 						handAlert.GetComponent<TextMesh>().text = "Mani troppo vicine!";
-						leftOverlay.renderer.material.mainTexture = (Texture) Resources.Load (leftRedTexture);
-						rightOverlay.renderer.material.mainTexture = (Texture) Resources.Load (rightRedTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftRedTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightRedTexture);
 					}
 					else if( handDistance > maxDistance){
 						handAlert.GetComponent<TextMesh>().text = "Mani troppo lontane!";
-						leftOverlay.renderer.material.mainTexture = (Texture) Resources.Load (leftRedTexture);
-						rightOverlay.renderer.material.mainTexture = (Texture) Resources.Load (rightRedTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftRedTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightRedTexture);
 					}
 					else{
 						handAlert.GetComponent<TextMesh>().text = "";
-						leftOverlay.renderer.material.mainTexture = (Texture) Resources.Load (leftGreenTexture);
-						rightOverlay.renderer.material.mainTexture = (Texture) Resources.Load (rightGreenTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftGreenTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightGreenTexture);
 					}
 
 					// Nella modalità a pugno chiuso, conta le dita visibili e mostra un alert

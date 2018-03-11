@@ -211,10 +211,10 @@ public class PlayerPlaneScript : MonoBehaviour {
 
 	void FixedUpdate(){
 		if(go){
-			rigidbody.velocity = transform.TransformDirection(Vector3.back) * speed;
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.back) * speed;
 		}
 		else
-			rigidbody.velocity = transform.TransformDirection(Vector3.zero);
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.zero);
 	}
 
 

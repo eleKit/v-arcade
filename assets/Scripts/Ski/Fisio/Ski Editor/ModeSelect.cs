@@ -27,19 +27,19 @@ public class ModeSelect : MonoBehaviour {
 		mode = (mode + 1) % 4;
 		switch (mode){
 		case 0:
-			renderer.material.mainTexture = (Texture)Resources.Load(empty_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(empty_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 1:
-			renderer.material.mainTexture = (Texture)Resources.Load(center_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(center_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 2:
-			renderer.material.mainTexture = (Texture)Resources.Load(left_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(left_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 3:
-			renderer.material.mainTexture = (Texture)Resources.Load(right_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(right_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		}
@@ -52,19 +52,19 @@ public class ModeSelect : MonoBehaviour {
 			mode = (mode - 1) % 4;
 		switch (mode){
 		case 0:
-			renderer.material.mainTexture = (Texture)Resources.Load(empty_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(empty_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 1:
-			renderer.material.mainTexture = (Texture)Resources.Load(center_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(center_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 2:
-			renderer.material.mainTexture = (Texture)Resources.Load(left_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(left_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		case 3:
-			renderer.material.mainTexture = (Texture)Resources.Load(right_texture);
+			GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(right_texture);
 			controller.GetComponent<SkiEditorController>().SetMode(mode, sector);
 			break;
 		}

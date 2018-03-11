@@ -105,7 +105,7 @@ public class FisioStarshipGameController : MonoBehaviour {
 					go.name = "Target0" + i;
 				else
 					go.name = "Target" + i;
-				go.renderer.material.color = colors[i%3];
+				go.GetComponent<Renderer>().material.color = colors[i%3];
 			}
 		}
 	}

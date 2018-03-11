@@ -51,9 +51,9 @@ public class AltimeterAnimator : MonoBehaviour {
 		int cent = (dist - (1000 * mil))/100;
 		int dec = (dist - (1000 * mil) - (100 * cent)) / 10;
 		int unit = (dist - (1000 * mil) - (100 * cent)) % 10;
-		unita.renderer.material.mainTexture = (Texture)Resources.Load (textures[unit]);
-		decine.renderer.material.mainTexture = (Texture)Resources.Load (textures[dec]);
-		centinaia.renderer.material.mainTexture = (Texture)Resources.Load (textures[cent]);
-		migliaia.renderer.material.mainTexture = (Texture)Resources.Load (textures[mil]);
+		unita.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load (textures[unit]);
+		decine.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load (textures[dec]);
+		centinaia.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load (textures[cent]);
+		migliaia.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load (textures[mil]);
 	}
 }

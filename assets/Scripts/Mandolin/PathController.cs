@@ -65,7 +65,7 @@ public class PathController : MonoBehaviour {
 			MusicSaveData.musicData.SetStart(true);
 			//Camera.main.audio.Stop();
 			startTime = Time.time;
-			Camera.main.audio.Play();
+			Camera.main.GetComponent<AudioSource>().Play();
 			checkLength = true;
 			time = 3;
 			if(!track)
@@ -90,7 +90,7 @@ public class PathController : MonoBehaviour {
 		MusicSaveData.musicData.SetStart(true);
 		//Camera.main.audio.Stop();
 		startTime = Time.time;
-		Camera.main.audio.Play();
+		Camera.main.GetComponent<AudioSource>().Play();
 		replaySelected = true;
 		checkLength = true;
 		track = false;
@@ -103,8 +103,8 @@ public class PathController : MonoBehaviour {
 		for(int i = 0; i < lines.Length; i++){
 			seconds[i] = float.Parse(lines[i], CultureInfo.InvariantCulture.NumberFormat);
 		}
-		Camera.main.audio.clip = (AudioClip)Resources.Load (audioResourcesFolder + song);
-		clipTime = Camera.main.audio.clip.length;
+		Camera.main.GetComponent<AudioSource>().clip = (AudioClip)Resources.Load (audioResourcesFolder + song);
+		clipTime = Camera.main.GetComponent<AudioSource>().clip.length;
 		CreateButtons (seconds);
 		timer.GetComponent<TextMesh>().text = time.ToString();
 		PlayerSaveData.playerData.SetScore(0);
@@ -170,7 +170,7 @@ public class PathController : MonoBehaviour {
 	public void Pause(){
 		pauseTime = Time.time;
 		pause = true;
-		Camera.main.audio.Pause ();
+		Camera.main.GetComponent<AudioSource>().Pause ();
 		MusicSaveData.musicData.SetStart (false);
 
 	}
@@ -192,19 +192,19 @@ public class PathController : MonoBehaviour {
 	}
 
 	public void GreenLeftCircle(){
-		leftCircle.renderer.material.color = Color.green;
+		leftCircle.GetComponent<Renderer>().material.color = Color.green;
 	}
 
 	public void GreenRightCircle(){
-		rightCircle.renderer.material.color = Color.green;
+		rightCircle.GetComponent<Renderer>().material.color = Color.green;
 	}
 
 	public void LeftBackToRed(){
-		leftCircle.renderer.material.color = Color.red;
+		leftCircle.GetComponent<Renderer>().material.color = Color.red;
 	}
 
 	public void RightBackToRed(){
-		rightCircle.renderer.material.color = Color.red;
+		rightCircle.GetComponent<Renderer>().material.color = Color.red;
 	}
 
 	void GetTunings(string pl){

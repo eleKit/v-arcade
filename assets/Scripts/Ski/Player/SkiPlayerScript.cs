@@ -29,10 +29,10 @@ public class SkiPlayerScript : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(other.gameObject.tag.Equals("Tree")){
 			SkiSaveData.skiData.SetStart(false);
-			audio.clip = crash;
-			audio.loop = false;
-			audio.Play();
-			InvokeRepeating("BackToLoopAudioEnd", audio.clip.length, 1);
+			GetComponent<AudioSource>().clip = crash;
+			GetComponent<AudioSource>().loop = false;
+			GetComponent<AudioSource>().Play();
+			InvokeRepeating("BackToLoopAudioEnd", GetComponent<AudioSource>().clip.length, 1);
 			if(SkiSaveData.skiData.GetRandomTreePath())
 				SkiSaveData.skiData.UpdateSkiTreeHighscore(PlayerSaveData.playerData.GetUserName(),PlayerSaveData.playerData.GetScore());
 			else{
@@ -56,10 +56,10 @@ public class SkiPlayerScript : MonoBehaviour {
 			controller.SendMessage("EndMenu");
 		}
 		else if((other.gameObject.tag.Equals("Tree_Generator") && !SkiSaveData.skiData.GetSmoothMode()) || other.gameObject.tag.Equals("Flags")){
-			audio.clip = good;
-			audio.loop = false;
-			audio.Play();
-			InvokeRepeating("BackToLoopAudio", audio.clip.length, 1);
+			GetComponent<AudioSource>().clip = good;
+			GetComponent<AudioSource>().loop = false;
+			GetComponent<AudioSource>().Play();
+			InvokeRepeating("BackToLoopAudio", GetComponent<AudioSource>().clip.length, 1);
 			PlayerSaveData.playerData.SetScore(PlayerSaveData.playerData.GetScore() + SkiSaveData.skiData.GetPoints());
 		}
 	}
@@ -89,13 +89,13 @@ public class SkiPlayerScript : MonoBehaviour {
 
 		if(SkiSaveData.skiData.GetStepMode()){
 			if(standText){
-				renderer.material = stand;
+				GetComponent<Renderer>().material = stand;
 			}
 			else if(rightText){
-				renderer.material = right;
+				GetComponent<Renderer>().material = right;
 			}
 			else if(leftText){
-				renderer.material = left;
+				GetComponent<Renderer>().material = left;
 			}
 
 			if(transform.position.x == leftGuideX){
@@ -121,22 +121,22 @@ public class SkiPlayerScript : MonoBehaviour {
 
 			if(goLeft && !onLeft){
 				if(onCenter){
-					animation.Play("Center_Left_Ski");
+					GetComponent<Animation>().Play("Center_Left_Ski");
 					goLeft = false;
 				}
 				if(onRight){
-					animation.Play("Right_Center_Ski");
+					GetComponent<Animation>().Play("Right_Center_Ski");
 					goLeft = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);
 			}
 			if(goRight && !onRight){
 				if(onCenter){
-					animation.Play("Center_Right_Ski");
+					GetComponent<Animation>().Play("Center_Right_Ski");
 					goRight = false;
 				}
 				if(onLeft){
-					animation.Play("Left_Center_Ski");
+					GetComponent<Animation>().Play("Left_Center_Ski");
 					goRight = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);
@@ -272,14 +272,14 @@ public class SkiPlayerScript : MonoBehaviour {
 	}
 
 	void BackToLoopAudio(){
-		audio.clip = loop;
-		audio.loop = true;
+		GetComponent<AudioSource>().clip = loop;
+		GetComponent<AudioSource>().loop = true;
 		CancelInvoke ();
 	}
 	void BackToLoopAudioEnd(){
-		audio.clip = loop;
-		audio.loop = true;
-		audio.Stop ();
+		GetComponent<AudioSource>().clip = loop;
+		GetComponent<AudioSource>().loop = true;
+		GetComponent<AudioSource>().Stop ();
 		CancelInvoke ();
 	}
 

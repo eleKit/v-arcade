@@ -179,7 +179,7 @@ public class PlayerStarshipGameController : MonoBehaviour {
 					go.name = "Target" + i;
 				//go.renderer.material.color = colors[i%3];
 				int co = i%3;
-				go.transform.FindChild(flowers[co]).gameObject.SetActive(true);
+				go.transform.Find(flowers[co]).gameObject.SetActive(true);
 			}
 			GameObject[] obst = GameObject.FindGameObjectsWithTag("Obstacle").OrderBy( go => go.name ).ToArray();
 			SetObstacleCount(obst.Length);
@@ -208,26 +208,26 @@ public class PlayerStarshipGameController : MonoBehaviour {
 		if(obstacleCount > 0){
 			GameObject nextObstacle = obstacles[startObstacles - obstacleCount];
 			if(nextObstacle){
-				float minX = nextObstacle.renderer.bounds.min.x; 
-				float maxX = nextObstacle.renderer.bounds.max.x;
-				float minY = nextObstacle.renderer.bounds.min.y; 
-				float maxY = nextObstacle.renderer.bounds.max.y;
+				float minX = nextObstacle.GetComponent<Renderer>().bounds.min.x; 
+				float maxX = nextObstacle.GetComponent<Renderer>().bounds.max.x;
+				float minY = nextObstacle.GetComponent<Renderer>().bounds.min.y; 
+				float maxY = nextObstacle.GetComponent<Renderer>().bounds.max.y;
 				float planeX = plane.transform.position.x;
 				float planeY = plane.transform.position.y;
 
 				if(planeX < minX)
-					horizontalArrow.renderer.material.mainTexture = (Texture) Resources.Load (arrowLeftTexture);
+					horizontalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (arrowLeftTexture);
 				else if(planeX > maxX)
-					horizontalArrow.renderer.material.mainTexture = (Texture) Resources.Load (arrowRightTexture);
+					horizontalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (arrowRightTexture);
 				else
-					horizontalArrow.renderer.material.mainTexture = (Texture) Resources.Load (transparentTexture);
+					horizontalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparentTexture);
 
 				if(planeY < minY)
-					verticalArrow.renderer.material.mainTexture = (Texture) Resources.Load (arrowUpTexture);
+					verticalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (arrowUpTexture);
 				else if(planeY > maxY)
-					verticalArrow.renderer.material.mainTexture = (Texture) Resources.Load (arrowDownTexture);
+					verticalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (arrowDownTexture);
 				else
-					verticalArrow.renderer.material.mainTexture = (Texture) Resources.Load (transparentTexture);
+					verticalArrow.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparentTexture);
 			}
 		}
 	}

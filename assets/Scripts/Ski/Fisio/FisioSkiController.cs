@@ -59,7 +59,7 @@ public class FisioSkiController : MonoBehaviour {
 	
 	void Begin(){
 		SkiSaveData.skiData.SetStart(false);
-		player.rigidbody.detectCollisions = false;
+		player.GetComponent<Rigidbody>().detectCollisions = false;
 		player.transform.position = playerStartPosition;
 		info.GetComponent<TextMesh>().text = infoText;
 		testing = false;
@@ -70,7 +70,7 @@ public class FisioSkiController : MonoBehaviour {
 		SkiSaveData.skiData.SetStart(false);
 		Vector3 temp = new Vector3 (playerStartPosition.x, - playerStartPosition.y, playerStartPosition.z);
 		player.transform.position = temp;
-		player.rigidbody.detectCollisions = true;
+		player.GetComponent<Rigidbody>().detectCollisions = true;
 		testing = true;
 		inGame = true;
 	}

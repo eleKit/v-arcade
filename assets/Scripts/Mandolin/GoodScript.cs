@@ -19,14 +19,14 @@ public class GoodScript : MonoBehaviour {
 		if(good){
 			if(base.transform.position.x == MusicSaveData.musicData.GetLeftGuideX() &&
 			   (Input.GetKeyDown(KeyCode.LeftArrow) || MusicSaveData.musicData.GetLeftGesture())){
-				audio.Play();
+				GetComponent<AudioSource>().Play();
 				GameObject.FindGameObjectWithTag ("GameController").SendMessage ("YeahL");
 				GameObject.FindGameObjectWithTag ("GameController").SendMessage ("LeftBackToRed");
 				transform.root.gameObject.SendMessage ("DestroyButtonGood");
 			}
 			if(base.transform.position.x == MusicSaveData.musicData.GetRightGuideX() &&
 			   (Input.GetKeyDown(KeyCode.RightArrow) || MusicSaveData.musicData.GetRightGesture())){
-				audio.Play();
+				GetComponent<AudioSource>().Play();
 				GameObject.FindGameObjectWithTag ("GameController").SendMessage ("YeahR");
 				GameObject.FindGameObjectWithTag ("GameController").SendMessage ("RightBackToRed");
 				transform.root.gameObject.SendMessage ("DestroyButtonGood");

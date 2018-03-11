@@ -19,10 +19,10 @@ public class ButtonScript : MonoBehaviour {
 
 	void FixedUpdate(){
 		if(start){
-			rigidbody.velocity = transform.TransformDirection(Vector3.down) * speed;
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.down) * speed;
 		}
 		else
-			rigidbody.velocity = transform.TransformDirection(Vector3.down) * 0f;
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.down) * 0f;
 	}
 
 

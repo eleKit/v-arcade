@@ -30,13 +30,13 @@ public class SkiFisioScript : MonoBehaviour {
 	void Update () {
 		if(SkiSaveData.skiData.GetStepMode()){
 			if(standText){
-				renderer.material = stand;
+				GetComponent<Renderer>().material = stand;
 			}
 			else if(rightText){
-				renderer.material = right;
+				GetComponent<Renderer>().material = right;
 			}
 			else if(leftText){
-				renderer.material = left;
+				GetComponent<Renderer>().material = left;
 			}
 			
 			if(transform.position.x == leftGuideX){
@@ -62,22 +62,22 @@ public class SkiFisioScript : MonoBehaviour {
 			
 			if(goLeft && !onLeft && !controller.GetComponent<FisioSkiController>().IsTesting()){
 				if(onCenter){
-					animation.Play("Center_Left_Ski_D");
+					GetComponent<Animation>().Play("Center_Left_Ski_D");
 					goLeft = false;
 				}
 				if(onRight){
-					animation.Play("Right_Center_Ski_D");
+					GetComponent<Animation>().Play("Right_Center_Ski_D");
 					goLeft = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);
 			}
 			if(goRight && !onRight && !controller.GetComponent<FisioSkiController>().IsTesting()){
 				if(onCenter){
-					animation.Play("Center_Right_Ski_D");
+					GetComponent<Animation>().Play("Center_Right_Ski_D");
 					goRight = false;
 				}
 				if(onLeft){
-					animation.Play("Left_Center_Ski_D");
+					GetComponent<Animation>().Play("Left_Center_Ski_D");
 					goRight = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);
@@ -85,22 +85,22 @@ public class SkiFisioScript : MonoBehaviour {
 
 			if(goLeft && !onLeft && controller.GetComponent<FisioSkiController>().IsTesting()){
 				if(onCenter){
-					animation.Play("Center_Left_Ski");
+					GetComponent<Animation>().Play("Center_Left_Ski");
 					goLeft = false;
 				}
 				if(onRight){
-					animation.Play("Right_Center_Ski");
+					GetComponent<Animation>().Play("Right_Center_Ski");
 					goLeft = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);
 			}
 			if(goRight && !onRight && controller.GetComponent<FisioSkiController>().IsTesting()){
 				if(onCenter){
-					animation.Play("Center_Right_Ski");
+					GetComponent<Animation>().Play("Center_Right_Ski");
 					goRight = false;
 				}
 				if(onLeft){
-					animation.Play("Left_Center_Ski");
+					GetComponent<Animation>().Play("Left_Center_Ski");
 					goRight = false;
 				}
 				//transform.Translate (Vector3.left * playerSpeed * Time.deltaTime);

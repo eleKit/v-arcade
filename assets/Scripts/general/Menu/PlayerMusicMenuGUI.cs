@@ -118,7 +118,7 @@ public class PlayerMusicMenuGUI : MonoBehaviour {
 	}
 	
 	void EndMenu(){
-		Camera.main.audio.Stop ();
+		Camera.main.GetComponent<AudioSource>().Stop ();
 		end = true;
 	}
 }

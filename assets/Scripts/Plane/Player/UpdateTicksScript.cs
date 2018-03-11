@@ -25,29 +25,29 @@ public class UpdateTicksScript : MonoBehaviour {
 
 	public void UpdateTicks(bool thumb, bool index, bool middle, bool ring, bool pinky){
 		if(thumb)
-			thumbT.renderer.material.mainTexture = (Texture) Resources.Load (tickTexture);
+			thumbT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (tickTexture);
 		else
-			thumbT.renderer.material.mainTexture = (Texture) Resources.Load (transparent);
+			thumbT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparent);
 
 		if(index)
-			indexT.renderer.material.mainTexture = (Texture) Resources.Load (tickTexture);
+			indexT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (tickTexture);
 		else
-			indexT.renderer.material.mainTexture = (Texture) Resources.Load (transparent);
+			indexT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparent);
 
 		if(middle)
-			middleT.renderer.material.mainTexture = (Texture) Resources.Load (tickTexture);
+			middleT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (tickTexture);
 		else
-			middleT.renderer.material.mainTexture = (Texture) Resources.Load (transparent);
+			middleT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparent);
 
 		if(ring)
-			ringT.renderer.material.mainTexture = (Texture) Resources.Load (tickTexture);
+			ringT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (tickTexture);
 		else
-			ringT.renderer.material.mainTexture = (Texture) Resources.Load (transparent);
+			ringT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparent);
 
 		if(pinky)
-			pinkyT.renderer.material.mainTexture = (Texture) Resources.Load (tickTexture);
+			pinkyT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (tickTexture);
 		else
-			pinkyT.renderer.material.mainTexture = (Texture) Resources.Load (transparent);
+			pinkyT.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (transparent);
 
 	}
 }

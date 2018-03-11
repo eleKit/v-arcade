@@ -81,7 +81,7 @@ public class FisioPlaneScript : MonoBehaviour {
 	
 	void FixedUpdate(){
 		if(anglesSet)
-			rigidbody.velocity = transform.TransformDirection(Vector3.forward) * speed;
+			GetComponent<Rigidbody>().velocity = transform.TransformDirection(Vector3.forward) * speed;
 	}
 	
 	float PerfomKalmanTest(float[] DATA)

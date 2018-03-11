@@ -18,7 +18,7 @@ public class TargetScript : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if(controller.GetComponent<PlayerStarshipGameController>() != null){
 			controller.GetComponent<PlayerStarshipGameController>().HitTarget();
-			Destroy(this.collider);
+			Destroy(this.GetComponent<Collider>());
 			transform.Find("Points").GetComponent<TextMesh>().text = "+" + PathSaveData.pathData.GetTargetPoints().ToString();
 			StartCoroutine(Wait());
 		}
