@@ -101,9 +101,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-*docx.meta
-*pdf.meta
-*xlsx.meta
+*.docx.meta
+*.pdf.meta
+*.xlsx.meta
 
 # ProjectVersion.txt
 ProjectVersion.txt
