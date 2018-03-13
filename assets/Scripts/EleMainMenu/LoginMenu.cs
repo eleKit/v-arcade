@@ -82,6 +82,8 @@ public class LoginMenu : MonoBehaviour
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
 			// TODO here there must be the logout
+			fisio = false;
+			menu = true;
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
 		}
 	}
@@ -129,6 +131,8 @@ public class LoginMenu : MonoBehaviour
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
 			// TODO here there must be the logout
+			player = false;
+			menu = true;
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
 		}
 	}
