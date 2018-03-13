@@ -82,9 +82,10 @@ public class LoginMenu : MonoBehaviour
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
 			// TODO here there must be the logout
+			uName = "";
+			password = "";
 			fisio = false;
 			menu = true;
-			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
 		}
 	}
 
@@ -131,9 +132,10 @@ public class LoginMenu : MonoBehaviour
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
 			// TODO here there must be the logout
+			uName = "";
+			password = "";
 			player = false;
 			menu = true;
-			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
 		}
 	}
 
@@ -270,6 +272,12 @@ public class LoginMenu : MonoBehaviour
 		}
 	}
 
+	void resetBool ()
+	{
+		player = false;
+		fisio = false;
+		menu = false;
+	}
 
 
 
