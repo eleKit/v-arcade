@@ -175,11 +175,13 @@ public class LoginMenu : MonoBehaviour
 					playerLogError = false;
 					PlayerSaveData.playerData.SetPlayer (GeneralSaveData.generalData.GetPlayer (uName));
 					if (PlayerSaveData.playerData.GetFirstTimePlaying ()) {
-						SendMessage ("ChangeFocusToPlayerTuning");
 						login = false;
+						player = true;
+						SceneManager.LoadSceneAsync ("Tuning");
 					} else if (PlayerSaveData.playerData.GetTuningTooOld ()) {
-						SendMessage ("ChangeFocusToPlayerTuning");
 						login = false;
+						player = true;
+						SceneManager.LoadSceneAsync ("Tuning");
 					} else {
 
 						/* if the player has done the tuning it is shown to him the PlayerWindow*/
@@ -243,7 +245,8 @@ public class LoginMenu : MonoBehaviour
 					PlayerSaveData.playerData.NewPlayer (uName);
 
 					signup = false;
-					SendMessage ("ChangeFocusToPlayerTuning");
+					player = true;
+					SceneManager.LoadSceneAsync ("Tuning");
 				}
 			}
 			if (selGridInt == 1) {
