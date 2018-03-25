@@ -16,7 +16,7 @@ public class LoginMenu : MonoBehaviour
 
 
 	// boolean to choose the login or signup menu
-	bool login, signup;
+	bool login, signup, account;
 
 	//boolean true if an error has to be shown
 	bool fisioLogError, playerLogError, signError, passwError;
@@ -53,33 +53,55 @@ public class LoginMenu : MonoBehaviour
 			windowRect = GUI.Window (3, windowRect, MyLoginWindow, "Accedi");
 		if (signup)
 			windowRect = GUI.Window (4, windowRect, SignupWindow, "Registrati");
+		if (account)
+			windowRect = GUI.Window (5, windowRect, AccountWindow, "Visualizza Account");
 	}
+
+
+	void AccountWindow (int id)
+	{
+		GUI.skin = customSkin;
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 75), "Cancella Account")) {
+			//TODO funzione che cancella l'account
+		}
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 100, 210, 75), "Menu principale")) {
+			uName = "";
+			password = "";
+			account = false;
+			BoolMenu.boolMenu.menu = true;
+		}
+	}
+
 
 	void FisioWindow (int id)
 	{
 		GUI.skin = customSkin;
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 75), "Simulazione di volo")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 55), "Simulazione di volo")) {
 			SaveInfos.plane = true;
 			SaveInfos.ski = false;
 			SaveInfos.music = false;
 			PlayerSaveData.playerData.FlightGame ();
 			SceneManager.LoadSceneAsync ("Fisio_Plane");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 100, 210, 75), "Eroe della chitarra\n(Replay)")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 90, 210, 55), "Eroe della chitarra\n(Replay)")) {
 			SaveInfos.plane = false;
 			SaveInfos.ski = false;
 			SaveInfos.music = true;
 			PlayerSaveData.playerData.MusicGame ();
 			SceneManager.LoadSceneAsync ("Mandolin_Replay");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 170, 210, 75), "Sci")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 150, 210, 55), "Sci")) {
 			SaveInfos.plane = false;
 			SaveInfos.ski = true;
 			SaveInfos.music = false;
 			PlayerSaveData.playerData.SkiGame ();
 			SceneManager.LoadSceneAsync ("Fisio_Ski");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 210, 210, 55), "Visualizza Account")) {
+			BoolMenu.boolMenu.fisio = false;
+			account = true;
+		}
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 270, 210, 55), "Menu principale")) {
 			// TODO here there must be the logout
 			uName = "";
 			password = "";
