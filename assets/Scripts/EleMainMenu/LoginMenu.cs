@@ -16,7 +16,7 @@ public class LoginMenu : MonoBehaviour
 
 
 	// boolean to choose the login or signup menu
-	bool login, signup, account;
+	bool login, signup, account, scores;
 
 	//boolean true if an error has to be shown
 	bool fisioLogError, playerLogError, signError, passwError;
@@ -55,8 +55,20 @@ public class LoginMenu : MonoBehaviour
 			windowRect = GUI.Window (4, windowRect, SignupWindow, "Registrati");
 		if (account)
 			windowRect = GUI.Window (5, windowRect, AccountWindow, "Visualizza Account");
+		if (scores)
+			windowRect = GUI.Window (6, windowRect, ScoresWindow, "Visualizza Punteggi");
 	}
 
+
+	void ScoresWindow (int id)
+	{
+		GUI.skin = customSkin;
+		//TODO lista di text con gli hign scores
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 210, 210, 75), "Indietro")) {
+			scores = false;
+			BoolMenu.boolMenu.player = true;
+		}
+	}
 
 	void AccountWindow (int id)
 	{
@@ -64,11 +76,9 @@ public class LoginMenu : MonoBehaviour
 		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 75), "Cancella Account")) {
 			//TODO funzione che cancella l'account
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 100, 210, 75), "Menu principale")) {
-			uName = "";
-			password = "";
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 100, 210, 75), "Indietro")) {
 			account = false;
-			BoolMenu.boolMenu.menu = true;
+			BoolMenu.boolMenu.fisio = true;
 		}
 	}
 
@@ -101,7 +111,7 @@ public class LoginMenu : MonoBehaviour
 			BoolMenu.boolMenu.fisio = false;
 			account = true;
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 270, 210, 55), "Menu principale")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 270, 210, 55), "Menu principale\n(Disconnetti)")) {
 			// TODO here there must be the logout
 			uName = "";
 			password = "";
@@ -130,28 +140,32 @@ public class LoginMenu : MonoBehaviour
 	void PlayerWindow (int id)
 	{
 		GUI.skin = customSkin;
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 75), "Simulazione di volo")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 30, 210, 55), "Simulazione di volo")) {
 			SaveInfos.plane = true;
 			SaveInfos.ski = false;
 			SaveInfos.music = false;
 			PlayerSaveData.playerData.FlightGame ();
 			SceneManager.LoadSceneAsync ("Player_Plane");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 100, 210, 75), "Eroe della chitarra")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 90, 210, 55), "Eroe della chitarra")) {
 			SaveInfos.plane = false;
 			SaveInfos.ski = false;
 			SaveInfos.music = true;
 			PlayerSaveData.playerData.MusicGame ();
 			SceneManager.LoadSceneAsync ("Mandolin_Hero");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 170, 210, 75), "Sci")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 150, 210, 55), "Sci")) {
 			SaveInfos.plane = false;
 			SaveInfos.ski = true;
 			SaveInfos.music = false;
 			PlayerSaveData.playerData.SkiGame ();
 			SceneManager.LoadSceneAsync ("Ski");
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 240, 210, 75), "Menu principale")) {
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 210, 210, 55), "High scores")) {
+			BoolMenu.boolMenu.player = false;
+			scores = true;
+		}
+		if (GUI.Button (new Rect ((windowRect.width - 210) / 2, 270, 210, 55), "Menu principale\n(Disconnetti)")) {
 			// TODO here there must be the logout
 			uName = "";
 			password = "";
