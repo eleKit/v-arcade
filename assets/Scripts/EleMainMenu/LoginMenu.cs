@@ -12,8 +12,7 @@ public class LoginMenu : MonoBehaviour
 
 	public GUISkin customSkin;
 
-	//boolean to chose the tipe of menu to show
-	public bool player, fisio, menu;
+
 
 
 	// boolean to choose the login or signup menu
@@ -44,11 +43,11 @@ public class LoginMenu : MonoBehaviour
 
 		GUI.skin = customSkin;
 
-		if (fisio)
+		if (BoolMenu.boolMenu.fisio)
 			windowRect = GUI.Window (0, windowRect, FisioWindow, "Seleziona Gioco");
-		if (menu)
+		if (BoolMenu.boolMenu.menu)
 			windowRect = GUI.Window (1, windowRect, MenuWindow, "Menu");
-		if (player)
+		if (BoolMenu.boolMenu.player)
 			windowRect = GUI.Window (2, windowRect, PlayerWindow, "Seleziona Gioco");
 		if (login)
 			windowRect = GUI.Window (3, windowRect, MyLoginWindow, "Accedi");
@@ -84,8 +83,8 @@ public class LoginMenu : MonoBehaviour
 			// TODO here there must be the logout
 			uName = "";
 			password = "";
-			fisio = false;
-			menu = true;
+			BoolMenu.boolMenu.fisio = false;
+			BoolMenu.boolMenu.menu = true;
 		}
 	}
 
@@ -93,12 +92,12 @@ public class LoginMenu : MonoBehaviour
 	{
 		GUI.skin = customSkin;
 		if (GUI.Button (new Rect ((windowRect.width - 150) / 2, 40, 150, 75), "Accedi")) {
-			menu = false;
+			BoolMenu.boolMenu.menu = false;
 			login = true;
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 150) / 2, 140, 150, 75), "Registrati")) {
 			signup = true;
-			menu = false;
+			BoolMenu.boolMenu.menu = false;
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 150) / 2, 240, 150, 75), "Esci")) {
 			Application.Quit ();
@@ -134,8 +133,8 @@ public class LoginMenu : MonoBehaviour
 			// TODO here there must be the logout
 			uName = "";
 			password = "";
-			player = false;
-			menu = true;
+			BoolMenu.boolMenu.player = false;
+			BoolMenu.boolMenu.menu = true;
 		}
 	}
 
@@ -176,18 +175,18 @@ public class LoginMenu : MonoBehaviour
 					PlayerSaveData.playerData.SetPlayer (GeneralSaveData.generalData.GetPlayer (uName));
 					if (PlayerSaveData.playerData.GetFirstTimePlaying ()) {
 						login = false;
-						player = true;
+						BoolMenu.boolMenu.player = true;
 						SceneManager.LoadSceneAsync ("Tuning");
 					} else if (PlayerSaveData.playerData.GetTuningTooOld ()) {
 						login = false;
-						player = true;
+						BoolMenu.boolMenu.player = true;
 						SceneManager.LoadSceneAsync ("Tuning");
 					} else {
 
 						/* if the player has done the tuning it is shown to him the PlayerWindow*/
 
 						login = false;
-						player = true;
+						BoolMenu.boolMenu.player = true;
 					}
 				} else
 					playerLogError = true;
@@ -198,7 +197,7 @@ public class LoginMenu : MonoBehaviour
 					fisioLogError = false;
 					PlayerSaveData.playerData.SetUserName (uName);
 					login = false;
-					fisio = true;
+					BoolMenu.boolMenu.fisio = true;
 				} else
 					fisioLogError = true;
 			}
@@ -208,7 +207,7 @@ public class LoginMenu : MonoBehaviour
 			login = false;
 			uName = "";
 			password = "";
-			menu = true;
+			BoolMenu.boolMenu.menu = true;
 		}
 	}
 
@@ -245,7 +244,7 @@ public class LoginMenu : MonoBehaviour
 					PlayerSaveData.playerData.NewPlayer (uName);
 
 					signup = false;
-					player = true;
+					BoolMenu.boolMenu.player = true;
 					SceneManager.LoadSceneAsync ("Tuning");
 				}
 			}
@@ -261,13 +260,13 @@ public class LoginMenu : MonoBehaviour
 						GeneralSaveData.generalData.AddFisioInfos (uName, password);
 						PlayerSaveData.playerData.SetUserName (uName);
 						signup = false;
-						fisio = true;
+						BoolMenu.boolMenu.fisio = true;
 					}
 				}
 			}
 		}
 		if (GUI.Button (new Rect (170, 270, 150f, 55f), "Annulla")) {
-			menu = true;
+			BoolMenu.boolMenu.menu = true;
 			signup = false; 
 			uName = "";
 			password = "";
@@ -277,43 +276,11 @@ public class LoginMenu : MonoBehaviour
 
 	void resetBool ()
 	{
-		player = false;
-		fisio = false;
-		menu = false;
+		BoolMenu.boolMenu.player = false;
+		BoolMenu.boolMenu.fisio = false;
+		BoolMenu.boolMenu.menu = false;
 	}
-
-
-
-	public void ShowPlayer ()
-	{
-		/*if (music) {
-			SaveInfos.plane = false;
-			SaveInfos.ski = false;
-			SaveInfos.music = true;
-			PlayerSaveData.playerData.MusicGame ();
-			SceneManager.LoadSceneAsync ("Mandolin_Replay");
-		} else if (ski) {
-			SaveInfos.plane = false;
-			SaveInfos.ski = true;
-			SaveInfos.music = false;
-			PlayerSaveData.playerData.SkiGame ();
-			SceneManager.LoadSceneAsync ("Ski");
-		} else if (plane) {
-			SaveInfos.plane = true;
-			SaveInfos.ski = false;
-			SaveInfos.music = false;
-			PlayerSaveData.playerData.FlightGame ();
-			SceneManager.LoadSceneAsync ("Player_Plane");
-		}
-		*/
-
-		/* TODO The function ShowPlayer is called ONLY after the tuning session, 
-		 * i want to do the tuning only after the login|logon and not in other times, 
-		 * so after the tuning it must be shown the PlayerWindow
-		*/
-
-		player = true;
-	}
+		
 
 
 
