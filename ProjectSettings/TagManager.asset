@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - NoXML
+  - Save_Manager
+  - Right_Hand
+  - Left_Hand
+  - Button
   layers:
   - Default
   - TransparentFX
