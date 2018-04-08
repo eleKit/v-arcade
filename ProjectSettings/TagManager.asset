@@ -3,30 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Save_Manager
-  - Flags
-  - Tree
-  - NoXML
-  - Button
-  - R_pinky
-  - R_ring
-  - R_thumb
-  - R_index
-  - R_palm
-  - R_mid
-  - Tree_Generator
-  - Finish_Line
-  - Obstacle
-  - Path_Name_Text
-  - Right_Hand
-  - L_thumb
-  - L_palm
-  - L_pinky
-  - L_mid
-  - L_ring
-  - L_index
-  - Left_Hand
+  tags: []
   layers:
   - Default
   - TransparentFX
