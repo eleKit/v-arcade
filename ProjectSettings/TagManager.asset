@@ -4,11 +4,26 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - NoXML
+  - Radar
+  - Target
+  - Time_Interval
+  - Spaceship
+  - Character
+  - Enemy
+  - Obstacle
   - Save_Manager
-  - Right_Hand
-  - Left_Hand
+  - Name_Text
+  - Player_Name_Text
+  - Path_Name_Text
+  - Highscore_Text
+  - NoXML
   - Button
+  - Tree
+  - Flags
+  - Tree_Generator
+  - Right_Hand
+  - Finish_Line
+  - Left_Hand
   layers:
   - Default
   - TransparentFX

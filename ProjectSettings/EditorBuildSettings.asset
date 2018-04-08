@@ -6,8 +6,56 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Ele_Scenes/Main_menu.unity
-    guid: 78feab790c19e4f129040a36ad9fd1c8
+    path: assets/Scenes/Mandolin_Main.unity
+    guid: eb3be2ae173a5e547b3b719412f88c6f
   - enabled: 1
-    path: Assets/Scenes/Ele_Scenes/Tuning.unity
+    path: assets/Scenes/Fisio_Plane.unity
+    guid: 313497c67a2e22a47b92873590ecb8b5
+  - enabled: 1
+    path: assets/Scenes/Player_Plane.unity
+    guid: 786c85bc250e98d40af8f8cc05369476
+  - enabled: 0
+    path: Assets/Scenes/Skateboard.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/Scenes/UpAndDown.unity
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: assets/Scenes/Mandolin_Hero.unity
+    guid: 3f7e082ab18023f4a9b346fd62ca47af
+  - enabled: 1
+    path: assets/Scenes/Ski.unity
+    guid: 0525f7d8c28afba48b746650004d651d
+  - enabled: 1
+    path: assets/Scenes/Fisio_Plane.unity
+    guid: 313497c67a2e22a47b92873590ecb8b5
+  - enabled: 1
+    path: assets/Scenes/Fisio_Ski.unity
+    guid: c56bd93832d55694ba1df9ceccd6203e
+  - enabled: 1
+    path: assets/Scenes/Plane_Replay.unity
+    guid: 05e1da0bd0ae22c448907b700b040132
+  - enabled: 1
+    path: assets/Scenes/Mandolin_Replay.unity
+    guid: 65b4fe036fe444748a9fc67ce39a204a
+  - enabled: 1
+    path: assets/Scenes/Fisio_Main.unity
+    guid: ecd51f8a9e7c472489d0b382b87a0f5c
+  - enabled: 1
+    path: assets/Scenes/Plane_Main.unity
+    guid: 82cfd38c449ce704cb30b2284b82416c
+  - enabled: 1
+    path: assets/Scenes/Ski_Main.unity
+    guid: 2afd0f0f59d546b48bd7feb00c470728
+  - enabled: 1
+    path: assets/Scenes/Ski_Replay.unity
+    guid: f6d9aa745ad24204f9c1d55ede5f3098
+  - enabled: 1
+    path: assets/Scenes/Fisio_Random_Editor.unity
+    guid: 9c8e9963b25f6be499d4dbbec7fc7e82
+  - enabled: 1
+    path: assets/Scenes/Ele_Scenes/Tuning.unity
     guid: db93e06e2b6fd4227925c270788a6a12
+  - enabled: 1
+    path: assets/Scenes/Ele_Scenes/Main_menu.unity
+    guid: 78feab790c19e4f129040a36ad9fd1c8
