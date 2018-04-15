@@ -5,25 +5,33 @@ using System.Collections.Generic;
 //Classe utilizzata per salvare le informazioni da utilizzare nella sessione di gioco
 using System;
 
-public static class SaveInfos{
+public static class SaveInfos
+{
 
 	public static bool plane = true;
 	public static bool music;
 	public static bool ski;
 	public static bool replay;
 
-	public static List<List<GameObjectInfos>> gameObjects = new List<List<GameObjectInfos>> ();
-	public static List<List<GameObjectInfos>> leftHandObjects = new List<List<GameObjectInfos>> ();
-	public static List<List<GameObjectInfos>> rightHandObjects = new List<List<GameObjectInfos>> ();
+	// Left + right game objects (used in XML serialization only)
+	public static List<List<GameObjectInfos>> gameObjects = new List<List<GameObjectInfos>>();
 
-	public static void ResetData(){
-		gameObjects = new List<List<GameObjectInfos>> ();
-		leftHandObjects = new List<List<GameObjectInfos>> ();
-		rightHandObjects = new List<List<GameObjectInfos>> ();
+	// Left.dat
+	public static List<List<GameObjectInfos>> leftHandObjects = new List<List<GameObjectInfos>>();
+
+	// Right.dat
+	public static List<List<GameObjectInfos>> rightHandObjects = new List<List<GameObjectInfos>>();
+
+	public static void ResetData()
+	{
+		gameObjects = new List<List<GameObjectInfos>>();
+		leftHandObjects = new List<List<GameObjectInfos>>();
+		rightHandObjects = new List<List<GameObjectInfos>>();
 	}
 
 	[Serializable]
-	public class GameObjectInfos{
+	public class GameObjectInfos
+	{
 		public string gName;
 		public string gID;
 		public float posX;
@@ -32,10 +40,11 @@ public static class SaveInfos{
 		public float angX;
 		public float angY;
 		public float angZ;
-//		public Vector3 pos;
-//		public Vector3 ang;
+		//		public Vector3 pos;
+		//		public Vector3 ang;
 		
-		public GameObjectInfos(GameObject go){
+		public GameObjectInfos(GameObject go)
+		{
 			gName = go.name;
 			gID = go.name + "_" + go.GetInstanceID();
 			posX = go.transform.position.x;
@@ -47,7 +56,9 @@ public static class SaveInfos{
 //			pos = go.transform.position;
 //			ang = go.transform.eulerAngles;
 		}
-		public GameObjectInfos(){
+
+		public GameObjectInfos()
+		{
 			gName = "";
 			gID = "";
 		}
