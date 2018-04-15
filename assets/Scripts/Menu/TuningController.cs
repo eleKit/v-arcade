@@ -38,14 +38,8 @@ public class TuningController : MonoBehaviour
 			distance = Mathf.Abs (handController.GetComponent<HandController> ().hands [0].PalmPosition.x - handController.GetComponent<HandController> ().hands [1].PalmPosition.x);
 		}
 
-		if (PlayerSaveData.playerData.GetFirstTimePlaying () && background.GetComponent<Renderer> ().isVisible && !isTuning) {
+		if (background.GetComponent<Renderer> ().isVisible && !startTuning) {
 			tuningInfos.GetComponent<TuningInfos> ().SetFirstTimeText ();
-			isTuning = true;
-			startTuning = true;
-		}
-		if (PlayerSaveData.playerData.GetTuningTooOld () && background.GetComponent<Renderer> ().isVisible && !isTuning) {
-			tuningInfos.GetComponent<TuningInfos> ().SetLongAgoText ();
-			isTuning = true;
 			startTuning = true;
 		}
 
@@ -191,6 +185,7 @@ public class TuningController : MonoBehaviour
 	{
 		endTuning = false;
 		HideStats ();
+		redoText.SetActive (false);
 		tuningInfos.GetComponent<TuningInfos> ().SetRedoText ();
 		hands.SetActive (true);
 		startTuning = true;
