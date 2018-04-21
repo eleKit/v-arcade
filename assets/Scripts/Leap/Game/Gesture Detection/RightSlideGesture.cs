@@ -37,7 +37,7 @@ public class RightSlideGesture : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float yRight = GameObject.Find ("HandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
+		float yRight = GameObject.Find("MyHandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
 		
 		rightMovement = UpdateRightAngles (yRight);
 
@@ -91,7 +91,7 @@ public class RightSlideGesture : MonoBehaviour {
 	}
 	
 	float UpdateRightAngles(float angle){
-		if(!GameObject.Find ("HandController").GetComponent<HandController>().rightHandVisible){
+		if(!GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible){
 			rAngles = new List<float>();
 			return 0;
 		}

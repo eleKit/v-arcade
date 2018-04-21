@@ -3,7 +3,8 @@ using System.Collections;
 using System;
 using Leap;
 
-public class HandPositionTrackerScript : MonoBehaviour {
+public class HandPositionTrackerScript : MonoBehaviour
+{
 
 	static string leftGreenTexture = "Textures/Plane/Left_hand_green_01";
 	static string rightGreenTexture = "Textures/Plane/Right_hand_green_01";
@@ -23,174 +24,218 @@ public class HandPositionTrackerScript : MonoBehaviour {
 	public GameObject leftPlaceholder, rightPlaceholder, leftOverlay, rightOverlay, handController, leapPlaceholder;
 
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
 		leftPlStartX = leftPlaceholder.transform.localPosition.x;
 		rightPlStartX = rightPlaceholder.transform.localPosition.x;
 		leftPlStartY = leftPlaceholder.transform.localPosition.y;
 		rightPlStartY = rightPlaceholder.transform.localPosition.y;
 		placeHolderStartPos = Mathf.Abs(leftPlaceholder.transform.position.x - rightPlaceholder.transform.position.x);
-		handAlert = GameObject.Find ("Hand Alert");
-		fingerAlert = GameObject.Find ("Finger Alert");
+		handAlert = GameObject.Find("Hand Alert");
+		fingerAlert = GameObject.Find("Finger Alert");
 		startDistance = PlayerSaveData.playerData.GetHandDistance();
 		minDistance = startDistance - (startDistance * percentage);
 		maxDistance = startDistance + (startDistance * percentage);
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		hands = handController.GetComponent<HandController> ().hands;
-		if(hands != null){
-			if(!PlayerSaveData.playerData.GetOneHandMode()){
+	void Update()
+	{
+		hands = handController.GetComponent<MyHandController>().hands;
+		if (hands != null)
+		{
+			if (!PlayerSaveData.playerData.GetOneHandMode())
+			{
 				//Se entrambe le mani sono sul leap, controlla la loro distanza e mostra
 				//un alert nel caso le mani siano troppo vicine o troppo lontane
-				if(hands.Count == 2){
-					if(handDistance == 0){
+				if (hands.Count == 2)
+				{
+					if (handDistance == 0)
+					{
 						handDistance = Mathf.Abs(hands[0].PalmPosition.x - hands[1].PalmPosition.x);
 						tempDistance = handDistance;
 					}
-					else{
+					else
+					{
 						tempDistance = handDistance;
 						handDistance = Mathf.Abs(hands[0].PalmPosition.x - hands[1].PalmPosition.x);
 					}
-					if(tempDistance != handDistance)
+					if (tempDistance != handDistance)
 						UpdatePlaceholderPositions(startDistance, handDistance);
-					if(handDistance < minDistance){
+					if (handDistance < minDistance)
+					{
 						handAlert.GetComponent<TextMesh>().text = "Mani troppo vicine!";
-						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftRedTexture);
-						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightRedTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(leftRedTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(rightRedTexture);
 					}
-					else if( handDistance > maxDistance){
+					else if (handDistance > maxDistance)
+					{
 						handAlert.GetComponent<TextMesh>().text = "Mani troppo lontane!";
-						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftRedTexture);
-						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightRedTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(leftRedTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(rightRedTexture);
 					}
-					else{
+					else
+					{
 						handAlert.GetComponent<TextMesh>().text = "";
-						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (leftGreenTexture);
-						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture) Resources.Load (rightGreenTexture);
+						leftOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(leftGreenTexture);
+						rightOverlay.GetComponent<Renderer>().material.mainTexture = (Texture)Resources.Load(rightGreenTexture);
 					}
 
 					// Nella modalità a pugno chiuso, conta le dita visibili e mostra un alert
 					// se il numero è maggiore di zero
-					if(!PlayerSaveData.playerData.GetOpenHandMode()){
+					if (!PlayerSaveData.playerData.GetOpenHandMode())
+					{
 						int leftFingers = -1;
 						int rightFingers = -1;
 						
-						try{
+						try
+						{
 							//leftFingers = leapLeftHand.hand.Fingers.Count;
 							//rightFingers = leapRightHand.hand.Fingers.Count;
-							if(hands[0].IsLeft){
+							if (hands[0].IsLeft)
+							{
 								FingerList leftExtendedFingers = hands[0].Fingers.Extended();
 								FingerList rightExtendedFingers = hands[1].Fingers.Extended();
 								leftFingers = leftExtendedFingers.Count;
 								rightFingers = rightExtendedFingers.Count;
 							}
-							else{
+							else
+							{
 								FingerList leftExtendedFingers = hands[1].Fingers.Extended();
 								FingerList rightExtendedFingers = hands[0].Fingers.Extended();
 								leftFingers = leftExtendedFingers.Count;
 								rightFingers = rightExtendedFingers.Count;
 							}
-						}catch(Exception e){
-							Debug.Log (e);
-						};
+						}
+						catch (Exception e)
+						{
+							Debug.Log(e);
+						}
+						;
 
-						if(leftFingers > 0 && rightFingers > 0){
+						if (leftFingers > 0 && rightFingers > 0)
+						{
 							fingerAlert.GetComponent<TextMesh>().text = "Chiudi bene le mani.";
 						}
-						else{
-							if(leftFingers > 0)
+						else
+						{
+							if (leftFingers > 0)
 								fingerAlert.GetComponent<TextMesh>().text = "Chiudi bene la mano sinistra.";
-							if(rightFingers > 0)
+							if (rightFingers > 0)
 								fingerAlert.GetComponent<TextMesh>().text = "Chiudi bene la mano destra.";
 						}
 
-						if(leftFingers < 1 && rightFingers < 1)
+						if (leftFingers < 1 && rightFingers < 1)
 							fingerAlert.GetComponent<TextMesh>().text = "";
 					}
 				}
 			}
-			else{
-				if(!PlayerSaveData.playerData.GetRightHand()){
-					if(handController.GetComponent<HandController>().leftHandVisible){
+			else
+			{
+				if (!PlayerSaveData.playerData.GetRightHand())
+				{
+					if (handController.GetComponent<MyHandController>().leftHandVisible)
+					{
 						Vector3 temp = new Vector3(leapPlaceholder.transform.localPosition.x, leapPlaceholder.transform.localPosition.y, leftPlaceholder.transform.localPosition.z);
-						if(hands[0].IsLeft){
+						if (hands[0].IsLeft)
+						{
 							temp.x += (hands[0].PalmPosition.x * 0.05f);
 							temp.y -= (hands[0].PalmPosition.z * 0.05f);
 							leftPlaceholder.transform.localPosition = temp;
 						}
-						else{
+						else
+						{
 							temp.x += (hands[1].PalmPosition.x * 0.05f);
 							temp.y -= (hands[1].PalmPosition.z * 0.05f);
 							leftPlaceholder.transform.localPosition = temp;
 						}
 					}
 
-					if(!PlayerSaveData.playerData.GetOpenHandMode() &&
-					   handController.GetComponent<HandController>().leftHandVisible){
+					if (!PlayerSaveData.playerData.GetOpenHandMode() &&
+					    handController.GetComponent<MyHandController>().leftHandVisible)
+					{
 						int leftFingers = -1;
 						
-						try{
+						try
+						{
 							//leftFingers = leapLeftHand.hand.Fingers.Count;
 							//rightFingers = leapRightHand.hand.Fingers.Count;
-							if(hands[0].IsLeft){
+							if (hands[0].IsLeft)
+							{
 								FingerList leftExtendedFingers = hands[0].Fingers.Extended();
 								leftFingers = leftExtendedFingers.Count;
 							}
-							else{
+							else
+							{
 								FingerList leftExtendedFingers = hands[1].Fingers.Extended();
 								leftFingers = leftExtendedFingers.Count;
 							}
-						}catch(Exception e){
-							Debug.Log (e);
-						};
+						}
+						catch (Exception e)
+						{
+							Debug.Log(e);
+						}
+						;
 						
-						if(leftFingers > 0){
+						if (leftFingers > 0)
+						{
 							fingerAlert.GetComponent<TextMesh>().text = "Chiudi bene la mano.";
 						}
 						
-						if(leftFingers < 1)
+						if (leftFingers < 1)
 							fingerAlert.GetComponent<TextMesh>().text = "";
 					}
 				}
-				if(PlayerSaveData.playerData.GetRightHand()){
-					if(handController.GetComponent<HandController>().rightHandVisible){
+				if (PlayerSaveData.playerData.GetRightHand())
+				{
+					if (handController.GetComponent<MyHandController>().rightHandVisible)
+					{
 						Vector3 temp = new Vector3(leapPlaceholder.transform.localPosition.x, leapPlaceholder.transform.localPosition.y, rightPlaceholder.transform.localPosition.z);
-						if(hands[0].IsRight){
+						if (hands[0].IsRight)
+						{
 							temp.x += (hands[0].PalmPosition.x * 0.05f);
 							temp.y -= (hands[0].PalmPosition.z * 0.05f);
 							rightPlaceholder.transform.localPosition = temp;
 						}
-						else{
+						else
+						{
 							temp.x += (hands[1].PalmPosition.x * 0.05f);
 							temp.y -= (hands[1].PalmPosition.z * 0.05f);
 							rightPlaceholder.transform.localPosition = temp;
 						}
 					}
-					if(!PlayerSaveData.playerData.GetOpenHandMode() &&
-					   handController.GetComponent<HandController>().rightHandVisible){
+					if (!PlayerSaveData.playerData.GetOpenHandMode() &&
+					    handController.GetComponent<MyHandController>().rightHandVisible)
+					{
 						int rightFingers = -1;
 						
-						try{
+						try
+						{
 							//leftFingers = leapLeftHand.hand.Fingers.Count;
 							//rightFingers = leapRightHand.hand.Fingers.Count;
-							if(hands[0].IsRight){
+							if (hands[0].IsRight)
+							{
 								FingerList rightExtendedFingers = hands[0].Fingers.Extended();
 								rightFingers = rightExtendedFingers.Count;
 							}
-							else{
+							else
+							{
 								FingerList rightExtendedFingers = hands[1].Fingers.Extended();
 								rightFingers = rightExtendedFingers.Count;
 							}
-						}catch(Exception e){
-							Debug.Log (e);
-						};
+						}
+						catch (Exception e)
+						{
+							Debug.Log(e);
+						}
+						;
 						
-						if(rightFingers > 0){
+						if (rightFingers > 0)
+						{
 							fingerAlert.GetComponent<TextMesh>().text = "Chiudi bene la mano.";
 						}
 						
-						if(rightFingers < 1)
+						if (rightFingers < 1)
 							fingerAlert.GetComponent<TextMesh>().text = "";
 					}
 				}
@@ -199,8 +244,9 @@ public class HandPositionTrackerScript : MonoBehaviour {
 	}
 
 	// Aggiorna la posizione delle mani sulla parte bassa dello schermo
-	void UpdatePlaceholderPositions(float startDist, float handsDist){
-		float newPlaceHolderDist = (handsDist*placeHolderStartPos)/startDist;
+	void UpdatePlaceholderPositions(float startDist, float handsDist)
+	{
+		float newPlaceHolderDist = (handsDist * placeHolderStartPos) / startDist;
 		float increment = placeHolderStartPos - newPlaceHolderDist;
 		float xLeft = leftPlStartX + increment / 2;
 		float xRight = rightPlStartX - increment / 2;
@@ -212,7 +258,8 @@ public class HandPositionTrackerScript : MonoBehaviour {
 		rightPlaceholder.transform.localPosition = rightTemp;
 	}
 
-	public float GetHandDistance(){
+	public float GetHandDistance()
+	{
 		return handDistance;
 	}
 }

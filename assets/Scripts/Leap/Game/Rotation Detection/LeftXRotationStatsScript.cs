@@ -29,7 +29,7 @@ public class LeftXRotationStatsScript : MonoBehaviour {
 	// la aggiunge all'array delle ultime numExtensions estensioni,
 	// su questo applica il filtro di kalman e restituisce l'estensione finale
 	void Update () {
-		Vector3 rot = gameObject.GetComponent<HandController> ().leftPalmRotation;
+		Vector3 rot = gameObject.GetComponent<MyHandController>().leftPalmRotation;
 		float xAngle = rot.x;
 		float onScreen = 0f;
 		

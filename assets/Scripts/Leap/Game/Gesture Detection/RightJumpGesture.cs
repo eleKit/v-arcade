@@ -37,7 +37,7 @@ public class RightJumpGesture : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float xRight = GameObject.Find ("HandController").GetComponent<RightRotationScript> ().GetXExtension ();
+		float xRight = GameObject.Find("MyHandController").GetComponent<RightRotationScript> ().GetXExtension ();
 
 		rightMovement = UpdateRightAngles (xRight);
 
@@ -95,7 +95,7 @@ public class RightJumpGesture : MonoBehaviour {
 	}
 	
 	float UpdateRightAngles(float angle){
-		if(!GameObject.Find ("HandController").GetComponent<HandController>().rightHandVisible){
+		if(!GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible){
 			rAngles = new List<float>();
 			return 0;
 		}

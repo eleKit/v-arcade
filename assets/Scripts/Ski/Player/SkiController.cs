@@ -24,8 +24,8 @@ public class SkiController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		score.GetComponent<TextMesh> ().text = "PUNTEGGIO\n" + PlayerSaveData.playerData.GetScore();
-		leftHandVisible = handController.GetComponent<HandController> ().leftHandVisible;
-		rightHandVisible = handController.GetComponent<HandController> ().rightHandVisible;
+		leftHandVisible = handController.GetComponent<MyHandController>().leftHandVisible;
+		rightHandVisible = handController.GetComponent<MyHandController>().rightHandVisible;
 
 		if(inGame){
 			if((PlayerSaveData.playerData.GetOneHandMode() && !PlayerSaveData.playerData.GetRightHand() && !leftHandVisible) ||

@@ -26,7 +26,7 @@ public class RightXRotationStatsScript : MonoBehaviour {
 	// la aggiunge all'array delle ultime numExtensions estensioni,
 	// su questo applica il filtro di kalman e restituisce l'estensione finale
 	void Update () {
-		Vector3 rot = gameObject.GetComponent<HandController> ().rightPalmRotation;
+		Vector3 rot = gameObject.GetComponent<MyHandController>().rightPalmRotation;
 		float xAngle = rot.x;
 		float onScreen = 0f;
 		

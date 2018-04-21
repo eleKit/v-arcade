@@ -148,16 +148,16 @@ public class SkiPlayerScript : MonoBehaviour {
 			float tmpx = 0f;
 
 			if(SkiSaveData.skiData.GetSlapMode()){
-				if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
+				if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<RightYRotationStatsScript>().GetYExtension();
-				else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
+				else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<LeftYRotationStatsScript>().GetYExtension();
 
 			}
 			else{
-				if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
+				if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<RightYRotationStatsScript>().GetYExtension();
-				else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
+				else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<LeftYRotationStatsScript>().GetYExtension();
 			}
 
@@ -171,7 +171,7 @@ public class SkiPlayerScript : MonoBehaviour {
 			}
 			else{
 				if(SkiSaveData.skiData.GetSlapMode()){
-					if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand()){
+					if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand()){
 						if(tmpx < 0){
 							tmpx = -(tmpx*leftGuideX)/minRightVertical;
 							if(tmpx < leftGuideX)
@@ -183,7 +183,7 @@ public class SkiPlayerScript : MonoBehaviour {
 								tmpx = rightGuideX;
 						}
 					}
-					else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand()){
+					else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand()){
 						if(tmpx < 0){
 							tmpx = (tmpx*leftGuideX)/maxLeftVertical;
 							if(tmpx < leftGuideX)
@@ -197,7 +197,7 @@ public class SkiPlayerScript : MonoBehaviour {
 					}
 				}
 				else{
-					if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand()){
+					if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand()){
 						if(tmpx < 0){
 							tmpx = (tmpx*leftGuideX)/minRightHorizontal;
 							if(tmpx < leftGuideX)
@@ -209,7 +209,7 @@ public class SkiPlayerScript : MonoBehaviour {
 								tmpx = rightGuideX;
 						}
 					}
-					else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand()){
+					else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand()){
 						if(tmpx < 0){
 							tmpx = (tmpx*leftGuideX)/minLeftHorizontal;
 							if(tmpx < leftGuideX)

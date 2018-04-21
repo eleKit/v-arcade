@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 //Questo script va attaccato al gameobject HandController
-public class LeftRotationScript : MonoBehaviour {
+public class LeftRotationScript : MonoBehaviour
+{
 
 	float xExtension = 0;
 	float yExtension = 0;
@@ -12,41 +14,49 @@ public class LeftRotationScript : MonoBehaviour {
 	static int numExtensions = 20;
 	
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
 		xExtensions = new float[numExtensions];
 		yExtensions = new float[numExtensions];
 	}
 	
 	// Restituisce le estensioni verticali e orizzontali del polso, senza applicare il filtro di kalman,
 	// ma facendo la media delle ultime numExtensions estensioni
-	void Update () {
-		Vector3 rot = gameObject.GetComponent<HandController> ().leftPalmRotation;
+	void Update()
+	{
+		Vector3 rot = gameObject.GetComponent<MyHandController>().leftPalmRotation;
 		float xAngle = rot.x;
 		float yAngle = rot.y;
 		float onScreenx = 0f;
 		float onScreeny = 0f;
 		
-		if (xAngle > 0 && xAngle <= 180){
-			onScreenx = Mathf.Round(xAngle*100f)/100f;
+		if (xAngle > 0 && xAngle <= 180)
+		{
+			onScreenx = Mathf.Round(xAngle * 100f) / 100f;
 			
-			if(count < numExtensions-1){
+			if (count < numExtensions - 1)
+			{
 				xExtensions[count] = onScreenx;
 			}
-			else{
+			else
+			{
 				ShiftArray(xExtensions);
-				xExtensions[numExtensions-1] = onScreenx;
+				xExtensions[numExtensions - 1] = onScreenx;
 			}
 			xExtension = onScreenx;
 		}
-		else if (xAngle > 180 && xAngle < 360){
-			onScreenx = Mathf.Round((360 - xAngle)*100f)/100f;
+		else if (xAngle > 180 && xAngle < 360)
+		{
+			onScreenx = Mathf.Round((360 - xAngle) * 100f) / 100f;
 			
-			if(count < numExtensions-1){
+			if (count < numExtensions - 1)
+			{
 				xExtensions[count] = -onScreenx;
 			}
-			else{
+			else
+			{
 				ShiftArray(xExtensions);
-				xExtensions[numExtensions-1] = -onScreenx;
+				xExtensions[numExtensions - 1] = -onScreenx;
 			}
 
 			xExtension = -onScreenx;
@@ -60,27 +70,33 @@ public class LeftRotationScript : MonoBehaviour {
 		
 		
 		
-		if (yAngle > 0 && yAngle <= 180){
-			onScreeny = Mathf.Round(yAngle*100f)/100f;
+		if (yAngle > 0 && yAngle <= 180)
+		{
+			onScreeny = Mathf.Round(yAngle * 100f) / 100f;
 			
-			if(count < numExtensions-1){
+			if (count < numExtensions - 1)
+			{
 				yExtensions[count] = onScreeny;
 			}
-			else{
+			else
+			{
 				ShiftArray(yExtensions);
-				yExtensions[numExtensions-1] = onScreeny;
+				yExtensions[numExtensions - 1] = onScreeny;
 			}
 			yExtension = onScreeny;
 		}
-		else if (yAngle > 180 && yAngle < 360){
-			onScreeny = Mathf.Round((360 - yAngle)*100f)/100f;
+		else if (yAngle > 180 && yAngle < 360)
+		{
+			onScreeny = Mathf.Round((360 - yAngle) * 100f) / 100f;
 			
-			if(count < numExtensions-1){
+			if (count < numExtensions - 1)
+			{
 				yExtensions[count] = -onScreeny;
 			}
-			else{
+			else
+			{
 				ShiftArray(yExtensions);
-				yExtensions[numExtensions-1] = -onScreeny;
+				yExtensions[numExtensions - 1] = -onScreeny;
 			}
 			yExtension = -onScreeny;
 		}
@@ -91,34 +107,39 @@ public class LeftRotationScript : MonoBehaviour {
 //			yExtension = 0f;
 		
 		//Debug.Log (xExtension);
-		if(count < numExtensions-1)
+		if (count < numExtensions - 1)
 			count++;
 	}
-	
-	void ShiftArray(float[] arr){
+
+	void ShiftArray(float[] arr)
+	{
 		float[] tempArray = new float[arr.Length];
 		for (int i = 1; i < arr.Length; i++)
 			tempArray[i - 1] = arr[i];
-		tempArray.CopyTo (arr, 0);
+		tempArray.CopyTo(arr, 0);
 	}
-	
-	float MeanArray(float[] array){
+
+	float MeanArray(float[] array)
+	{
 		float sum = 0;
-		for(int i = 0; i < array.Length; i++)
+		for (int i = 0; i < array.Length; i++)
 			sum += array[i];
 		return (sum / array.Length);
 	}
-	
-	public float GetXExtension(){
+
+	public float GetXExtension()
+	{
 		return xExtension;
 	}
-	
-	public float GetYExtension(){
+
+	public float GetYExtension()
+	{
 		return yExtension;
 	}
-	
-	public Vector3 GetLeftRotation(){
-		return gameObject.GetComponent<HandController> ().leftPalmRotation;
+
+	public Vector3 GetLeftRotation()
+	{
+		return gameObject.GetComponent<MyHandController>().leftPalmRotation;
 	}
 
 }

@@ -3,7 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class LeftJumpGesture : MonoBehaviour {
+public class LeftJumpGesture : MonoBehaviour
+{
 
 	//Numero di angoli da considerare per rilevare il movimento
 	static int numAngles = 30;
@@ -31,25 +32,31 @@ public class LeftJumpGesture : MonoBehaviour {
 	bool jumpUp = true;
 	
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
 //		GetTunings(PlayerSaveData.playerData.GetUserName());
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		float xLeft = GameObject.Find ("HandController").GetComponent<LeftRotationScript> ().GetXExtension ();
-		leftMovement = UpdateLeftAngles (xLeft);
+	void Update()
+	{
+		float xLeft = GameObject.Find("MyHandController").GetComponent<LeftRotationScript>().GetXExtension();
+		leftMovement = UpdateLeftAngles(xLeft);
 
-		if(xLeft > -minOffsetToRelease && xLeft < minOffsetToRelease){
+		if (xLeft > -minOffsetToRelease && xLeft < minOffsetToRelease)
+		{
 			goDown = true;
 			jumpUp = true;
 		}
 
-		if(tuningsSet){
-			if(xLeft > minLeftVertical/2 && (leftMovement > minLeftVertical/2 || relMovement > minLeftVertical/2)){
-				if(canGoDown && goDown){
+		if (tuningsSet)
+		{
+			if (xLeft > minLeftVertical / 2 && (leftMovement > minLeftVertical / 2 || relMovement > minLeftVertical / 2))
+			{
+				if (canGoDown && goDown)
+				{
 					lAngles = new List<float>();
-					Debug.Log ("Down " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
+					Debug.Log("Down " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
 					canJump = false;
 					StartCoroutine("NowJump");
 					goDown = false;
@@ -57,9 +64,11 @@ public class LeftJumpGesture : MonoBehaviour {
 				}
 			}
 
-			if(xLeft < maxLeftVertical/2 && (leftMovement < maxLeftVertical/2 || relMovement < maxLeftVertical/2)){
-				if(canJump && jumpUp){
-					Debug.Log ("Up " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
+			if (xLeft < maxLeftVertical / 2 && (leftMovement < maxLeftVertical / 2 || relMovement < maxLeftVertical / 2))
+			{
+				if (canJump && jumpUp)
+				{
+					Debug.Log("Up " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
 					canGoDown = false;
 					lAngles = new List<float>();
 					StartCoroutine("NowDown");
@@ -68,11 +77,14 @@ public class LeftJumpGesture : MonoBehaviour {
 				}
 			}
 		}
-		else{
-			if(xLeft > defaultMinAngle && (leftMovement > defaultMinLeftMovement || relMovement > defaultMinLeftMovement)){
-				if(canGoDown && goDown){
+		else
+		{
+			if (xLeft > defaultMinAngle && (leftMovement > defaultMinLeftMovement || relMovement > defaultMinLeftMovement))
+			{
+				if (canGoDown && goDown)
+				{
 					lAngles = new List<float>();
-					Debug.Log ("Down " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
+					Debug.Log("Down " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
 					canJump = false;
 					StartCoroutine("NowJump");
 					goDown = false;
@@ -80,9 +92,11 @@ public class LeftJumpGesture : MonoBehaviour {
 				}
 			}
 			
-			if(xLeft < -defaultMinAngle && (leftMovement < -defaultMinLeftMovement || relMovement < -defaultMinLeftMovement)){
-				if(canJump && jumpUp){
-					Debug.Log ("Up " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
+			if (xLeft < -defaultMinAngle && (leftMovement < -defaultMinLeftMovement || relMovement < -defaultMinLeftMovement))
+			{
+				if (canJump && jumpUp)
+				{
+					Debug.Log("Up " + Time.time + " angle: " + xLeft + " lMov: " + leftMovement + " lRMov: " + relMovement);
 					canGoDown = false;
 					lAngles = new List<float>();
 					StartCoroutine("NowDown");
@@ -92,44 +106,49 @@ public class LeftJumpGesture : MonoBehaviour {
 			}
 		}
 	}
-	
-	float UpdateLeftAngles(float angle){
-		if(!GameObject.Find ("HandController").GetComponent<HandController>().leftHandVisible){
+
+	float UpdateLeftAngles(float angle)
+	{
+		if (!GameObject.Find("MyHandController").GetComponent<MyHandController>().leftHandVisible)
+		{
 			lAngles = new List<float>();
 			return 0;
 		}
 
-		lAngles.Add (angle);
+		lAngles.Add(angle);
 
-		if(lAngles.Count < relAngles)
-			relMovement = lAngles[lAngles.Count -1] - lAngles[0];
+		if (lAngles.Count < relAngles)
+			relMovement = lAngles[lAngles.Count - 1] - lAngles[0];
 		else
-			relMovement = lAngles[lAngles.Count -1] - lAngles[lAngles.Count - relAngles];
+			relMovement = lAngles[lAngles.Count - 1] - lAngles[lAngles.Count - relAngles];
 
-		if(lAngles.Count < numAngles)
-			return lAngles[lAngles.Count -1] - lAngles[0];
+		if (lAngles.Count < numAngles)
+			return lAngles[lAngles.Count - 1] - lAngles[0];
 		else
-			return lAngles[lAngles.Count -1] - lAngles[lAngles.Count - numAngles];
+			return lAngles[lAngles.Count - 1] - lAngles[lAngles.Count - numAngles];
 	}
 
 
-//	void GetTunings(string pl){
-//		Hashtable tunings = PlayerSaveData.playerData.GetPlayerTunings();
-//		minLeftVertical = (float)tunings ["Min Left Vertical"];
-//		maxLeftVertical = (float)tunings ["Max Left Vertical"];
-//	}
+	//	void GetTunings(string pl){
+	//		Hashtable tunings = PlayerSaveData.playerData.GetPlayerTunings();
+	//		minLeftVertical = (float)tunings ["Min Left Vertical"];
+	//		maxLeftVertical = (float)tunings ["Max Left Vertical"];
+	//	}
 
-	IEnumerator NowJump(){
+	IEnumerator NowJump()
+	{
 		yield return new WaitForSeconds(0.75f);
 		canJump = true;
 	}
 
-	IEnumerator NowDown(){
+	IEnumerator NowDown()
+	{
 		yield return new WaitForSeconds(0.75f);
 		canGoDown = true;
 	}
 
-	public void SetTunings(float minVertical, float maxVertical){
+	public void SetTunings(float minVertical, float maxVertical)
+	{
 		minLeftVertical = minVertical;
 		maxLeftVertical = maxVertical;
 		tuningsSet = true;

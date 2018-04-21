@@ -56,19 +56,19 @@ public class PlayerStarshipGameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		visibleHands = GameObject.Find ("HandController").GetComponent<HandController> ().visibleHands;
+		visibleHands = GameObject.Find("MyHandController").GetComponent<MyHandController>().visibleHands;
 		if(visibleHands == 2){
-			if(GameObject.Find ("HandController").GetComponent<HandController> ().hands[0].IsRight 
-			   && GameObject.Find ("HandController").GetComponent<HandController> ().hands[1].IsRight)
+			if(GameObject.Find("MyHandController").GetComponent<MyHandController>().hands[0].IsRight 
+			   && GameObject.Find("MyHandController").GetComponent<MyHandController>().hands[1].IsRight)
 				sameHands = true;
-			else if(GameObject.Find ("HandController").GetComponent<HandController> ().hands[0].IsLeft 
-			   && GameObject.Find ("HandController").GetComponent<HandController> ().hands[1].IsLeft)
+			else if(GameObject.Find("MyHandController").GetComponent<MyHandController>().hands[0].IsLeft 
+			   && GameObject.Find("MyHandController").GetComponent<MyHandController>().hands[1].IsLeft)
 				sameHands = true;
 			else
 				sameHands = false;
 		}
-		leftHandVisible = GameObject.Find ("HandController").GetComponent<HandController> ().leftHandVisible;
-		rightHandVisible = GameObject.Find ("HandController").GetComponent<HandController> ().rightHandVisible;
+		leftHandVisible = GameObject.Find("MyHandController").GetComponent<MyHandController>().leftHandVisible;
+		rightHandVisible = GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible;
 		if(inGame){
 			UpdateArrows();
 

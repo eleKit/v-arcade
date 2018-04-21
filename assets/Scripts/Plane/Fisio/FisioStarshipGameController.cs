@@ -28,9 +28,9 @@ public class FisioStarshipGameController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		visibleHands = GameObject.Find ("HandController").GetComponent<HandController> ().visibleHands;
-		leftHandVisible = GameObject.Find ("HandController").GetComponent<HandController> ().leftHandVisible;
-		rightHandVisible = GameObject.Find ("HandController").GetComponent<HandController> ().rightHandVisible;
+		visibleHands = GameObject.Find("MyHandController").GetComponent<MyHandController>().visibleHands;
+		leftHandVisible = GameObject.Find("MyHandController").GetComponent<MyHandController>().leftHandVisible;
+		rightHandVisible = GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible;
 		if(inGame){
 			if((!PlayerSaveData.playerData.GetOneHandMode() && visibleHands < 2) ||
 			   (PlayerSaveData.playerData.GetOneHandMode() && !PlayerSaveData.playerData.GetRightHand() && !leftHandVisible) ||

@@ -139,8 +139,8 @@ public class ReplayController : MonoBehaviour {
 					}
 				}
 			}
-			handController.GetComponent<HandController>().SetLeftPalmRotation(leftHandGo.transform.Find("lpalm").eulerAngles);
-			handController.GetComponent<HandController>().SetLeftHandVisible(true);
+			handController.GetComponent<MyHandController>().SetLeftPalmRotation(leftHandGo.transform.Find("lpalm").eulerAngles);
+			handController.GetComponent<MyHandController>().SetLeftHandVisible(true);
 		}
 		if(rightHand != null){
 			startRightPos = new Vector3(rightHand.posX, rightHand.posY, rightHand.posZ);
@@ -176,8 +176,8 @@ public class ReplayController : MonoBehaviour {
 					}	
 				}	
 			}
-			handController.GetComponent<HandController>().SetRightPalmRotation(rightHandGo.transform.Find("rpalm").eulerAngles);
-			handController.GetComponent<HandController>().SetRightHandVisible(true);
+			handController.GetComponent<MyHandController>().SetRightPalmRotation(rightHandGo.transform.Find("rpalm").eulerAngles);
+			handController.GetComponent<MyHandController>().SetRightHandVisible(true);
 		}
 		frameCount++;
 		if(SaveInfos.rightHandObjects.Count <= frameCount)

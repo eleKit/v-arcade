@@ -112,15 +112,15 @@ public class SkiFisioScript : MonoBehaviour {
 			float tmpx = 0f;
 			
 			if(SkiSaveData.skiData.GetSlapMode()){
-				if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
+				if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<RightYRotationStatsScript>().GetYExtension();
-				else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
+				else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<LeftYRotationStatsScript>().GetYExtension();
 			}
 			else{
-				if(handController.GetComponent<HandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
+				if(handController.GetComponent<MyHandController>().rightHandVisible && PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<RightYRotationStatsScript>().GetYExtension();
-				else if(handController.GetComponent<HandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
+				else if(handController.GetComponent<MyHandController>().leftHandVisible && !PlayerSaveData.playerData.GetRightHand())
 					tmpx = handController.GetComponent<LeftYRotationStatsScript>().GetYExtension();
 			}
 			

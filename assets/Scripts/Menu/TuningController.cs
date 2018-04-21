@@ -34,8 +34,8 @@ public class TuningController : MonoBehaviour
 //			Time.timeScale = 1f;
 
 
-		if (handController.GetComponent<HandController> ().visibleHands == 2) {
-			distance = Mathf.Abs (handController.GetComponent<HandController> ().hands [0].PalmPosition.x - handController.GetComponent<HandController> ().hands [1].PalmPosition.x);
+		if (handController.GetComponent<MyHandController>().visibleHands == 2) {
+			distance = Mathf.Abs (handController.GetComponent<MyHandController>().hands [0].PalmPosition.x - handController.GetComponent<MyHandController>().hands [1].PalmPosition.x);
 		}
 
 		if (background.GetComponent<Renderer> ().isVisible && !startTuning) {
@@ -44,7 +44,7 @@ public class TuningController : MonoBehaviour
 		}
 
 		if (startTuning) {
-			if (handController.GetComponent<HandController> ().visibleHands == 2) {
+			if (handController.GetComponent<MyHandController>().visibleHands == 2) {
 				if (distance >= minDistance && distance <= maxDistance) {
 					startMaxVertical = true;
 					hands.GetComponent<AnimatedTextureExtendedUV> ().rowNumber = 1;
@@ -55,7 +55,7 @@ public class TuningController : MonoBehaviour
 
 		if (startMaxVertical) {
 			tuningInfos.GetComponent<TuningInfos> ().SetHandsUpText ();
-			if (handController.GetComponent<HandController> ().visibleHands == 2) {
+			if (handController.GetComponent<MyHandController>().visibleHands == 2) {
 				if (!timer) {
 					GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = time.ToString ();
 					InvokeRepeating ("Countdown", 1f, 1f);
@@ -66,7 +66,7 @@ public class TuningController : MonoBehaviour
 
 		if (startMinVertical) {
 			tuningInfos.GetComponent<TuningInfos> ().SetHandsDownText ();
-			if (handController.GetComponent<HandController> ().visibleHands == 2) {
+			if (handController.GetComponent<MyHandController>().visibleHands == 2) {
 				if (!timer) {
 					GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = time.ToString ();
 					InvokeRepeating ("Countdown", 1f, 1f);
@@ -77,7 +77,7 @@ public class TuningController : MonoBehaviour
 
 		if (startMaxHorizontal) {
 			tuningInfos.GetComponent<TuningInfos> ().SetHandsRightText ();
-			if (handController.GetComponent<HandController> ().visibleHands == 2) {
+			if (handController.GetComponent<MyHandController>().visibleHands == 2) {
 				if (!timer) {
 					GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = time.ToString ();
 					InvokeRepeating ("Countdown", 1f, 1f);
@@ -88,7 +88,7 @@ public class TuningController : MonoBehaviour
 
 		if (startMinHorizontal) {
 			tuningInfos.GetComponent<TuningInfos> ().SetHandsLeftText ();
-			if (handController.GetComponent<HandController> ().visibleHands == 2) {
+			if (handController.GetComponent<MyHandController>().visibleHands == 2) {
 				if (!timer) {
 					GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = time.ToString ();
 					InvokeRepeating ("Countdown", 1f, 1f);
@@ -102,8 +102,8 @@ public class TuningController : MonoBehaviour
 			CancelInvoke ();
 			GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = "";
 			time = maxTime;
-			rightMaxVertical = GameObject.Find ("HandController").GetComponent<RightXRotationStatsScript> ().GetXExtension ();
-			leftMaxVertical = GameObject.Find ("HandController").GetComponent<LeftXRotationStatsScript> ().GetXExtension ();
+			rightMaxVertical = GameObject.Find("MyHandController").GetComponent<RightXRotationStatsScript> ().GetXExtension ();
+			leftMaxVertical = GameObject.Find("MyHandController").GetComponent<LeftXRotationStatsScript> ().GetXExtension ();
 			hands.GetComponent<AnimatedTextureExtendedUV> ().rowNumber = 2;
 			startMaxVertical = false;
 			startMinVertical = true;
@@ -115,8 +115,8 @@ public class TuningController : MonoBehaviour
 			CancelInvoke ();
 			GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = "";
 			time = maxTime;
-			rightMinVertical = GameObject.Find ("HandController").GetComponent<RightXRotationStatsScript> ().GetXExtension ();
-			leftMinVertical = GameObject.Find ("HandController").GetComponent<LeftXRotationStatsScript> ().GetXExtension ();
+			rightMinVertical = GameObject.Find("MyHandController").GetComponent<RightXRotationStatsScript> ().GetXExtension ();
+			leftMinVertical = GameObject.Find("MyHandController").GetComponent<LeftXRotationStatsScript> ().GetXExtension ();
 			hands.GetComponent<AnimatedTextureExtendedUV> ().rowNumber = 3;
 			startMinVertical = false;
 			startMaxHorizontal = true;
@@ -127,8 +127,8 @@ public class TuningController : MonoBehaviour
 			CancelInvoke ();
 			GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = "";
 			time = maxTime;
-			rightMaxHorizontal = GameObject.Find ("HandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
-			leftMaxHorizontal = GameObject.Find ("HandController").GetComponent<LeftYRotationStatsScript> ().GetYExtension ();
+			rightMaxHorizontal = GameObject.Find("MyHandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
+			leftMaxHorizontal = GameObject.Find("MyHandController").GetComponent<LeftYRotationStatsScript> ().GetYExtension ();
 			hands.GetComponent<AnimatedTextureExtendedUV> ().rowNumber = 4;
 			startMaxHorizontal = false;
 			startMinHorizontal = true;
@@ -139,8 +139,8 @@ public class TuningController : MonoBehaviour
 			CancelInvoke ();
 			GameObject.Find ("Countdown Text").GetComponent<TextMesh> ().text = "";
 			time = maxTime;
-			rightMinHorizontal = GameObject.Find ("HandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
-			leftMinHorizontal = GameObject.Find ("HandController").GetComponent<LeftYRotationStatsScript> ().GetYExtension ();
+			rightMinHorizontal = GameObject.Find("MyHandController").GetComponent<RightYRotationStatsScript> ().GetYExtension ();
+			leftMinHorizontal = GameObject.Find("MyHandController").GetComponent<LeftYRotationStatsScript> ().GetYExtension ();
 			startMinHorizontal = false;
 			timer = false;
 			hands.GetComponent<AnimatedTextureExtendedUV> ().rowNumber = 0;

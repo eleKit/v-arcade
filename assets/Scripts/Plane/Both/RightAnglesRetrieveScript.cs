@@ -9,11 +9,11 @@ public class RightAnglesRetrieveScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		xExt = GameObject.Find ("HandController").GetComponent<RightXRotationStatsScript> ().GetXExtension();
+		xExt = GameObject.Find("MyHandController").GetComponent<RightXRotationStatsScript> ().GetXExtension();
 
-		yExt = GameObject.Find ("HandController").GetComponent<RightYRotationStatsScript> ().GetYExtension();
+		yExt = GameObject.Find("MyHandController").GetComponent<RightYRotationStatsScript> ().GetYExtension();
 
-		zExt = GameObject.Find ("HandController").GetComponent<RightZRotationStatsScript> ().GetZExtension();
+		zExt = GameObject.Find("MyHandController").GetComponent<RightZRotationStatsScript> ().GetZExtension();
 
 	}
 	

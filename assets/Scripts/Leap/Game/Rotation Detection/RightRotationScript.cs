@@ -20,7 +20,7 @@ public class RightRotationScript : MonoBehaviour {
 	// Restituisce le estensioni verticali e orizzontali del polso, senza applicare il filtro di kalman,
 	// ma facendo la media delle ultime numExtensions estensioni
 	void Update () {
-		Vector3 rot = gameObject.GetComponent<HandController> ().rightPalmRotation;
+		Vector3 rot = gameObject.GetComponent<MyHandController>().rightPalmRotation;
 		float xAngle = rot.x;
 		float yAngle = rot.y;
 		float onScreenx = 0f;
@@ -116,7 +116,7 @@ public class RightRotationScript : MonoBehaviour {
 	}
 	
 	public Vector3 GetRightRotation(){
-		return gameObject.GetComponent<HandController> ().rightPalmRotation;
+		return gameObject.GetComponent<MyHandController>().rightPalmRotation;
 	}
 
 }

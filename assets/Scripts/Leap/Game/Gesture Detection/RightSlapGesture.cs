@@ -3,7 +3,8 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
-public class RightSlapGesture : MonoBehaviour {
+public class RightSlapGesture : MonoBehaviour
+{
 	
 	//Numero di angoli da considerare per rilevare il movimento
 	static int numAngles = 30;
@@ -35,26 +36,33 @@ public class RightSlapGesture : MonoBehaviour {
 	bool slapRight = true;
 	
 	// Use this for initialization
-	void Start () {
+	void Start()
+	{
 //		GetTunings(PlayerSaveData.playerData.GetUserName());
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		float yRight = GameObject.Find ("HandController").GetComponent<RightRotationScript> ().GetYExtension ();
-		curZ = GameObject.Find ("HandController").GetComponent<RightRotationScript> ().GetRightRotation ().z;
+	void Update()
+	{
+		float yRight = GameObject.Find("MyHandController").GetComponent<RightRotationScript>().GetYExtension();
+		curZ = GameObject.Find("MyHandController").GetComponent<RightRotationScript>().GetRightRotation().z;
 
-		rightMovement = UpdateRightAngles (yRight);
+		rightMovement = UpdateRightAngles(yRight);
 
-		if(yRight > -minOffsetToRelease && yRight < minOffsetToRelease){
+		if (yRight > -minOffsetToRelease && yRight < minOffsetToRelease)
+		{
 			slapLeft = true;
 			slapRight = true;
 		}
 
-		if(curZ > (zRef - offset) && curZ < (zRef + offset)){
-			if(tuningsSet){
-				if(yRight > -maxRightVertical/4 && (rightMovement > -maxRightVertical/3 || relMovement > -maxRightVertical/3)){
-					if(canSlapRight && slapRight){
+		if (curZ > (zRef - offset) && curZ < (zRef + offset))
+		{
+			if (tuningsSet)
+			{
+				if (yRight > -maxRightVertical / 4 && (rightMovement > -maxRightVertical / 3 || relMovement > -maxRightVertical / 3))
+				{
+					if (canSlapRight && slapRight)
+					{
 						rAngles = new List<float>();
 						canSlapLeft = false;
 						slapRight = false;
@@ -63,8 +71,10 @@ public class RightSlapGesture : MonoBehaviour {
 					}
 				}
 				
-				if(yRight < -minRightVertical/4 && (rightMovement < -minRightVertical/3 || relMovement < -minRightVertical/3)){
-					if(canSlapLeft && slapLeft){
+				if (yRight < -minRightVertical / 4 && (rightMovement < -minRightVertical / 3 || relMovement < -minRightVertical / 3))
+				{
+					if (canSlapLeft && slapLeft)
+					{
 						rAngles = new List<float>();
 						canSlapRight = false;
 						slapLeft = false;
@@ -73,9 +83,12 @@ public class RightSlapGesture : MonoBehaviour {
 					}
 				}
 			}
-			else{
-				if(yRight > defaultMinAngle && (rightMovement > defaultMinRightMovement || relMovement > defaultMinRightMovement)){
-					if(canSlapRight && slapRight){
+			else
+			{
+				if (yRight > defaultMinAngle && (rightMovement > defaultMinRightMovement || relMovement > defaultMinRightMovement))
+				{
+					if (canSlapRight && slapRight)
+					{
 						rAngles = new List<float>();
 						canSlapLeft = false;
 						slapRight = false;
@@ -84,8 +97,10 @@ public class RightSlapGesture : MonoBehaviour {
 					}
 				}
 				
-				if(yRight < -defaultMinAngle && (rightMovement < -defaultMinRightMovement || relMovement < -defaultMinRightMovement)){
-					if(canSlapLeft && slapLeft){
+				if (yRight < -defaultMinAngle && (rightMovement < -defaultMinRightMovement || relMovement < -defaultMinRightMovement))
+				{
+					if (canSlapLeft && slapLeft)
+					{
 						rAngles = new List<float>();
 						canSlapRight = false;
 						slapLeft = false;
@@ -96,42 +111,47 @@ public class RightSlapGesture : MonoBehaviour {
 			}
 		}
 	}
-	
-	float UpdateRightAngles(float angle){
-		if(!GameObject.Find ("HandController").GetComponent<HandController>().rightHandVisible){
+
+	float UpdateRightAngles(float angle)
+	{
+		if (!GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible)
+		{
 			rAngles = new List<float>();
 			return 0;
 		}
-		rAngles.Add (angle);
+		rAngles.Add(angle);
 		
-		if(rAngles.Count < relAngles)
-			relMovement = rAngles[rAngles.Count -1] - rAngles[0];
+		if (rAngles.Count < relAngles)
+			relMovement = rAngles[rAngles.Count - 1] - rAngles[0];
 		else
-			relMovement = rAngles[rAngles.Count -1] - rAngles[rAngles.Count - relAngles];
+			relMovement = rAngles[rAngles.Count - 1] - rAngles[rAngles.Count - relAngles];
 		
-		if(rAngles.Count < numAngles)
-			return rAngles[rAngles.Count -1] - rAngles[0];
+		if (rAngles.Count < numAngles)
+			return rAngles[rAngles.Count - 1] - rAngles[0];
 		else
-			return rAngles[rAngles.Count -1] - rAngles[rAngles.Count - numAngles];
+			return rAngles[rAngles.Count - 1] - rAngles[rAngles.Count - numAngles];
 	}
 
-//	void GetTunings(string pl){
-//		Hashtable tunings = PlayerSaveData.playerData.GetPlayerTunings();
-//		minRightVertical = (float)tunings ["Min Right Vertical"];
-//		maxRightVertical = (float)tunings ["Max Right Vertical"];
-//	}
+	//	void GetTunings(string pl){
+	//		Hashtable tunings = PlayerSaveData.playerData.GetPlayerTunings();
+	//		minRightVertical = (float)tunings ["Min Right Vertical"];
+	//		maxRightVertical = (float)tunings ["Max Right Vertical"];
+	//	}
 	
-	IEnumerator NowSlapLeft(){
+	IEnumerator NowSlapLeft()
+	{
 		yield return new WaitForSeconds(0.75f);
 		canSlapLeft = true;
 	}
-	
-	IEnumerator NowSlapRight(){
+
+	IEnumerator NowSlapRight()
+	{
 		yield return new WaitForSeconds(0.75f);
 		canSlapRight = true;
 	}
 
-	public void SetTunings(float minVertical, float maxVertical){
+	public void SetTunings(float minVertical, float maxVertical)
+	{
 		minRightVertical = minVertical;
 		maxRightVertical = maxVertical;
 		tuningsSet = true;

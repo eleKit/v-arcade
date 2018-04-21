@@ -24,7 +24,7 @@ public class LeftZRotationStatsScript : MonoBehaviour {
 	//Calcola l'estensione dalla rotazione del polso rispetto all'asse z
 	// Per il momento non viene utilizzatonel calcolo finale, perché non è una vera e propria estensione del polso
 	void Update () {
-		Vector3 rot = gameObject.GetComponent<HandController> ().leftPalmRotation;
+		Vector3 rot = gameObject.GetComponent<MyHandController>().leftPalmRotation;
 //		Vector3 temp = transform.eulerAngles;
 //		temp.z = 0f;
 //		transform.eulerAngles = temp;

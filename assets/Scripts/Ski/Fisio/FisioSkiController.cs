@@ -23,7 +23,7 @@ public class FisioSkiController : MonoBehaviour {
 	}
 	
 	void Update () {
-		rightHandVisible = GameObject.Find ("HandController").GetComponent<HandController> ().rightHandVisible;
+		rightHandVisible = GameObject.Find("MyHandController").GetComponent<MyHandController>().rightHandVisible;
 		if(inGame){
 			if(!rightHandVisible || pause)
 				Time.timeScale = 0f;
