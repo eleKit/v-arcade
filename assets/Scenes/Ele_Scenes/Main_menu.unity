@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customSkin: {fileID: 11400000, guid: e28198975c37f684eb26e7ddccd90052, type: 2}
+  ignore_tuning: 1
 --- !u!114 &1385041673
 MonoBehaviour:
   m_ObjectHideFlags: 0
