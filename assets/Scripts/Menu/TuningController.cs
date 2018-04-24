@@ -34,9 +34,9 @@ public class TuningController : MonoBehaviour
 //			Time.timeScale = 1f;
 
 
-		if (handController.GetComponent<HandController>().visibleHands == 2)
+		if (handController.GetComponent <MyHandController>().visibleHands == 2)
 		{
-			distance = Mathf.Abs(handController.GetComponent<HandController>().hands[0].PalmPosition.x - handController.GetComponent<HandController>().hands[1].PalmPosition.x);
+			distance = Mathf.Abs(handController.GetComponent<MyHandController>().hands[0].PalmPosition.x - handController.GetComponent <MyHandController>().hands[1].PalmPosition.x);
 		}
 
 		if (PlayerSaveData.playerData.GetFirstTimePlaying() && background.GetComponent<Renderer>().isVisible && !isTuning)
@@ -56,7 +56,7 @@ public class TuningController : MonoBehaviour
 
 		if (startTuning)
 		{
-			if (handController.GetComponent<HandController>().visibleHands == 2)
+			if (handController.GetComponent <MyHandController>().visibleHands == 2)
 			{
 				if (distance >= minDistance && distance <= maxDistance)
 				{
@@ -70,7 +70,7 @@ public class TuningController : MonoBehaviour
 		if (startMaxVertical)
 		{
 			tuningInfos.GetComponent<TuningInfos>().SetHandsUpText();
-			if (handController.GetComponent<HandController>().visibleHands == 2)
+			if (handController.GetComponent <MyHandController>().visibleHands == 2)
 			{
 				if (!timer)
 				{
@@ -84,7 +84,7 @@ public class TuningController : MonoBehaviour
 		if (startMinVertical)
 		{
 			tuningInfos.GetComponent<TuningInfos>().SetHandsDownText();
-			if (handController.GetComponent<HandController>().visibleHands == 2)
+			if (handController.GetComponent <MyHandController>().visibleHands == 2)
 			{
 				if (!timer)
 				{
@@ -98,7 +98,7 @@ public class TuningController : MonoBehaviour
 		if (startMaxHorizontal)
 		{
 			tuningInfos.GetComponent<TuningInfos>().SetHandsRightText();
-			if (handController.GetComponent<HandController>().visibleHands == 2)
+			if (handController.GetComponent <MyHandController>().visibleHands == 2)
 			{
 				if (!timer)
 				{
@@ -112,7 +112,7 @@ public class TuningController : MonoBehaviour
 		if (startMinHorizontal)
 		{
 			tuningInfos.GetComponent<TuningInfos>().SetHandsLeftText();
-			if (handController.GetComponent<HandController>().visibleHands == 2)
+			if (handController.GetComponent <MyHandController>().visibleHands == 2)
 			{
 				if (!timer)
 				{
