@@ -7,30 +7,25 @@ using System.Linq;
 public class PushGesture : MonoBehaviour
 {
 
-	/* push gesture: a tapping movement made by all the fingers and the palm
-	 * substitutes the old jump gesture
+	/* Push gesture: a tapping movement made by all the fingers and the palm,
+	 * substitutes the old jump gesture. 
+	 * The wrist is not moved and the palm goes down and up
+	 * only the angle made by the hand movement is checked
 	 */
 
-	/* TODO vi è una differenza: 
-	* il palmo deve essere sempre nella stessa posizione e le dita si muovono
-	* oppure
-	* il palmo si muove co le dita?
-	* previa verifica io ho scelto la prima opzione
-	*/
 
-
-	//Poiché si vuole ricreare idealmente il funzionamento di un bottone che mandi un singolo
-	//impulso quando attivato (e non uno continuato, come ad esempio quello della tastiera)
-	//si controlla che, dopo aver riconosciuto un movimento, la mano sia tornata in una posizione
-	// nell'intorno (-minOffsetToRelease, +minOffsetTorelease), prima di poter riconoscere nuovamente lo stesso movimento
-	static float minOffsetToRelease = 5f;
-
+	/* the hand should return around the original position after a push gesture, 
+	 * no more gestures are accepted in case this offset condition is not respected
+	 */
 	[Range (-5f, 0f)]
 	public float offset = -0.2f;
 
+
+	// In roder to recognize the gesture a minimum angle should be done by the hand movement
 	[Range (-5f, 0f)]
 	public float threshold = -0.5f;
 
+	//no more than K previous frames are taken into account
 	[Range (0, 20)]
 	public int K = 10;
 
@@ -40,7 +35,7 @@ public class PushGesture : MonoBehaviour
 
 	private HandController hc;
 
-	//save the past K frame used to check if a push gesture happens
+	//save the past pitch angles of left and right hand in the previous K frames
 	private LinkedList<float> left_pitch = new LinkedList<float> ();
 	private LinkedList<float> right_pitch = new LinkedList<float> ();
 
