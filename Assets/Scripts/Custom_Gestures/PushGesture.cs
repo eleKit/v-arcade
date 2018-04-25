@@ -26,7 +26,7 @@ public class PushGesture : MonoBehaviour
 	public float threshold = -0.5f;
 
 	//no more than K previous frames are taken into account
-	[Range (0, 20)]
+	[Range (0, 50)]
 	public int K = 10;
 
 	//the hand controller prefab in the scene
