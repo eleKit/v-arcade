@@ -1,12 +1,9 @@
 fileFormatVersion: 2
-guid: 73cd5dac6c3cc48adadb030aca927136
-timeCreated: 1524642381
+guid: bea8b5ebc3ad54e279e624ad0002bbe4
+timeCreated: 1524730927
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: green_vehicles_0
-    21300002: red_vehicles_0
-    21300004: red_motorcycle
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -43,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -112,49 +109,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: green_vehicles_0
-      rect:
-        serializedVersion: 2
-        x: 220
-        y: 382
-        width: 69
-        height: 130
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: red_vehicles_0
-      rect:
-        serializedVersion: 2
-        x: 291
-        y: 380
-        width: 70
-        height: 132
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: red_motorcycle
-      rect:
-        serializedVersion: 2
-        x: 288
-        y: 11
-        width: 48
-        height: 103
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
+    sprites: []
     outline: []
     physicsShape: []
   spritePackingTag: 
