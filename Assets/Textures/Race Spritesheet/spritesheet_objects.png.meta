@@ -17,6 +17,8 @@ TextureImporter:
     21300020: blue_roof
     21300022: blue_roof_small
     21300024: black_spot
+    21300026: empty_audience
+    21300028: red_audience
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -301,6 +303,34 @@ TextureImporter:
         height: 101
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: empty_audience
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 285
+        width: 447
+        height: 222
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red_audience
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 734
+        width: 444
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
