@@ -7,10 +7,10 @@ public class CarControllerScript : MonoBehaviour
 {
 	/* 180° */
 
-	[Range (0f, 9.81f)]
+	[Range (0f, 19.62f)]
 	public float gravityValue = 9.81f;
 
-	[Range (0f, 50f)]
+	[Range (0f, 100f)]
 	public float scale = 1f;
 
 	public Text angle;
