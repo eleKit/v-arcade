@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using POLIMIGameCollective;
 
-public class CarGameManager : MonoBehaviour
+public class CarGameManager : Singleton<CarGameManager>
 {
 
 	[Header ("Cheat Flag")]
 	public bool cheat;
 
-	[Header ("Score Screen")]
-	public GameObject m_score_screen;
-	public Text m_score_text;
 
 
 	[Header ("Loading time for Level")]
@@ -32,6 +30,9 @@ public class CarGameManager : MonoBehaviour
 	//gameobject array containing the diamonds whose position indicates the level path
 	private GameObject[] m_path;
 
+	//name of the path chosen
+	private string current_path = "";
+
 
 	//bool to deactivate player if the game is paused
 	private bool is_playing = false;
@@ -39,14 +40,10 @@ public class CarGameManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		//music starts
-		//MusicManager.Instance.PlayMusic ("GameplayMusic");
-
-		//cleans from all sound effects
-		//SfxManager.Instance.Stop ();
 
 		//reset car position and deactivates car gameObj 
 		ResetPlayer ();
+
 		//the scene begins with the game main menu
 		menu_GUI.menu = true;
 
@@ -62,6 +59,12 @@ public class CarGameManager : MonoBehaviour
 		
 	}
 
+	//This method is used to set the point where the game ends
+	public void SetWinningPosition (Vector3 coord)
+	{
+		winning_Point.transform.position = coord;
+	}
+
 
 	public void ResetPlayer ()
 	{
@@ -70,9 +73,11 @@ public class CarGameManager : MonoBehaviour
 		player.SetActive (false);
 	}
 
+
 	//called when the user choses one level
 	public void ChooseLevel (string n)
 	{
+		current_path = n;
 		StartCoroutine (LoadLevel (name));
 
 	}
@@ -82,14 +87,19 @@ public class CarGameManager : MonoBehaviour
 
 		yield return new WaitForSeconds (m_loading_time);
 		//TODO generate the path
-		player.SetActive (true);
 
 		is_playing = true;
 
-		m_score_screen.SetActive (true);
+		Debug.Log ("inside LoadLevel");
 
+		//this must be before setting the position
+		player.SetActive (true);
 		//reset car position
 		player.transform.position = player_initial_pos;
+
+		Debug.Log ("end LoadLevel");
+
+
 
 
 
@@ -99,29 +109,22 @@ public class CarGameManager : MonoBehaviour
 	public void WinLevel ()
 	{
 		is_playing = false;
+		Debug.Log ("you win");
 		StartCoroutine ("WinCoroutine");
 	}
 
 
 	IEnumerator WinCoroutine ()
 	{
-		
+		menu_GUI.win = true;
 
-		m_score_screen.SetActive (false);
-
-		//Music Manager mute the main jingle
-		//MusicManager.Instance.MuteAll ();
-
-		//lose jingle sound
-		//SfxManager.Instance.Play ("win_jingle");
+		yield return new WaitForSeconds (0.5f);
 
 		player.SetActive (false);
 
-		yield return new WaitForSeconds (2.5f);
-
 		EndLevel ();
 
-		menu_GUI.win = true;
+
 
 
 	}
@@ -131,17 +134,11 @@ public class CarGameManager : MonoBehaviour
 	void EndLevel ()
 	{
 		is_playing = false;
-		//SfxManager.Instance.Unmute ();
-		//SfxManager.Instance.Stop ();
-
-		// destroy the currently allocated level screen when a level ends winning/losing
-
-
-		//Unmutes Music Manager main jingle
-		//MusicManager.Instance.UnmuteAll ();
-
-		for (int i = 0; i < m_path.Length; i++) {
-			Destroy (m_path [i]);
+	
+		if (m_path != null) {
+			for (int i = 0; i < m_path.Length; i++) {
+				Destroy (m_path [i]);
+			}
 		}
 
 	}
@@ -149,7 +146,7 @@ public class CarGameManager : MonoBehaviour
 	//called when the player pauses the game
 	void PauseLevel ()
 	{
-		//SfxManager.Instance.Mute ();
+		
 		is_playing = false;
 
 		player.SetActive (false);
@@ -162,9 +159,25 @@ public class CarGameManager : MonoBehaviour
 	//triggered by the button "continue" in the pause screen
 	public void ResumeLevel ()
 	{
-		is_playing = false;
-		//SfxManager.Instance.Unmute ();
-		player.SetActive (false);
-		;
+		is_playing = true;
+	
+		player.SetActive (true);
+
+	}
+
+	public void RestartLevel ()
+	{
+		Debug.Log ("Load Level call");
+		StartCoroutine (LoadLevel (current_path));
+
+
+
+	}
+
+
+	public int GetScore ()
+	{
+		//return score_counter.GetScore();
+		return 0;
 	}
 }

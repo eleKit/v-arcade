@@ -81,7 +81,7 @@ public class GameMenuScript : MonoBehaviour
 	{
 		GUI.skin = customSkin;
 		GUI.Label (new Rect (30, 40, 200, 25), "Punteggio:");
-		GUI.Label (new Rect (180, 40, 50, 25), "Na"); // TODO CarGameManagerScript.Instance.getScore().ToString());
+		GUI.Label (new Rect (180, 40, 50, 25), CarGameManager.Instance.GetScore ().ToString ());
 		GUI.Label (new Rect (30, 80, 250, 25), "Il Tuo Punteggio Migliore:");
 		GUI.Label (new Rect (280, 80, 50, 25), "Na"); //TODO caricare da file 
 
@@ -99,11 +99,12 @@ public class GameMenuScript : MonoBehaviour
 		GUI.skin = customSkin;
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 30, 200, 75), "Continua")) {
 			pause = false;
-			//SendMessage ("UnPause");
+			CarGameManager.Instance.ResumeLevel ();
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 100, 200, 75), "Ricomincia")) {
 			pause = false;
-			//SendMessage ("Reload");
+			//TODO cambiare funzione
+			CarGameManager.Instance.RestartLevel ();
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 170, 200, 75), "Scegli livello")) {
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
@@ -144,10 +145,10 @@ public class GameMenuScript : MonoBehaviour
 
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
 			random = false;
-			//SendMessage("Start");
+			CarGameManager.Instance.ChooseLevel ("Na");
 		}
 		if (GUI.Button (new Rect (180, 265, 150, 65), "Torna al menu")) {
-			Application.LoadLevel ("Menu");
+			SceneManager.LoadSceneAsync ("Main_Menu");
 		}
 		
 	}
