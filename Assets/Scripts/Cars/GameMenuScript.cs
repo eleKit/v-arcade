@@ -8,7 +8,7 @@ public class GameMenuScript : MonoBehaviour
 
 	public GUISkin customSkin;
 
-	bool menu, random, load_path, pause, win;
+	public bool menu, random, load_path, pause, win;
 
 	//GUI settings
 	Vector2 scrollPosition = Vector2.zero;
@@ -30,19 +30,13 @@ public class GameMenuScript : MonoBehaviour
 	void Start ()
 	{
 		windowRect = new Rect ((Screen.width - width) / 2, (Screen.height - height) / 2, width, height);
-		menu = true;
 		
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown ("escape") && !pause) {
-			pause = true;
-			//TODO i messaggi devono essere ricevuti da il game manager
-			//SendMessage ("PauseCarGame");
 		
-		}
 	}
 
 	void OnGUI ()

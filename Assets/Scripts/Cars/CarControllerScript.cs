@@ -13,7 +13,6 @@ public class CarControllerScript : MonoBehaviour
 	[Range (0f, 100f)]
 	public float scale = 1f;
 
-	public Text angle;
 
 
 	public GameObject handController;
@@ -41,9 +40,6 @@ public class CarControllerScript : MonoBehaviour
 			float roll = hc.GetFixedFrame ().Hands.Leftmost.PalmNormal.Roll;
 			float pitch = hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch;
 			float yaw = hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw; 
-			angle.text = "Roll: " + (Mathf.Rad2Deg * roll).ToString () + "\n" +
-			"Pitch: " + (Mathf.Rad2Deg * pitch).ToString () + "\n" +
-			"Yaw: " + (Mathf.Rad2Deg * yaw).ToString ();
 
 			Vector3 horizontalAcc = new Vector3 (scale * Mathf.Sin (-roll), 0, 0);
 			Vector3 res = (horizontalAcc + verticalAcc);
@@ -54,5 +50,10 @@ public class CarControllerScript : MonoBehaviour
 			Physics2D.gravity = Vector3.zero;
 			
 		}
+	}
+
+	public void SetGravityToZero ()
+	{
+		Physics2D.gravity = Vector3.zero;
 	}
 }
