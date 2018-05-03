@@ -208,10 +208,10 @@ TextureImporter:
       name: Water_1
       rect:
         serializedVersion: 2
-        x: 540
+        x: 541
         y: 136
-        width: 131
-        height: 220
+        width: 129
+        height: 222
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
