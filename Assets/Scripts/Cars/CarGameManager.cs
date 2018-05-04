@@ -37,6 +37,10 @@ public class CarGameManager : Singleton<CarGameManager>
 	//bool to deactivate player if the game is paused
 	private bool is_playing = false;
 
+
+	//score of the game
+	private int score;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -177,7 +181,12 @@ public class CarGameManager : Singleton<CarGameManager>
 
 	public int GetScore ()
 	{
-		//return score_counter.GetScore();
-		return 0;
+		return score;
+	}
+
+	public void AddPoints ()
+	{
+		score = score + 10;
+		
 	}
 }

@@ -5,7 +5,18 @@ using UnityEngine.UI;
 
 public class CarControllerScript : MonoBehaviour
 {
-	/* 180° */
+
+	/* Roll gesture 180°: a roll movement made by all the fingers and the palm,
+	 * substitutes the old plane controller gesture. 
+	 * The wrist is moved and the palm rolls down and up
+	 */
+
+
+
+	/* TODO Slap gesture 90°: a slap movement made by all the fingers and the palm,
+	 * substitutes the old slap gesture.
+	 * The wrist is not moved and the palm goes left and right.
+	 */
 
 	[Range (0f, 19.62f)]
 	public float gravityValue = 9.81f;
