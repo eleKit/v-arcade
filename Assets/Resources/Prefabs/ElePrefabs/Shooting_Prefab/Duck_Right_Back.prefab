@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4902298496383502}
   - component: {fileID: 50844972353349456}
   - component: {fileID: 58479595363818784}
+  - component: {fileID: 114311608883045740}
   m_Layer: 0
   m_Name: Duck_Right_Back
   m_TagString: Untagged
@@ -80,7 +81,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1398211961053478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: 3, z: 0}
+  m_LocalPosition: {x: 4, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4445509962748906}
@@ -136,6 +137,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.9436307
+--- !u!114 &114311608883045740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1398211961053478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c06ee0b8adaf54a8497011f1cc20903e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  max_duck_time: 10
 --- !u!212 &212543169594249630
 SpriteRenderer:
   m_ObjectHideFlags: 1
