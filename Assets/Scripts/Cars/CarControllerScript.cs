@@ -13,14 +13,6 @@ public class CarControllerScript : MonoBehaviour
 	[Range (0f, 100f)]
 	public float scale = 1f;
 
-	/*bool used to determine the 90° or 180° mode
-	 * it is true when the game is played with 90° roll of the hand
-	 */
-
-	//TODO
-
-	public bool half_pi = false;
-
 
 
 	public GameObject handController;
