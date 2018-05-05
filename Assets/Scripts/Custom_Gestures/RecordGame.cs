@@ -11,7 +11,6 @@ public class RecordGame : Singleton<RecordGame>
 	// Use this for initialization
 	void Start ()
 	{
-
 		hc.Record ();
 		
 	}
@@ -27,6 +26,7 @@ public class RecordGame : Singleton<RecordGame>
 	{
 		hc.StopRecording ();
 		CarGameManager.Instance.ChooseLevel ("");
+		hc.GetLeapRecorder ().SaveToNewFile ("/Users/kit93/Desktop/Leap.json");
 		hc.PlayRecording ();
 	}
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using POLIMIGameCollective;
+using System;
+using System.IO;
+using Leap;
 
 public class CarGameManager : Singleton<CarGameManager>
 {
@@ -18,6 +21,7 @@ public class CarGameManager : Singleton<CarGameManager>
 
 	public GameObject player;
 
+	public HandController hc;
 
 
 	public GameMenuScript menu_GUI;
@@ -41,6 +45,17 @@ public class CarGameManager : Singleton<CarGameManager>
 
 	//score of the game
 	private int score;
+
+
+
+
+	//TODO cancellare
+	private string hand_data_file_path;
+
+	private bool firstTime = true;
+
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -104,6 +119,9 @@ public class CarGameManager : Singleton<CarGameManager>
 
 		Debug.Log ("end LoadLevel");
 
+		if (firstTime) {
+			hc.Record ();
+		}
 
 
 
@@ -114,7 +132,6 @@ public class CarGameManager : Singleton<CarGameManager>
 	public void WinLevel ()
 	{
 		is_playing = false;
-		Debug.Log ("you win");
 		StartCoroutine ("WinCoroutine");
 	}
 
@@ -127,6 +144,8 @@ public class CarGameManager : Singleton<CarGameManager>
 		yield return new WaitForSeconds (0.5f);
 
 		player.SetActive (false);
+
+		SaveData ();
 
 		EndLevel ();
 
@@ -148,6 +167,98 @@ public class CarGameManager : Singleton<CarGameManager>
 		}
 
 	}
+
+
+	void SaveData ()
+	{ 
+
+		GameMatch m = new GameMatch ();
+
+		DateTime gameDate = DateTime.UtcNow;
+
+		m.timestamp = gameDate.ToFileTimeUtc ();
+		m.patientName = GlobalPlayerData.globalPlayerData.player;
+		m.id_path = current_path;
+		m.gameType = GameMatch.GameType.Car;
+
+		string directoryPath = 
+			Path.Combine (Application.persistentDataPath, m.patientName);
+
+		Directory.CreateDirectory (directoryPath);
+		string filePath = Path.Combine (
+			                  directoryPath,
+			                  m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+		                  );
+
+		string jsonString = JsonUtility.ToJson (m);
+		File.WriteAllText (filePath, jsonString);
+
+
+		// Now we save motion data
+		FrameSequence frame_sequence = new FrameSequence ();
+		frame_sequence.timestamp = gameDate.ToFileTimeUtc ();
+		frame_sequence.patientName = m.patientName;
+		hc.StopRecording ();
+
+		LeapRecorder recorder = hc.GetLeapRecorder ();
+
+	
+		foreach (Frame f in recorder.GetFrames ()) {
+			frame_sequence.addFrame (f);
+		}
+
+		string framesPath = Path.Combine (
+			                    directoryPath,
+			                    m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json"
+		                    );
+
+
+		string frameString = JsonUtility.ToJson (frame_sequence);
+		File.WriteAllText (framesPath, frameString);
+
+		hand_data_file_path = framesPath;
+		
+	}
+
+
+	public void ReplayWithouthPath ()
+	{
+		Debug.Log ("ReplayWithouthPath");
+		ReplayFromFile (hand_data_file_path);
+	}
+
+
+	public void ReplayFromFile (string filePath)
+	{
+
+		Debug.Log (filePath.ToString ());
+
+		string frameString = File.ReadAllText (filePath);
+
+		FrameSequence frame_sequence = JsonUtility.FromJson<FrameSequence> (frameString);
+
+		hc.ResetRecording ();
+
+		foreach (Frame frame in frame_sequence.GetFrames ()) {
+
+			hc.GetLeapRecorder ().AddFrame (frame);
+		}
+
+
+		firstTime = false;
+		ChooseLevel ("Na");
+		hc.PlayRecording ();
+
+
+
+
+		
+		
+	}
+
+
+
+
 
 	//called when the player pauses the game
 	void PauseLevel ()

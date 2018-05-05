@@ -85,8 +85,10 @@ public class GameMenuScript : MonoBehaviour
 		GUI.Label (new Rect (30, 80, 250, 25), "Il Tuo Punteggio Migliore:");
 		GUI.Label (new Rect (280, 80, 50, 25), "Na"); //TODO caricare da file 
 
-		if (GUI.Button (new Rect (20f, 180, 150, 75), "Ricomincia")) {
-			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
+		if (GUI.Button (new Rect (20f, 180, 150, 75), "Replay")) {
+			win = false;
+			Debug.Log ("Premuto Replay");
+			//CarGameManager.Instance.ReplayWithouthPath ();
 		}
 		if (GUI.Button (new Rect (180, 180, 150, 75), "Torna al menu")) {
 			SceneManager.LoadSceneAsync ("Main_Menu");

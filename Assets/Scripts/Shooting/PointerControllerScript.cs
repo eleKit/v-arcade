@@ -19,6 +19,9 @@ public class PointerControllerScript : MonoBehaviour
 	[Range (0f, 15f)]
 	public float m_vertical_scale = 1f;
 
+	[Range (-50f, 50f)]
+	public float pitchOffset = 10f;
+
 	public GameObject handController;
 
 	private HandController hc;
@@ -27,6 +30,7 @@ public class PointerControllerScript : MonoBehaviour
 	private Vector3 verticalAcc;
 
 	private Rigidbody2D pointer;
+
 
 	// Use this for initialization
 	void Start ()
@@ -42,6 +46,8 @@ public class PointerControllerScript : MonoBehaviour
 		pointer.drag = 5f;
 
 		verticalAcc = new Vector3 (0f, 0f, 0f);
+
+		pitchOffset = (pitchOffset * Mathf.Deg2Rad);
 		
 	}
 	
@@ -54,14 +60,13 @@ public class PointerControllerScript : MonoBehaviour
 
 
 			float roll = hc.GetFixedFrame ().Hands.Leftmost.PalmNormal.Roll;
-			float pitch = hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch;
+			float pitch = hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + pitchOffset;
 			float yaw = hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw; 
 
 			Vector3 horizontalAcc = new Vector3 (m_horizontal_scale * Mathf.Sin (yaw), 0, 0);
-			Vector3 verticalAcc = new Vector3 (0, m_vertical_scale * Mathf.Cos (pitch), 0);
+			Vector3 verticalAcc = new Vector3 (0, m_vertical_scale * Mathf.Sin (pitch), 0);
 
-			Debug.Log ("pitch " + pitch.ToString ());
-			Debug.Log ("yaw " + yaw.ToString () + "; sin " + Mathf.Sin (yaw).ToString ());
+		
 
 			Vector3 res = (horizontalAcc + verticalAcc);
 
