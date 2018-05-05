@@ -21,6 +21,7 @@ public class CarWinPoint : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag ("Player")) {
 			CarGameManager.Instance.WinLevel ();
+			RecordGame.Instance.StartPlayback ();
 		}
 
 	}

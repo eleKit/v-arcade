@@ -31,7 +31,7 @@ public class CoinCollectScript : MonoBehaviour
 	}
 
 
-	/* Used by car game */
+	/* Scripts used by car game */
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
@@ -43,7 +43,7 @@ public class CoinCollectScript : MonoBehaviour
 
 	}
 
-	/* Used by shooting game */
+	/* Scripts used by shooting game */
 
 	//Sent each frame where another object is within a trigger collider attached to this object (2D physics only).
 	void OnTriggerStay2D (Collider2D other)

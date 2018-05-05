@@ -19,6 +19,7 @@ public class CarGameManager : Singleton<CarGameManager>
 	public GameObject player;
 
 
+
 	public GameMenuScript menu_GUI;
 
 	//attribute used to set the winning point coordinates
@@ -120,6 +121,7 @@ public class CarGameManager : Singleton<CarGameManager>
 
 	IEnumerator WinCoroutine ()
 	{
+		
 		menu_GUI.win = true;
 
 		yield return new WaitForSeconds (0.5f);
