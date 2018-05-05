@@ -740,7 +740,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4810430917572644, guid: e99e4e69df2f04400a3d7562345f8cb1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 20.2
+      value: 141
       objectReference: {fileID: 0}
     - target: {fileID: 4810430917572644, guid: e99e4e69df2f04400a3d7562345f8cb1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -780,7 +780,7 @@ GameObject:
   - component: {fileID: 1279366005}
   - component: {fileID: 1279366004}
   - component: {fileID: 1279366003}
-  - component: {fileID: 1279366007}
+  - component: {fileID: 1279366008}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -851,7 +851,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1279366007
+--- !u!114 &1279366008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
@@ -859,15 +859,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1279366002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9dfad760b6e9455593192a6d869f7ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b522ec7273b84e7bb2c24271166f23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xMargin: 1
-  yMargin: 0.1
-  xSmooth: 8
-  ySmooth: 8
-  maxXAndY: {x: 0, y: 140}
-  minXAndY: {x: 0, y: 1}
 --- !u!1001 &1622344718
 Prefab:
   m_ObjectHideFlags: 0
