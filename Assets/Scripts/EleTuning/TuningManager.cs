@@ -164,10 +164,10 @@ public class TuningManager : MonoBehaviour
 				+ "Dev radiale destra: " + Mathf.Abs (right_min_yaw).ToString ("n2") + "°";
 
 				m_left_result_text.text =
-					"Estensione destra: " + Mathf.Abs (left_max_pitch).ToString ("n2") + "°" + "\n"
-				+ "Flessione destra: " + Mathf.Abs (left_min_pitch).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare destra: " + Mathf.Abs (left_max_yaw).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale destra: " + Mathf.Abs (left_min_yaw).ToString ("n2") + "°";
+					"Estensione sinistra: " + Mathf.Abs (left_max_pitch).ToString ("n2") + "°" + "\n"
+				+ "Flessione sinistra: " + Mathf.Abs (left_min_pitch).ToString ("n2") + "°" + "\n"
+				+ "Dev ulnare sinistra: " + Mathf.Abs (left_max_yaw).ToString ("n2") + "°" + "\n"
+				+ "Dev radiale sinista: " + Mathf.Abs (left_min_yaw).ToString ("n2") + "°";
 
 
 
