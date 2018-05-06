@@ -13,7 +13,7 @@ public class CarGameManager : Singleton<CarGameManager>
 	[Header ("Cheat Flag")]
 	public bool cheat;
 
-
+	public GameObject m_background;
 
 	[Header ("Loading time for Level")]
 	[Range (0f, 4f)]
@@ -60,7 +60,7 @@ public class CarGameManager : Singleton<CarGameManager>
 	// Use this for initialization
 	void Start ()
 	{
-
+		m_background.SetActive (true);
 		//reset car position and deactivates car gameObj 
 		ResetPlayer ();
 
@@ -112,10 +112,19 @@ public class CarGameManager : Singleton<CarGameManager>
 
 		Debug.Log ("inside LoadLevel");
 
+
+
 		//this must be before setting the position
 		player.SetActive (true);
+
+
+		//deactivate BG screen
+		m_background.SetActive (false);
+
+
 		//reset car position
 		player.transform.position = player_initial_pos;
+
 
 		Debug.Log ("end LoadLevel");
 
@@ -132,6 +141,8 @@ public class CarGameManager : Singleton<CarGameManager>
 	public void WinLevel ()
 	{
 		is_playing = false;
+
+
 		StartCoroutine ("WinCoroutine");
 	}
 
@@ -142,6 +153,8 @@ public class CarGameManager : Singleton<CarGameManager>
 		menu_GUI.win = true;
 
 		yield return new WaitForSeconds (0.5f);
+
+		m_background.SetActive (true);
 
 		player.SetActive (false);
 
