@@ -77,13 +77,16 @@ public class TuningManager : MonoBehaviour
 		Debug.Log (timer.ToString ());
 
 		StartCoroutine ("WaitToStart");
-		count++;
-		is_playing = true;
+
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+
+		float deltaTime = Time.deltaTime;
+
+
 		if (Input.GetKeyDown ("escape") && is_playing) {
 			PauseLevel ();
 		}
@@ -97,7 +100,7 @@ public class TuningManager : MonoBehaviour
 					Debug.Log ("end phase");
 				} else {
 
-					if (Mathf.Approximately (timer, timeLeft)) {
+					if ((int)Mathf.Round (timer) % 60 == (int)Mathf.Round (timeLeft - deltaTime) % 60) {
 						//wait to set active the next screen
 						//StartCoroutine ("StartPhase");
 						ClearScreens ();
@@ -110,13 +113,12 @@ public class TuningManager : MonoBehaviour
 					}
 
 					//counting the time left
-					float deltaTime = Time.deltaTime;
 					timer = timer - deltaTime;
 					int sec = (int)Mathf.Round (timer) % 60;
 					if (sec == 0) {
 						m_timer.text = "Bene!";
 					} else {
-						if ((int)Mathf.Round (timer) % 60 != (int)Mathf.Round (timeLeft - deltaTime) % 60) {
+						if ((int)Mathf.Round (timer) % 60 != (int)Mathf.Round (timeLeft - deltaTime) % 60 && (int)Mathf.Round (timer) % 60 > 0) {
 							m_timer.text = sec.ToString ();
 							//Debug.Log ("timer " + timer.ToString ("n2") + " timeLeft - deltaTime " + (timeLeft - deltaTime).ToString ("n2"));
 						}
@@ -200,17 +202,11 @@ public class TuningManager : MonoBehaviour
 	IEnumerator WaitToStart ()
 	{
 		yield return new WaitForSeconds (waiting_time);
+		count++;
+		is_playing = true;
 	}
 
-	IEnumerator StartPhase ()
-	{
-		ClearScreens ();
-		m_hands_images [count].SetActive (true);
-		m_timer_object.SetActive (true);
-		m_instructions_screen [count].SetActive (true);
 
-		yield return new WaitForSeconds (0f);
-	}
 
 
 
