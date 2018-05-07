@@ -41,9 +41,6 @@ public class TuningManager : MonoBehaviour
 
 	private int count = 0;
 
-	private int wait_counter = 0;
-
-	private const int MAX = 200;
 
 	private bool is_playing = false;
 
@@ -119,7 +116,7 @@ public class TuningManager : MonoBehaviour
 					if (sec == 0) {
 						m_timer.text = "Bene!";
 					} else {
-						if (!Mathf.Approximately (timer, (timeLeft - deltaTime))) {
+						if ((int)Mathf.Round (timer) % 60 != (int)Mathf.Round (timeLeft - deltaTime) % 60) {
 							m_timer.text = sec.ToString ();
 							//Debug.Log ("timer " + timer.ToString ("n2") + " timeLeft - deltaTime " + (timeLeft - deltaTime).ToString ("n2"));
 						}
@@ -215,11 +212,6 @@ public class TuningManager : MonoBehaviour
 		yield return new WaitForSeconds (0f);
 	}
 
-	IEnumerator EndPhase ()
-	{
-		yield return new WaitForSeconds (2f);
-		wait_counter = 0;
-	}
 
 
 
