@@ -41,7 +41,11 @@ public class TuningManager : MonoBehaviour
 
 	private int count = 0;
 
-	private bool tuning = false;
+	private int wait_counter = 0;
+
+	private const int MAX = 200;
+
+	private bool is_playing = false;
 
 	//save the past pitch angles of left and right hand in the previous K frames
 	private LinkedList<float> left_pitch = new LinkedList<float> ();
@@ -69,44 +73,59 @@ public class TuningManager : MonoBehaviour
 		m_instructions_screen [count].SetActive (true);
 		m_timer_object.SetActive (true);
 
+		timeLeft++;
+
 		timer = timeLeft;
 
 		Debug.Log (timer.ToString ());
 
 		StartCoroutine ("WaitToStart");
 		count++;
+		is_playing = true;
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		
-		if (hc.GetFrame ().Hands.Count == 2) {
+		if (Input.GetKeyDown ("escape") && is_playing) {
+			PauseLevel ();
+		}
+
+		if (hc.GetFrame ().Hands.Count == 2 && is_playing) {
 			if (count < m_hands_images.Length && count < m_instructions_screen.Length) {
 
-				if ((int)Mathf.Round (timer) % 60 <= 0) {
+				if ((int)Mathf.Round (timer) % 60 < 0) {
 					count++;
 					timer = timeLeft;
 					Debug.Log ("end phase");
 				} else {
 
-					if (timer == timeLeft) {
+					if (Mathf.Approximately (timer, timeLeft)) {
 						//wait to set active the next screen
-						StartCoroutine ("StartPhase");
+						//StartCoroutine ("StartPhase");
+						ClearScreens ();
+						m_hands_images [count].SetActive (true);
+						m_timer_object.SetActive (true);
+						m_timer.text = "Iniziamo!";
+						m_instructions_screen [count].SetActive (true);
 						Debug.Log ("start phase, timer " + timer.ToString ());
 
 					}
 
 					//counting the time left
-					timer -= Time.deltaTime;
+					float deltaTime = Time.deltaTime;
+					timer = timer - deltaTime;
 					int sec = (int)Mathf.Round (timer) % 60;
 					if (sec == 0) {
 						m_timer.text = "Bene!";
 					} else {
-						m_timer.text = sec.ToString ();
+						if (!Mathf.Approximately (timer, (timeLeft - deltaTime))) {
+							m_timer.text = sec.ToString ();
+							//Debug.Log ("timer " + timer.ToString ("n2") + " timeLeft - deltaTime " + (timeLeft - deltaTime).ToString ("n2"));
+						}
 					}
 
-					Debug.Log ("Sono qui " + count.ToString () + " sec " + sec.ToString ());
+					//Debug.Log ("Sono qui " + count.ToString () + " sec " + sec.ToString ());
 
 					// max yaw count = 1
 					// min yaw count = 2
@@ -136,6 +155,7 @@ public class TuningManager : MonoBehaviour
 							right_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
 						}
 					}
+
 				}
 
 			} else {
@@ -158,16 +178,16 @@ public class TuningManager : MonoBehaviour
 				m_right_result.SetActive (true);
 
 				m_right_result_text.text =
-					"Estensione destra: " + Mathf.Abs (right_max_pitch).ToString ("n2") + "°" + "\n"
-				+ "Flessione destra: " + Mathf.Abs (right_min_pitch).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare destra: " + Mathf.Abs (right_max_yaw).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale destra: " + Mathf.Abs (right_min_yaw).ToString ("n2") + "°";
+					"Estensione destra: " + Mathf.Abs (right_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Flessione destra: " + Mathf.Abs (right_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Dev ulnare destra: " + Mathf.Abs (right_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Dev radiale destra: " + Mathf.Abs (right_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
 
 				m_left_result_text.text =
-					"Estensione sinistra: " + Mathf.Abs (left_max_pitch).ToString ("n2") + "°" + "\n"
-				+ "Flessione sinistra: " + Mathf.Abs (left_min_pitch).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare sinistra: " + Mathf.Abs (left_max_yaw).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale sinista: " + Mathf.Abs (left_min_yaw).ToString ("n2") + "°";
+					"Estensione sinistra: " + Mathf.Abs (left_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Flessione sinistra: " + Mathf.Abs (left_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Dev ulnare sinistra: " + Mathf.Abs (left_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+				+ "Dev radiale sinista: " + Mathf.Abs (left_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
 
 
 
@@ -187,14 +207,31 @@ public class TuningManager : MonoBehaviour
 
 	IEnumerator StartPhase ()
 	{
-		yield return new WaitForSeconds (waiting_time);
 		ClearScreens ();
 		m_hands_images [count].SetActive (true);
 		m_timer_object.SetActive (true);
-		m_timer.text = "Iniziamo!";
 		m_instructions_screen [count].SetActive (true);
+
+		yield return new WaitForSeconds (0f);
 	}
 
+	IEnumerator EndPhase ()
+	{
+		yield return new WaitForSeconds (2f);
+		wait_counter = 0;
+	}
+
+
+
+	void PauseLevel ()
+	{
+
+		is_playing = false;
+		Debug.Log ("paused");
+
+		//menu_GUI.pause = true;
+		
+	}
 
 	void ClearScreens ()
 	{
