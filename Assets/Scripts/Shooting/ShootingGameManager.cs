@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using POLIMIGameCollective;
 
-public class ShootingGameManager : MonoBehaviour
+public class ShootingGameManager : Singleton<ShootingGameManager>
 {
 
 	public GameObject m_background;
@@ -49,7 +50,8 @@ public class ShootingGameManager : MonoBehaviour
 		player.SetActive (false);
 
 		//the scene begins with the game main menu
-		//menu_GUI.menu = true;
+		menu_GUI.menu = true;
+		menu_GUI.shooting = true;
 		
 	}
 	
@@ -60,9 +62,6 @@ public class ShootingGameManager : MonoBehaviour
 			PauseLevel ();
 		}
 
-		if (Input.GetKeyDown ("space")) {
-			ChooseLevel ("Na");
-		}
 
 		if (GameObject.FindGameObjectsWithTag ("Duck").Length == 0 && is_playing) {
 			is_playing = false;
@@ -141,7 +140,7 @@ public class ShootingGameManager : MonoBehaviour
 
 		player.SetActive (false);
 
-		//menu_GUI.pause = true;
+		menu_GUI.pause = true;
 
 	}
 
@@ -168,7 +167,7 @@ public class ShootingGameManager : MonoBehaviour
 	IEnumerator WinCoroutine ()
 	{
 
-		//menu_GUI.win = true;
+		menu_GUI.win = true;
 
 		yield return new WaitForSeconds (0.5f);
 

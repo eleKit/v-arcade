@@ -70,6 +70,7 @@ public class CarGameManager : Singleton<CarGameManager>
 
 		//the scene begins with the game main menu
 		menu_GUI.menu = true;
+		menu_GUI.car = true;
 
 		
 	}

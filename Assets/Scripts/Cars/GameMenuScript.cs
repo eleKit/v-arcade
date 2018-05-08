@@ -8,7 +8,9 @@ public class GameMenuScript : MonoBehaviour
 
 	public GUISkin customSkin;
 
-	public bool menu, random, load_path, pause, win;
+	public bool menu, load_path, pause, win;
+
+	public bool car, music, shooting;
 
 	//GUI settings
 	Vector2 scrollPosition = Vector2.zero;
@@ -52,8 +54,8 @@ public class GameMenuScript : MonoBehaviour
 			windowRect = GUI.Window (1, windowRect, EndWindow, "Finito");
 		if (pause)
 			windowRect = GUI.Window (2, windowRect, PauseWindow, "Pausa");
-		if (random)
-			windowRect = GUI.Window (3, windowRect, RandomWindow, "Random Menu");
+		if (load_path)
+			windowRect = GUI.Window (2, windowRect, Start, "inizia");
 		
 
 	}
@@ -61,11 +63,7 @@ public class GameMenuScript : MonoBehaviour
 
 	void MenuWindow (int id)
 	{
-		GUI.skin = customSkin;
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 40, 200, 75), "Percorso casuale")) {
-			menu = false;
-			random = true;
-		}
+		
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 140, 200, 75), "Percorsi Salvati")) {
 			// pathNames = get path names List<sting> from saved path 
 			load_path = true;
@@ -81,7 +79,7 @@ public class GameMenuScript : MonoBehaviour
 	{
 		GUI.skin = customSkin;
 		GUI.Label (new Rect (30, 40, 200, 25), "Punteggio:");
-		GUI.Label (new Rect (180, 40, 50, 25), CarGameManager.Instance.GetScore ().ToString ());
+		GUI.Label (new Rect (180, 40, 50, 25), "Na");
 		GUI.Label (new Rect (30, 80, 250, 25), "Il Tuo Punteggio Migliore:");
 		GUI.Label (new Rect (280, 80, 50, 25), "Na"); //TODO caricare da file 
 
@@ -101,12 +99,23 @@ public class GameMenuScript : MonoBehaviour
 		GUI.skin = customSkin;
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 30, 200, 75), "Continua")) {
 			pause = false;
-			CarGameManager.Instance.ResumeLevel ();
+			if (car) {
+				CarGameManager.Instance.ResumeLevel ();
+			} else if (shooting) {
+				ShootingGameManager.Instance.ResumeLevel ();
+			} else if (music) {
+				//TODO
+			}
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 100, 200, 75), "Ricomincia")) {
 			pause = false;
-			//TODO cambiare funzione
-			CarGameManager.Instance.RestartLevel ();
+			if (car) {
+				CarGameManager.Instance.RestartLevel ();
+			} else if (shooting) {
+				ShootingGameManager.Instance.RestartLevel ();
+			} else if (music) {
+				//TODO
+			}
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 170, 200, 75), "Scegli livello")) {
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
@@ -119,6 +128,21 @@ public class GameMenuScript : MonoBehaviour
 	}
 
 
+	void Start (int id)
+	{
+		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
+			if (car) {
+				load_path = false;
+				CarGameManager.Instance.ChooseLevel ("Na");
+			}
+			if (shooting) {
+				load_path = false;
+				ShootingGameManager.Instance.ChooseLevel ("Na");
+			}
+		}
+	}
+
+	//TODO deve andare solo nella gui del fisioterapista
 	void RandomWindow (int id)
 	{
 		GUI.skin = customSkin;
@@ -146,7 +170,6 @@ public class GameMenuScript : MonoBehaviour
 
 
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
-			random = false;
 			CarGameManager.Instance.ChooseLevel ("Na");
 		}
 		if (GUI.Button (new Rect (180, 265, 150, 65), "Torna al menu")) {
