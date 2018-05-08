@@ -996,6 +996,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826927176}
   - component: {fileID: 1826927175}
+  - component: {fileID: 1826927177}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -1054,12 +1055,24 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1826927174}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.13, y: -3.66, z: 0}
+  m_LocalPosition: {x: 2.19, y: -3.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1826927177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1826927174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e52423b1f7c4d6cbc5fafc5cac23ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_pointer: {fileID: 1991778011}
 --- !u!1 &1857899767
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,8 +1436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   half_pi: 0
-  m_horizontal_scale: 10
-  m_vertical_scale: 5
+  m_horizontal_scale: 20
+  m_vertical_scale: 10
   pitchOffset: -13
   handController: {fileID: 1458756208}
 --- !u!50 &1991778015
@@ -1446,7 +1459,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1991778016
 CircleCollider2D:
   m_ObjectHideFlags: 0

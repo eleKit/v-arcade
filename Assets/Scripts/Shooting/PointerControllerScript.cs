@@ -20,7 +20,7 @@ public class PointerControllerScript : MonoBehaviour
 	public float m_vertical_scale = 1f;
 
 	[Range (-50f, 50f)]
-	public float pitchOffset = 10f;
+	public float pitchOffset = 9f;
 
 	public GameObject handController;
 
