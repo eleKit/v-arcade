@@ -15,6 +15,9 @@ public class CarGameManager : Singleton<CarGameManager>
 
 	public GameObject m_background;
 
+	public GameObject m_wait_background;
+	public Text m_wait_text;
+
 	[Header ("Loading time for Level")]
 	[Range (0f, 4f)]
 	public float m_loading_time = 0.5f;
@@ -49,7 +52,7 @@ public class CarGameManager : Singleton<CarGameManager>
 
 
 
-	//TODO cancellare
+	//TODO cancellare fa crashare Unity
 	private string hand_data_file_path;
 
 	private bool firstTime = true;
@@ -60,6 +63,7 @@ public class CarGameManager : Singleton<CarGameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		ClearScreens ();
 		m_background.SetActive (true);
 		//reset car position and deactivates car gameObj 
 		ResetPlayer ();
@@ -112,14 +116,29 @@ public class CarGameManager : Singleton<CarGameManager>
 
 		Debug.Log ("inside LoadLevel");
 
+		//deactivate BG screen
+		m_background.SetActive (false);
+
+		m_wait_background.SetActive (true);
+		m_wait_text.text = "caricamento.";
+
+		yield return new WaitForSeconds (0.5f);
+
+
+		m_wait_text.text = "caricamento..";
+
+		yield return new WaitForSeconds (0.5f);
+
+		m_wait_text.text = "caricamento...";
+
+		yield return new WaitForSeconds (0.5f);
 
 
 		//this must be before setting the position
 		player.SetActive (true);
 
 
-		//deactivate BG screen
-		m_background.SetActive (false);
+		m_wait_background.SetActive (false);
 
 
 		//reset car position
@@ -314,5 +333,15 @@ public class CarGameManager : Singleton<CarGameManager>
 	{
 		score = score + 10;
 		
+	}
+
+
+	void ClearScreens ()
+	{
+		if (m_background != null)
+			m_background.SetActive (false);
+
+		if (m_wait_background != null)
+			m_wait_background.SetActive (false);
 	}
 }

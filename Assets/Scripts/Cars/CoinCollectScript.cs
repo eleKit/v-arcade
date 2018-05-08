@@ -10,7 +10,7 @@ public class CoinCollectScript : MonoBehaviour
 
 	//the therapist must be able to change this paramether
 	[Range (0, 500)]
-	public int max_duck_time;
+	public int max_duck_time = 10;
 	//the time after the duck must fall down
 
 
