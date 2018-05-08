@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 212085011838667990}
   - component: {fileID: 61213115270568816}
   m_Layer: 0
-  m_Name: Retta (5)
+  m_Name: Ending_point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
