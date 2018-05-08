@@ -24,6 +24,7 @@ TagManager:
   - Right_Hand
   - Finish_Line
   - Left_Hand
+  - Duck
   layers:
   - Default
   - TransparentFX
