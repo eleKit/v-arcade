@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using POLIMIGameCollective;
+using System;
+using System.IO;
+using Leap;
 
-public class ShootingGameManager : Singleton<ShootingGameManager>
+public class GameManager : Singleton<GameManager>
 {
 
 	public GameObject m_background;
@@ -18,20 +21,27 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 	public GameObject player;
 
+	public Vector3 player_initial_pos;
+
+
 	public HandController hc;
+
 
 	public GameMenuScript menu_GUI;
 
-	//gameobject array containing the ducks whose position indicates the level path
-	private GameObject[] m_path;
 
 	//name of the path chosen
-	private string current_path = "";
+	public string current_path = "";
+
+
+	//gameobject array containing the diamonds whose position indicates the level path
+	private GameObject[] m_path;
+
+
 
 
 	//bool to deactivate player if the game is paused
 	private bool is_playing = false;
-
 
 
 	//score of the game
@@ -39,62 +49,78 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 
 
+
+	//TODO cancellare fa crashare Unity
+	private string hand_data_file_path;
+
+	private bool firstTime = true;
+
+
+
 	// Use this for initialization
 	void Start ()
 	{
-		ClearScreens ();
-		m_background.SetActive (true);
-		//reset car position and deactivates car gameObj 
-		ResetPlayer ();
-
-		player.SetActive (false);
-
-		//the scene begins with the game main menu
-		menu_GUI.menu = true;
-		menu_GUI.shooting = true;
 		
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyDown ("escape") && is_playing) {
-			PauseLevel ();
-		}
-
-
-		if (GameObject.FindGameObjectsWithTag ("Duck").Length == 0 && is_playing) {
-			is_playing = false;
-			StartCoroutine ("WinCoroutine");
-		}
 		
 	}
 
-	public void ResetPlayer ()
+
+	public void BaseStart ()
 	{
-		player.transform.position = new Vector3 (0, 0, 0);
+		ClearScreens ();
+		m_background.SetActive (true);
+		//reset car position and deactivates car gameObj 
+
+		//the scene begins with the game main menu
+		menu_GUI.menu = true;
+
+
 	}
 
 
-	//called when the user choses one level
-	public void ChooseLevel (string n)
+	public void BaseUpdate ()
 	{
-		current_path = n;
-		StartCoroutine (LoadLevel (name));
+		if (Input.GetKeyDown ("escape") && is_playing) {
+			BasePauseLevel ();
+		}
 
 	}
 
-	IEnumerator LoadLevel (string name)
+
+	void ClearScreens ()
 	{
+		if (m_background != null)
+			m_background.SetActive (false);
+
+		if (m_wait_background != null)
+			m_wait_background.SetActive (false);
+	}
+
+
+
+
+	public void BaseChooseLevel (string name)
+	{
+		current_path = name;
+		StartCoroutine (BaseLoadLevel (name));
+	}
+
+	IEnumerator BaseLoadLevel (string name)
+	{
+		
 
 		yield return new WaitForSeconds (m_loading_time);
-		//TODO generate the path
 
 		is_playing = true;
 
 		Debug.Log ("inside LoadLevel");
 
-		//deactivate BG screen
+		//deactivate BG 
 		m_background.SetActive (false);
 
 		m_wait_background.SetActive (true);
@@ -111,29 +137,24 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 		yield return new WaitForSeconds (0.5f);
 
-
 		//this must be before setting the position
 		player.SetActive (true);
 
-
+		//deactivate wait screen
 		m_wait_background.SetActive (false);
 
-
-		//reset car position
-		ResetPlayer ();
-
-
-		Debug.Log ("end LoadLevel");
-
-
+		//player.transform.position = player_initial_pos;
 
 
 	}
+		
+
+
 
 
 
 	//called when the player pauses the game
-	void PauseLevel ()
+	void BasePauseLevel ()
 	{
 
 		is_playing = false;
@@ -144,9 +165,8 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 	}
 
-
 	//triggered by the button "continue" in the pause screen
-	public void ResumeLevel ()
+	public void BaseResumeLevel ()
 	{
 		is_playing = true;
 
@@ -154,19 +174,20 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 	}
 
-	public void RestartLevel ()
+
+
+	//called when the player reaches the end of the level
+	public void BaseWinLevel ()
 	{
-		Debug.Log ("Load Level call");
-		StartCoroutine (LoadLevel (current_path));
+		is_playing = false;
 
 
-
+		StartCoroutine (WinCoroutine ());
 	}
 
 
 	IEnumerator WinCoroutine ()
 	{
-		is_playing = false;
 
 		menu_GUI.win = true;
 
@@ -174,13 +195,11 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 
 		m_background.SetActive (true);
 
-		Debug.Log ("you win");
-
 		player.SetActive (false);
 
 		EndLevel ();
 
-
+		//TODO call savedata and endlevel
 
 
 	}
@@ -189,34 +208,31 @@ public class ShootingGameManager : Singleton<ShootingGameManager>
 	// never called directly by the UI
 	void EndLevel ()
 	{
+		is_playing = false;
+
 		if (m_path != null) {
 			for (int i = 0; i < m_path.Length; i++) {
 				Destroy (m_path [i]);
 			}
 		}
-
 	}
 
+
+
+	/* these function are in common between all the games
+	 * so can be called from here directly 
+	 */
 
 	public int GetScore ()
 	{
 		return score;
 	}
 
-
-
 	public void AddPoints ()
 	{
 		score = score + 10;
 
 	}
+		
 
-	void ClearScreens ()
-	{
-		if (m_background != null)
-			m_background.SetActive (false);
-
-		if (m_wait_background != null)
-			m_wait_background.SetActive (false);
-	}
 }

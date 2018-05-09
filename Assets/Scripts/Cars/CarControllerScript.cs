@@ -47,7 +47,7 @@ public class CarControllerScript : MonoBehaviour
 	void FixedUpdate ()
 	{
 		//controllo che il bambino giochi con una mano
-		if (hc.GetFrame ().Hands.Count == 1) {
+		if (hc.GetFixedFrame ().Hands.Count == 1) {
 			float roll = hc.GetFixedFrame ().Hands.Leftmost.PalmNormal.Roll;
 			float pitch = hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch;
 			float yaw = hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw; 

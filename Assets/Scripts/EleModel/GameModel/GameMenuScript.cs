@@ -86,7 +86,7 @@ public class GameMenuScript : MonoBehaviour
 		if (GUI.Button (new Rect (20f, 180, 150, 75), "Replay")) {
 			win = false;
 			Debug.Log ("Premuto Replay");
-			//CarGameManager.Instance.ReplayWithouthPath ();
+			//CarManager.Instance.ReplayWithouthPath ();
 		}
 		if (GUI.Button (new Rect (180, 180, 150, 75), "Torna al menu")) {
 			SceneManager.LoadSceneAsync ("Main_Menu");
@@ -100,7 +100,7 @@ public class GameMenuScript : MonoBehaviour
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 30, 200, 75), "Continua")) {
 			pause = false;
 			if (car) {
-				CarGameManager.Instance.ResumeLevel ();
+				CarManager.Instance.ResumeLevel ();
 			} else if (shooting) {
 				ShootingGameManager.Instance.ResumeLevel ();
 			} else if (music) {
@@ -110,7 +110,7 @@ public class GameMenuScript : MonoBehaviour
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 100, 200, 75), "Ricomincia")) {
 			pause = false;
 			if (car) {
-				CarGameManager.Instance.RestartLevel ();
+				CarManager.Instance.RestartLevel ();
 			} else if (shooting) {
 				ShootingGameManager.Instance.RestartLevel ();
 			} else if (music) {
@@ -133,7 +133,7 @@ public class GameMenuScript : MonoBehaviour
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
 			if (car) {
 				load_path = false;
-				CarGameManager.Instance.ChooseLevel ("Na");
+				CarManager.Instance.ChooseLevel ("Na");
 			}
 			if (shooting) {
 				load_path = false;
@@ -170,7 +170,7 @@ public class GameMenuScript : MonoBehaviour
 
 
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
-			CarGameManager.Instance.ChooseLevel ("Na");
+			CarManager.Instance.ChooseLevel ("Na");
 		}
 		if (GUI.Button (new Rect (180, 265, 150, 65), "Torna al menu")) {
 			SceneManager.LoadSceneAsync ("Main_Menu");
