@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 330569226}
   - component: {fileID: 330569225}
   m_Layer: 0
-  m_Name: yeah_right
+  m_Name: Yeah_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -308,6 +308,7 @@ MonoBehaviour:
   left_trigger: 0
   m_left_yeah: {fileID: 1686708142}
   m_right_yeah: {fileID: 330569224}
+  hand_to_delete: {fileID: 0}
 --- !u!4 &395677875
 Transform:
   m_ObjectHideFlags: 0
@@ -333,12 +334,12 @@ GameObject:
   - component: {fileID: 453475093}
   - component: {fileID: 453475092}
   m_Layer: 5
-  m_Name: Wait_scanvas
+  m_Name: Wait_canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &453475092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -511,8 +512,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000022888, y: 0.0000038147}
-  m_SizeDelta: {x: 185, y: 47.251}
+  m_AnchoredPosition: {x: 0.000015259, y: 0.0000038147}
+  m_SizeDelta: {x: 223.2, y: 47.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &904068298
 MonoBehaviour:
@@ -546,7 +547,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Caricando...
+  m_Text: Caricamento...
 --- !u!222 &904068299
 CanvasRenderer:
   m_ObjectHideFlags: 0
