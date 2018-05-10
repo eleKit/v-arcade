@@ -60,12 +60,25 @@ public class CarManager : Singleton<CarManager>
 
 	public void RestartLevel ()
 	{
+		GameManager.Instance.m_wait_background.SetActive (true);
 		ChooseLevel (GameManager.Instance.current_path);
 	}
 
 	public void WinLevel ()
 	{
 		GameManager.Instance.BaseWinLevel ();
+	}
+
+
+	public int GetScore ()
+	{
+		return GameManager.Instance.BaseGetScore ();
+	}
+
+	public void AddPoints ()
+	{
+		GameManager.Instance.BaseAddPoints ();
+
 	}
 
 

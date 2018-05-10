@@ -102,9 +102,9 @@ public class GameMenuScript : MonoBehaviour
 			if (car) {
 				CarManager.Instance.ResumeLevel ();
 			} else if (shooting) {
-				ShootingGameManager.Instance.ResumeLevel ();
+				ShootingManager.Instance.ResumeLevel ();
 			} else if (music) {
-				//TODO
+				MusicGameManager.Instance.ResumeLevel ();
 			}
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 100, 200, 75), "Ricomincia")) {
@@ -112,9 +112,9 @@ public class GameMenuScript : MonoBehaviour
 			if (car) {
 				CarManager.Instance.RestartLevel ();
 			} else if (shooting) {
-				ShootingGameManager.Instance.RestartLevel ();
+				ShootingManager.Instance.RestartLevel ();
 			} else if (music) {
-				//TODO
+				MusicGameManager.Instance.RestartLevel ();
 			}
 		}
 		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 170, 200, 75), "Scegli livello")) {
@@ -131,18 +131,20 @@ public class GameMenuScript : MonoBehaviour
 	void Start (int id)
 	{
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
+			load_path = false;
 			if (car) {
-				load_path = false;
 				CarManager.Instance.ChooseLevel ("Na");
-			}
-			if (shooting) {
-				load_path = false;
-				ShootingGameManager.Instance.ChooseLevel ("Na");
+			} else if (shooting) {
+				ShootingManager.Instance.ChooseLevel ("Na");
+			} else if (music) {
+				MusicGameManager.Instance.ChooseLevel ("Na");
 			}
 		}
 	}
 
-	//TODO deve andare solo nella gui del fisioterapista
+
+
+	//TODO deve andare solo nella gui del fisioterapista, qui non la uso
 	void RandomWindow (int id)
 	{
 		GUI.skin = customSkin;

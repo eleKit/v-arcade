@@ -220,18 +220,23 @@ public class GameManager : Singleton<GameManager>
 
 
 	/* these function are in common between all the games
-	 * so can be called from here directly 
 	 */
 
-	public int GetScore ()
+	public int BaseGetScore ()
 	{
 		return score;
 	}
 
-	public void AddPoints ()
+	public void BaseAddPoints ()
 	{
 		score = score + 10;
 
+	}
+
+
+	public bool Get_Is_Playing ()
+	{
+		return is_playing;
 	}
 		
 

@@ -20,7 +20,7 @@ public class CarWinPoint : MonoBehaviour
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.CompareTag ("Player")) {
-			CarGameManager.Instance.WinLevel ();
+			CarManager.Instance.WinLevel ();
 		}
 
 	}
