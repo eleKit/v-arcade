@@ -15,6 +15,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	public GameObject m_left_yeah;
 	public GameObject m_right_yeah;
 
+	public GameObject hand_to_delete;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -41,6 +43,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		} else {
 			//blocca mani e musica
 		}
+
+		//TODO if music is finished the game ends
 
 		
 	}
@@ -74,6 +78,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		return GameManager.Instance.BaseGetScore ();
 	}
 
+
+	/* the trigger OnTriggerEnter of CoinCollectScript sets the bool left|right_trigger that is checked by the PushGesture script
+	 * if both the button is inside the trigger and the player has done the push gesture
+	 * the PushGesture script calls the AddPoints() funcion
+	 */
+
 	public void AddPoints ()
 	{
 		GameManager.Instance.BaseAddPoints ();
@@ -91,6 +101,11 @@ public class MusicGameManager : Singleton<MusicGameManager>
 			m_left_yeah.SetActive (true);
 
 		}
+
+		if (hand_to_delete != null) {
+			hand_to_delete.SetActive (false);
+		}
+
 		yield return new WaitForSeconds (0.5f);
 		ClearScreens ();
 	}
