@@ -91,11 +91,10 @@ public class PushGesture : MonoBehaviour
 		float max_pitch = left_pitch.Max ();
 		if ((pitch - max_pitch) < threshold && pitch < offset) {
 			Debug.Log ("left push" + " max " + max_pitch.ToString ());
+			if (MusicGameManager.Instance.left_trigger) {
+				MusicGameManager.Instance.AddPoints ();
+			}
 		}
-
-
-
-			
 	}
 
 	void CheckRightPushGesture (float pitch)
@@ -104,6 +103,10 @@ public class PushGesture : MonoBehaviour
 		float max_pitch = right_pitch.Max ();
 		if ((pitch - max_pitch) < threshold && pitch < offset) {
 			Debug.Log ("right push" + " max " + max_pitch.ToString ());
+
+			if (MusicGameManager.Instance.right_trigger) {
+				MusicGameManager.Instance.AddPoints ();
+			}
 		}
 		
 	}

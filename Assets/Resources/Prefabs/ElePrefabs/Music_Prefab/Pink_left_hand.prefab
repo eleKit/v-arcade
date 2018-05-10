@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 60931906734939192}
   m_Layer: 0
   m_Name: Pink_left_hand
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -35,13 +35,45 @@ public class CoinCollectScript : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
+		
 		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
 			this.gameObject.SetActive (false);
-			CarGameManager.Instance.AddPoints ();
+			CarManager.Instance.AddPoints ();
 			Debug.Log ("Collect diamond");
-		}
+		} 
 
+		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
+
+			Debug.Log ("inside trigger");
+
+			if (other.gameObject.name.Equals ("Pink_left_hand"))
+				MusicGameManager.Instance.left_trigger = true;
+			if (other.gameObject.name.Equals ("Blue_right_hand"))
+				MusicGameManager.Instance.right_trigger = true;
+		}
 	}
+
+	void OnTriggerExit2D (Collider2D other)
+	{
+		
+		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
+
+			//deactivate the pink hand | blue hand
+			other.gameObject.SetActive (false);
+
+
+			if (other.gameObject.name.Equals ("Pink_left_hand")) {
+				MusicGameManager.Instance.left_trigger = false;
+			}
+			if (other.gameObject.name.Equals ("Blue_right_hand")) {
+				MusicGameManager.Instance.right_trigger = false;
+			}
+
+			
+		}
+		
+	}
+		
 
 	/* Scripts used by shooting game */
 
@@ -54,7 +86,7 @@ public class CoinCollectScript : MonoBehaviour
 				duck_time++;
 
 				if (duck_time >= max_duck_time) {
-					//ShootingGameManager.Instance.AddPoints ();
+					ShootingManager.Instance.AddPoints ();
 					StartCoroutine ("Fall");
 					Debug.Log ("duck shooted");
 				}
