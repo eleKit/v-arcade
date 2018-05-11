@@ -18,7 +18,7 @@ public class CarManager : Singleton<CarManager>
 	void Start ()
 	{
 		GameManager.Instance.player_initial_pos = new Vector3 (0f, -5.7f, 0f);
-		GameManager.Instance.BaseStart ();
+		GameManager.Instance.BaseStart ("CarGameplayMusic");
 		GameManager.Instance.menu_GUI.car = true;
 		ResetPlayer ();
 		GameManager.Instance.player.SetActive (false);

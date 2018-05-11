@@ -10,7 +10,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	void Start ()
 	{
 		GameManager.Instance.player_initial_pos = Vector3.zero;
-		GameManager.Instance.BaseStart ();
+		GameManager.Instance.BaseStart ("GameplayMusic");
 		GameManager.Instance.menu_GUI.shooting = true;
 
 		GameManager.Instance.player.transform.position = 
@@ -34,6 +34,8 @@ public class ShootingManager : Singleton<ShootingManager>
 
 	public void WinLevel ()
 	{
+		//this function starts win jingle and then calls the win function
+		SfxManager.Instance.Play ("win_jigle");
 		GameManager.Instance.BaseWinLevel ();
 	}
 

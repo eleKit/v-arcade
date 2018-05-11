@@ -20,7 +20,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	// Use this for initialization
 	void Start ()
 	{
-		GameManager.Instance.BaseStart ();
+		GameManager.Instance.BaseStart ("MusicGameplayMusic");
 		GameManager.Instance.menu_GUI.music = true;
 		GameManager.Instance.player.SetActive (false);
 		ClearScreens ();

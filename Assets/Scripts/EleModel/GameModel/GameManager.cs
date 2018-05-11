@@ -70,9 +70,17 @@ public class GameManager : Singleton<GameManager>
 	}
 
 
-	public void BaseStart ()
+	public void BaseStart (string music_title)
 	{
 		ClearScreens ();
+
+		//music starts
+		MusicManager.Instance.PlayMusic (music_title);
+
+		//cleans from all sound effects
+		SfxManager.Instance.Stop ();
+
+
 		m_background.SetActive (true);
 		//reset car position and deactivates car gameObj 
 
@@ -159,6 +167,8 @@ public class GameManager : Singleton<GameManager>
 
 		is_playing = false;
 
+		SfxManager.Instance.Mute ();
+
 		player.SetActive (false);
 
 		menu_GUI.pause = true;
@@ -168,6 +178,8 @@ public class GameManager : Singleton<GameManager>
 	//triggered by the button "continue" in the pause screen
 	public void BaseResumeLevel ()
 	{
+		SfxManager.Instance.Unmute ();
+
 		is_playing = true;
 
 		player.SetActive (true);
@@ -206,9 +218,16 @@ public class GameManager : Singleton<GameManager>
 
 	// called to destroy the current level path
 	// never called directly by the UI
+
+	// TODO this myst be called also by restart level function
 	void EndLevel ()
 	{
 		is_playing = false;
+
+		SfxManager.Instance.Unmute ();
+		SfxManager.Instance.Stop ();
+
+		MusicManager.Instance.UnmuteAll ();
 
 		if (m_path != null) {
 			for (int i = 0; i < m_path.Length; i++) {
