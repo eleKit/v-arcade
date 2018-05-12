@@ -33,6 +33,8 @@ public class GameManager : Singleton<GameManager>
 	//name of the path chosen
 	public string current_path = "";
 
+	public bool car, music, shooting;
+
 
 	//gameobject array containing the diamonds whose position indicates the level path
 	private GameObject[] m_path;
@@ -115,10 +117,10 @@ public class GameManager : Singleton<GameManager>
 	public void BaseChooseLevel (string name)
 	{
 		current_path = name;
-		StartCoroutine (BaseLoadLevel (name));
+		StartCoroutine (LoadLevel (name));
 	}
 
-	IEnumerator BaseLoadLevel (string name)
+	IEnumerator LoadLevel (string name)
 	{
 		
 
@@ -151,10 +153,36 @@ public class GameManager : Singleton<GameManager>
 		//deactivate wait screen
 		m_wait_background.SetActive (false);
 
-		//player.transform.position = player_initial_pos;
+
+		hc.Record ();
 
 
 	}
+
+
+
+	/* these function are in common between all the games
+	 */
+
+	public int BaseGetScore ()
+	{
+		return score;
+	}
+
+	public void BaseAddPoints ()
+	{
+		score = score + 10;
+
+	}
+
+
+	public bool Get_Is_Playing ()
+	{
+		return is_playing;
+	}
+
+
+	/* end common functions */
 		
 
 
@@ -209,9 +237,10 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
+		SaveData ();
+
 		EndLevel ();
 
-		//TODO call savedata and endlevel
 
 
 	}
@@ -231,32 +260,110 @@ public class GameManager : Singleton<GameManager>
 
 		if (m_path != null) {
 			for (int i = 0; i < m_path.Length; i++) {
-				Destroy (m_path [i]);
+				if (m_path [i] != null) {
+					Destroy (m_path [i]);
+				}
 			}
 		}
 	}
 
 
 
-	/* these function are in common between all the games
-	 */
+	void SaveData ()
+	{ 
 
-	public int BaseGetScore ()
-	{
-		return score;
+		GameMatch m = new GameMatch ();
+
+		DateTime gameDate = DateTime.UtcNow;
+
+		m.timestamp = gameDate.ToFileTimeUtc ();
+		m.patientName = GlobalPlayerData.globalPlayerData.player;
+		m.id_path = current_path;
+
+
+		if (car) {
+			m.gameType = GameMatch.GameType.Car;
+		} else if (music) {
+			m.gameType = GameMatch.GameType.Music;
+		} else if (shooting) {
+			m.gameType = GameMatch.GameType.Shooting;
+		}
+
+		string directoryPath = 
+			Path.Combine (Application.persistentDataPath, m.patientName);
+
+		Directory.CreateDirectory (directoryPath);
+		string filePath = Path.Combine (
+			                  directoryPath,
+			                  m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+		                  );
+
+		string jsonString = JsonUtility.ToJson (m);
+		File.WriteAllText (filePath, jsonString);
+
+
+		// Now we save motion data
+		FrameSequence frame_sequence = new FrameSequence ();
+		frame_sequence.timestamp = gameDate.ToFileTimeUtc ();
+		frame_sequence.patientName = m.patientName;
+
+		//now we stop the leap recorder
+		hc.StopRecording ();
+
+		LeapRecorder recorder = hc.GetLeapRecorder ();
+
+
+		foreach (Frame f in recorder.GetFrames ()) {
+			frame_sequence.addFrame (f);
+		}
+
+		string framesPath = Path.Combine (
+			                    directoryPath,
+			                    m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json"
+		                    );
+
+
+		string frameString = JsonUtility.ToJson (frame_sequence);
+		File.WriteAllText (framesPath, frameString);
+
+		hand_data_file_path = framesPath;
+
 	}
 
-	public void BaseAddPoints ()
-	{
-		score = score + 10;
 
+	//TODO this doesn't go here
+	public void ReplayWithouthPath ()
+	{
+		Debug.Log ("ReplayWithouthPath");
+		ReplayFromFile (hand_data_file_path);
 	}
 
 
-	public bool Get_Is_Playing ()
+	public void ReplayFromFile (string filePath)
 	{
-		return is_playing;
+
+		Debug.Log (filePath.ToString ());
+
+		string frameString = File.ReadAllText (filePath);
+
+		FrameSequence frame_sequence = JsonUtility.FromJson<FrameSequence> (frameString);
+
+		hc.ResetRecording ();
+
+		foreach (Frame frame in frame_sequence.GetFrames ()) {
+
+			hc.GetLeapRecorder ().AddFrame (frame);
+		}
+
+
+		firstTime = false;
+		BaseChooseLevel ("Na");
+		hc.PlayRecording ();
 	}
-		
+
+
+
+
+
 
 }

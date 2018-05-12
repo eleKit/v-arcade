@@ -11,7 +11,13 @@ public class ShootingManager : Singleton<ShootingManager>
 	{
 		GameManager.Instance.player_initial_pos = Vector3.zero;
 		GameManager.Instance.BaseStart ("GameplayMusic");
+
+		/* set the bool of the current game in the game manager 
+		 * and in the GUI manager
+		 */
 		GameManager.Instance.menu_GUI.shooting = true;
+		GameManager.Instance.shooting = true;
+
 
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;

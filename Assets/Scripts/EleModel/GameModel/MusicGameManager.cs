@@ -20,15 +20,22 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	// Use this for initialization
 	void Start ()
 	{
-		GameManager.Instance.BaseStart ("MusicGameplayMusic");
+		GameManager.Instance.BaseStart ("GameplayMusic");
+
+		/* set the bool of the current game in the game manager 
+		 * and in the GUI manager
+		 */
 		GameManager.Instance.menu_GUI.music = true;
+		GameManager.Instance.music = true;
+
+
 		GameManager.Instance.player.SetActive (false);
 		ClearScreens ();
 		
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
 	{
 		GameManager.Instance.BaseUpdate ();
 

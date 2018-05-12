@@ -86,7 +86,7 @@ public class GameMenuScript : MonoBehaviour
 		if (GUI.Button (new Rect (20f, 180, 150, 75), "Replay")) {
 			win = false;
 			Debug.Log ("Premuto Replay");
-			//CarManager.Instance.ReplayWithouthPath ();
+			GameManager.Instance.ReplayWithouthPath ();
 		}
 		if (GUI.Button (new Rect (180, 180, 150, 75), "Torna al menu")) {
 			SceneManager.LoadSceneAsync ("Main_Menu");
