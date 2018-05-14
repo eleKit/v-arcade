@@ -17,9 +17,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public GameObject hand_to_delete;
 
+	public bool no_more_hands;
+
 	// Use this for initialization
 	void Start ()
 	{
+
 		GameManager.Instance.BaseStart ("GameplayMusic");
 
 		/* set the bool of the current game in the game manager 
@@ -47,6 +50,11 @@ public class MusicGameManager : Singleton<MusicGameManager>
 					button.transform.position.y,
 					button.transform.position.z);
 			}
+
+
+			if (GameObject.FindGameObjectsWithTag ("Button").Length == 0 && no_more_hands) {
+				WinLevel ();		
+			}
 		} else {
 			//blocca mani e musica
 		}
@@ -58,6 +66,10 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public void ChooseLevel (string name)
 	{
+		no_more_hands = false;
+
+		GameObject.Find ("MusicPathGenerator").GetComponent<MusicPathGenerator> ().SetupMusicPath ();
+
 		GameManager.Instance.BaseChooseLevel (name);
 
 	}
@@ -71,8 +83,15 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	public void RestartLevel ()
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
+
+		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("Button")) {
+			Destroy (button);
+		}
+
 		ChooseLevel (GameManager.Instance.current_path);
 	}
+
+
 
 	public void WinLevel ()
 	{
