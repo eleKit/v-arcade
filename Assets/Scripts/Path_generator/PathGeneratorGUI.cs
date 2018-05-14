@@ -24,13 +24,17 @@ public class PathGeneratorGUI : MonoBehaviour
 
 	public GameObject m_initial_BG;
 
-	public GameObject m_save_screen;
+	public GameObject m_save_duck_screen;
+
+	public GameObject m_save_car_screen;
 
 	public GameObject m_duck_screen;
 
 	public GameObject m_duck_instruction_screen;
 
 	public GameObject m_duck_path_screen;
+
+	public GameObject m_car_path_screen;
 
 	public GameObject m_car_screen;
 
@@ -52,29 +56,46 @@ public class PathGeneratorGUI : MonoBehaviour
 	}
 
 
-	public void LoadCar ()
-	{
-		ClearScreens ();
-		m_car_screen.SetActive (true);
-	}
-
-	public void LoadDuck ()
-	{
-		ClearScreens ();
-		m_duck_screen.SetActive (true);
-		ResetScreens ();
-	}
-
 	public void LoadMenu ()
 	{
 		ClearScreens ();
 		m_initial_BG.SetActive (true);
 	}
 
+	public void LoadCar ()
+	{
+		ClearScreens ();
+		m_car_screen.SetActive (true);
+		ResetCarScreens ();
+		m_car_path_screen.SetActive (true);
+	}
+
+	public void LoadDuck ()
+	{
+		ClearScreens ();
+		m_duck_screen.SetActive (true);
+		ResetDuckScreens ();
+		StartCoroutine (LoadDucks ());
+	}
+
+	IEnumerator LoadDucks ()
+	{
+		m_duck_instruction_screen.SetActive (true);
+
+		yield return new WaitForSeconds (3f);
+
+		m_duck_instruction_screen.SetActive (false);
+
+		m_duck_path_screen.SetActive (true);
+	}
+
+
+
 	public void LoadMainMenu ()
 	{
 		SceneManager.LoadSceneAsync ("Main_Menu");
 	}
+
 
 	/* car screen scripts */
 
@@ -84,16 +105,26 @@ public class PathGeneratorGUI : MonoBehaviour
 		curve_amplitude++;
 	}
 
-	public void CarPathSave ()
+	public void CarPathSaveScreen ()
 	{
-		m_save_screen.SetActive (true);
+		m_save_car_screen.SetActive (true);
 		
 	}
 
-	public void DuckPathSave ()
+	public void GoBackToCar ()
 	{
-		m_save_screen.SetActive (true);
+		m_save_car_screen.SetActive (false);
+	}
 
+	public void DuckPathSaveScreen ()
+	{
+		m_save_duck_screen.SetActive (true);
+
+	}
+
+	public void GoBackToDucks ()
+	{
+		m_save_duck_screen.SetActive (false);
 	}
 
 
@@ -108,29 +139,32 @@ public class PathGeneratorGUI : MonoBehaviour
 		if (m_car_screen != null)
 			m_car_screen.SetActive (false);
 
-		if (m_save_screen != null)
-			m_save_screen.SetActive (false);
+
 	}
 
-	void ResetScreens ()
+	void ResetDuckScreens ()
 	{
 		if (m_duck_screen != null) {
-			m_duck_instruction_screen.SetActive (false);
-			m_duck_path_screen.SetActive (false);
-			StartCoroutine (LoadDucks ());
+			if (m_save_duck_screen != null)
+				m_save_duck_screen.SetActive (false);
+			if (m_duck_instruction_screen != null)
+				m_duck_instruction_screen.SetActive (false);
+			if (m_duck_path_screen != null)
+				m_duck_path_screen.SetActive (false);
 		}
 	}
 
-	IEnumerator LoadDucks ()
+	void ResetCarScreens ()
 	{
-		m_duck_instruction_screen.SetActive (true);
-
-		yield return new WaitForSeconds (3f);
-
-		m_duck_instruction_screen.SetActive (false);
-
-		m_duck_path_screen.SetActive (true);
+		if (m_car_screen != null) {
+			if (m_save_car_screen != null)
+				m_save_car_screen.SetActive (false);
+			if (m_car_path_screen != null)
+				m_car_path_screen.SetActive (false);
+		}
 	}
+
+
 
 
 
