@@ -29,9 +29,9 @@ public class DuckPathGenerator : MonoBehaviour
 
 	float front_y_coord = 4.5f;
 
-	bool[] front = new bool[N] { true, false, false, false, true, true };
-	bool[] middle = new bool[N]{ false, false, false, false, true, true };
-	bool[] back = new bool[N]{ true, false, false, false, false, true };
+	bool[] front = new bool[N] { true, true, true, true, true, true };
+	bool[] middle = new bool[N]{ true, true, true, true, true, true };
+	bool[] back = new bool[N]{ true, true, true, true, true, true };
 
 
 	// Use this for initialization
@@ -41,7 +41,7 @@ public class DuckPathGenerator : MonoBehaviour
 			if (front [i]) {
 				if (i < 3) {
 					Instantiate (m_front_duck_left, back_coord [i] - new Vector3 (0, front_y_coord, 0), Quaternion.identity);
-				} else if (i > 4) {
+				} else if (i >= 3) {
 					Instantiate (m_front_duck_right, back_coord [i] - new Vector3 (0, front_y_coord, 0), Quaternion.identity);
 				}
 			}
@@ -52,7 +52,7 @@ public class DuckPathGenerator : MonoBehaviour
 			if (middle [i]) {
 				if (i < 3) {
 					Instantiate (m_middle_duck_left, back_coord [i] - new Vector3 (0, middle_y_coord, 0), Quaternion.identity);
-				} else if (i > 4) {
+				} else if (i >= 3) {
 					Instantiate (m_middle_duck_right, back_coord [i] - new Vector3 (0, middle_y_coord, 0), Quaternion.identity);
 				}
 			}
@@ -62,7 +62,7 @@ public class DuckPathGenerator : MonoBehaviour
 			if (back [i]) {
 				if (i < 3) {
 					Instantiate (m_back_duck_left, back_coord [i], Quaternion.identity);
-				} else if (i > 4) {
+				} else if (i >= 3) {
 					Instantiate (m_back_duck_right, back_coord [i], Quaternion.identity);
 				}
 			}
