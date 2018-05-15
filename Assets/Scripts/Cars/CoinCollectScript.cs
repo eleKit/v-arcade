@@ -43,6 +43,8 @@ public class CoinCollectScript : MonoBehaviour
 			this.gameObject.SetActive (false);
 			CarManager.Instance.AddPoints ();
 			Debug.Log ("Collect diamond");
+			SfxManager.Instance.Play ("pickup");
+			Debug.Log ("music");
 		} 
 
 		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {

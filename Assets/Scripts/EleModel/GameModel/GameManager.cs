@@ -116,6 +116,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void BaseChooseLevel (string name)
 	{
+		SfxManager.Instance.Unmute ();
 		current_path = name;
 		StartCoroutine (LoadLevel (name));
 	}
