@@ -37,6 +37,19 @@ public class DuckPathGenerator : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		
+	}
+
+
+	public void LoadDucks ()
+	{
+
 		for (int i = 0; i < front.Length; i++) {
 			if (front [i]) {
 				if (i < 3) {
@@ -67,11 +80,6 @@ public class DuckPathGenerator : MonoBehaviour
 				}
 			}
 		}
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
 		
 	}
 }

@@ -19,6 +19,19 @@ public class CarPathGenerator : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		
+	}
+
+
+	public void LoadDiamonds ()
+	{
 		//diamond coordinates
 		float y = 1f;
 		float x = 0;
@@ -33,16 +46,9 @@ public class CarPathGenerator : MonoBehaviour
 				+ curve_position [h];
 
 				Instantiate (diamond, new Vector3 (x, y + 1, 0), Quaternion.identity);
-			
+
 			}
 			y_start = Mathf.RoundToInt (y);
 		}
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		
 	}
 }
