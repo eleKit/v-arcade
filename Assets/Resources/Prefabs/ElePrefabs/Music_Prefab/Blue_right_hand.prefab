@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50030934809221414}
   m_Layer: 0
   m_Name: Blue_right_hand
-  m_TagString: Button
+  m_TagString: RightButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

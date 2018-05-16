@@ -53,9 +53,9 @@ public class CoinCollectScript : MonoBehaviour
 
 			MusicGameManager.Instance.hand_to_delete = other.gameObject;
 
-			if (other.gameObject.name.Equals ("Pink_left_hand"))
+			if (other.gameObject.tag.Equals ("LeftButton"))
 				MusicGameManager.Instance.left_trigger = true;
-			if (other.gameObject.name.Equals ("Blue_right_hand"))
+			if (other.gameObject.tag.Equals ("RightButton"))
 				MusicGameManager.Instance.right_trigger = true;
 		}
 	}

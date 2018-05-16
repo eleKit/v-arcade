@@ -10,7 +10,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	void Start ()
 	{
 		GameManager.Instance.player_initial_pos = Vector3.zero;
-		GameManager.Instance.BaseStart ("GameplayMusic");
+		GameManager.Instance.BaseStart ("DuckGameMusic");
 
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager

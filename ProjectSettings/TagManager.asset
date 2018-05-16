@@ -25,6 +25,8 @@ TagManager:
   - Finish_Line
   - Left_Hand
   - Duck
+  - LeftButton
+  - RightButton
   layers:
   - Default
   - TransparentFX

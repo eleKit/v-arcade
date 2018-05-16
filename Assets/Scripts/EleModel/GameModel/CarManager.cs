@@ -18,7 +18,7 @@ public class CarManager : Singleton<CarManager>
 	void Start ()
 	{
 		GameManager.Instance.player_initial_pos = new Vector3 (0f, -5.7f, 0f);
-		GameManager.Instance.BaseStart ("GameplayMusic");
+		GameManager.Instance.BaseStart ("CarGameMusic");
 
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager

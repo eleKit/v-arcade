@@ -23,7 +23,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	void Start ()
 	{
 
-		GameManager.Instance.BaseStart ("GameplayMusic");
+		GameManager.Instance.BaseStart ("MusicMenuMusic");
 
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
@@ -44,7 +44,14 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 		if (GameManager.Instance.Get_Is_Playing ()) {
 
-			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("Button")) {
+			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("LeftButton")) {
+				button.transform.position = new Vector3 (
+					button.transform.position.x + m_button_movement_offset,
+					button.transform.position.y,
+					button.transform.position.z);
+			}
+
+			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("RightButton")) {
 				button.transform.position = new Vector3 (
 					button.transform.position.x + m_button_movement_offset,
 					button.transform.position.y,
@@ -67,6 +74,9 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	public void ChooseLevel (string name)
 	{
 		no_more_hands = false;
+
+		MusicManager.Instance.StopAll ();
+		//TODO here must be played the game music chosen by the player
 
 		GameObject.Find ("MusicPathGenerator").GetComponent<MusicPathGenerator> ().SetupMusicPath ();
 
