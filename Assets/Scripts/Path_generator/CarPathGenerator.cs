@@ -14,10 +14,16 @@ public class CarPathGenerator : MonoBehaviour
 
 	int[] n_items = new int[] { 10, 25, 5 };
 
-	float amplitude = 2f;
+	//5f is the maximum amplitude possible
+	float amplitude = 5f;
 
 	//values: -1, 0, 1
 	int[] curve_position = new int[] { -1, 1, 0 };
+
+
+	//size of n_items and curve_position arrays
+	//the game is divided into 3 portions: start, middle, end
+	const int N = 3;
 
 	// Use this for initialization
 	void Start ()
