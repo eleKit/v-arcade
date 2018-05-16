@@ -15,6 +15,11 @@ public class GameManager : Singleton<GameManager>
 	public GameObject m_wait_background;
 	public Text m_wait_text;
 
+
+	public GameObject m_score_canvas;
+	public Text m_score_text;
+
+
 	[Header ("Loading time for Level")]
 	[Range (0f, 4f)]
 	public float m_loading_time = 0.5f;
@@ -89,7 +94,6 @@ public class GameManager : Singleton<GameManager>
 		//the scene begins with the game main menu
 		menu_GUI.menu = true;
 
-
 	}
 
 
@@ -109,6 +113,9 @@ public class GameManager : Singleton<GameManager>
 
 		if (m_wait_background != null)
 			m_wait_background.SetActive (false);
+
+		if (m_score_canvas != null)
+			m_score_canvas.SetActive (false);
 	}
 
 
@@ -154,6 +161,13 @@ public class GameManager : Singleton<GameManager>
 		//deactivate wait screen
 		m_wait_background.SetActive (false);
 
+		//activate score screen
+		m_score_canvas.SetActive (true);
+
+		score = 0;
+
+		m_score_text.text = "Punteggio: " + score.ToString ();
+
 
 		hc.Record ();
 
@@ -173,6 +187,7 @@ public class GameManager : Singleton<GameManager>
 	public void BaseAddPoints ()
 	{
 		score = score + 10;
+		m_score_text.text = "Punteggio: " + score.ToString ();
 
 	}
 
@@ -232,7 +247,10 @@ public class GameManager : Singleton<GameManager>
 
 		menu_GUI.win = true;
 
+		ClearScreens ();
+
 		yield return new WaitForSeconds (0.5f);
+
 
 		m_background.SetActive (true);
 
