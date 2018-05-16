@@ -69,10 +69,10 @@ public class CoinCollectScript : MonoBehaviour
 			other.gameObject.SetActive (false);
 
 
-			if (other.gameObject.name.Equals ("Pink_left_hand")) {
+			if (other.gameObject.tag.Equals ("LeftButton")) {
 				MusicGameManager.Instance.left_trigger = false;
 			}
-			if (other.gameObject.name.Equals ("Blue_right_hand")) {
+			if (other.gameObject.tag.Equals ("RightButton")) {
 				MusicGameManager.Instance.right_trigger = false;
 			}
 

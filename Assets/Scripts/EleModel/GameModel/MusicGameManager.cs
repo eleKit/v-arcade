@@ -59,7 +59,9 @@ public class MusicGameManager : Singleton<MusicGameManager>
 			}
 
 
-			if (GameObject.FindGameObjectsWithTag ("Button").Length == 0 && no_more_hands) {
+			if (GameObject.FindGameObjectsWithTag ("RightButton").Length == 0
+			    && GameObject.FindGameObjectsWithTag ("LeftButton").Length == 0
+			    && no_more_hands) {
 				WinLevel ();		
 			}
 		} else {
@@ -94,7 +96,11 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
 
-		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("Button")) {
+		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("LeftButton")) {
+			Destroy (button);
+		}
+
+		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("RightButton")) {
 			Destroy (button);
 		}
 
@@ -131,10 +137,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		if (right_trigger) {
 			m_right_yeah.SetActive (true);	
+			right_trigger = false;
 		}
 
 		if (left_trigger) {
 			m_left_yeah.SetActive (true);
+			left_trigger = false;
 
 		}
 
