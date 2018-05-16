@@ -15,7 +15,9 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	public GameObject m_left_yeah;
 	public GameObject m_right_yeah;
 
-	public GameObject hand_to_delete;
+	public GameObject left_hand_to_delete;
+
+	public GameObject right_hand_to_delete;
 
 	public bool no_more_hands;
 
@@ -138,16 +140,18 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		if (right_trigger) {
 			m_right_yeah.SetActive (true);	
 			right_trigger = false;
+			if (right_hand_to_delete != null) {
+				right_hand_to_delete.SetActive (false);
+			}
 		}
 
 		if (left_trigger) {
 			m_left_yeah.SetActive (true);
 			left_trigger = false;
+			if (left_hand_to_delete != null) {
+				left_hand_to_delete.SetActive (false);
+			}
 
-		}
-
-		if (hand_to_delete != null) {
-			hand_to_delete.SetActive (false);
 		}
 
 		yield return new WaitForSeconds (0.5f);
