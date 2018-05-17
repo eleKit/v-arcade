@@ -61,22 +61,12 @@ public class TuningManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		count = 0;
+		
 
 		hc = handController.GetComponent<HandController> ();
 
-		ClearScreens ();
-		m_hands_images [count].SetActive (true);
-		m_instructions_screen [count].SetActive (true);
-		m_timer_object.SetActive (true);
+		StartLevel ();
 
-		timeLeft++;
-
-		timer = timeLeft;
-
-		Debug.Log (timer.ToString ());
-
-		StartCoroutine ("WaitToStart");
 
 	}
 	
@@ -96,17 +86,17 @@ public class TuningManager : MonoBehaviour
 
 				if ((int)Mathf.Round (timer) % 60 < 0) {
 					count++;
-					timer = timeLeft;
+					timer = timeLeft + 2;
 					Debug.Log ("end phase");
 				} else {
 
-					if ((int)Mathf.Round (timer) % 60 == (int)Mathf.Round (timeLeft - deltaTime) % 60) {
+					if ((int)Mathf.Round (timer) % 60 >= (int)Mathf.Round (timeLeft - deltaTime) % 60) {
 						//wait to set active the next screen
 						//StartCoroutine ("StartPhase");
 						ClearScreens ();
 						m_hands_images [count].SetActive (true);
 						m_timer_object.SetActive (true);
-						m_timer.text = "Iniziamo!";
+						m_timer.text = "Tra poco iniziamo!";
 						m_instructions_screen [count].SetActive (true);
 						Debug.Log ("start phase, timer " + timer.ToString ());
 
@@ -118,40 +108,41 @@ public class TuningManager : MonoBehaviour
 					if (sec == 0) {
 						m_timer.text = "Bene!";
 					} else {
-						if ((int)Mathf.Round (timer) % 60 != (int)Mathf.Round (timeLeft - deltaTime) % 60 && (int)Mathf.Round (timer) % 60 > 0) {
+						if ((int)Mathf.Round (timer) % 60 < (int)Mathf.Round (timeLeft - deltaTime) % 60 && (int)Mathf.Round (timer) % 60 > 0) {
 							m_timer.text = sec.ToString ();
 							//Debug.Log ("timer " + timer.ToString ("n2") + " timeLeft - deltaTime " + (timeLeft - deltaTime).ToString ("n2"));
-						}
-					}
+						
 
-					//Debug.Log ("Sono qui " + count.ToString () + " sec " + sec.ToString ());
+							//Debug.Log ("Sono qui " + count.ToString () + " sec " + sec.ToString ());
 
-					// max yaw count = 1
-					// min yaw count = 2
-					// max pitch count = 3
-					// min pitch count = 4
-					// horizontal starting point = 5
+							// max yaw count = 1
+							// min yaw count = 2
+							// max pitch count = 3
+							// min pitch count = 4
+							// horizontal starting point = 5
 
-					if (count <= 2) { 
-						if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-							left_yaw.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
-						}
-						if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-							right_yaw.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
-						}
-					} else if (count <= 4) {
-						if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-							left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-						}
-						if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-							right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-						}
-					} else if (count == 5) {
-						if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-							left_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-						}
-						if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-							right_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+							if (count <= 2) { 
+								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+									left_yaw.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+								}
+								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+									right_yaw.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
+								}
+							} else if (count <= 4) {
+								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+									left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+								}
+								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+									right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+								}
+							} else if (count == 5) {
+								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+									left_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+								}
+								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+									right_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+								}
+							}
 						}
 					}
 
@@ -204,9 +195,29 @@ public class TuningManager : MonoBehaviour
 		yield return new WaitForSeconds (waiting_time);
 		count++;
 		is_playing = true;
+
 	}
 
+	void StartLevel ()
+	{
 
+		count = 0;
+
+		ClearScreens ();
+		m_timer.text = "Posiziona le mani sul Leap";
+		m_hands_images [count].SetActive (true);
+		m_instructions_screen [count].SetActive (true);
+		m_timer_object.SetActive (true);
+
+		timeLeft++;
+
+		timer = timeLeft;
+
+		Debug.Log (timer.ToString ());
+
+		StartCoroutine ("WaitToStart");
+		
+	}
 
 
 
