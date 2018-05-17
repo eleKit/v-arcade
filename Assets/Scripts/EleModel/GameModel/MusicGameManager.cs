@@ -79,12 +79,16 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		no_more_hands = false;
 
+		//the path must be read before launching base choose level!!
+		MusicPathGenerator.Instance.ReadPath ();
+
 		MusicManager.Instance.StopAll ();
 		//TODO here must be played the game music chosen by the player
 
 		GameObject.Find ("MusicPathGenerator").GetComponent<MusicPathGenerator> ().SetupMusicPath ();
 
 		GameManager.Instance.BaseChooseLevel (name);
+
 
 	}
 

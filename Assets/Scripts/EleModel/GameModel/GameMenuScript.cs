@@ -130,6 +130,11 @@ public class GameMenuScript : MonoBehaviour
 
 	void Start (int id)
 	{
+		if (music) {
+			if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 70, 200, 75), "provamusica"))
+				MusicPathGenerator.Instance.filename = "provamusica.txt";
+			
+		}
 		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
 			load_path = false;
 			if (car) {

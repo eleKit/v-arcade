@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System;
+using POLIMIGameCollective;
 
-public class MusicPathGenerator : MonoBehaviour
+public class MusicPathGenerator : Singleton<MusicPathGenerator>
 {
+	public GameObject left_hand;
+
+	public GameObject right_hand;
+
+	public string filename;
 
 	/* TODO load from file for every music the offset array for every hand
 	 */
@@ -27,19 +33,17 @@ public class MusicPathGenerator : MonoBehaviour
 
 	float spawn_time_right;
 
-	public GameObject left_hand;
-
-	public GameObject right_hand;
 
 
 
-	string path = "Assets/MusicTexts/provamusica.txt";
+
+	string dataPath = "Assets/MusicTexts";
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		ReadPath ();
+		
 	}
 
 
@@ -86,9 +90,9 @@ public class MusicPathGenerator : MonoBehaviour
 
 
 
-	void ReadPath ()
+	public void ReadPath ()
 	{
-		StreamReader reader = new StreamReader (path); 
+		StreamReader reader = new StreamReader (dataPath + "/" + filename); 
 
 		if (!reader.EndOfStream) {
 			string inp_ln = reader.ReadLine ();
@@ -101,5 +105,6 @@ public class MusicPathGenerator : MonoBehaviour
 		}
 
 		reader.Close ();  
+
 	}
 }
