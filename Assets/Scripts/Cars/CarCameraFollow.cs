@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarCameraFollow : MonoBehaviour
 {
 	
+	public float max_y;
 
 	private Transform m_Player;
 	// Reference to the player's transform.
@@ -21,12 +22,12 @@ public class CarCameraFollow : MonoBehaviour
 
 	private void LateUpdate ()
 	{
+		if (m_Player.position.y <= max_y) {
+			Vector3 currentPlayerPosition = m_Player.position; //Get current player position
+			Vector3 distanceMoved = currentPlayerPosition - lastPlayerPosition; //Figure out how much the player moved since the last frame
+			lastPlayerPosition = currentPlayerPosition;
 
-		Vector3 currentPlayerPosition = m_Player.position; //Get current player position
-		Vector3 distanceMoved = currentPlayerPosition - lastPlayerPosition; //Figure out how much the player moved since the last frame
-		lastPlayerPosition = currentPlayerPosition;
-
-		transform.position = new Vector3 (transform.position.x, transform.position.y + distanceMoved.y, transform.position.z); //Move the camera
-
+			transform.position = new Vector3 (transform.position.x, transform.position.y + distanceMoved.y, transform.position.z); //Move the camera
+		}
 	}
 }
