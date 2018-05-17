@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System;
 
 public class MusicPathGenerator : MonoBehaviour
 {
@@ -9,9 +11,11 @@ public class MusicPathGenerator : MonoBehaviour
 	 */
 	//this changes for every music
 
-	float[] instantiationTimer_left = new float[5] { 1f, 10f, 20f, 30f, 10f };
+	float[] instantiationTimer_left;
+	//= new float[5] { 1f, 10f, 20f, 30f, 10f };
 
-	float[] instantiationTimer_right = new float[5] { 1f, 10f, 10f, 10f, 10f };
+	float[] instantiationTimer_right;
+	//= new float[5] { 1f, 10f, 10f, 10f, 10f };
 
 	Vector3 left_position = new Vector3 (-6f, 0f, 0f);
 	Vector3 right_position = new Vector3 (-6f, 2f, 0f);
@@ -27,10 +31,15 @@ public class MusicPathGenerator : MonoBehaviour
 
 	public GameObject right_hand;
 
+
+
+	string path = "Assets/MusicTexts/provamusica.txt";
+
+
 	// Use this for initialization
 	void Start ()
 	{
-		
+		ReadPath ();
 	}
 
 
@@ -76,4 +85,21 @@ public class MusicPathGenerator : MonoBehaviour
 
 
 
+
+	void ReadPath ()
+	{
+		StreamReader reader = new StreamReader (path); 
+
+		if (!reader.EndOfStream) {
+			string inp_ln = reader.ReadLine ();
+			instantiationTimer_left = Array.ConvertAll (inp_ln.Split (','), float.Parse);
+		}
+
+		if (!reader.EndOfStream) {
+			string inp_ln = reader.ReadLine ();
+			instantiationTimer_right = Array.ConvertAll (inp_ln.Split (','), float.Parse);
+		}
+
+		reader.Close ();  
+	}
 }
