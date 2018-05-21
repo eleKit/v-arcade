@@ -16,10 +16,9 @@ public class DuckPathGenerator : MonoBehaviour
 	public GameObject m_front_duck_right;
 
 
-	const int N = 6;
 
 
-	Vector3[] back_coord = new Vector3[N] {new Vector3 (-6f, 3f, 0f), 
+	Vector3[] back_coord = new Vector3[FisioDuckPathGenerator.N] {new Vector3 (-6f, 3f, 0f), 
 		new Vector3 (-3.8f, 3.5f, 0f), new Vector3 (-1.65f, 3f, 0f), new Vector3 (1.45f, 3.5f, 0f),
 		new Vector3 (3.85f, 3f, 0f), new Vector3 (6.1f, 3.5f, 0f)
 	};
@@ -29,9 +28,9 @@ public class DuckPathGenerator : MonoBehaviour
 
 	float front_y_coord = 4.5f;
 
-	bool[] front = new bool[N] { true, true, true, true, true, true };
-	bool[] middle = new bool[N]{ true, true, true, true, true, true };
-	bool[] back = new bool[N]{ true, true, true, true, true, true };
+	bool[] front = new bool[FisioDuckPathGenerator.N] { true, true, true, true, true, true };
+	bool[] middle = new bool[FisioDuckPathGenerator.N]{ true, true, true, true, true, true };
+	bool[] back = new bool[FisioDuckPathGenerator.N]{ true, true, true, true, true, true };
 
 
 	// Use this for initialization
