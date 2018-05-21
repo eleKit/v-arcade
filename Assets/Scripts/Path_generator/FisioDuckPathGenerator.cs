@@ -8,6 +8,8 @@ using POLIMIGameCollective;
 public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
 	public const int N = 6;
+
+
 	bool[] front = new bool[N];
 	bool[] middle = new bool[N];
 	bool[] back = new bool[N];
@@ -17,6 +19,8 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	public Toggle[] middle_buttons = new Toggle[N];
 	public Toggle[] back_buttons = new Toggle[N];
 
+
+	string name_path = "";
 
 	// Use this for initialization
 	void Start ()
@@ -36,28 +40,33 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 		
 	}
 
-	public void SetBackBool (int i)
-	{
-		if (i < N) {
-			back [i] = back_buttons [i].isOn;
-			Debug.Log ("back: " + i.ToString () + " " + back [i].ToString ());
-		}
-	}
 
-	public void SetMiddleBool (int i)
+	public void SaveDuckBool ()
 	{
-		if (i < N) {
-			middle [i] = middle_buttons [i].isOn;
-			Debug.Log ("middle: " + i.ToString () + " " + middle [i].ToString ());
-		}
-	}
-
-	public void SetFrontBool (int i)
-	{
-		if (i < N) {
+		for (int i = 0; i < N; i++) {
 			front [i] = front_buttons [i].isOn;
-			Debug.Log ("front: " + i.ToString () + " " + front [i].ToString ());
+			middle [i] = middle_buttons [i].isOn;
+			back [i] = back_buttons [i].isOn;
 		}
+	}
 
+
+
+	public void SetPathName (string name)
+	{
+		name_path = name;
+		Debug.Log (name_path);
+		
+	}
+
+
+	public void SavePath ()
+	{
+
+		//TODO parte di salvataggio
+
+
+
+		SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 	}
 }
