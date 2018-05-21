@@ -15,13 +15,13 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	public Button[] final;
 
 	public Slider start_slider;
-	public Text start_diamonds;
+	public Text start_diamonds_text;
 
 	public Slider middle_slider;
-	public Text middle_diamonds;
+	public Text middle_diamonds_text;
 
 	public Slider final_slider;
-	public Text final_diamonds;
+	public Text final_diamonds_text;
 
 	public Slider amplitude_slider;
 	public Text amplitude_text;
@@ -37,7 +37,6 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	int[] temporary_car_path = new int[M];
 
-	int[] temporary_items = new int[M];
 
 	int[] car_path = new int[M];
 
@@ -64,15 +63,15 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 		start_slider.interactable = true;
 		start_slider.value = start_slider.minValue;
-		start_diamonds.text = start_slider.minValue.ToString ();
+		start_diamonds_text.text = start_slider.minValue.ToString ();
 
 		middle_slider.interactable = true;
 		middle_slider.value = middle_slider.minValue;
-		middle_diamonds.text = middle_slider.minValue.ToString ();
+		middle_diamonds_text.text = middle_slider.minValue.ToString ();
 
 		final_slider.interactable = true;
 		final_slider.value = final_slider.minValue;
-		final_diamonds.text = final_slider.minValue.ToString ();
+		final_diamonds_text.text = final_slider.minValue.ToString ();
 		
 	}
 	
@@ -80,6 +79,13 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	void Update ()
 	{
 		
+	}
+
+
+
+	int FromCurveToIndex (int value)
+	{
+		return value + 1;
 	}
 
 
@@ -91,8 +97,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			start [h].interactable = true;
 		}
 
-		start [(i + 1)].interactable = false;
-		
+		start [FromCurveToIndex (i)].interactable = false;
+
 	}
 
 
@@ -109,7 +115,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		}
 
 
-		middle [(i + 1)].interactable = false;
+		middle [FromCurveToIndex (i)].interactable = false;
 
 	}
 
@@ -128,7 +134,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			final_slider.interactable = true;
 		}
 
-		final [(i + 1)].interactable = false;
+		final [FromCurveToIndex (i)].interactable = false;
 
 	}
 
@@ -141,7 +147,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		middle_slider.interactable = true;
 
 		for (int h = 0; h < final.Length; h++) {
-			final [h].interactable = true;
+			if (FromCurveToIndex (temporary_car_path [2]) != h)
+				final [h].interactable = true;
 		}
 
 		final_empty_button.interactable = true;
@@ -177,7 +184,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			middle [h].interactable = true;
 		}
 
-		//temporary_car_path [1] = -2;
+		temporary_car_path [1] = -2;
 		
 	}
 
@@ -188,11 +195,29 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			final [h].interactable = true;
 		}
 
+		final_empty_button.interactable = false;
+
 		final_slider.interactable = false;
 
 		temporary_car_path [2] = -2;
 	}
 
+
+
+	public void ManageStartSlider (float value)
+	{
+		start_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
+	}
+
+	public void ManageMiddleSlider (float value)
+	{
+		middle_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
+	}
+
+	public void ManageFinalSlider (float value)
+	{
+		final_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
+	}
 
 
 }
