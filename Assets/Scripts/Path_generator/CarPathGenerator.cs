@@ -6,6 +6,10 @@ public class CarPathGenerator : MonoBehaviour
 {
 	public GameObject diamond;
 
+
+	public GameObject goal;
+
+
 	//this is the whole length of the game must not be changed
 	float trajectory_length;
 
@@ -18,7 +22,7 @@ public class CarPathGenerator : MonoBehaviour
 	float amplitude = 5f;
 
 	//values: -1, 0, 1
-	int[] curve_position = new int[] { -1, 1, 0 };
+	int[] curve_position = new int[] { -1, -1, 0 };
 
 
 	//size of n_items and curve_position arrays
@@ -29,6 +33,7 @@ public class CarPathGenerator : MonoBehaviour
 	void Start ()
 	{
 		trajectory_length = Mathf.PI * coeff_trajectory_lenght;
+		goal.transform.position = new Vector3 (0, (trajectory_length * 3) + 10, 0);
 		
 	}
 	
@@ -50,19 +55,26 @@ public class CarPathGenerator : MonoBehaviour
 		if (curve_position.Length == n_items.Length) {
 
 			for (int h = 0; h < curve_position.Length; h++) {
-				for (int i = 0; i < n_items [h]; i++) {
-					y = i * (trajectory_length / n_items [h]);
-					x = amplitude *
-					(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * curve_position [h]))
-					+ curve_position [h]);
 
-					//y starts from the previous end curve + 2f of offset
-					y = y + y_start + 2f;
+				if (curve_position [h] != (-2)) {
 
-					Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
+					for (int i = 0; i < n_items [h]; i++) {
+						y = i * (trajectory_length / n_items [h]);
+						x = amplitude *
+						(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * curve_position [h]))
+						+ curve_position [h]);
 
+						//y starts from the previous end curve + 2f of offset
+						y = y + y_start + 2f;
+
+						Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
+
+					}
+					y_start = y + 3f;
+				} else {
+					goal.transform.position = new Vector3 (0, y_start + 7, 0);
+					break;
 				}
-				y_start = y + 3f;
 			}
 		}
 	}

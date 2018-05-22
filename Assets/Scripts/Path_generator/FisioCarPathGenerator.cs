@@ -73,7 +73,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 		activated = false;
 
-
+		amplitude_slider.value = amplitude_slider.minValue;
+		amplitude_text.text = "Ampiezza curva: " + amplitude_slider.value.ToString ();
 
 		for (int i = 0; i < M; i++) {
 			start [i].interactable = true;
@@ -231,6 +232,11 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		diamonds_text [index].text = 
 			Mathf.RoundToInt (diamonds_slider [index].value)
 				.ToString ();
+	}
+
+	public void ManageAmplitudeSlider (float value)
+	{
+		amplitude_text.text = "Ampiezza curva: " + Mathf.RoundToInt (value).ToString ();
 	}
 
 

@@ -6,16 +6,6 @@ using UnityEngine.SceneManagement;
 public class PathGeneratorGUI : MonoBehaviour
 {
 
-	/* car screen elements */
-
-
-	int curve_amplitude = 1;
-
-
-	/* shooting screen elements */
-	const int N = 3;
-	const int M = 6;
-	public bool[,] m_ducks_position = new bool[N, M];
 
 
 
@@ -30,14 +20,18 @@ public class PathGeneratorGUI : MonoBehaviour
 
 	public GameObject m_duck_screen;
 
-	public GameObject m_duck_instruction_screen;
-
 	public GameObject m_duck_path_screen;
 
 	public GameObject m_car_path_screen;
 
 	public GameObject m_car_screen;
 
+
+
+	public GameObject m_instructions_screen;
+	public GameObject m_car_instruction_screen;
+	public GameObject m_duck_instruction_screen;
+	public GameObject m_instruction_menu;
 
 
 
@@ -62,6 +56,34 @@ public class PathGeneratorGUI : MonoBehaviour
 		m_initial_BG.SetActive (true);
 	}
 
+
+	/* load instruction screen script */
+
+	public void LoadInstructions ()
+	{
+		ClearScreens ();
+		m_instructions_screen.SetActive (true);
+		ResetInstructionScreen ();
+		m_instruction_menu.SetActive (true);
+
+	}
+
+	public void LoadCarInstructions ()
+	{
+		
+		ResetInstructionScreen ();
+		m_car_instruction_screen.SetActive (true);
+	}
+
+	public void LoadDuckInstructions ()
+	{
+		ResetInstructionScreen ();
+		m_duck_instruction_screen.SetActive (true);
+	}
+
+
+	/* load path generator screen script */
+
 	public void LoadCar ()
 	{
 		ClearScreens ();
@@ -70,24 +92,16 @@ public class PathGeneratorGUI : MonoBehaviour
 		m_car_path_screen.SetActive (true);
 	}
 
+
+
 	public void LoadDuck ()
 	{
 		ClearScreens ();
 		m_duck_screen.SetActive (true);
 		ResetDuckScreens ();
-		StartCoroutine (LoadDucks ());
-	}
-
-	IEnumerator LoadDucks ()
-	{
-		m_duck_instruction_screen.SetActive (true);
-
-		yield return new WaitForSeconds (3f);
-
-		m_duck_instruction_screen.SetActive (false);
-
 		m_duck_path_screen.SetActive (true);
 	}
+
 
 
 
@@ -97,13 +111,9 @@ public class PathGeneratorGUI : MonoBehaviour
 	}
 
 
-	/* car screen scripts */
+	/* save screen scripts */
 
 
-	public void AddCarCurveAmplitude ()
-	{
-		curve_amplitude++;
-	}
 
 	public void CarPathSaveScreen ()
 	{
@@ -128,10 +138,16 @@ public class PathGeneratorGUI : MonoBehaviour
 	}
 
 
+
+	/* reset screen scripts */
+
 	void ClearScreens ()
 	{
 		if (m_initial_BG != null)
 			m_initial_BG.SetActive (false);
+
+		if (m_instructions_screen != null)
+			m_instructions_screen.SetActive (false);
 
 		if (m_duck_screen != null)
 			m_duck_screen.SetActive (false);
@@ -147,8 +163,6 @@ public class PathGeneratorGUI : MonoBehaviour
 		if (m_duck_screen != null) {
 			if (m_save_duck_screen != null)
 				m_save_duck_screen.SetActive (false);
-			if (m_duck_instruction_screen != null)
-				m_duck_instruction_screen.SetActive (false);
 			if (m_duck_path_screen != null)
 				m_duck_path_screen.SetActive (false);
 		}
@@ -161,7 +175,21 @@ public class PathGeneratorGUI : MonoBehaviour
 				m_save_car_screen.SetActive (false);
 			if (m_car_path_screen != null)
 				m_car_path_screen.SetActive (false);
+			
 		}
+	}
+
+	void ResetInstructionScreen ()
+	{
+		if (m_instructions_screen != null) {
+			if (m_car_instruction_screen != null)
+				m_car_instruction_screen.SetActive (false);
+			if (m_duck_instruction_screen != null)
+				m_duck_instruction_screen.SetActive (false);
+			if (m_instruction_menu != null)
+				m_instruction_menu.SetActive (false);
+		}
+		
 	}
 
 

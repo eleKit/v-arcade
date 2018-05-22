@@ -620,6 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diamond: {fileID: 1760637048425986, guid: f06938f44ada24bb0a63d8b5a1861852, type: 2}
+  goal: {fileID: 944359810}
   coeff_trajectory_lenght: 15
 --- !u!4 &586659648
 Transform:
@@ -1158,6 +1159,10 @@ Prefab:
     - target: {fileID: 4810430917572644, guid: e99e4e69df2f04400a3d7562345f8cb1, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480351487929692, guid: e99e4e69df2f04400a3d7562345f8cb1, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e99e4e69df2f04400a3d7562345f8cb1, type: 2}
