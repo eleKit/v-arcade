@@ -25,11 +25,7 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	// Use this for initialization
 	void Start ()
 	{
-		for (int i = 0; i < N; i++) {
-			front [i] = false;
-			middle [i] = false;
-			back [i] = false;
-		}
+		Reset ();
 			
 		
 	}
@@ -40,6 +36,20 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 		
 	}
 
+	public void Reset ()
+	{
+		
+		for (int i = 0; i < N; i++) {
+			front [i] = false;
+			middle [i] = false;
+			back [i] = false;
+
+			front_buttons [i].isOn = false;
+			middle_buttons [i].isOn = false;
+			back_buttons [i].isOn = false;
+		}
+	}
+
 
 	public void SaveDuckBool ()
 	{
@@ -47,6 +57,7 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 			front [i] = front_buttons [i].isOn;
 			middle [i] = middle_buttons [i].isOn;
 			back [i] = back_buttons [i].isOn;
+			Debug.Log (front [i].ToString ());
 		}
 	}
 

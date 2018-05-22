@@ -8,20 +8,18 @@ using POLIMIGameCollective;
 public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 {
 
-	public Button[] start;
+	public const int M = 3;
 
-	public Button[] middle;
 
-	public Button[] final;
+	public Button[] start = new Button[M];
 
-	public Slider start_slider;
-	public Text start_diamonds_text;
+	public Button[] middle = new Button[M];
 
-	public Slider middle_slider;
-	public Text middle_diamonds_text;
+	public Button[] final = new Button[M];
 
-	public Slider final_slider;
-	public Text final_diamonds_text;
+	public Text[] diamonds_text = new Text[M];
+
+	public Slider[] diamonds_slider = new Slider[M];
 
 	public Slider amplitude_slider;
 	public Text amplitude_text;
@@ -32,56 +30,64 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	public Button final_empty_button;
 
-	public const int M = 3;
 
+	int[] car_path = new int[M] { -3, -3, -3 };
 
-	int[] temporary_car_path = new int[M];
-
-
-	int[] car_path = new int[M];
 
 	int[] n_items = new int[M];
+
+
+	bool start_ok;
+
+	bool middle_ok;
+
+	bool final_ok;
+
+	bool activated;
 
 	// Use this for initialization
 	void Start ()
 	{ 
-
-	
-		for (int i = 0; i < start.Length; i++) {
-			start [i].interactable = true;
-		}
-
-		for (int i = 0; i < middle.Length; i++) {
-			middle [i].interactable = true;
-		}
-
-		for (int i = 0; i < final.Length; i++) {
-			final [i].interactable = true;
-		}
-
-		button_go_on.interactable = false;
-
-		start_slider.interactable = true;
-		start_slider.value = start_slider.minValue;
-		start_diamonds_text.text = start_slider.minValue.ToString ();
-
-		middle_slider.interactable = true;
-		middle_slider.value = middle_slider.minValue;
-		middle_diamonds_text.text = middle_slider.minValue.ToString ();
-
-		final_slider.interactable = true;
-		final_slider.value = final_slider.minValue;
-		final_diamonds_text.text = final_slider.minValue.ToString ();
+		ResetAll ();
 		
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
+		if (start_ok && middle_ok && final_ok && !activated) {
+			activated = true;
+			button_go_on.interactable = true;
+		}
 		
 	}
 
 
+	public void ResetAll ()
+	{
+		start_ok = false;
+
+		middle_ok = false;
+
+		final_ok = false;
+
+		activated = false;
+
+
+
+		for (int i = 0; i < M; i++) {
+			start [i].interactable = true;
+
+			middle [i].interactable = true;
+
+			final [i].interactable = true;
+
+			diamonds_slider [i].value = diamonds_slider [i].minValue;
+			diamonds_text [i].text = diamonds_slider [i].minValue.ToString ();
+		}
+
+		button_go_on.interactable = false;
+	}
 
 	int FromCurveToIndex (int value)
 	{
@@ -91,7 +97,9 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	public void StartPressed (int i)
 	{
-		temporary_car_path [0] = i;
+		start_ok = true;
+
+		car_path [0] = i;
 
 		for (int h = 0; h < start.Length; h++) {
 			start [h].interactable = true;
@@ -104,7 +112,9 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	public void MiddlePressed (int i)
 	{
-		temporary_car_path [1] = i;
+		middle_ok = true;
+
+		car_path [(M - 1) / 2] = i;
 
 		for (int h = 0; h < middle.Length; h++) {
 			middle [h].interactable = true;
@@ -122,7 +132,9 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	public void FinalPressed (int i)
 	{
-		temporary_car_path [2] = i;
+		final_ok = true;
+
+		car_path [M - 1] = i;
 
 		for (int h = 0; h < final.Length; h++) {
 			final [h].interactable = true;
@@ -131,7 +143,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		if (!final_empty_button.interactable) {
 			final_empty_button.interactable = true;
 
-			final_slider.interactable = true;
+			diamonds_slider [M - 1].interactable = true;
 		}
 
 		final [FromCurveToIndex (i)].interactable = false;
@@ -144,25 +156,35 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 		middle_empty_button.interactable = true;
 
-		middle_slider.interactable = true;
+		//middle
+		diamonds_slider [(M - 1) / 2].interactable = true;
 
 		for (int h = 0; h < final.Length; h++) {
-			if (FromCurveToIndex (temporary_car_path [2]) != h)
-				final [h].interactable = true;
+			final [h].interactable = true;
 		}
 
+		//final
 		final_empty_button.interactable = true;
 
-		final_slider.interactable = true;
+		diamonds_slider [M - 1].interactable = true;
+
+		//deactivate the "continua" button
+		final_ok = false;
+
+		button_go_on.interactable = false;
+
+		activated = false;
 	}
 
 
 	void DeactivateButtons ()
 	{
+		middle_ok = true;
+		final_ok = true;
 
 		middle_empty_button.interactable = false;
 
-		middle_slider.interactable = false;
+		diamonds_slider [(M - 1) / 2].interactable = false;
 
 		for (int h = 0; h < final.Length; h++) {
 			final [h].interactable = false;
@@ -170,7 +192,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 		final_empty_button.interactable = false;
 
-		final_slider.interactable = false;
+		diamonds_slider [M - 1].interactable = false;
 	}
 
 
@@ -184,39 +206,45 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			middle [h].interactable = true;
 		}
 
-		temporary_car_path [1] = -2;
+		car_path [(M - 1) / 2] = -2;
 		
 	}
 
 	public void FinalEmpty ()
 	{
-		
+		final_ok = true;
 		for (int h = 0; h < final.Length; h++) {
 			final [h].interactable = true;
 		}
 
 		final_empty_button.interactable = false;
 
-		final_slider.interactable = false;
+		diamonds_slider [M - 1].interactable = false;
 
-		temporary_car_path [2] = -2;
+		car_path [M - 1] = -2;
 	}
 
 
 
-	public void ManageStartSlider (float value)
+	public void ManageSlider (int index)
 	{
-		start_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
+		diamonds_text [index].text = 
+			Mathf.RoundToInt (diamonds_slider [index].value)
+				.ToString ();
 	}
 
-	public void ManageMiddleSlider (float value)
-	{
-		middle_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
-	}
 
-	public void ManageFinalSlider (float value)
+
+	public void SaveCarPath ()
 	{
-		final_diamonds_text.text = Mathf.RoundToInt (value).ToString ();
+		Debug.Log (car_path [0].ToString () + " " +
+		car_path [1].ToString () + " " +
+		car_path [2].ToString ());
+
+		for (int h = 0; h < M; h++) {
+			n_items [h] = Mathf.RoundToInt (diamonds_slider [h].value);
+			Debug.Log (n_items [h].ToString ());
+		}
 	}
 
 
