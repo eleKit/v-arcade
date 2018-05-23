@@ -33,7 +33,11 @@ public class PathGeneratorGUI : MonoBehaviour
 	public GameObject m_duck_instruction_screen;
 	public GameObject m_instruction_menu;
 
+	public GameObject m_car_save_text;
+	public GameObject m_duck_save_text;
 
+	string duck_name = "";
+	string car_name = "";
 
 	// Use this for initialization
 	void Start ()
@@ -118,7 +122,20 @@ public class PathGeneratorGUI : MonoBehaviour
 	public void CarPathSaveScreen ()
 	{
 		m_save_car_screen.SetActive (true);
+		m_car_save_text.SetActive (false);
 		
+	}
+
+	public void CarPathSaveWithNoName ()
+	{
+		if (car_name.Equals (""))
+			m_car_save_text.SetActive (true);
+
+	}
+
+	public void CarNameInserted (string name)
+	{
+		car_name = name;
 	}
 
 	public void GoBackToCar ()
@@ -129,7 +146,20 @@ public class PathGeneratorGUI : MonoBehaviour
 	public void DuckPathSaveScreen ()
 	{
 		m_save_duck_screen.SetActive (true);
+		m_duck_save_text.SetActive (false);
 
+	}
+
+	public void DuckPathSaveWithNoName ()
+	{
+		if (duck_name.Equals (""))
+			m_duck_save_text.SetActive (true);
+
+	}
+
+	public void DuckNameInserted (string name)
+	{
+		duck_name = name;
 	}
 
 	public void GoBackToDucks ()
