@@ -96,8 +96,10 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		}
 
 
+
 		for (int i = 0; i < diamonds_slider.Length; i++) {
 			diamonds_slider [i].value = diamonds_slider [i].minValue;
+			diamonds_slider [i].interactable = true;
 			diamonds_text [i].text = diamonds_slider [i].minValue.ToString ();
 		}
 
@@ -270,7 +272,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 
 
-	public void SaveCarPath ()
+	public void SaveCarData ()
 	{
 		bool path_already_ended = false;
 
@@ -301,6 +303,25 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		car_path.curve_amplitude = amplitude_slider.value;
 		Debug.Log ("amplitude " + car_path.curve_amplitude.ToString ());
 		
+		
+	}
+
+
+	public void SetPathName (string name)
+	{
+		car_path.id_path = name;
+		Debug.Log (car_path.id_path);
+
+	}
+
+
+	public void SaveCarPath ()
+	{
+		//TODO parte di salvataggio
+
+
+
+		SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		
 	}
 

@@ -8,12 +8,7 @@ using POLIMIGameCollective;
 public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
 
-	DuckSection ducks_front_position;
-
-	DuckSection ducks_middle_position;
-
-	DuckSection ducks_back_position;
-
+	DuckPath duck_path;
 
 	public Toggle[] front_buttons = new Toggle[DuckSection.N];
 	public Toggle[] middle_buttons = new Toggle[DuckSection.N];
@@ -27,14 +22,16 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	// Use this for initialization
 	void Start ()
 	{
-		ducks_front_position = new DuckSection ();
-		ducks_front_position.section = DuckSection.DuckGameSection.Front;
+		duck_path = new DuckPath ();
 
-		ducks_middle_position = new DuckSection ();
-		ducks_middle_position.section = DuckSection.DuckGameSection.Middle;
+		duck_path.back = new DuckSection ();
+		duck_path.back.section = DuckSection.DuckGameSection.Back;
 
-		ducks_back_position = new DuckSection ();
-		ducks_back_position.section = DuckSection.DuckGameSection.Back;
+		duck_path.middle = new DuckSection ();
+		duck_path.middle.section = DuckSection.DuckGameSection.Middle;
+
+		duck_path.front = new DuckSection ();
+		duck_path.front.section = DuckSection.DuckGameSection.Front;
 
 
 
@@ -54,15 +51,15 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 		
 		for (int i = 0; i < DuckSection.N; i++) {
 
-			ducks_front_position.ducks [i] = false;
+			duck_path.back.ducks [i] = false;
 			front_buttons [i].isOn = false;
 	
 
-			ducks_middle_position.ducks [i] = false;
+			duck_path.middle.ducks [i] = false;
 			middle_buttons [i].isOn = false;
 	
 
-			ducks_back_position.ducks [i] = false;
+			duck_path.front.ducks [i] = false;
 			back_buttons [i].isOn = false;
 		}
 
@@ -75,11 +72,12 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 		
 		for (int i = 0; i < DuckSection.N; i++) {
 			
-			ducks_front_position.ducks [i] = front_buttons [i].isOn;
-	
-			ducks_middle_position.ducks [i] = middle_buttons [i].isOn;
-	
-			ducks_back_position.ducks [i] = back_buttons [i].isOn;
+			duck_path.back.ducks [i] = back_buttons [i].isOn;
+
+			duck_path.middle.ducks [i] = middle_buttons [i].isOn;
+
+			duck_path.front.ducks [i] = front_buttons [i].isOn;
+
 		}
 		
 

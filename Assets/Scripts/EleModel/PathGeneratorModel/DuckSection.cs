@@ -18,9 +18,7 @@ public class DuckSection
 
 	;
 
-	const float MIDDLE_y_coord = 2.5f;
 
-	const float FRONT_y_coord = 4.5f;
 
 	public DuckGameSection section;
 
@@ -31,4 +29,8 @@ public class DuckSection
 		new Vector3 (-1.65f, 3f, 0f), new Vector3 (1.45f, 3.5f, 0f),
 		new Vector3 (3.85f, 3f, 0f), new Vector3 (6.1f, 3.5f, 0f)
 	};
+
+	public const float MIDDLE_y_coord = 2.5f;
+
+	public const float FRONT_y_coord = 4.5f;
 }
