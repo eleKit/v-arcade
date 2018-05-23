@@ -165,20 +165,21 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 				} else if (!m_final_buttons [h].interactable) {      //if "Target" has been pressed before
 
 					//reactivate the non iteractable item slider
-					for (int k = 0; k < diamonds_slider.Length; h++) {
+					for (int k = 0; k < diamonds_slider.Length; k++) {
 						if (!diamonds_slider [k].interactable)
 							diamonds_slider [k].interactable = true;
 					}
 				} else {
 					//do nothing
 				}
-				m_final_buttons [h].interactable = true;
+					
 			}
 				
-
-			m_final_buttons [i].interactable = false;
+			m_final_buttons [h].interactable = true;
 
 		}
+
+		m_final_buttons [i].interactable = false;
 	}
 
 
@@ -208,6 +209,10 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	{
 		middle_ok = true;
 
+		for (int h = 0; h < m_final_buttons.Length; h++) {
+			m_final_buttons [h].interactable = false;
+		}
+
 		DeactivateFinalButtons (diamond_index);
 
 
@@ -218,9 +223,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	{
 		final_ok = true;
 
-		for (int h = 0; h < m_final_buttons.Length; h++) {
-			m_final_buttons [h].interactable = false;
-		}
+
 
 		for (int h = 0; h < diamonds_slider.Length; h++) {
 			if (h >= diamond_index)
