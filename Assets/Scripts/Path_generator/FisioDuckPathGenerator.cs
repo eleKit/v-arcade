@@ -7,24 +7,37 @@ using POLIMIGameCollective;
 
 public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
-	public const int N = 6;
+
+	DuckPath ducks_front_position;
+
+	DuckPath ducks_middle_position;
+
+	DuckPath ducks_back_position;
 
 
-	bool[] front = new bool[N];
-	bool[] middle = new bool[N];
-	bool[] back = new bool[N];
-
-
-	public Toggle[] front_buttons = new Toggle[N];
-	public Toggle[] middle_buttons = new Toggle[N];
-	public Toggle[] back_buttons = new Toggle[N];
+	public Toggle[] front_buttons = new Toggle[DuckPath.N];
+	public Toggle[] middle_buttons = new Toggle[DuckPath.N];
+	public Toggle[] back_buttons = new Toggle[DuckPath.N];
 
 
 	string name_path = "";
 
+
+
 	// Use this for initialization
 	void Start ()
 	{
+		ducks_front_position = new DuckPath ();
+		ducks_front_position.section = DuckPath.DuckSection.Front;
+
+		ducks_middle_position = new DuckPath ();
+		ducks_middle_position.section = DuckPath.DuckSection.Middle;
+
+		ducks_back_position = new DuckPath ();
+		ducks_back_position.section = DuckPath.DuckSection.Back;
+
+
+
 		Reset ();
 			
 		
@@ -39,26 +52,38 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	public void Reset ()
 	{
 		
-		for (int i = 0; i < N; i++) {
-			front [i] = false;
-			middle [i] = false;
-			back [i] = false;
+		for (int i = 0; i < DuckPath.N; i++) {
 
+			ducks_front_position.ducks [i] = false;
 			front_buttons [i].isOn = false;
+	
+
+			ducks_middle_position.ducks [i] = false;
 			middle_buttons [i].isOn = false;
+	
+
+			ducks_back_position.ducks [i] = false;
 			back_buttons [i].isOn = false;
 		}
+
+
 	}
 
 
 	public void SaveDuckBool ()
 	{
-		for (int i = 0; i < N; i++) {
-			front [i] = front_buttons [i].isOn;
-			middle [i] = middle_buttons [i].isOn;
-			back [i] = back_buttons [i].isOn;
-			Debug.Log (front [i].ToString ());
+		
+		for (int i = 0; i < DuckPath.N; i++) {
+			
+			ducks_front_position.ducks [i] = front_buttons [i].isOn;
+	
+			ducks_middle_position.ducks [i] = middle_buttons [i].isOn;
+	
+			ducks_back_position.ducks [i] = back_buttons [i].isOn;
 		}
+		
+
+
 	}
 
 
