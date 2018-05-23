@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using POLIMIGameCollective;
+using System;
+using System.IO;
 
 public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 {
@@ -27,6 +29,9 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	public Text amplitude_text;
 
 	public CarPath car_path;
+
+
+	string name_path = "";
 
 
 
@@ -309,19 +314,43 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	public void SetPathName (string name)
 	{
-		car_path.id_path = name;
-		Debug.Log (car_path.id_path);
+		name_path = name;
+		Debug.Log (name_path);
 
 	}
 
 
 	public void SaveCarPath ()
 	{
-		//TODO parte di salvataggio
+		if (name_path.Equals ("")) {
+			//do nothing
+		} else {
+
+
+			DateTime gameDate = DateTime.UtcNow;
+			car_path.timestamp = gameDate.ToFileTimeUtc ();
+			car_path.doctorName = GlobalDoctorData.globalDoctorData.doctor;
+
+			car_path.id_path = name_path;
+
+			string directoryPath = 
+				Path.Combine (Application.persistentDataPath, car_path.doctorName);
+
+			Directory.CreateDirectory (directoryPath);
+			string filePath = Path.Combine (
+				                  directoryPath,
+				                  GameMatch.GameType.Car.ToString () + "_"
+				                  + car_path.id_path + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+			                  );
+
+			string jsonString = JsonUtility.ToJson (car_path);
+			File.WriteAllText (filePath, jsonString);
 
 
 
-		SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
+
+			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
+		}
 		
 	}
 

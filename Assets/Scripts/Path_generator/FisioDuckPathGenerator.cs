@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using POLIMIGameCollective;
+using System;
+using System.IO;
 
 public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
@@ -97,8 +99,24 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	public void SavePath ()
 	{
 
-		//TODO parte di salvataggio
+		DateTime gameDate = DateTime.UtcNow;
+		duck_path.timestamp = gameDate.ToFileTimeUtc ();
+		duck_path.doctorName = GlobalDoctorData.globalDoctorData.doctor;
 
+		duck_path.id_path = name_path;
+
+		string directoryPath = 
+			Path.Combine (Application.persistentDataPath, duck_path.doctorName);
+
+		Directory.CreateDirectory (directoryPath);
+		string filePath = Path.Combine (
+			                  directoryPath,
+			                  GameMatch.GameType.Shooting.ToString () + "_"
+			                  + duck_path.id_path + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+		                  );
+
+		string jsonString = JsonUtility.ToJson (duck_path);
+		File.WriteAllText (filePath, jsonString);
 
 
 		SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
