@@ -16,7 +16,7 @@ public class DuckPathGenerator : MonoBehaviour
 	public GameObject m_front_duck_right;
 
 
-
+	//TODO delete this and substitute with an only object of type DuckPath
 
 	Vector3[] back_coord = new Vector3[N] {new Vector3 (-6f, 3f, 0f), 
 		new Vector3 (-3.8f, 3.5f, 0f), new Vector3 (-1.65f, 3f, 0f), new Vector3 (1.45f, 3.5f, 0f),
@@ -32,7 +32,7 @@ public class DuckPathGenerator : MonoBehaviour
 	bool[] middle = new bool[N]{ true, true, true, true, true, true };
 	bool[] back = new bool[N]{ true, true, true, true, true, true };
 
-	//TODO delete this
+
 	const int N = 6;
 
 
