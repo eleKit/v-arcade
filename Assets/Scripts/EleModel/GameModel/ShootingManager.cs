@@ -53,7 +53,7 @@ public class ShootingManager : Singleton<ShootingManager>
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;
 
-		GameObject.Find ("DuckPathGenerator").GetComponent<DuckPathGenerator> ().LoadDucks ();
+		GameObject.Find ("DuckPathGenerator").GetComponent<DuckPathGenerator> ().LoadPath ("");
 		
 	}
 

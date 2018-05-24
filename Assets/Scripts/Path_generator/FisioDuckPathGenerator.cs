@@ -107,8 +107,9 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 
 			duck_path.id_path = name_path;
 
+			//TODO if the paths are divided into doctors substitute GameMatch.GameType.Shooting.ToString () with duck_path.doctorName
 			string directoryPath = 
-				Path.Combine (Application.persistentDataPath, duck_path.doctorName);
+				Path.Combine (Application.persistentDataPath, GameMatch.GameType.Shooting.ToString ());
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (

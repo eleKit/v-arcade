@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class CarPathGenerator : MonoBehaviour
 {
@@ -10,30 +11,23 @@ public class CarPathGenerator : MonoBehaviour
 	public GameObject goal;
 
 
-	//this is the whole length of the game must not be changed
+	//this two attributes are the whole length of the game must not be changed
 	float trajectory_length;
 
 	[Range (1, 50)]
 	public int coeff_trajectory_lenght = 30;
 
-	int[] n_items = new int[] { 10, 25, 5 };
+
+
+	CarPath car_path;
 
 	//5f is the maximum amplitude possible
-	float amplitude = 5f;
 
-	//values: -1, 0, 1
-	int[] curve_position = new int[] { -1, -1, 0 };
-
-
-	//size of n_items and curve_position arrays
-	//the game is divided into 3 portions: start, middle, end
-	const int N = 3;
 
 	// Use this for initialization
 	void Start ()
 	{
 		trajectory_length = Mathf.PI * coeff_trajectory_lenght;
-		goal.transform.position = new Vector3 (0, (trajectory_length * 3) + 10, 0);
 		
 	}
 	
@@ -44,7 +38,30 @@ public class CarPathGenerator : MonoBehaviour
 	}
 
 
-	public void LoadDiamonds ()
+
+
+	//TODO this is called by UI and used to load the path data
+	public void LoadPath (string filePath)
+	{
+		string directoryPath = Path.Combine (Application.persistentDataPath, GameMatch.GameType.Car.ToString ());
+
+		filePath = Path.Combine (
+			directoryPath,
+			"Car_prova_20180524T071123" + ".json"
+		);
+		Debug.Log (filePath.ToString ());
+
+		string carPath = File.ReadAllText (filePath);
+
+		car_path = JsonUtility.FromJson<CarPath> (carPath);
+
+		LoadDiamonds ();
+
+	}
+
+
+
+	void LoadDiamonds ()
 	{
 		//diamond coordinates
 		float y = 1f;
@@ -52,30 +69,30 @@ public class CarPathGenerator : MonoBehaviour
 
 		float y_start = y;
 
-		if (curve_position.Length == n_items.Length) {
 
-			for (int h = 0; h < curve_position.Length; h++) {
 
-				if (curve_position [h] != (-2)) {
+		for (int h = 0; h < car_path.car_sections.Length; h++) {
 
-					for (int i = 0; i < n_items [h]; i++) {
-						y = i * (trajectory_length / n_items [h]);
-						x = amplitude *
-						(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * curve_position [h]))
-						+ curve_position [h]);
+			for (int i = 0; i < car_path.car_sections [h].num_items; i++) {
+				y = i * (trajectory_length / car_path.car_sections [h].num_items);
+				x = car_path.curve_amplitude *
+				(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * car_path.car_sections [h].curve_position))
+				+ car_path.car_sections [h].curve_position);
 
-						//y starts from the previous end curve + 2f of offset
-						y = y + y_start + 2f;
+				//new y is traslated of y_start based on the end of the previous curve
+				y = y + y_start;
 
-						Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
+				Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
 
-					}
-					y_start = y + 3f;
-				} else {
-					goal.transform.position = new Vector3 (0, y_start + 7, 0);
-					break;
-				}
 			}
+
+			//y starts from the previous end curve + 5f of offset
+			y_start = y + 5f;
+
 		}
+
+		goal.transform.position = new Vector3 (0, y_start + 10, 0);
+
+		
 	}
 }

@@ -51,7 +51,7 @@ public class CarManager : Singleton<CarManager>
 	{
 		GameManager.Instance.BaseChooseLevel (name);
 		ResetPlayer ();
-		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadDiamonds ();
+		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadPath ("");
 
 	}
 

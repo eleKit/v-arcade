@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class DuckPathGenerator : MonoBehaviour
 {
@@ -16,24 +17,8 @@ public class DuckPathGenerator : MonoBehaviour
 	public GameObject m_front_duck_right;
 
 
-	//TODO delete this and substitute with an only object of type DuckPath
+	DuckPath duck_path;
 
-	Vector3[] back_coord = new Vector3[N] {new Vector3 (-6f, 3f, 0f), 
-		new Vector3 (-3.8f, 3.5f, 0f), new Vector3 (-1.65f, 3f, 0f), new Vector3 (1.45f, 3.5f, 0f),
-		new Vector3 (3.85f, 3f, 0f), new Vector3 (6.1f, 3.5f, 0f)
-	};
-
-
-	float middle_y_coord = 2.5f;
-
-	float front_y_coord = 4.5f;
-
-	bool[] front = new bool[N] { true, true, true, true, true, true };
-	bool[] middle = new bool[N]{ true, true, true, true, true, true };
-	bool[] back = new bool[N]{ true, true, true, true, true, true };
-
-
-	const int N = 6;
 
 
 	// Use this for initialization
@@ -48,37 +33,59 @@ public class DuckPathGenerator : MonoBehaviour
 		
 	}
 
+	//TODO this is called by UI and used to load the path data
+	public void LoadPath (string filePath)
+	{
+		string directoryPath = Path.Combine (Application.persistentDataPath, GameMatch.GameType.Shooting.ToString ());
 
-	public void LoadDucks ()
+		filePath = Path.Combine (
+			directoryPath,
+			"Shooting_prova_20180524T071133" + ".json"
+		);
+
+		Debug.Log (filePath.ToString ());
+
+		string duckPath = File.ReadAllText (filePath);
+
+		duck_path = JsonUtility.FromJson<DuckPath> (duckPath);
+
+		LoadDucks ();
+
+	}
+
+
+
+
+	void LoadDucks ()
 	{
 
-		for (int i = 0; i < front.Length; i++) {
-			if (front [i]) {
+		for (int i = 0; i < duck_path.front.ducks.Length; i++) {
+			if (duck_path.front.ducks [i]) {
 				if (i < 3) {
-					Instantiate (m_front_duck_left, back_coord [i] - new Vector3 (0, front_y_coord, 0), Quaternion.identity);
+					Instantiate (m_front_duck_left, duck_path.front.back_coord [i] - new Vector3 (0, DuckSection.FRONT_y_coord, 0), Quaternion.identity);
 				} else if (i >= 3) {
-					Instantiate (m_front_duck_right, back_coord [i] - new Vector3 (0, front_y_coord, 0), Quaternion.identity);
+					Instantiate (m_front_duck_left, duck_path.front.back_coord [i] - new Vector3 (0, DuckSection.FRONT_y_coord, 0), Quaternion.identity);
 				}
 			}
 		}
 
 
-		for (int i = 0; i < middle.Length; i++) {
-			if (middle [i]) {
+		for (int i = 0; i < duck_path.middle.ducks.Length; i++) {
+			if (duck_path.middle.ducks [i]) {
 				if (i < 3) {
-					Instantiate (m_middle_duck_left, back_coord [i] - new Vector3 (0, middle_y_coord, 0), Quaternion.identity);
+					Instantiate (m_middle_duck_left, duck_path.middle.back_coord [i] - new Vector3 (0, DuckSection.MIDDLE_y_coord, 0), Quaternion.identity);
 				} else if (i >= 3) {
-					Instantiate (m_middle_duck_right, back_coord [i] - new Vector3 (0, middle_y_coord, 0), Quaternion.identity);
+					Instantiate (m_middle_duck_right, duck_path.middle.back_coord [i] - new Vector3 (0, DuckSection.MIDDLE_y_coord, 0), Quaternion.identity);
 				}
 			}
 		}
 
-		for (int i = 0; i < back.Length; i++) {
-			if (back [i]) {
+		for (int i = 0; i < duck_path.back.ducks.Length; i++) {
+			if (duck_path.back.ducks [i]) {
 				if (i < 3) {
-					Instantiate (m_back_duck_left, back_coord [i], Quaternion.identity);
+					Instantiate (m_back_duck_left, duck_path.back.back_coord [i], Quaternion.identity);
 				} else if (i >= 3) {
-					Instantiate (m_back_duck_right, back_coord [i], Quaternion.identity);
+					Instantiate (m_back_duck_right, duck_path.back.back_coord [i], Quaternion.identity);
 				}
 			}
 		}

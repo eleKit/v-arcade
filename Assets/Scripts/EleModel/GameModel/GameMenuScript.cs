@@ -131,18 +131,21 @@ public class GameMenuScript : MonoBehaviour
 	void Start (int id)
 	{
 		if (music) {
-			if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 70, 200, 75), "provamusica"))
+			if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 70, 200, 75), "provamusica")) {
 				MusicPathGenerator.Instance.filename = "provamusica.txt";
+				MusicGameManager.Instance.ChooseLevel ("Na");
+				load_path = false;
+			}
 			
 		}
-		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
-			load_path = false;
-			if (car) {
-				CarManager.Instance.ChooseLevel ("Na");
-			} else if (shooting) {
-				ShootingManager.Instance.ChooseLevel ("Na");
-			} else if (music) {
-				MusicGameManager.Instance.ChooseLevel ("Na");
+		if (car || shooting) {
+			if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
+				load_path = false;
+				if (car) {
+					CarManager.Instance.ChooseLevel ("Na");
+				} else if (shooting) {
+					ShootingManager.Instance.ChooseLevel ("Na");
+				}
 			}
 		}
 	}
