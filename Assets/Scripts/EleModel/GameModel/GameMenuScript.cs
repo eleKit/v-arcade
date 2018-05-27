@@ -23,6 +23,8 @@ public class GameMenuScript : MonoBehaviour
 
 	public Button[] m_level_button;
 
+	public bool car;
+
 	//retreive the name levels from file into list, convert the list into a new array
 	string[] name_levels;
 	int index_of_current_level_screen;
@@ -58,9 +60,10 @@ public class GameMenuScript : MonoBehaviour
 
 		if (m_win_screen != null)
 			m_win_screen.SetActive (false);
-
-		if (m_mode_screen != null)
-			m_mode_screen.SetActive (false);
+		if (car) {
+			if (m_mode_screen != null)
+				m_mode_screen.SetActive (false);
+		}
 
 	}
 
