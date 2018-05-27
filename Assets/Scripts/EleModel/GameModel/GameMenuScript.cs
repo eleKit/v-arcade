@@ -95,7 +95,7 @@ public class GameMenuScript : MonoBehaviour
 	{
 		ClearScreens ();
 		m_win_screen.SetActive (true);
-		m_win_text.text = "Punteggio partita: " + score.ToString ();
+		m_win_text.text = score.ToString ();
 	}
 
 	public void LoadPauseScreen ()
