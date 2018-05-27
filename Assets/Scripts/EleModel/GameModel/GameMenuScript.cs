@@ -108,6 +108,17 @@ public class GameMenuScript : MonoBehaviour
 	{
 		ClearScreens ();
 		m_level_screen.SetActive (true);
+		LoadFirstLevels ();
+	}
+
+	public void LoadModeScreen ()
+	{
+		if (car) {
+			ClearScreens ();
+			m_mode_screen.SetActive (true);
+		} else {
+			LoadLevelScreen ();
+		}
 	}
 
 
