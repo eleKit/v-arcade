@@ -54,7 +54,7 @@ public class PointerControllerScript : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		if (hc.GetFrame ().Hands.Count == 1 && ShootingManager.Instance.GetIsPlaying ()) {
 
 			GetComponent<SpriteRenderer> ().color = Color.white;
 

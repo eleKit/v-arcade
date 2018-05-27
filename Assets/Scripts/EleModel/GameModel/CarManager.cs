@@ -23,7 +23,7 @@ public class CarManager : Singleton<CarManager>
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
 		 */
-		GameManager.Instance.menu_GUI.car = true;
+		//GameManager.Instance.menu_GUI.car = true;
 		GameManager.Instance.car = true;
 
 
@@ -87,6 +87,13 @@ public class CarManager : Singleton<CarManager>
 	public void AddPoints ()
 	{
 		GameManager.Instance.BaseAddPoints ();
+
+	}
+
+
+	public bool GetIsPlaying ()
+	{
+		return GameManager.Instance.Get_Is_Playing ();
 
 	}
 

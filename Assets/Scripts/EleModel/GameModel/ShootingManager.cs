@@ -15,7 +15,7 @@ public class ShootingManager : Singleton<ShootingManager>
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
 		 */
-		GameManager.Instance.menu_GUI.shooting = true;
+		//GameManager.Instance.menu_GUI.shooting = true;
 		GameManager.Instance.shooting = true;
 
 
@@ -78,5 +78,10 @@ public class ShootingManager : Singleton<ShootingManager>
 	{
 		GameManager.Instance.BaseAddPoints ();
 
+	}
+
+	public bool GetIsPlaying ()
+	{
+		return GameManager.Instance.Get_Is_Playing ();
 	}
 }

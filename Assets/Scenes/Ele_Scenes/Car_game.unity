@@ -150,7 +150,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4930730751256730, guid: ef62540567cbd473497af13cc23da86d, type: 2}
       propertyPath: m_RootOrder
-      value: 17
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef62540567cbd473497af13cc23da86d, type: 2}
@@ -585,7 +585,7 @@ RectTransform:
   - {fileID: 683353135}
   - {fileID: 2090360673}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -633,7 +633,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &670559790
 Prefab:
@@ -714,7 +714,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4316292818405194, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
@@ -901,55 +901,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 683353134}
---- !u!1 &717766278
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 717766280}
-  - component: {fileID: 717766279}
-  m_Layer: 0
-  m_Name: CarGameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &717766279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 717766278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db0524860e6764745bc91f85288642b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cheat: 0
-  m_background: {fileID: 529813318}
-  m_wait_background: {fileID: 1448980010}
-  m_wait_text: {fileID: 675356311}
-  m_loading_time: 0.5
-  player: {fileID: 472364380}
-  hc: {fileID: 913721117}
-  menu_GUI: {fileID: 135497762}
-  winning_Point: {fileID: 944359810}
---- !u!4 &717766280
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 717766278}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.22165321, y: 142.2804, z: 0.07846574}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &855330346 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: c9f2277f2b4414ff9abf05e783890171, type: 2}
@@ -1349,7 +1300,7 @@ RectTransform:
   - {fileID: 1094377335}
   - {fileID: 675356310}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1393,7 +1344,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4983425542502380, guid: bb6ffe04da8434316b4c194f8e819dc2, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb6ffe04da8434316b4c194f8e819dc2, type: 2}
@@ -1437,7 +1388,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1622344718
 Prefab:
@@ -1518,7 +1469,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4738627540273160, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}
@@ -1652,7 +1603,7 @@ RectTransform:
   m_Children:
   - {fileID: 347626421}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

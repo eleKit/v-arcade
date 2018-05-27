@@ -2,37 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameMenuScript : MonoBehaviour
 {
+	public GameObject m_info_screen;
 
-	public GUISkin customSkin;
+	public GameObject m_level_screen;
 
-	public bool menu, load_path, pause, win;
+	public GameObject m_main_screen;
 
-	public bool car, music, shooting;
+	public GameObject m_pause_screen;
 
-	//GUI settings
-	Vector2 scrollPosition = Vector2.zero;
-	int selGridInt = 0;
-	int modGridInt = 0;
-	Rect windowRect;
-	float width = 350;
-	float height = 350f;
+	public GameObject m_win_screen;
+	public Text m_win_text;
 
+	//only for car game
+	public GameObject m_mode_screen;
 
 
-	int handInt = 0;
-	int movInt = 0;
-	int obsInt = 0;
-	int diffInt = 1;
-	int velInt = 1;
+	public Button[] m_level_button;
+
+	//retreive the name levels from file into list, convert the list into a new array
+	string[] name_levels;
+	int index_of_current_level_screen;
 
 	// Use this for initialization
 	void Start ()
 	{
-		windowRect = new Rect ((Screen.width - width) / 2, (Screen.height - height) / 2, width, height);
-		
+		LoadLevelNames ();
+		LoadFirstLevels ();
+		LoadMenu ();
 	}
 	
 	// Update is called once per frame
@@ -41,163 +41,151 @@ public class GameMenuScript : MonoBehaviour
 		
 	}
 
-	void OnGUI ()
+
+	void ClearScreens ()
 	{
-		windowRect.x = (Screen.width - width) / 2;
-		windowRect.y = (Screen.height - height) / 2;
+		if (m_info_screen != null)
+			m_info_screen.SetActive (false);
 
-		GUI.skin = customSkin;
+		if (m_level_screen != null)
+			m_level_screen.SetActive (false);
 
-		if (menu)
-			windowRect = GUI.Window (0, windowRect, MenuWindow, "Menu Principale");
-		if (win)
-			windowRect = GUI.Window (1, windowRect, EndWindow, "Finito");
-		if (pause)
-			windowRect = GUI.Window (2, windowRect, PauseWindow, "Pausa");
-		if (load_path)
-			windowRect = GUI.Window (2, windowRect, Start, "inizia");
-		
+		if (m_main_screen != null)
+			m_main_screen.SetActive (false);
+
+		if (m_pause_screen != null)
+			m_pause_screen.SetActive (false);
+
+		if (m_win_screen != null)
+			m_win_screen.SetActive (false);
+
+		if (m_mode_screen != null)
+			m_mode_screen.SetActive (false);
 
 	}
 
 
-	void MenuWindow (int id)
+	public void LoadMainMenu ()
 	{
-		
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 140, 200, 75), "Percorsi Salvati")) {
-			// pathNames = get path names List<sting> from saved path 
-			load_path = true;
-			menu = false;
-		}
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 240, 200, 75), "Menu principale")) {
-			SceneManager.LoadSceneAsync ("Main_Menu");
-		}
+		SceneManager.LoadSceneAsync ("Main_Menu");
+	}
+
+	public void LoadMenu ()
+	{
+		ClearScreens ();
+		m_main_screen.SetActive (true);
+	}
+
+	public void LoadInstructions ()
+	{
+		ClearScreens ();
+		m_info_screen.SetActive (true);
+	}
+
+	public void LoadModeMenu ()
+	{
+		ClearScreens ();
+		m_mode_screen.SetActive (true);
+	}
+
+	public void LoadWinScreen (int score)
+	{
+		ClearScreens ();
+		m_win_screen.SetActive (true);
+		m_win_text.text = "Punteggio partita: " + score.ToString ();
+	}
+
+	public void LoadPauseScreen ()
+	{
+		ClearScreens ();
+		m_pause_screen.SetActive (true);
+	}
+
+	public void LoadLevelScreen ()
+	{
+		ClearScreens ();
+		m_level_screen.SetActive (true);
 	}
 
 
-	void EndWindow (int id)
+	public void PushedOnArrow ()
 	{
-		GUI.skin = customSkin;
-		GUI.Label (new Rect (30, 40, 200, 25), "Punteggio:");
-		GUI.Label (new Rect (180, 40, 50, 25), "Na");
-		GUI.Label (new Rect (30, 80, 250, 25), "Il Tuo Punteggio Migliore:");
-		GUI.Label (new Rect (280, 80, 50, 25), "Na"); //TODO caricare da file 
+		PushedArrow (+1);
+	}
 
-		if (GUI.Button (new Rect (20f, 180, 150, 75), "Replay")) {
-			win = false;
-			Debug.Log ("Premuto Replay");
-			GameManager.Instance.ReplayWithouthPath ();
-		}
-		if (GUI.Button (new Rect (180, 180, 150, 75), "Torna al menu")) {
-			SceneManager.LoadSceneAsync ("Main_Menu");
+	public void PushedBackArrow ()
+	{
+		PushedArrow (-1);
+	}
 
+	void PushedArrow (int direction)
+	{
+		if (index_of_current_level_screen + (m_level_button.Length * direction) < name_levels.Length
+		    && index_of_current_level_screen + (m_level_button.Length * direction) >= 0) {
+			index_of_current_level_screen = index_of_current_level_screen + (m_level_button.Length * direction);
+			LoadNameButtons ();
+		} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
+			LoadMenu ();
 		}
 	}
 
-	void PauseWindow (int id)
+	public void LoadFirstLevels ()
 	{
-		GUI.skin = customSkin;
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 30, 200, 75), "Continua")) {
-			pause = false;
-			if (car) {
-				CarManager.Instance.ResumeLevel ();
-			} else if (shooting) {
-				ShootingManager.Instance.ResumeLevel ();
-			} else if (music) {
-				MusicGameManager.Instance.ResumeLevel ();
+		index_of_current_level_screen = 0;
+		LoadNameButtons ();
+	}
+
+
+	void LoadNameButtons ()
+	{
+		//TODO retreive name buttons
+		MakeButonsInteractable ();
+
+		for (int i = 0; i < m_level_button.Length; i++) {
+			if (i + index_of_current_level_screen < name_levels.Length) {
+				m_level_button [i].GetComponentInChildren<Text> ().text = name_levels [i + index_of_current_level_screen];
+			} else {
+				//if there are no more levels
+				m_level_button [i].GetComponentInChildren<Text> ().text = "";
+				m_level_button [i].interactable = false;
 			}
 		}
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 100, 200, 75), "Ricomincia")) {
-			pause = false;
-			if (car) {
-				CarManager.Instance.RestartLevel ();
-			} else if (shooting) {
-				ShootingManager.Instance.RestartLevel ();
-			} else if (music) {
-				MusicGameManager.Instance.RestartLevel ();
-			}
-		}
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 170, 200, 75), "Scegli livello")) {
-			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().buildIndex);
-		}
 
-		if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 240, 200, 75), "Salva e interrompi")) {
-			//TODO salvare
-			SceneManager.LoadSceneAsync ("Main_Menu");
-		}
 	}
 
 
-	void Start (int id)
+	void LoadLevelNames ()
 	{
-		if (music) {
-			if (GUI.Button (new Rect ((windowRect.width - 200) / 2, 70, 200, 75), "provamusica")) {
-				MusicPathGenerator.Instance.filename = "provamusica.txt";
-				MusicGameManager.Instance.ChooseLevel ("Na");
-				load_path = false;
-			}
-			
-		}
-		if (car || shooting) {
-			if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
-				load_path = false;
-				if (car) {
-					CarManager.Instance.ChooseLevel ("Na");
-				} else if (shooting) {
-					ShootingManager.Instance.ChooseLevel ("Na");
-				}
-			}
-		}
+		name_levels = new string[4]{ "a", "b", "c", "d" };
 	}
 
-
-
-	//TODO deve andare solo nella gui del fisioterapista, qui non la uso
-	void RandomWindow (int id)
+	void MakeButonsInteractable ()
 	{
-		GUI.skin = customSkin;
-		string[] modeStrings = new string[]{ "180°", "90°" };
-		string[] handStrings = new string[]{ "Sinistra", "Destra" };
-		string[] diffStrings = new string[]{ "Facile", "Medio", "Difficile" };
-		string[] velStrings = new string[]{ "Lenta", "Media", "Veloce" };
-
-
-		GUI.Label (new Rect (30, 30, 250, 20), new GUIContent ("Seleziona difficolta'", "La difficolta' influisce sull'ampiezza del movimento da effettuare."));
-		diffInt = GUI.SelectionGrid (new Rect (25, 50, 300, 30), diffInt, diffStrings, 3);
-
-		GUI.Label (new Rect (30, 90, 200, 20), "Seleziona mano");
-		handInt = GUI.SelectionGrid (new Rect (25, 110, 300, 30), handInt, handStrings, 2);
-
-	
-		GUI.Label (new Rect (30, 150, 200, 20), "Inclinazione mano");
-		modGridInt = GUI.SelectionGrid (new Rect (25, 170, 300, 30), modGridInt, modeStrings, 2);
-
-		GUI.Label (new Rect (30, 200, 310, 20), "Accelerazione massima dell'automobile");
-		velInt = GUI.SelectionGrid (new Rect (25, 215, 300, 30), velInt, velStrings, 3);
-
-	
-		GUI.Label (new Rect (30, 220, 300, 100), GUI.tooltip);
-
-
-		if (GUI.Button (new Rect (20, 265, 150, 65), "Inizia")) {
-			CarManager.Instance.ChooseLevel ("Na");
+		for (int i = 0; i < m_level_button.Length; i++) {
+			m_level_button [i].interactable = true;
 		}
-		if (GUI.Button (new Rect (180, 265, 150, 65), "Torna al menu")) {
-			SceneManager.LoadSceneAsync ("Main_Menu");
-		}
-		
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

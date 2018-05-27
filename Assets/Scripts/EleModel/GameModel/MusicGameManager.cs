@@ -30,7 +30,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
 		 */
-		GameManager.Instance.menu_GUI.music = true;
+		//GameManager.Instance.menu_GUI.music = true;
 		GameManager.Instance.music = true;
 
 

@@ -16,6 +16,9 @@ public class GameManager : Singleton<GameManager>
 	public Text m_wait_text;
 
 
+	public GameObject m_resume_screen;
+	public Text m_resume_countdown;
+
 	public GameObject m_score_canvas;
 	public Text m_score_text;
 
@@ -92,7 +95,7 @@ public class GameManager : Singleton<GameManager>
 		//reset car position and deactivates car gameObj 
 
 		//the scene begins with the game main menu
-		menu_GUI.menu = true;
+		//menu_GUI.menu = true;
 
 	}
 
@@ -116,6 +119,9 @@ public class GameManager : Singleton<GameManager>
 
 		if (m_score_canvas != null)
 			m_score_canvas.SetActive (false);
+
+		if (m_resume_screen != null)
+			m_resume_screen.SetActive (false);
 	}
 
 
@@ -215,19 +221,39 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		menu_GUI.pause = true;
+		//menu_GUI.pause = true;
 
 	}
 
 	//triggered by the button "continue" in the pause screen
 	public void BaseResumeLevel ()
 	{
+		//the olayer manager works only when is_playing is true
+		player.SetActive (true);
+
+		StartCoroutine (Resume ());
+
 		SfxManager.Instance.Unmute ();
 
 		is_playing = true;
 
-		player.SetActive (true);
 
+
+	}
+
+	IEnumerator Resume ()
+	{
+		ClearScreens ();
+		m_resume_screen.SetActive (true);
+
+		for (int i = 3; i > 0; i--) {
+
+			m_resume_countdown.text = i.ToString ();
+			yield return new WaitForSeconds (0.5f);
+		}
+
+		ClearScreens ();
+		m_score_canvas.SetActive (true);
 	}
 
 
@@ -245,7 +271,7 @@ public class GameManager : Singleton<GameManager>
 	IEnumerator WinCoroutine ()
 	{
 
-		menu_GUI.win = true;
+		//menu_GUI.win = true;
 
 		ClearScreens ();
 
