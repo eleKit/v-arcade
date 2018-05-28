@@ -41,9 +41,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	void Start ()
 	{
 
-		LoadLevelNames ();
-		LoadFirstLevels ();
-		LoadMenu ();
+
 	}
 	
 	// Update is called once per frame
@@ -52,6 +50,27 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		
 	}
 
+	//this is called once at the start of game manager to set the initial paramethers
+	public void LoadUIOfGame (GameMatch.GameType game_type)
+	{
+
+		switch (game_type) {
+		case GameMatch.GameType.Car:
+			car = true;
+			break;
+		case GameMatch.GameType.Shooting:
+			shooting = true;
+			break;
+		case GameMatch.GameType.Music:
+			music = true;
+			break;
+		}
+
+
+		LoadLevelNames ();
+		LoadFirstLevels ();
+		LoadMenu ();
+	}
 
 	void ClearScreens ()
 	{
@@ -245,7 +264,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	void LoadLevelNames ()
 	{
-		name_levels = new string[4]{ "a", "b", "c", "d" };
+		
+		if (car) {
+			name_levels = new string[4]{ "a", "b", "c", "d" };
+		}
+		if (shooting) {
+			name_levels = new string[5]{ "e", "f", "g", "h", "i" };
+		}
+		if (music) {
+			name_levels = new string[4]{ "i", "l", "m", "n" };
+		}
 	}
 
 	void MakeButonsInteractable ()

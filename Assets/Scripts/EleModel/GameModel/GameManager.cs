@@ -106,9 +106,7 @@ public class GameManager : Singleton<GameManager>
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
 
-		GameMenuScript.Instance.car = car;
-		GameMenuScript.Instance.shooting = shooting;
-		GameMenuScript.Instance.music = music;
+		GameMenuScript.Instance.LoadUIOfGame (game_type);
 
 		//the scene begins with the game main menu
 		BaseToMenu ();
