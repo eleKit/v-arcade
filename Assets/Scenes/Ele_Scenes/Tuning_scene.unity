@@ -1594,8 +1594,9 @@ MonoBehaviour:
   m_left_result_text: {fileID: 325891945}
   m_right_result: {fileID: 414022019}
   m_right_result_text: {fileID: 414022021}
-  waiting_time: 2
-  timeLeft: 5
+  waiting_time: 0.5
+  m_timeout_s: 5
+  m_instruction_timeout_s: 0.5
   handController: {fileID: 1563989601}
 --- !u!4 &1830976554
 Transform:

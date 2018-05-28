@@ -23,12 +23,15 @@ public class TuningManager : MonoBehaviour
 	public GameObject m_right_result;
 	public Text m_right_result_text;
 
-	[Range (0f, 5f)]
-	public float waiting_time = 1f;
+
 
 	[Header ("Time in which the player moves the hands")]
-	[Range (0f, 200f)]
-	public float timeLeft = 200f;
+	[Range (0f, 10f)]
+	public float m_timeout_s = 200f;
+
+	[Header ("Time when the player reads the instruction")]
+	[Range (0f, 10f)]
+	public float m_instruction_timeout_s = 200f;
 
 	//the hand controller prefab in the scene
 	public GameObject handController;
@@ -37,12 +40,8 @@ public class TuningManager : MonoBehaviour
 	private HandController hc;
 
 
-	private float timer = 0f;
-
 	private int index = 0;
 
-
-	private bool is_playing = false;
 
 	//save the past pitch angles of left and right hand in the previous K frames
 	private List<float> left_pitch = new List<float> ();
@@ -73,11 +72,13 @@ public class TuningManager : MonoBehaviour
 	{
 
 		float timeout_s;
+		float instruction_time_s;
 		int counter_frames;
 
-		public Counter (float timeout_s)
+		public Counter (float timeout_s, float instruction_time_s)
 		{
-			this.timeout_s = timeout_s;
+			this.timeout_s = timeout_s + instruction_time_s;
+			this.instruction_time_s = instruction_time_s;
 			this.counter_frames = 0;
 		}
 
@@ -95,6 +96,12 @@ public class TuningManager : MonoBehaviour
 		public bool timeIsUp ()
 		{
 			return counter_frames / 60 > timeout_s;
+		}
+
+
+		public bool instructionTimeIsUp ()
+		{
+			return counter_frames / 60 > instruction_time_s;
 		}
 
 		public int getCounterFrame ()
@@ -149,13 +156,13 @@ public class TuningManager : MonoBehaviour
 			previous_phase = current_phase;
 
 			if (counter == null) {
-				counter = new Counter (2f);
+				counter = new Counter (2f, 0f);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
 				m_timer_object.SetActive (true);
 				m_timer.text = "Tra poco iniziamo!";
 				m_instructions_screen [index].SetActive (true);
-				Debug.Log ("start phase, timer " + timer.ToString ());
+		
 			}
 
 			if (counter.timeIsUp ()) {
@@ -167,7 +174,7 @@ public class TuningManager : MonoBehaviour
 				current_phase = Tuning_Phase.NoHands_phase;
 			} else {
 				counter.countFrame ();
-			}
+			} 
 
 			break;
 
@@ -176,35 +183,38 @@ public class TuningManager : MonoBehaviour
 			previous_phase = current_phase;
 
 			if (counter == null) {
-				counter = new Counter (5f);
+				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
 				m_timer_object.SetActive (true);
 				m_timer.text = "Iniziamo!";
 				m_instructions_screen [index].SetActive (true);
-				Debug.Log ("start phase, timer " + timer.ToString ());
-			}
+			} else if (counter.instructionTimeIsUp ()) {
 
-			if (counter.timeIsUp ()) {
-				counter = null;
-				current_phase = Tuning_Phase.Roll_phase;
-				index++;
-			} else if (!HandsOk ()) {
-				counter = null;
-				current_phase = Tuning_Phase.NoHands_phase;
+				if (counter.timeIsUp ()) {
+					counter = null;
+					current_phase = Tuning_Phase.Roll_phase;
+					index++;
+				} else if (!HandsOk ()) {
+					counter = null;
+					current_phase = Tuning_Phase.NoHands_phase;
+				} else {
+					counter.countFrame ();
+
+					m_timer.text = counter.getCounterFrame ().ToString ();
+
+					//save yaw gestures
+
+					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+						left_yaw.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+					}
+					if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+						right_yaw.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
+					}
+				}
 			} else {
 				counter.countFrame ();
-
-				m_timer.text = counter.getCounterFrame ().ToString ();
-
-				//save yaw gestures
-
-				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-					left_yaw.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
-				}
-				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-					right_yaw.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
-				}
+				//the player has the time to read the intruction screen before playing
 			}
 
 			break;
@@ -214,35 +224,38 @@ public class TuningManager : MonoBehaviour
 			previous_phase = current_phase;
 
 			if (counter == null) {
-				counter = new Counter (5f);
+				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
 				m_timer_object.SetActive (true);
 				m_timer.text = "Iniziamo!";
 				m_instructions_screen [index].SetActive (true);
-				Debug.Log ("start phase, timer " + timer.ToString ());
-			}
+			} else if (counter.instructionTimeIsUp ()) {
 
-			if (counter.timeIsUp ()) {
-				counter = null;
-				current_phase = Tuning_Phase.Pitch_phase;
-				index++;
-			} else if (!HandsOk ()) {
-				counter = null;
-				current_phase = Tuning_Phase.NoHands_phase;
+				if (counter.timeIsUp ()) {
+					counter = null;
+					current_phase = Tuning_Phase.Pitch_phase;
+					index++;
+				} else if (!HandsOk ()) {
+					counter = null;
+					current_phase = Tuning_Phase.NoHands_phase;
+				} else {
+					counter.countFrame ();
+
+					m_timer.text = counter.getCounterFrame ().ToString ();
+
+					//save roll gestures
+
+					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+						left_roll.Add (hc.GetFrame ().Hands.Leftmost.PalmNormal.Roll);
+					}
+					if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+						right_roll.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
+					}
+				}
 			} else {
 				counter.countFrame ();
-
-				m_timer.text = counter.getCounterFrame ().ToString ();
-
-				//save roll gestures
-
-				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-					left_roll.Add (hc.GetFrame ().Hands.Leftmost.PalmNormal.Roll);
-				}
-				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-					right_roll.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
-				}
+				//the player has the time to read the intruction screen before playing
 			}
 
 			break;
@@ -252,35 +265,38 @@ public class TuningManager : MonoBehaviour
 			previous_phase = current_phase;
 
 			if (counter == null) {
-				counter = new Counter (5f);
+				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
 				m_timer_object.SetActive (true);
 				m_timer.text = "Iniziamo!";
 				m_instructions_screen [index].SetActive (true);
-				Debug.Log ("start phase, timer " + timer.ToString ());
-			}
+			} else if (counter.instructionTimeIsUp ()) {
 
-			if (counter.timeIsUp ()) {
-				counter = null;
-				current_phase = Tuning_Phase.End_phase;
-				index++;
-			} else if (!HandsOk ()) {
-				counter = null;
-				current_phase = Tuning_Phase.NoHands_phase;
+				if (counter.timeIsUp ()) {
+					counter = null;
+					current_phase = Tuning_Phase.End_phase;
+					index++;
+				} else if (!HandsOk ()) {
+					counter = null;
+					current_phase = Tuning_Phase.NoHands_phase;
+				} else {
+					counter.countFrame ();
+
+					m_timer.text = counter.getCounterFrame ().ToString ();
+
+					//save pitch gestures
+
+					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+						left_pitch.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+					}
+					if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+						right_pitch.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+					}
+				}
 			} else {
 				counter.countFrame ();
-
-				m_timer.text = counter.getCounterFrame ().ToString ();
-
-				//save pitch gestures
-
-				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-					left_pitch.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-				}
-				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-					right_pitch.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-				}
+				//the player has the time to read the intruction screen before playing
 			}
 
 			break;
@@ -327,13 +343,6 @@ public class TuningManager : MonoBehaviour
 	}
 
 
-	IEnumerator WaitToStart ()
-	{
-		yield return new WaitForSeconds (waiting_time);
-		index++;
-		is_playing = true;
-
-	}
 
 	void StartLevel ()
 	{
