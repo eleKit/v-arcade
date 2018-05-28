@@ -21,9 +21,9 @@ public class CarManager : Singleton<CarManager>
 		GameManager.Instance.BaseStart ("CarGameMusic");
 
 		/* set the bool of the current game in the game manager 
-		 * and in the GUI manager
+		 * and in the UI manager
 		 */
-		//GameManager.Instance.menu_GUI.car = true;
+		GameMenuScript.Instance.car = true;
 		GameManager.Instance.car = true;
 
 
@@ -51,7 +51,7 @@ public class CarManager : Singleton<CarManager>
 	{
 		GameManager.Instance.BaseChooseLevel (name);
 		ResetPlayer ();
-		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadPath ("");
+		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadPath (name);
 
 	}
 
@@ -76,6 +76,7 @@ public class CarManager : Singleton<CarManager>
 	public void WinLevel ()
 	{
 		GameManager.Instance.BaseWinLevel ();
+		GameMenuScript.Instance.LoadWinScreen (GetScore ());
 	}
 
 

@@ -221,7 +221,7 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		//menu_GUI.pause = true;
+		GameMenuScript.Instance.LoadPauseScreen ();
 
 	}
 

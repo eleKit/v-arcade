@@ -307,17 +307,26 @@ public class TuningManager : MonoBehaviour
 
 			ClearScreens ();
 
-			float left_max_pitch = left_pitch.Max ();
-			float right_max_pitch = right_pitch.Max ();
+			left_pitch.Sort ();
+			right_pitch.Sort ();
+
+			left_roll.Sort ();
+			right_roll.Sort ();
+
+			left_yaw.Sort ();
+			right_yaw.Sort ();
+
+			float left_max_pitch = left_pitch [left_pitch.Count / 10];
+			float right_max_pitch = right_pitch [1];
 
 			float left_min_pitch = left_pitch.Min ();
 			float right_min_pitch = right_pitch.Min ();
 
 			float left_max_yaw = left_yaw.Max ();
-			float right_max_yaw = left_yaw.Max ();
+			float right_max_yaw = right_yaw.Max ();
 
 			float left_min_yaw = left_yaw.Min ();
-			float right_min_yaw = left_yaw.Min ();
+			float right_min_yaw = right_yaw.Min ();
 
 			m_left_result.SetActive (true);
 
