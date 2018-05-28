@@ -59,7 +59,9 @@ public class TuningManager : MonoBehaviour
 	private Counter counter = null;
 
 
-	Tuning_Phase current_phase;
+	Tuning_Phase current_phase = Tuning_Phase.Null;
+
+	Tuning_Phase previous_phase = Tuning_Phase.Null;
 
 	/*
 	 * Class for a simple timeout counter.
@@ -132,14 +134,20 @@ public class TuningManager : MonoBehaviour
 		 */
 
 		case Tuning_Phase.NoHands_phase:
-
 			if (HandsOk ()) {
-				index++;
-				current_phase = Tuning_Phase.Start_phase;
+				if (previous_phase == Tuning_Phase.Null) {
+					index++;
+					current_phase = Tuning_Phase.Start_phase;
+				} else {
+					current_phase = previous_phase;
+				}
 			}
 			break;
 
 		case Tuning_Phase.Start_phase:
+
+			previous_phase = current_phase;
+
 			if (counter == null) {
 				counter = new Counter (2f);
 				ClearScreens ();
@@ -164,6 +172,8 @@ public class TuningManager : MonoBehaviour
 			break;
 
 		case Tuning_Phase.Yaw_phase:
+			
+			previous_phase = current_phase;
 
 			if (counter == null) {
 				counter = new Counter (5f);
@@ -201,6 +211,8 @@ public class TuningManager : MonoBehaviour
 
 		case Tuning_Phase.Roll_phase:
 
+			previous_phase = current_phase;
+
 			if (counter == null) {
 				counter = new Counter (5f);
 				ClearScreens ();
@@ -236,6 +248,9 @@ public class TuningManager : MonoBehaviour
 			break;
 
 		case Tuning_Phase.Pitch_phase:
+
+			previous_phase = current_phase;
+
 			if (counter == null) {
 				counter = new Counter (5f);
 				ClearScreens ();
@@ -271,6 +286,9 @@ public class TuningManager : MonoBehaviour
 			break;
 
 		case Tuning_Phase.End_phase:
+
+			current_phase = Tuning_Phase.Finished_tuning;
+
 			ClearScreens ();
 
 			float left_max_pitch = left_pitch.Max ();
@@ -325,6 +343,7 @@ public class TuningManager : MonoBehaviour
 		counter = null;
 
 		current_phase = Tuning_Phase.NoHands_phase;
+		previous_phase = Tuning_Phase.Null;
 
 		ClearScreens ();
 		m_timer.text = "Posiziona le mani sul Leap";
@@ -372,6 +391,7 @@ public class TuningManager : MonoBehaviour
 
 	enum Tuning_Phase
 	{
+		Null,
 		NoHands_phase,
 		Start_phase,
 		Yaw_phase,
