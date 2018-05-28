@@ -6,13 +6,13 @@ using System.Linq;
 
 public class TuningManager : MonoBehaviour
 {
+	const int N = 5;
 
 	[Header ("Images about the hand movement")]
-	public GameObject[] m_hands_images;
-
+	public GameObject[] m_hands_image = new GameObject[N];
 
 	[Header ("Intructions about the hand movement")]
-	public GameObject[] m_instructions_screen;
+	public GameObject[] m_instructions_screen = new GameObject[N];
 
 	[Header ("Seconds the player has to wait")]
 	public GameObject m_timer_object;
@@ -39,23 +39,67 @@ public class TuningManager : MonoBehaviour
 
 	private float timer = 0f;
 
-	private int count = 0;
+	private int index = 0;
 
 
 	private bool is_playing = false;
 
 	//save the past pitch angles of left and right hand in the previous K frames
-	private LinkedList<float> left_pitch = new LinkedList<float> ();
-	private LinkedList<float> right_pitch = new LinkedList<float> ();
+	private List<float> left_pitch = new List<float> ();
+	private List<float> right_pitch = new List<float> ();
 
 	//save the past yaw angles of left and right hand in the previous K frames
-	private LinkedList<float> left_yaw = new LinkedList<float> ();
-	private LinkedList<float> right_yaw = new LinkedList<float> ();
+	private List<float> left_yaw = new List<float> ();
+	private List<float> right_yaw = new List<float> ();
 
 	//save the past pitch offset to keep an horizontal position of hands
-	private LinkedList<float> left_horizontal_pitch = new LinkedList<float> ();
-	private LinkedList<float> right_horizontal_pitch = new LinkedList<float> ();
+	private List<float> left_roll = new List<float> ();
+	private List<float> right_roll = new List<float> ();
 
+	private Counter counter = null;
+
+
+	Tuning_Phase current_phase;
+
+	/*
+	 * Class for a simple timeout counter.
+	 * 
+	 * Initialize the counter with a timeout in seconds; at each FixedUpdate call countFrame();
+	 * to know whether the time is up, call timeIsUp().
+	 */
+	class Counter
+	{
+
+		float timeout_s;
+		int counter_frames;
+
+		public Counter (float timeout_s)
+		{
+			this.timeout_s = timeout_s;
+			this.counter_frames = 0;
+		}
+
+		/*
+		 * Method to call to count up one frame
+		*/
+		public void countFrame ()
+		{
+			this.counter_frames += 1;
+		}
+
+		/*
+		 * Return true if the counter time is up
+		 */
+		public bool timeIsUp ()
+		{
+			return counter_frames / 60 > timeout_s;
+		}
+
+		public int getCounterFrame ()
+		{
+			return counter_frames;
+		}
+	}
 
 
 	// Use this for initialization
@@ -64,128 +108,203 @@ public class TuningManager : MonoBehaviour
 		
 
 		hc = handController.GetComponent<HandController> ();
-
 		StartLevel ();
 
 
 	}
-	
+
+
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
 
-		float deltaTime = Time.deltaTime;
+		switch (current_phase) {
 
+		/* the phases are in this order:
+		 * 1. no hands on the leap
+		 * 2. Initial instruction of tuning
+		 * 3. yaw recording
+		 * 4. roll recording
+		 * 5. pitch recording
+		 * 6. End notes with data results
+		 * if the player removes the hand the state becomes again 1. no hands on the leap
+		 * but then restarts from the previous (2.-5.) phase and not from the beginning
+		 */
 
-		if (Input.GetKeyDown ("escape") && is_playing) {
-			PauseLevel ();
-		}
+		case Tuning_Phase.NoHands_phase:
 
-		if (hc.GetFrame ().Hands.Count == 2 && is_playing) {
-			if (count < m_hands_images.Length && count < m_instructions_screen.Length) {
-
-				if ((int)Mathf.Round (timer) % 60 < 0) {
-					count++;
-					timer = timeLeft + 2;
-					Debug.Log ("end phase");
-				} else {
-
-					if ((int)Mathf.Round (timer) % 60 >= (int)Mathf.Round (timeLeft - deltaTime) % 60) {
-						//wait to set active the next screen
-						//StartCoroutine ("StartPhase");
-						ClearScreens ();
-						m_hands_images [count].SetActive (true);
-						m_timer_object.SetActive (true);
-						m_timer.text = "Tra poco iniziamo!";
-						m_instructions_screen [count].SetActive (true);
-						Debug.Log ("start phase, timer " + timer.ToString ());
-
-					}
-
-					//counting the time left
-					timer = timer - deltaTime;
-					int sec = (int)Mathf.Round (timer) % 60;
-					if (sec == 0) {
-						m_timer.text = "Bene!";
-					} else {
-						if ((int)Mathf.Round (timer) % 60 < (int)Mathf.Round (timeLeft - deltaTime) % 60 && (int)Mathf.Round (timer) % 60 > 0) {
-							m_timer.text = sec.ToString ();
-							//Debug.Log ("timer " + timer.ToString ("n2") + " timeLeft - deltaTime " + (timeLeft - deltaTime).ToString ("n2"));
-						
-
-							//Debug.Log ("Sono qui " + count.ToString () + " sec " + sec.ToString ());
-
-							// max yaw count = 1
-							// min yaw count = 2
-							// max pitch count = 3
-							// min pitch count = 4
-							// horizontal starting point = 5
-
-							if (count <= 2) { 
-								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-									left_yaw.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
-								}
-								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-									right_yaw.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
-								}
-							} else if (count <= 4) {
-								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-									left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-								}
-								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-									right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-								}
-							} else if (count == 5) {
-								if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-									left_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-								}
-								if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-									right_horizontal_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-								}
-							}
-						}
-					}
-
-				}
-
-			} else {
-				ClearScreens ();
-
-				float left_max_pitch = left_pitch.Max ();
-				float right_max_pitch = right_pitch.Max ();
-
-				float left_min_pitch = left_pitch.Min ();
-				float right_min_pitch = right_pitch.Min ();
-
-				float left_max_yaw = left_yaw.Max ();
-				float right_max_yaw = left_yaw.Max ();
-
-				float left_min_yaw = left_yaw.Min ();
-				float right_min_yaw = left_yaw.Min ();
-
-				m_left_result.SetActive (true);
-
-				m_right_result.SetActive (true);
-
-				m_right_result_text.text =
-					"Estensione destra: " + Mathf.Abs (right_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Flessione destra: " + Mathf.Abs (right_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare destra: " + Mathf.Abs (right_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale destra: " + Mathf.Abs (right_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
-
-				m_left_result_text.text =
-					"Estensione sinistra: " + Mathf.Abs (left_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Flessione sinistra: " + Mathf.Abs (left_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare sinistra: " + Mathf.Abs (left_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale sinista: " + Mathf.Abs (left_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
-
-
-
-
-
+			if (HandsOk ()) {
+				index++;
+				current_phase = Tuning_Phase.Start_phase;
 			}
-		}
+			break;
+
+		case Tuning_Phase.Start_phase:
+			if (counter == null) {
+				counter = new Counter (2f);
+				ClearScreens ();
+				m_hands_image [index].SetActive (true);
+				m_timer_object.SetActive (true);
+				m_timer.text = "Tra poco iniziamo!";
+				m_instructions_screen [index].SetActive (true);
+				Debug.Log ("start phase, timer " + timer.ToString ());
+			}
+
+			if (counter.timeIsUp ()) {
+				counter = null;
+				index++;
+				current_phase = Tuning_Phase.Yaw_phase;
+			} else if (!HandsOk ()) {
+				counter = null;
+				current_phase = Tuning_Phase.NoHands_phase;
+			} else {
+				counter.countFrame ();
+			}
+
+			break;
+
+		case Tuning_Phase.Yaw_phase:
+
+			if (counter == null) {
+				counter = new Counter (5f);
+				ClearScreens ();
+				m_hands_image [index].SetActive (true);
+				m_timer_object.SetActive (true);
+				m_timer.text = "Iniziamo!";
+				m_instructions_screen [index].SetActive (true);
+				Debug.Log ("start phase, timer " + timer.ToString ());
+			}
+
+			if (counter.timeIsUp ()) {
+				counter = null;
+				current_phase = Tuning_Phase.Roll_phase;
+				index++;
+			} else if (!HandsOk ()) {
+				counter = null;
+				current_phase = Tuning_Phase.NoHands_phase;
+			} else {
+				counter.countFrame ();
+
+				m_timer.text = counter.getCounterFrame ().ToString ();
+
+				//save yaw gestures
+
+				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+					left_yaw.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+				}
+				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+					right_yaw.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
+				}
+			}
+
+			break;
+
+		case Tuning_Phase.Roll_phase:
+
+			if (counter == null) {
+				counter = new Counter (5f);
+				ClearScreens ();
+				m_hands_image [index].SetActive (true);
+				m_timer_object.SetActive (true);
+				m_timer.text = "Iniziamo!";
+				m_instructions_screen [index].SetActive (true);
+				Debug.Log ("start phase, timer " + timer.ToString ());
+			}
+
+			if (counter.timeIsUp ()) {
+				counter = null;
+				current_phase = Tuning_Phase.Pitch_phase;
+				index++;
+			} else if (!HandsOk ()) {
+				counter = null;
+				current_phase = Tuning_Phase.NoHands_phase;
+			} else {
+				counter.countFrame ();
+
+				m_timer.text = counter.getCounterFrame ().ToString ();
+
+				//save roll gestures
+
+				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+					left_roll.Add (hc.GetFrame ().Hands.Leftmost.PalmNormal.Roll);
+				}
+				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+					right_roll.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
+				}
+			}
+
+			break;
+
+		case Tuning_Phase.Pitch_phase:
+			if (counter == null) {
+				counter = new Counter (5f);
+				ClearScreens ();
+				m_hands_image [index].SetActive (true);
+				m_timer_object.SetActive (true);
+				m_timer.text = "Iniziamo!";
+				m_instructions_screen [index].SetActive (true);
+				Debug.Log ("start phase, timer " + timer.ToString ());
+			}
+
+			if (counter.timeIsUp ()) {
+				counter = null;
+				current_phase = Tuning_Phase.End_phase;
+				index++;
+			} else if (!HandsOk ()) {
+				counter = null;
+				current_phase = Tuning_Phase.NoHands_phase;
+			} else {
+				counter.countFrame ();
+
+				m_timer.text = counter.getCounterFrame ().ToString ();
+
+				//save pitch gestures
+
+				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+					left_pitch.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+				}
+				if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+					right_pitch.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+				}
+			}
+
+			break;
+
+		case Tuning_Phase.End_phase:
+			ClearScreens ();
+
+			float left_max_pitch = left_pitch.Max ();
+			float right_max_pitch = right_pitch.Max ();
+
+			float left_min_pitch = left_pitch.Min ();
+			float right_min_pitch = right_pitch.Min ();
+
+			float left_max_yaw = left_yaw.Max ();
+			float right_max_yaw = left_yaw.Max ();
+
+			float left_min_yaw = left_yaw.Min ();
+			float right_min_yaw = left_yaw.Min ();
+
+			m_left_result.SetActive (true);
+
+			m_right_result.SetActive (true);
+
+			m_right_result_text.text =
+				"Estensione destra: " + Mathf.Abs (right_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Flessione destra: " + Mathf.Abs (right_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Dev ulnare destra: " + Mathf.Abs (right_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Dev radiale destra: " + Mathf.Abs (right_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
+
+			m_left_result_text.text =
+				"Estensione sinistra: " + Mathf.Abs (left_max_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Flessione sinistra: " + Mathf.Abs (left_min_pitch * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Dev ulnare sinistra: " + Mathf.Abs (left_max_yaw * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
+			+ "Dev radiale sinista: " + Mathf.Abs (left_min_yaw * Mathf.Rad2Deg).ToString ("n2") + "°";
 			
+
+			break;
+
+		}
 		
 	}
 
@@ -193,7 +312,7 @@ public class TuningManager : MonoBehaviour
 	IEnumerator WaitToStart ()
 	{
 		yield return new WaitForSeconds (waiting_time);
-		count++;
+		index++;
 		is_playing = true;
 
 	}
@@ -201,36 +320,23 @@ public class TuningManager : MonoBehaviour
 	void StartLevel ()
 	{
 
-		count = 0;
+		index = 0;
+
+		counter = null;
+
+		current_phase = Tuning_Phase.NoHands_phase;
 
 		ClearScreens ();
 		m_timer.text = "Posiziona le mani sul Leap";
-		m_hands_images [count].SetActive (true);
-		m_instructions_screen [count].SetActive (true);
+		m_hands_image [index].SetActive (true);
+		m_instructions_screen [index].SetActive (true);
 		m_timer_object.SetActive (true);
-
-		timeLeft++;
-
-		timer = timeLeft;
-
-		Debug.Log (timer.ToString ());
-
-		StartCoroutine ("WaitToStart");
 		
 	}
 
 
 
 
-	void PauseLevel ()
-	{
-
-		is_playing = false;
-		Debug.Log ("paused");
-
-		//menu_GUI.pause = true;
-		
-	}
 
 	void ClearScreens ()
 	{
@@ -239,9 +345,9 @@ public class TuningManager : MonoBehaviour
 				m_instructions_screen [i].SetActive (false);
 		}
 
-		for (int i = 0; i < m_hands_images.Length; i++) {
-			if (m_hands_images [i] != null)
-				m_hands_images [i].SetActive (false);
+		for (int i = 0; i < m_hands_image.Length; i++) {
+			if (m_hands_image [i] != null)
+				m_hands_image [i].SetActive (false);
 		}
 
 		if (m_timer_object != null)
@@ -253,4 +359,28 @@ public class TuningManager : MonoBehaviour
 		if (m_right_result != null)
 			m_right_result.SetActive (false);
 	}
+
+
+
+
+	bool HandsOk ()
+	{
+		return (hc.GetFrame ().Hands.Count == 2); 
+	}
+
+
+
+	enum Tuning_Phase
+	{
+		NoHands_phase,
+		Start_phase,
+		Yaw_phase,
+		Pitch_phase,
+		Roll_phase,
+		End_phase,
+		Finished_tuning,
+	};
+
+
+
 }
