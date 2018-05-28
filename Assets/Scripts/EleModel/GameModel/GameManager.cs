@@ -289,6 +289,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		is_playing = false;
 
+		GameMenuScript.Instance.LoadWinScreen (score);
 
 		StartCoroutine (WinCoroutine ());
 	}

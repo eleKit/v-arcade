@@ -92,6 +92,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 	public void ReadPath ()
 	{
+		filename = "provamusica.txt";
 		StreamReader reader = new StreamReader (dataPath + "/" + filename); 
 
 		if (!reader.EndOfStream) {

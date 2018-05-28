@@ -95,7 +95,7 @@ public class CarManager : Singleton<CarManager>
 	public void WinLevel ()
 	{
 		GameManager.Instance.BaseWinLevel ();
-		GameMenuScript.Instance.LoadWinScreen (GetScore ());
+
 	}
 
 

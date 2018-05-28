@@ -84,7 +84,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		MusicManager.Instance.StopAll ();
 		//TODO here must be played the game music chosen by the player
 
-		GameObject.Find ("MusicPathGenerator").GetComponent<MusicPathGenerator> ().SetupMusicPath ();
+		MusicPathGenerator.Instance.SetupMusicPath ();
 
 		GameManager.Instance.BaseChooseLevel (name);
 
