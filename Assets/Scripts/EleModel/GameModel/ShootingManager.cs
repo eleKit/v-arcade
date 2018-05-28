@@ -9,14 +9,15 @@ public class ShootingManager : Singleton<ShootingManager>
 	// Use this for initialization
 	void Start ()
 	{
+
 		GameManager.Instance.player_initial_pos = Vector3.zero;
-		GameManager.Instance.BaseStart ("DuckGameMusic");
+		GameManager.Instance.BaseStart ("DuckGameMusic", GameMatch.GameType.Shooting);
 
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
 		 */
-		//GameManager.Instance.menu_GUI.shooting = true;
-		GameManager.Instance.shooting = true;
+
+
 
 
 		GameManager.Instance.player.transform.position = 
@@ -38,6 +39,19 @@ public class ShootingManager : Singleton<ShootingManager>
 		}
 	}
 
+	public void ToMenu ()
+	{
+		ResetPath ();
+		GameManager.Instance.BaseToMenu ();
+	}
+
+	void ResetPath ()
+	{
+		foreach (GameObject duck in GameObject.FindGameObjectsWithTag ("Duck")) {
+			Destroy (duck);
+		}
+	}
+
 	public void WinLevel ()
 	{
 		//this function starts win jingle and then calls the win function
@@ -53,7 +67,7 @@ public class ShootingManager : Singleton<ShootingManager>
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;
 
-		GameObject.Find ("DuckPathGenerator").GetComponent<DuckPathGenerator> ().LoadPath ("");
+		GameObject.Find ("DuckPathGenerator").GetComponent<DuckPathGenerator> ().LoadPath (name);
 		
 	}
 
@@ -66,6 +80,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	public void RestartLevel ()
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
+		ResetPath ();
 		ChooseLevel (GameManager.Instance.current_path);
 	}
 

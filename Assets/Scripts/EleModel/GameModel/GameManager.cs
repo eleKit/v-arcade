@@ -35,8 +35,6 @@ public class GameManager : Singleton<GameManager>
 	public HandController hc;
 
 
-	public GameMenuScript menu_GUI;
-
 
 	//name of the path chosen
 	public string current_path = "";
@@ -67,6 +65,15 @@ public class GameManager : Singleton<GameManager>
 
 
 
+
+	void Awake ()
+	{
+		car = false;
+		shooting = false;
+		music = false;
+
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -80,22 +87,43 @@ public class GameManager : Singleton<GameManager>
 	}
 
 
-	public void BaseStart (string music_title)
+	public void BaseStart (string music_title, GameMatch.GameType game_type)
 	{
-		ClearScreens ();
+		switch (game_type) {
+
+		case GameMatch.GameType.Car:
+			car = true;
+			break;
+		case GameMatch.GameType.Shooting:
+			shooting = true;
+			break;
+		case GameMatch.GameType.Music:
+			music = true;
+			break;
+		}
+
 
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
 
-		//cleans from all sound effects
-		SfxManager.Instance.Stop ();
-
-
-		m_background.SetActive (true);
-		//reset car position and deactivates car gameObj 
+		GameMenuScript.Instance.car = car;
+		GameMenuScript.Instance.shooting = shooting;
+		GameMenuScript.Instance.music = music;
 
 		//the scene begins with the game main menu
-		//menu_GUI.menu = true;
+		BaseToMenu ();
+
+
+	}
+
+	public void BaseToMenu ()
+	{
+		ClearScreens ();
+
+		SfxManager.Instance.Stop ();
+
+		m_background.SetActive (true);
+
 
 	}
 
@@ -228,7 +256,7 @@ public class GameManager : Singleton<GameManager>
 	//triggered by the button "continue" in the pause screen
 	public void BaseResumeLevel ()
 	{
-		//the olayer manager works only when is_playing is true
+		//the player controller works only when is_playing is true
 		player.SetActive (true);
 
 		StartCoroutine (Resume ());

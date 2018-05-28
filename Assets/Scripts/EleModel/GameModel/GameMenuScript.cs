@@ -30,9 +30,17 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	string[] name_levels;
 	int index_of_current_level_screen;
 
+	void Awake ()
+	{
+		car = false;
+		shooting = false;
+		music = false;
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
+
 		LoadLevelNames ();
 		LoadFirstLevels ();
 		LoadMenu ();
@@ -74,10 +82,28 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		SceneManager.LoadSceneAsync ("Main_Menu");
 	}
 
+	/* use this only from Instruction Screen and from Level Screen
+	 * otherwise use FromGameToMenu()
+	 */
 	public void LoadMenu ()
 	{
+
 		ClearScreens ();
 		m_main_screen.SetActive (true);
+	}
+
+	public void FromGameToMenu ()
+	{
+		if (car) {
+			CarManager.Instance.ToMenu ();
+		}
+		if (shooting) {
+			ShootingManager.Instance.ToMenu ();
+		}
+		if (music) {
+			MusicGameManager.Instance.ToMenu ();
+		}
+		LoadMenu ();
 	}
 
 	public void LoadInstructions ()
@@ -154,14 +180,6 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public void ResumeGame ()
 	{
 		ClearScreens ();
-		StartCoroutine (WaitToResume ());
-	}
-
-	//TODO this goes into the game manager
-	IEnumerator WaitToResume ()
-	{
-		yield return new WaitForSeconds (1f);
-		//TODO here goes the couter 3-2-1-go
 		if (car) {
 			CarManager.Instance.ResumeLevel ();
 		}
@@ -172,6 +190,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			ShootingManager.Instance.ResumeLevel ();
 		}
 	}
+
+
 
 	public void PushedOnArrow ()
 	{

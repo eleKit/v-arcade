@@ -28,6 +28,7 @@ TagManager:
   - LeftButton
   - RightButton
   - Goal
+  - Diamond
   layers:
   - Default
   - TransparentFX

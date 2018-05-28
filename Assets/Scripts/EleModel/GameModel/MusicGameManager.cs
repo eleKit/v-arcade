@@ -25,13 +25,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	void Start ()
 	{
 
-		GameManager.Instance.BaseStart ("MusicMenuMusic");
+		GameManager.Instance.BaseStart ("MusicMenuMusic", GameMatch.GameType.Music);
 
 		/* set the bool of the current game in the game manager 
 		 * and in the GUI manager
 		 */
-		//GameManager.Instance.menu_GUI.music = true;
-		GameManager.Instance.music = true;
+
 
 
 		GameManager.Instance.player.SetActive (false);
@@ -92,6 +91,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	}
 
+	public void ToMenu ()
+	{
+		ResetPath ();
+		GameManager.Instance.BaseToMenu ();
+	}
+
 	//function called after pause the game
 	public void ResumeLevel ()
 	{
@@ -102,6 +107,14 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
 
+		ResetPath ();
+
+		ChooseLevel (GameManager.Instance.current_path);
+	}
+
+	void ResetPath ()
+	{
+
 		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("LeftButton")) {
 			Destroy (button);
 		}
@@ -109,11 +122,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		foreach (GameObject button in GameObject.FindGameObjectsWithTag ("RightButton")) {
 			Destroy (button);
 		}
-
-		ChooseLevel (GameManager.Instance.current_path);
 	}
-
-
 
 	public void WinLevel ()
 	{
