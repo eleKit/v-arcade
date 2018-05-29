@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PathGeneratorGUI : MonoBehaviour
+public class PathGeneratorUI : MonoBehaviour
 {
 
 
@@ -12,7 +12,7 @@ public class PathGeneratorGUI : MonoBehaviour
 	/* initial screen*/
 
 
-	public GameObject m_initial_BG;
+	public GameObject m_initial_screen;
 
 	public GameObject m_save_duck_screen;
 
@@ -44,7 +44,7 @@ public class PathGeneratorGUI : MonoBehaviour
 	{
 		
 		ClearScreens ();
-		m_initial_BG.SetActive (true);
+		m_initial_screen.SetActive (true);
 
 	}
 	// Update is called once per frame
@@ -57,7 +57,7 @@ public class PathGeneratorGUI : MonoBehaviour
 	public void LoadMenu ()
 	{
 		ClearScreens ();
-		m_initial_BG.SetActive (true);
+		m_initial_screen.SetActive (true);
 	}
 
 
@@ -173,8 +173,8 @@ public class PathGeneratorGUI : MonoBehaviour
 
 	void ClearScreens ()
 	{
-		if (m_initial_BG != null)
-			m_initial_BG.SetActive (false);
+		if (m_initial_screen != null)
+			m_initial_screen.SetActive (false);
 
 		if (m_instructions_screen != null)
 			m_instructions_screen.SetActive (false);
