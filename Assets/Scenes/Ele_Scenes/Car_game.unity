@@ -360,6 +360,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1419441108}
     m_Modifications:
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224097923801253542, guid: 18e5808b059154a21b65fff4d4c27c16,
         type: 2}
       propertyPath: m_RootOrder
@@ -459,12 +464,42 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 644018521}
     - target: {fileID: 223547586822278384, guid: 18e5808b059154a21b65fff4d4c27c16,
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114989839368585916, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 644018521}
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: FromGameToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114890794594592204, guid: 18e5808b059154a21b65fff4d4c27c16,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1461273586}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18e5808b059154a21b65fff4d4c27c16, type: 2}
   m_IsPrefabParent: 0
