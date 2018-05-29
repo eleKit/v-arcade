@@ -261,7 +261,7 @@ public class GameManager : Singleton<GameManager>
 
 		SfxManager.Instance.Unmute ();
 
-		is_playing = true;
+
 
 
 
@@ -280,6 +280,7 @@ public class GameManager : Singleton<GameManager>
 
 		ClearScreens ();
 		m_score_canvas.SetActive (true);
+		is_playing = true;
 	}
 
 

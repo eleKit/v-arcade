@@ -1970,7 +1970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b522ec7273b84e7bb2c24271166f23e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  max_y: 142
+  max_y: 145
 --- !u!1001 &1296489172
 Prefab:
   m_ObjectHideFlags: 0
