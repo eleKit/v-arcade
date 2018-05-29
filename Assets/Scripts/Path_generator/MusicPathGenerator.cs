@@ -11,7 +11,6 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 	public GameObject right_hand;
 
-	public string filename;
 
 	/* TODO load from file for every music the offset array for every hand
 	 */
@@ -77,8 +76,10 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	}
 
 
-	public void SetupMusicPath ()
+	public void SetupMusicPath (string name)
 	{
+		ReadPath (name);
+		
 		left = 0;
 		right = 0;
 
@@ -90,10 +91,10 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 
 
-	public void ReadPath ()
+	void ReadPath (string filename)
 	{
-		filename = "provamusica.txt";
-		StreamReader reader = new StreamReader (dataPath + "/" + filename); 
+		string file_path = Path.Combine (dataPath, filename);
+		StreamReader reader = new StreamReader (file_path); 
 
 		if (!reader.EndOfStream) {
 			string inp_ln = reader.ReadLine ();

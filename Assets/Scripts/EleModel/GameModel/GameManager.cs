@@ -157,10 +157,10 @@ public class GameManager : Singleton<GameManager>
 	{
 		SfxManager.Instance.Unmute ();
 		current_path = name;
-		StartCoroutine (LoadLevel (name));
+		StartCoroutine (LoadLevel ());
 	}
 
-	IEnumerator LoadLevel (string name)
+	IEnumerator LoadLevel ()
 	{
 		
 

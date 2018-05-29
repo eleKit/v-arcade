@@ -67,7 +67,7 @@ public class CarManager : Singleton<CarManager>
 
 	public void ChooseLevel (string name)
 	{
-		GameManager.Instance.BaseChooseLevel (name);
+		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('_') [1]);
 		ResetPlayer ();
 		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadPath (name);
 

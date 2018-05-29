@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using POLIMIGameCollective;
+using System.IO;
 
 public class MusicGameManager : Singleton<MusicGameManager>
 {
@@ -78,15 +79,13 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		no_more_hands = false;
 
-		//the path must be read before launching base choose level!!
-		MusicPathGenerator.Instance.ReadPath ();
 
 		MusicManager.Instance.StopAll ();
 		//TODO here must be played the game music chosen by the player
 
-		MusicPathGenerator.Instance.SetupMusicPath ();
+		MusicPathGenerator.Instance.SetupMusicPath (name);
 
-		GameManager.Instance.BaseChooseLevel (name);
+		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('.') [0]);
 
 
 	}

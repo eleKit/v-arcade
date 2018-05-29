@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using POLIMIGameCollective;
+using System.IO;
 
 public class ShootingManager : Singleton<ShootingManager>
 {
@@ -62,7 +63,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	public void ChooseLevel (string name)
 	{
 
-		GameManager.Instance.BaseChooseLevel (name);
+		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('_') [1]);
 
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using POLIMIGameCollective;
+using System.IO;
+using System;
 
 public class GameMenuScript : Singleton<GameMenuScript>
 {
@@ -29,6 +31,12 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	//retreive the name levels from file into list, convert the list into a new array
 	string[] name_levels;
 	int index_of_current_level_screen;
+
+	string directoryPath;
+
+	string[] game_paths;
+
+	string music_dataPath = "Assets/MusicTexts";
 
 	void Awake ()
 	{
@@ -67,7 +75,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		}
 
 
-		LoadLevelNames ();
+		LoadLevelNames (game_type);
 		LoadFirstLevels ();
 		LoadMenu ();
 	}
@@ -164,18 +172,18 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 
 
-	public void LoadGameLevel (Button pushed)
+	public void LoadGameLevel (int button_index)
 	{
 		ClearScreens ();
 
 		if (car) {
-			CarManager.Instance.ChooseLevel (pushed.GetComponentInChildren<Text> ().text);
+			CarManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
 		}
 		if (shooting) {
-			ShootingManager.Instance.ChooseLevel (pushed.GetComponentInChildren<Text> ().text);
+			ShootingManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
 		}
 		if (music) {
-			MusicGameManager.Instance.ChooseLevel (pushed.GetComponentInChildren<Text> ().text);
+			MusicGameManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
 		}
 	}
 
@@ -262,18 +270,35 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	}
 
 
-	void LoadLevelNames ()
+	void LoadLevelNames (GameMatch.GameType game_type)
 	{
-		
-		if (car) {
-			name_levels = new string[4]{ "a", "b", "c", "d" };
+		if (!music) {
+			directoryPath = 
+			Path.Combine (Application.persistentDataPath, game_type.ToString ());
+			game_paths = Directory.GetFiles (directoryPath);
+
+			name_levels = new string[game_paths.Length];
+			Char delimiter = '_';
+			string file_name_level = "";
+			for (int i = 0; i < game_paths.Length; i++) {
+
+				name_levels [i] = Path.GetFileName (game_paths [i]).Split (delimiter) [1];
+			}
+		} else {
+			string[] game_paths = Directory.GetFiles (music_dataPath);
+
+
+			//TODO ho un problema perchè vede il .meta
+			name_levels = new string[game_paths.Length];
+			Char delimiter = '.';
+			string file_name_level = "";
+			for (int i = 0; i < game_paths.Length; i++) {
+
+				name_levels [i] = Path.GetFileName (game_paths [i]).Split (delimiter) [0];
+			}
 		}
-		if (shooting) {
-			name_levels = new string[5]{ "e", "f", "g", "h", "i" };
-		}
-		if (music) {
-			name_levels = new string[4]{ "i", "l", "m", "n" };
-		}
+
+
 	}
 
 	void MakeButonsInteractable ()

@@ -47,7 +47,7 @@ public class CarPathGenerator : MonoBehaviour
 
 		filePath = Path.Combine (
 			directoryPath,
-			"Car_prova_20180524T071123" + ".json"
+			filePath
 		);
 		Debug.Log (filePath.ToString ());
 

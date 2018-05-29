@@ -40,7 +40,7 @@ public class DuckPathGenerator : MonoBehaviour
 
 		filePath = Path.Combine (
 			directoryPath,
-			"Shooting_prova_20180524T071133" + ".json"
+			filePath
 		);
 
 		Debug.Log (filePath.ToString ());
