@@ -17,6 +17,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public GameObject m_pause_screen;
 
+
 	public GameObject m_no_level_text;
 
 	public GameObject m_win_screen;
@@ -24,6 +25,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	//only for car game
 	public GameObject m_mode_screen;
+	public GameObject m_car_colours_screen;
 
 
 	public Button[] m_level_button;
@@ -109,6 +111,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (car) {
 			if (m_mode_screen != null)
 				m_mode_screen.SetActive (false);
+			if (m_car_colours_screen != null)
+				m_car_colours_screen.SetActive (false);
 		}
 
 	}
@@ -183,6 +187,11 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		}
 	}
 
+	public void LoadCarColourScreen ()
+	{
+		ClearScreens ();
+		m_car_colours_screen.SetActive (true);
+	}
 
 
 	public void LoadGameLevel (int button_index)
@@ -252,7 +261,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				LoadNameButtons ();
 			} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
 				if (car) {
-					LoadModeScreen ();
+					LoadCarColourScreen ();
 				} else {
 					LoadMenu ();
 				}
