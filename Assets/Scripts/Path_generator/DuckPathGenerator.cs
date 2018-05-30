@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using POLIMIGameCollective;
 
-public class DuckPathGenerator : MonoBehaviour
+public class DuckPathGenerator : Singleton<DuckPathGenerator>
 {
 
 	public GameObject m_back_duck_left;
@@ -36,14 +37,7 @@ public class DuckPathGenerator : MonoBehaviour
 	//TODO this is called by UI and used to load the path data
 	public void LoadPath (string filePath)
 	{
-		string directoryPath = Path.Combine (Application.persistentDataPath, GameMatch.GameType.Shooting.ToString ());
-
-		filePath = Path.Combine (
-			directoryPath,
-			filePath
-		);
-
-		Debug.Log (filePath.ToString ());
+		
 
 		string duckPath = File.ReadAllText (filePath);
 
@@ -64,7 +58,7 @@ public class DuckPathGenerator : MonoBehaviour
 				if (i < 3) {
 					Instantiate (m_front_duck_left, duck_path.front.back_coord [i] - new Vector3 (0, DuckSection.FRONT_y_coord, 0), Quaternion.identity);
 				} else if (i >= 3) {
-					Instantiate (m_front_duck_left, duck_path.front.back_coord [i] - new Vector3 (0, DuckSection.FRONT_y_coord, 0), Quaternion.identity);
+					Instantiate (m_front_duck_right, duck_path.front.back_coord [i] - new Vector3 (0, DuckSection.FRONT_y_coord, 0), Quaternion.identity);
 				}
 			}
 		}

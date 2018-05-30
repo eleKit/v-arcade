@@ -76,9 +76,9 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	}
 
 
-	public void SetupMusicPath (string name)
+	public void SetupMusicPath (string path)
 	{
-		ReadPath (name);
+		ReadPath (path);
 		
 		left = 0;
 		right = 0;
@@ -93,8 +93,8 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 	void ReadPath (string filename)
 	{
-		string file_path = Path.Combine (dataPath, filename);
-		StreamReader reader = new StreamReader (file_path); 
+		
+		StreamReader reader = new StreamReader (filename); 
 
 		if (!reader.EndOfStream) {
 			string inp_ln = reader.ReadLine ();

@@ -29,14 +29,14 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public bool car, music, shooting;
 
 	//retreive the name levels from file into list, convert the list into a new array
-	string[] name_levels;
+
 	int index_of_current_level_screen;
 
 	string directoryPath;
 
-	string[] game_paths;
-
 	string music_dataPath = "Assets/MusicTexts";
+
+	FileNamesOfPaths[] file_names_of_paths;
 
 	void Awake ()
 	{
@@ -177,13 +177,13 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		ClearScreens ();
 
 		if (car) {
-			CarManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
+			CarManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
 		if (shooting) {
-			ShootingManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
+			ShootingManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
 		if (music) {
-			MusicGameManager.Instance.ChooseLevel (game_paths [button_index + index_of_current_level_screen]);
+			MusicGameManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
 	}
 
@@ -232,7 +232,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	void PushedArrow (int direction)
 	{
-		if (index_of_current_level_screen + (m_level_button.Length * direction) < name_levels.Length
+		if (index_of_current_level_screen + (m_level_button.Length * direction) < file_names_of_paths.Length
 		    && index_of_current_level_screen + (m_level_button.Length * direction) >= 0) {
 			index_of_current_level_screen = index_of_current_level_screen + (m_level_button.Length * direction);
 			LoadNameButtons ();
@@ -258,8 +258,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		MakeButonsInteractable ();
 
 		for (int i = 0; i < m_level_button.Length; i++) {
-			if (i + index_of_current_level_screen < name_levels.Length) {
-				m_level_button [i].GetComponentInChildren<Text> ().text = name_levels [i + index_of_current_level_screen];
+			if (i + index_of_current_level_screen < file_names_of_paths.Length) {
+				m_level_button [i].GetComponentInChildren<Text> ().text = file_names_of_paths [i + index_of_current_level_screen].name;
 			} else {
 				//if there are no more levels
 				m_level_button [i].GetComponentInChildren<Text> ().text = "";
@@ -275,26 +275,27 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (!music) {
 			directoryPath = 
 			Path.Combine (Application.persistentDataPath, game_type.ToString ());
-			game_paths = Directory.GetFiles (directoryPath);
+			string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
 
-			name_levels = new string[game_paths.Length];
-			Char delimiter = '_';
-			string file_name_level = "";
-			for (int i = 0; i < game_paths.Length; i++) {
+			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
 
-				name_levels [i] = Path.GetFileName (game_paths [i]).Split (delimiter) [1];
+			for (int i = 0; i < file_names_of_paths.Length; i++) {
+				file_names_of_paths [i] = new FileNamesOfPaths ();
+				file_names_of_paths [i].file_path = game_paths [i];
+				file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('_') [1];
 			}
+
 		} else {
-			string[] game_paths = Directory.GetFiles (music_dataPath);
+			string[] game_paths = Directory.GetFiles (music_dataPath, "*.txt");
 
 
-			//TODO ho un problema perchè vede il .meta
-			name_levels = new string[game_paths.Length];
-			Char delimiter = '.';
-			string file_name_level = "";
-			for (int i = 0; i < game_paths.Length; i++) {
+			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
 
-				name_levels [i] = Path.GetFileName (game_paths [i]).Split (delimiter) [0];
+
+			for (int i = 0; i < file_names_of_paths.Length; i++) {
+				file_names_of_paths [i] = new FileNamesOfPaths ();
+				file_names_of_paths [i].file_path = game_paths [i];
+				file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('.') [0];
 			}
 		}
 

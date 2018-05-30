@@ -6,6 +6,7 @@ using System.IO;
 
 public class ShootingManager : Singleton<ShootingManager>
 {
+	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
 	// Use this for initialization
 	void Start ()
@@ -60,15 +61,15 @@ public class ShootingManager : Singleton<ShootingManager>
 		GameManager.Instance.BaseWinLevel ();
 	}
 
-	public void ChooseLevel (string name)
+	public void ChooseLevel (FileNamesOfPaths path)
 	{
-
-		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('_') [1]);
+		loaded_path = path;
+		GameManager.Instance.BaseChooseLevel (path.name);
 
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;
 
-		GameObject.Find ("DuckPathGenerator").GetComponent<DuckPathGenerator> ().LoadPath (name);
+		DuckPathGenerator.Instance.LoadPath (path.file_path);
 		
 	}
 
@@ -82,7 +83,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
 		ResetPath ();
-		ChooseLevel (GameManager.Instance.current_path);
+		ChooseLevel (loaded_path);
 	}
 
 	public int GetScore ()

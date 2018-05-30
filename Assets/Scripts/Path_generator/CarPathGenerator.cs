@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using POLIMIGameCollective;
 
-public class CarPathGenerator : MonoBehaviour
+public class CarPathGenerator : Singleton<CarPathGenerator>
 {
 	public GameObject diamond;
 
@@ -43,12 +44,7 @@ public class CarPathGenerator : MonoBehaviour
 	//TODO this is called by UI and used to load the path data
 	public void LoadPath (string filePath)
 	{
-		string directoryPath = Path.Combine (Application.persistentDataPath, GameMatch.GameType.Car.ToString ());
-
-		filePath = Path.Combine (
-			directoryPath,
-			filePath
-		);
+		
 		Debug.Log (filePath.ToString ());
 
 		string carPath = File.ReadAllText (filePath);

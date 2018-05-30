@@ -14,6 +14,8 @@ public class CarManager : Singleton<CarManager>
 
 	Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
 
+	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -65,11 +67,13 @@ public class CarManager : Singleton<CarManager>
 		}
 	}
 
-	public void ChooseLevel (string name)
+	public void ChooseLevel (FileNamesOfPaths path)
 	{
-		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('_') [1]);
+		loaded_path = path;
+
+		GameManager.Instance.BaseChooseLevel (path.name);
 		ResetPlayer ();
-		GameObject.Find ("CarPathGenerator").GetComponent<CarPathGenerator> ().LoadPath (name);
+		CarPathGenerator.Instance.LoadPath (path.file_path);
 
 	}
 
@@ -89,7 +93,7 @@ public class CarManager : Singleton<CarManager>
 	{
 		GameManager.Instance.m_wait_background.SetActive (true);
 		ResetPath ();
-		ChooseLevel (GameManager.Instance.current_path);
+		ChooseLevel (loaded_path);
 	}
 
 	public void WinLevel ()

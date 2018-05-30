@@ -22,6 +22,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public bool no_more_hands;
 
+	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -75,17 +77,18 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		
 	}
 
-	public void ChooseLevel (string name)
+	public void ChooseLevel (FileNamesOfPaths path)
 	{
 		no_more_hands = false;
 
+		loaded_path = path;
 
 		MusicManager.Instance.StopAll ();
 		//TODO here must be played the game music chosen by the player
 
-		MusicPathGenerator.Instance.SetupMusicPath (name);
+		MusicPathGenerator.Instance.SetupMusicPath (path.file_path);
 
-		GameManager.Instance.BaseChooseLevel (Path.GetFileName (name).Split ('.') [0]);
+		GameManager.Instance.BaseChooseLevel (path.name);
 
 
 	}
@@ -108,7 +111,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 		ResetPath ();
 
-		ChooseLevel (GameManager.Instance.current_path);
+		ChooseLevel (loaded_path);
 	}
 
 	void ResetPath ()
