@@ -1513,6 +1513,11 @@ Prefab:
       propertyPath: m_level_button.Array.data[2]
       value: 
       objectReference: {fileID: 1055677866}
+    - target: {fileID: 114904308936048702, guid: 04fc61fdb23794c559f11bfc7bdd3527,
+        type: 2}
+      propertyPath: m_no_level_text
+      value: 
+      objectReference: {fileID: 1385888690}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04fc61fdb23794c559f11bfc7bdd3527, type: 2}
   m_IsPrefabParent: 0
@@ -1956,6 +1961,11 @@ Prefab:
 --- !u!224 &1385888689 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224963540630881528, guid: 5d824afce80884775a46d28d79fb1fa1,
+    type: 2}
+  m_PrefabInternal: {fileID: 1385888688}
+--- !u!1 &1385888690 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1585061502555774, guid: 5d824afce80884775a46d28d79fb1fa1,
     type: 2}
   m_PrefabInternal: {fileID: 1385888688}
 --- !u!1 &1394646609

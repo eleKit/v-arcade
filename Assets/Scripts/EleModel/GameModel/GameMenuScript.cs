@@ -17,6 +17,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public GameObject m_pause_screen;
 
+	public GameObject m_no_level_text;
+
 	public GameObject m_win_screen;
 	public Text m_win_text;
 
@@ -27,6 +29,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public Button[] m_level_button;
 
 	public bool car, music, shooting;
+
+	bool there_are_no_level;
 
 	//retreive the name levels from file into list, convert the list into a new array
 
@@ -43,6 +47,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		car = false;
 		shooting = false;
 		music = false;
+		there_are_no_level = false;
 	}
 
 	// Use this for initialization
@@ -86,6 +91,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	{
 		if (m_info_screen != null)
 			m_info_screen.SetActive (false);
+		
+		if (m_no_level_text != null)
+			m_no_level_text.SetActive (false);
 
 		if (m_level_screen != null)
 			m_level_screen.SetActive (false);
@@ -119,6 +127,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 		ClearScreens ();
 		m_main_screen.SetActive (true);
+
+		if (there_are_no_level)
+			m_no_level_text.SetActive (true);
 	}
 
 	public void FromGameToMenu ()
@@ -247,11 +258,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				}
 			}
 		} else if (direction == -1) {
-			if (car) {
-				LoadModeScreen ();
-			} else {
-				LoadMenu ();
-			}
+			there_are_no_level = true;
+			LoadMenu ();
+
 		}
 	}
 
