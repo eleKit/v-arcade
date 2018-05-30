@@ -61,6 +61,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	//this is called once at the start of game manager to set the initial paramethers
 	public void LoadUIOfGame (GameMatch.GameType game_type)
 	{
+		ButtonsNonInteractable ();
+
 
 		switch (game_type) {
 		case GameMatch.GameType.Car:
@@ -232,11 +234,19 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	void PushedArrow (int direction)
 	{
-		if (index_of_current_level_screen + (m_level_button.Length * direction) < file_names_of_paths.Length
-		    && index_of_current_level_screen + (m_level_button.Length * direction) >= 0) {
-			index_of_current_level_screen = index_of_current_level_screen + (m_level_button.Length * direction);
-			LoadNameButtons ();
-		} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
+		if (file_names_of_paths != null) {
+			if (index_of_current_level_screen + (m_level_button.Length * direction) < file_names_of_paths.Length
+			    && index_of_current_level_screen + (m_level_button.Length * direction) >= 0) {
+				index_of_current_level_screen = index_of_current_level_screen + (m_level_button.Length * direction);
+				LoadNameButtons ();
+			} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
+				if (car) {
+					LoadModeScreen ();
+				} else {
+					LoadMenu ();
+				}
+			}
+		} else if (direction == -1) {
 			if (car) {
 				LoadModeScreen ();
 			} else {
@@ -254,16 +264,18 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	void LoadNameButtons ()
 	{
-		//TODO retreive name buttons
-		MakeButonsInteractable ();
+		if (file_names_of_paths != null) {
+			//TODO retreive name buttons
+			MakeButtonsInteractable ();
 
-		for (int i = 0; i < m_level_button.Length; i++) {
-			if (i + index_of_current_level_screen < file_names_of_paths.Length) {
-				m_level_button [i].GetComponentInChildren<Text> ().text = file_names_of_paths [i + index_of_current_level_screen].name;
-			} else {
-				//if there are no more levels
-				m_level_button [i].GetComponentInChildren<Text> ().text = "";
-				m_level_button [i].interactable = false;
+			for (int i = 0; i < m_level_button.Length; i++) {
+				if (i + index_of_current_level_screen < file_names_of_paths.Length) {
+					m_level_button [i].GetComponentInChildren<Text> ().text = file_names_of_paths [i + index_of_current_level_screen].name;
+				} else {
+					//if there are no more levels
+					m_level_button [i].GetComponentInChildren<Text> ().text = "";
+					m_level_button [i].interactable = false;
+				}
 			}
 		}
 
@@ -275,37 +287,50 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (!music) {
 			directoryPath = 
 			Path.Combine (Application.persistentDataPath, game_type.ToString ());
-			string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
 
-			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+			if (Directory.Exists (directoryPath)) {
+				string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
 
-			for (int i = 0; i < file_names_of_paths.Length; i++) {
-				file_names_of_paths [i] = new FileNamesOfPaths ();
-				file_names_of_paths [i].file_path = game_paths [i];
-				file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('_') [1];
+				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+
+				for (int i = 0; i < file_names_of_paths.Length; i++) {
+					file_names_of_paths [i] = new FileNamesOfPaths ();
+					file_names_of_paths [i].file_path = game_paths [i];
+					file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('_') [1];
+				}
+
 			}
-
 		} else {
-			string[] game_paths = Directory.GetFiles (music_dataPath, "*.txt");
+			if (Directory.Exists (music_dataPath)) {
+				string[] game_paths = Directory.GetFiles (music_dataPath, "*.txt");
 
 
-			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
 
 
-			for (int i = 0; i < file_names_of_paths.Length; i++) {
-				file_names_of_paths [i] = new FileNamesOfPaths ();
-				file_names_of_paths [i].file_path = game_paths [i];
-				file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('.') [0];
+				for (int i = 0; i < file_names_of_paths.Length; i++) {
+					file_names_of_paths [i] = new FileNamesOfPaths ();
+					file_names_of_paths [i].file_path = game_paths [i];
+					file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('.') [0];
+				}
 			}
 		}
 
 
 	}
 
-	void MakeButonsInteractable ()
+	void MakeButtonsInteractable ()
 	{
 		for (int i = 0; i < m_level_button.Length; i++) {
 			m_level_button [i].interactable = true;
+		}
+	}
+
+	void ButtonsNonInteractable ()
+	{
+		for (int i = 0; i < m_level_button.Length; i++) {
+			m_level_button [i].interactable = false;
+			m_level_button [i].GetComponentInChildren<Text> ().text = "";
 		}
 	}
 }
