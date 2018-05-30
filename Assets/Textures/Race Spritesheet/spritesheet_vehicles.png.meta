@@ -7,6 +7,8 @@ TextureImporter:
     21300000: green_vehicles_0
     21300002: red_vehicles_0
     21300004: red_motorcycle
+    21300006: yellow_vehicles_0
+    21300008: blue_vehicles_0
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -149,6 +151,34 @@ TextureImporter:
         y: 11
         width: 48
         height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: yellow_vehicles_0
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 131
+        width: 71
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: blue_vehicles_0
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 249
+        width: 70
+        height: 131
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
