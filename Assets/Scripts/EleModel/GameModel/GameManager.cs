@@ -42,11 +42,6 @@ public class GameManager : Singleton<GameManager>
 	public bool car, music, shooting;
 
 
-	//gameobject array containing the diamonds whose position indicates the level path
-	private GameObject[] m_path;
-
-
-
 
 	//bool to deactivate player if the game is paused
 	private bool is_playing = false;
@@ -201,6 +196,13 @@ public class GameManager : Singleton<GameManager>
 		m_score_text.text = "Punteggio: " + score.ToString ();
 
 
+		/* reset the recorder before start playing:
+		 * this function is also called by the RestartLevel function 
+		 * of the specific game manager ( CarManager | ShootingManager | MusicGameManager )
+		 */
+		hc.ResetRecording ();
+
+		// the recorder starts to save all the Frames
 		hc.Record ();
 
 
@@ -240,6 +242,8 @@ public class GameManager : Singleton<GameManager>
 	//called when the player pauses the game
 	void BasePauseLevel ()
 	{
+		//pause the recording when the game is in pause
+		hc.PauseRecording ();
 
 		is_playing = false;
 
@@ -280,7 +284,12 @@ public class GameManager : Singleton<GameManager>
 
 		ClearScreens ();
 		m_score_canvas.SetActive (true);
+
+		//resume the recording when the game is resumed by the player
+		hc.Record ();
+
 		is_playing = true;
+	
 	}
 
 
@@ -312,8 +321,8 @@ public class GameManager : Singleton<GameManager>
 
 		SaveData ();
 
-		EndLevel ();
-
+		//EndLevel ();
+		is_playing = false;
 
 
 	}
@@ -321,23 +330,16 @@ public class GameManager : Singleton<GameManager>
 	// called to destroy the current level path
 	// never called directly by the UI
 
-	// TODO this myst be called also by restart level function
+	// TODO this myst be called
 	void EndLevel ()
 	{
-		is_playing = false;
+		
 
 		SfxManager.Instance.Unmute ();
 		SfxManager.Instance.Stop ();
 
 		MusicManager.Instance.UnmuteAll ();
 
-		if (m_path != null) {
-			for (int i = 0; i < m_path.Length; i++) {
-				if (m_path [i] != null) {
-					Destroy (m_path [i]);
-				}
-			}
-		}
 	}
 
 
