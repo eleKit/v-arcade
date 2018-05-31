@@ -65,7 +65,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 			if (GameObject.FindGameObjectsWithTag ("RightButton").Length == 0
 			    && GameObject.FindGameObjectsWithTag ("LeftButton").Length == 0
-			    && no_more_hands) {
+			    && no_more_hands && !MusicManager.Instance.isPlaying (loaded_path.name)) {
 				WinLevel ();		
 			}
 		} else {
@@ -83,15 +83,21 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 		loaded_path = path;
 
-		MusicManager.Instance.StopAll ();
-		//TODO here must be played the game music chosen by the player
+
+
+
 
 		MusicPathGenerator.Instance.SetupMusicPath (path.file_path);
+
+
 
 		GameManager.Instance.BaseChooseLevel (path.name);
 
 
+
+
 	}
+
 
 	public void ToMenu ()
 	{
@@ -103,6 +109,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	public void ResumeLevel ()
 	{
 		GameManager.Instance.BaseResumeLevel ();
+
 	}
 
 	public void RestartLevel ()
@@ -112,6 +119,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		ResetPath ();
 
 		ChooseLevel (loaded_path);
+
 	}
 
 	void ResetPath ()
@@ -128,6 +136,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public void WinLevel ()
 	{
+		MusicManager.Instance.StopAll ();
+		MusicManager.Instance.PlayMusic ("MusicMenuMusic");
 		GameManager.Instance.BaseWinLevel ();
 	}
 

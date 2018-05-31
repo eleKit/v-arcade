@@ -157,11 +157,14 @@ public class GameManager : Singleton<GameManager>
 
 	IEnumerator LoadLevel ()
 	{
-		
+		if (music) {
+			//now stops the music menuu
+			MusicManager.Instance.StopAll ();
+		}
 
 		yield return new WaitForSeconds (m_loading_time);
 
-		is_playing = true;
+
 
 		Debug.Log ("inside LoadLevel");
 
@@ -181,6 +184,14 @@ public class GameManager : Singleton<GameManager>
 		m_wait_text.text = "caricamento...";
 
 		yield return new WaitForSeconds (0.5f);
+
+
+		if (music) {
+			//now plays the music correspondent to the level chosen
+			MusicManager.Instance.PlayMusic (current_path);
+		}
+
+		is_playing = true;
 
 		//this must be before setting the position
 		player.SetActive (true);
@@ -249,6 +260,11 @@ public class GameManager : Singleton<GameManager>
 
 		SfxManager.Instance.Mute ();
 
+		if (music) {
+			//pause the current path level music
+			MusicManager.Instance.PauseAll ();
+		}
+
 		player.SetActive (false);
 
 		GameMenuScript.Instance.LoadPauseScreen ();
@@ -281,13 +297,21 @@ public class GameManager : Singleton<GameManager>
 			m_resume_countdown.text = i.ToString ();
 			yield return new WaitForSeconds (0.5f);
 		}
-
 		ClearScreens ();
+		
+
+
 		m_score_canvas.SetActive (true);
 
 		//resume the recording when the game is resumed by the player
 		hc.Record ();
 
+
+
+		if (music) {
+			//unpause the current path level music
+			MusicManager.Instance.UnPauseAll ();
+		}
 		is_playing = true;
 	
 	}

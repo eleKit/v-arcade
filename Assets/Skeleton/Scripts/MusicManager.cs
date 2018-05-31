@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace POLIMIGameCollective {
+namespace POLIMIGameCollective
+{
 	
-	public class MusicManager : Singleton<MusicManager> {
+	public class MusicManager : Singleton<MusicManager>
+	{
 
 		private AudioSource[] m_audio_sources;
 
@@ -13,16 +15,17 @@ namespace POLIMIGameCollective {
 
 		private Dictionary<string, AudioSource> music_list;
 
-		void Awake() {
+		void Awake ()
+		{
 			if (FindObjectsOfType (typeof(MusicManager)).Length > 1) {
 				Destroy (gameObject);
 			} else {
 				DontDestroyOnLoad (gameObject);
 			}
 
-			music_list = new Dictionary<string, AudioSource>();
+			music_list = new Dictionary<string, AudioSource> ();
 
-			m_audio_sources = gameObject.GetComponentsInChildren<AudioSource>();
+			m_audio_sources = gameObject.GetComponentsInChildren<AudioSource> ();
 
 			for (int i = 0; i < m_audio_sources.Length; i++) {
 				AudioSource s = m_audio_sources [i];
@@ -33,37 +36,51 @@ namespace POLIMIGameCollective {
 			}
 		}
 
-		public void PlayMusic(string name, float pitchVariance = 0)
+		public void PlayMusic (string name, float pitchVariance = 0)
 		{
-			if (music_list.ContainsKey(name))
-			{
-				if (pitchVariance != 0) music_list[name].pitch = 1 + Random.Range(-pitchVariance, pitchVariance);
+			if (music_list.ContainsKey (name)) {
+				if (pitchVariance != 0)
+					music_list [name].pitch = 1 + Random.Range (-pitchVariance, pitchVariance);
 
 				if (!music_list [name].isPlaying)
-					music_list[name].Play();
+					music_list [name].Play ();
 
-			} else Debug.LogWarning("No sound of name " + name + " exists");
+			} else
+				Debug.LogWarning ("No sound of name " + name + " exists");
 		}
 
-		public void MuteAll()
+		public void MuteAll ()
 		{
 			for (int i = 0; i < m_audio_sources.Length; i++)
 				m_audio_sources [i].mute = true;
 		}
 
-		public void UnmuteAll()
+		public void UnmuteAll ()
 		{
 			for (int i = 0; i < m_audio_sources.Length; i++)
 				m_audio_sources [i].mute = false;
 		}
 
-		public void StopAll()
+		public void StopAll ()
 		{
 			for (int i = 0; i < m_audio_sources.Length; i++)
 				m_audio_sources [i].Stop ();
 		}
 
-		public bool isPlaying(string name) {
+		public void PauseAll ()
+		{
+			for (int i = 0; i < m_audio_sources.Length; i++)
+				m_audio_sources [i].Pause ();
+		}
+
+		public void UnPauseAll ()
+		{
+			for (int i = 0; i < m_audio_sources.Length; i++)
+				m_audio_sources [i].UnPause ();
+		}
+
+		public bool isPlaying (string name)
+		{
 			if (music_list.ContainsKey (name)) {
 				return music_list [name].isPlaying;
 			} else {
