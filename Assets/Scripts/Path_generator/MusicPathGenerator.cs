@@ -76,12 +76,18 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	}
 
 
+	//this function is called before the game starts (i.e. when GameManager is_playing = false)
 	public void SetupMusicPath (string path)
 	{
 		ReadPath (path);
 		
 		left = 0;
 		right = 0;
+
+		/* the moment in which the next hand_button will be spauned is calculated as
+		 * t0 + x (t0 = the starting time, x= the seconds to wait)
+		 * when the current time t1 = t0 + x the button is spauned
+		 */
 
 		spawn_time_left = Time.time + instantiationTimer_left [left];
 
@@ -95,6 +101,10 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	{
 		
 		StreamReader reader = new StreamReader (filename); 
+
+		/* the first line contains the spauning seconds of the left hand buttons
+		 * the second line the ones of the right hand buttons
+		 */
 
 		if (!reader.EndOfStream) {
 			string inp_ln = reader.ReadLine ();
