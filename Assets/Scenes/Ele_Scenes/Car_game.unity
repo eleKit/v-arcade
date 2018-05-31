@@ -340,6 +340,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1119867203725746, guid: 91b02f330e1164d39ae3050c7aaf4684, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 91b02f330e1164d39ae3050c7aaf4684, type: 2}
   m_IsPrefabParent: 0
@@ -500,6 +504,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1461273586}
+    - target: {fileID: 1989097169598208, guid: 18e5808b059154a21b65fff4d4c27c16, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18e5808b059154a21b65fff4d4c27c16, type: 2}
   m_IsPrefabParent: 0
@@ -878,7 +886,7 @@ Transform:
   m_GameObject: {fileID: 472364380}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -5.7, z: 0}
-  m_LocalScale: {x: 2.7, y: 2.5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1590,6 +1598,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1712811782514446, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
   m_IsPrefabParent: 0
@@ -1999,6 +2011,31 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224700791180155630, guid: 690c5508ef5754f0494a488771db0d28,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 224700791180155630, guid: 690c5508ef5754f0494a488771db0d28,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 224503966805733826, guid: 690c5508ef5754f0494a488771db0d28,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 224682139959189656, guid: 690c5508ef5754f0494a488771db0d28,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 224891365886326844, guid: 690c5508ef5754f0494a488771db0d28,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 690c5508ef5754f0494a488771db0d28, type: 2}
@@ -2718,6 +2755,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1237780310344516, guid: d1c817e0494f440cc8450ae5bfb6b908, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d1c817e0494f440cc8450ae5bfb6b908, type: 2}
   m_IsPrefabParent: 0
@@ -3199,6 +3240,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1991398309223772, guid: 49b1e94ec9a3544d49f6416ecab36da8, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 49b1e94ec9a3544d49f6416ecab36da8, type: 2}
@@ -3738,6 +3783,10 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1142530020461840, guid: 7249fa5434f2e4ada8ed9505f609b4a1, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7249fa5434f2e4ada8ed9505f609b4a1, type: 2}
