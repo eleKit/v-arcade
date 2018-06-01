@@ -12,7 +12,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	public GameObject right_hand;
 
 
-	/* TODO load from file for every music the offset array for every hand
+	/* in the txt file the distance between two spauned buttons must be >= 5f
 	 */
 	//this changes for every music
 
@@ -32,6 +32,9 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 	float spawn_time_right;
 
+	//the time t0 used by the spauning calculator in the Update() to generate buttons
+	float t0;
+
 
 
 
@@ -47,7 +50,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 
 
-	void Update ()
+	void FixedUpdate ()
 	{
 		if (GameManager.Instance.Get_Is_Playing ()) {
 			if (Time.time > spawn_time_left && left < instantiationTimer_left.Length) {
@@ -58,7 +61,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 				//increment next_spawn_time
 				left++;
 				if (left < instantiationTimer_left.Length)
-					spawn_time_left = Time.time + instantiationTimer_left [left];
+					spawn_time_left = t0 + instantiationTimer_left [left];
 			}
 			
 			if (Time.time > spawn_time_right && right < instantiationTimer_right.Length) {
@@ -66,7 +69,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 				right++;
 				if (right < instantiationTimer_right.Length)
-					spawn_time_right = Time.time + instantiationTimer_right [right];
+					spawn_time_right = t0 + instantiationTimer_right [right];
 			}
 
 			if (left >= instantiationTimer_left.Length && right >= instantiationTimer_right.Length) {
@@ -89,9 +92,11 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 		 * when the current time t1 = t0 + x the button is spauned
 		 */
 
-		spawn_time_left = Time.time + instantiationTimer_left [left];
+		t0 = Time.time;
 
-		spawn_time_right = Time.time + instantiationTimer_right [right];
+		spawn_time_left = t0 + instantiationTimer_left [left];
+
+		spawn_time_right = t0 + instantiationTimer_right [right];
 	}
 
 
