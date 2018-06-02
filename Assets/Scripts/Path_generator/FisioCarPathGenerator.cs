@@ -341,7 +341,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			string filePath = Path.Combine (
 				                  directoryPath,
 				                  GameMatch.GameType.Car.ToString () + "_"
-				                  + car_path.id_path + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+				                  + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
 			                  );
 
 			string jsonString = JsonUtility.ToJson (car_path);
@@ -352,6 +352,12 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		}
+		
+	}
+
+	string FromNameToFilename (string name)
+	{
+		return name.Replace (" ", "-");
 		
 	}
 

@@ -115,7 +115,7 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 			string filePath = Path.Combine (
 				                  directoryPath,
 				                  GameMatch.GameType.Shooting.ToString () + "_"
-				                  + duck_path.id_path + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
+				                  + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json"
 			                  );
 
 			string jsonString = JsonUtility.ToJson (duck_path);
@@ -125,4 +125,12 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		}
 	}
+
+
+	string FromNameToFilename (string name)
+	{
+		return name.Replace (" ", "-");
+
+	}
 }
+

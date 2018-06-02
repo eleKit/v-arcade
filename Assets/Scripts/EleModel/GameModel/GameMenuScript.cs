@@ -314,7 +314,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				for (int i = 0; i < file_names_of_paths.Length; i++) {
 					file_names_of_paths [i] = new FileNamesOfPaths ();
 					file_names_of_paths [i].file_path = game_paths [i];
-					file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('_') [1];
+					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
 				}
 
 			}
@@ -329,11 +329,18 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				for (int i = 0; i < file_names_of_paths.Length; i++) {
 					file_names_of_paths [i] = new FileNamesOfPaths ();
 					file_names_of_paths [i].file_path = game_paths [i];
-					file_names_of_paths [i].name = Path.GetFileName (game_paths [i]).Split ('.') [0];
+					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
 				}
 			}
 		}
 
+
+	}
+
+
+	string FromFilenameToName (string name)
+	{
+		return name.Replace ("-", " ");
 
 	}
 
