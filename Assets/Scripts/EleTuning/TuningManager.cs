@@ -365,6 +365,7 @@ public class TuningManager : MonoBehaviour
 
 
 
+
 	void StartLevel ()
 	{
 
@@ -384,6 +385,20 @@ public class TuningManager : MonoBehaviour
 	}
 
 
+
+
+
+	void SaveTuningData ()
+	{
+		/* TODO 
+		 * deve esserci la funzione che calcola le tre variabili nei giochi:
+		 * * CarControllerScript: scale
+		 * * PushGesture: threshold (and offset?)
+		 * * PointerController: vertical_scale, horizontal_scale
+		 */
+
+
+	}
 
 
 

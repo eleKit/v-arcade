@@ -6,6 +6,8 @@ public class GlobalPlayerData : MonoBehaviour
 {
 	public string player;
 
+	public GlobalPlayer player_data;
+
 	public static GlobalPlayerData globalPlayerData;
 
 	void Awake ()
@@ -16,5 +18,14 @@ public class GlobalPlayerData : MonoBehaviour
 		} else if (globalPlayerData != this) {
 			Destroy (gameObject);
 		}
+	}
+
+
+	public void SetPlayer (GlobalPlayer pl)
+	{
+
+		player_data = pl;
+		player = pl.name;
+
 	}
 }
