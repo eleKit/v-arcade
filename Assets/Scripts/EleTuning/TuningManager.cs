@@ -6,7 +6,7 @@ using System.Linq;
 
 public class TuningManager : MonoBehaviour
 {
-	const int N = 5;
+	const int N = 4;
 
 	[Header ("Images about the hand movement")]
 	public GameObject[] m_hands_image = new GameObject[N];
@@ -153,9 +153,10 @@ public class TuningManager : MonoBehaviour
 
 		case Tuning_Phase.Start_phase:
 
-			previous_phase = current_phase;
+
 
 			if (counter == null) {
+				previous_phase = current_phase;
 				counter = new Counter (2f, 0f);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
@@ -180,9 +181,13 @@ public class TuningManager : MonoBehaviour
 
 		case Tuning_Phase.Yaw_phase:
 			
-			previous_phase = current_phase;
-
 			if (counter == null) {
+
+				previous_phase = current_phase;
+
+				left_yaw.Clear ();
+				right_yaw.Clear ();
+
 				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
@@ -193,7 +198,7 @@ public class TuningManager : MonoBehaviour
 
 				if (counter.timeIsUp ()) {
 					counter = null;
-					current_phase = Tuning_Phase.Roll_phase;
+					current_phase = Tuning_Phase.Pitch_phase;
 					index++;
 				} else if (!HandsOk ()) {
 					counter = null;
@@ -219,7 +224,7 @@ public class TuningManager : MonoBehaviour
 
 			break;
 
-		case Tuning_Phase.Roll_phase:
+		/*case Tuning_Phase.Roll_phase:
 
 			previous_phase = current_phase;
 
@@ -258,13 +263,19 @@ public class TuningManager : MonoBehaviour
 				//the player has the time to read the intruction screen before playing
 			}
 
-			break;
+			break;*/
 
 		case Tuning_Phase.Pitch_phase:
 
-			previous_phase = current_phase;
+
 
 			if (counter == null) {
+
+				previous_phase = current_phase;
+
+				left_pitch.Clear ();
+				right_pitch.Clear ();
+
 				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
 				m_hands_image [index].SetActive (true);
@@ -274,8 +285,8 @@ public class TuningManager : MonoBehaviour
 			} else if (counter.instructionTimeIsUp ()) {
 
 				if (counter.timeIsUp ()) {
-					counter = null;
 					current_phase = Tuning_Phase.End_phase;
+					counter = null;
 					index++;
 				} else if (!HandsOk ()) {
 					counter = null;
@@ -307,26 +318,27 @@ public class TuningManager : MonoBehaviour
 
 			ClearScreens ();
 
+
+			/* List.Sort() sorts i ascending order */
+
 			left_pitch.Sort ();
 			right_pitch.Sort ();
-
-			left_roll.Sort ();
-			right_roll.Sort ();
 
 			left_yaw.Sort ();
 			right_yaw.Sort ();
 
-			float left_max_pitch = left_pitch [left_pitch.Count / 10];
-			float right_max_pitch = right_pitch [1];
+	
+			float left_max_pitch = left_pitch [left_pitch.Count - (left_pitch.Count / 10)];
+			float right_max_pitch = right_pitch [right_pitch.Count - (right_pitch.Count / 10)];
 
-			float left_min_pitch = left_pitch.Min ();
-			float right_min_pitch = right_pitch.Min ();
+			float left_min_pitch = left_pitch [left_pitch.Count / 10];
+			float right_min_pitch = right_pitch [right_pitch.Count / 10];
 
-			float left_max_yaw = left_yaw.Max ();
-			float right_max_yaw = right_yaw.Max ();
+			float left_max_yaw = left_yaw [left_yaw.Count - (left_yaw.Count / 10)];
+			float right_max_yaw = right_yaw [right_yaw.Count - (right_yaw.Count / 10)];
 
-			float left_min_yaw = left_yaw.Min ();
-			float right_min_yaw = right_yaw.Min ();
+			float left_min_yaw = left_yaw [left_yaw.Count / 10];
+			float right_min_yaw = right_yaw [right_yaw.Count / 10];
 
 			m_left_result.SetActive (true);
 
@@ -414,7 +426,6 @@ public class TuningManager : MonoBehaviour
 		Start_phase,
 		Yaw_phase,
 		Pitch_phase,
-		Roll_phase,
 		End_phase,
 		Finished_tuning,
 	};

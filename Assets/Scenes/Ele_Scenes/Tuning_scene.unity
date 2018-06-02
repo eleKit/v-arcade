@@ -1579,22 +1579,19 @@ MonoBehaviour:
   m_hands_image:
   - {fileID: 949630036}
   - {fileID: 949630036}
-  - {fileID: 41870875}
-  - {fileID: 41870875}
   - {fileID: 2038365065}
+  - {fileID: 41870875}
   m_instructions_screen:
   - {fileID: 2015681680}
   - {fileID: 2015681680}
-  - {fileID: 1066007033}
-  - {fileID: 1226455105}
   - {fileID: 1076288616}
+  - {fileID: 1066007033}
   m_timer_object: {fileID: 1847608581}
   m_timer: {fileID: 1847608583}
   m_left_result: {fileID: 325891943}
   m_left_result_text: {fileID: 325891945}
   m_right_result: {fileID: 414022019}
   m_right_result_text: {fileID: 414022021}
-  waiting_time: 0.5
   m_timeout_s: 5
   m_instruction_timeout_s: 0.5
   handController: {fileID: 1563989601}
