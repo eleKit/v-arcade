@@ -120,7 +120,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public void LoadMainMenu ()
 	{
-		SceneManager.LoadSceneAsync ("Main_Menu");
+		//everytime a new scene is loaded the MusicManager must stop 
+		MusicManager.Instance.StopAll ();
+		SceneManager.LoadSceneAsync ("Main_Menu_Patient");
 	}
 
 	/* use this only from Instruction Screen and from Level Screen

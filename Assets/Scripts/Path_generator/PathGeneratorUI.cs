@@ -111,7 +111,7 @@ public class PathGeneratorUI : MonoBehaviour
 
 	public void LoadMainMenu ()
 	{
-		SceneManager.LoadSceneAsync ("Main_Menu");
+		SceneManager.LoadSceneAsync ("Main_Menu_Doctor");
 	}
 
 

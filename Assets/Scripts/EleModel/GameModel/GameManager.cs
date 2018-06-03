@@ -97,7 +97,6 @@ public class GameManager : Singleton<GameManager>
 			break;
 		}
 
-
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
 
