@@ -305,8 +305,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	void LoadLevelNames (GameMatch.GameType game_type)
 	{
 		if (!music) {
-			directoryPath = 
-			Path.Combine (Application.persistentDataPath, game_type.ToString ());
+			directoryPath = Path.Combine (Application.persistentDataPath,
+				Path.Combine ("Paths", game_type.ToString ()));
 
 			if (Directory.Exists (directoryPath)) {
 				string[] game_paths = Directory.GetFiles (directoryPath, "*.json");

@@ -334,8 +334,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			car_path.id_path = name_path;
 
 			//TODO if the paths are divided into doctors substitute GameMatch.GameType.Car.ToString () with car_path.doctorName
-			string directoryPath = 
-				Path.Combine (Application.persistentDataPath, GameMatch.GameType.Car.ToString ());
+			string directoryPath = Path.Combine (Application.persistentDataPath,
+				                       Path.Combine ("Paths", GameMatch.GameType.Car.ToString ()));
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (
