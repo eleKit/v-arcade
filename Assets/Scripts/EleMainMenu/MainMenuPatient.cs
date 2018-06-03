@@ -4,17 +4,31 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using POLIMIGameCollective;
 
-public class MainMenuPatient : MonoBehaviour {
+public class MainMenuPatient : MonoBehaviour
+{
 
 
 	string[] scenes_names = 
-		new string[]{
-		"Car_game",
-		"Music_game",
-		"Shooting_game",
-		"Tuning_scene" };
+		new string[] {
+			"Car_game",
+			"Music_game",
+			"Shooting_game",
+			"Tuning_scene"
+		};
 
-	public void LoadNextScene(int i){
+
+	void Start ()
+	{
+		MusicManager.Instance.PlayMusic ("MainMenuMusic");
+	}
+
+	void Update ()
+	{
+		
+	}
+
+	public void LoadNextScene (int i)
+	{
 		//everytime a new scene is loaded the MusicManager must stop 
 		MusicManager.Instance.StopAll ();
 
