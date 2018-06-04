@@ -87,7 +87,7 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 		}
 
-		goal.transform.position = new Vector3 (0, y_start + 10, 0);
+		goal.transform.position = new Vector3 (0, y_start + 5f, 0);
 
 		
 	}
