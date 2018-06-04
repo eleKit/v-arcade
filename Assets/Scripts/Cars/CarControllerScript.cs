@@ -71,7 +71,7 @@ public class CarControllerScript : MonoBehaviour
 			} else if (ninety_deg_hand) {
 
 				//TODO fix pich doesnt work!!
-				horizontalAcc = new Vector3 (scale * 10 * Mathf.Sin (pitch), 0, 0);
+				horizontalAcc = new Vector3 (scale * Mathf.Sin (pitch), 0, 0);
 				res = (horizontalAcc + verticalAcc);
 
 			}

@@ -122,6 +122,10 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	{
 		//everytime a new scene is loaded the MusicManager must stop 
 		MusicManager.Instance.StopAll ();
+
+		//TODO fix better this bug! 
+		Physics2D.gravity = new Vector3 (0f, -9.81f, 0f);
+
 		SceneManager.LoadSceneAsync ("Main_Menu_Patient");
 	}
 
