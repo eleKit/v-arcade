@@ -153,24 +153,22 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	 * the PushGesture script calls the AddPoints() funcion
 	 */
 
-	public void AddPoints ()
+	public void AddPoints (bool left)
 	{
 		GameManager.Instance.BaseAddPoints ();
-		StartCoroutine (Yeah ());
+		StartCoroutine (Yeah (left));
 
 	}
 
-	IEnumerator Yeah ()
+	IEnumerator Yeah (bool left)
 	{
-		if (right_trigger) {
+		if (!left) {
 			m_right_yeah.SetActive (true);	
 			right_trigger = false;
 			if (right_hand_to_delete != null) {
 				right_hand_to_delete.SetActive (false);
 			}
-		}
-
-		if (left_trigger) {
+		} else {
 			m_left_yeah.SetActive (true);
 			left_trigger = false;
 			if (left_hand_to_delete != null) {

@@ -92,7 +92,7 @@ public class PushGesture : MonoBehaviour
 		if ((pitch - max_pitch) < threshold && pitch < offset) {
 			Debug.Log ("left push" + " max " + max_pitch.ToString ());
 			if (MusicGameManager.Instance.left_trigger) {
-				MusicGameManager.Instance.AddPoints ();
+				MusicGameManager.Instance.AddPoints (true);
 			}
 		}
 	}
@@ -105,7 +105,7 @@ public class PushGesture : MonoBehaviour
 			Debug.Log ("right push" + " max " + max_pitch.ToString ());
 
 			if (MusicGameManager.Instance.right_trigger) {
-				MusicGameManager.Instance.AddPoints ();
+				MusicGameManager.Instance.AddPoints (false);
 			}
 		}
 		

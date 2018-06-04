@@ -101,7 +101,7 @@ public class CoinCollectScript : MonoBehaviour
 					if (duck_time >= max_duck_time && !duck_already_shooted) {
 						duck_already_shooted = true;
 						ShootingManager.Instance.AddPoints ();
-						StartCoroutine ("Fall");
+						StartCoroutine (Fall ());
 						Debug.Log ("duck shooted");
 					}
 				}
@@ -116,7 +116,6 @@ public class CoinCollectScript : MonoBehaviour
 	{
 		
 		SfxManager.Instance.Play ("rumble");
-		Debug.Log ("music");
 
 		Rigidbody2D rb2d = GetComponent<Rigidbody2D> ();
 		Collider2D coll2d = GetComponent<Collider2D> ();
