@@ -120,6 +120,11 @@ public class DoctorMenuUI : MonoBehaviour
 	}
 
 
+	public void SetPatientNameForReplay (int index)
+	{
+		GlobalReplayData.globalReplayData.patient_folder_name = patients [index + index_of_current_replay_patients_screen];
+	}
+
 
 	//these are the script used to set the buttons of the replay
 	public void PushedOnArrowButtons ()

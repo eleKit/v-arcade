@@ -187,6 +187,118 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 22707736}
+--- !u!1001 &39768328
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 214.21117
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 87.10389
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 5.068062
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190987261559146, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_actions_screen
+      value: 
+      objectReference: {fileID: 1695906940}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_manage_patients_screen
+      value: 
+      objectReference: {fileID: 1772332119}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_patients_list_screen
+      value: 
+      objectReference: {fileID: 1586298351}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[0]
+      value: 
+      objectReference: {fileID: 1577185622}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[1]
+      value: 
+      objectReference: {fileID: 998673511}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[2]
+      value: 
+      objectReference: {fileID: 1476360172}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[3]
+      value: 
+      objectReference: {fileID: 1316878106}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[4]
+      value: 
+      objectReference: {fileID: 893663222}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_text_patients_list.Array.data[5]
+      value: 
+      objectReference: {fileID: 1119208470}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_patiens_replay_screen
+      value: 
+      objectReference: {fileID: 1904929802}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_button_patients_list.Array.data[0]
+      value: 
+      objectReference: {fileID: 1338016844}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_button_patients_list.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100410599}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_button_patients_list.Array.data[2]
+      value: 
+      objectReference: {fileID: 972265927}
+    - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+        type: 2}
+      propertyPath: m_replay_games_screen
+      value: 
+      objectReference: {fileID: 1641077553}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &146729841
 GameObject:
   m_ObjectHideFlags: 0
@@ -2541,6 +2653,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1448434876}
+        m_MethodName: SetPatientNameForReplay
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &972265928
@@ -3476,6 +3599,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1448434876}
+        m_MethodName: SetPatientNameForReplay
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1338016845
@@ -3755,62 +3889,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1351792656}
---- !u!1 &1448434875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1448434877}
-  - component: {fileID: 1448434876}
-  m_Layer: 0
-  m_Name: MenuDoctorUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1448434876
+--- !u!114 &1448434876 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1448434875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
+  m_PrefabParentObject: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
+    type: 2}
+  m_PrefabInternal: {fileID: 39768328}
   m_Script: {fileID: 11500000, guid: c22c9e7aed6694c7fba225c841839f54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_actions_screen: {fileID: 1695906940}
-  m_manage_patients_screen: {fileID: 1772332119}
-  m_patients_list_screen: {fileID: 1586298351}
-  m_text_patients_list:
-  - {fileID: 1577185622}
-  - {fileID: 998673511}
-  - {fileID: 1476360172}
-  - {fileID: 1316878106}
-  - {fileID: 893663222}
-  - {fileID: 1119208470}
-  m_patiens_replay_screen: {fileID: 1904929802}
-  m_button_patients_list:
-  - {fileID: 1338016844}
-  - {fileID: 2100410599}
-  - {fileID: 972265927}
-  m_replay_games_screen: {fileID: 1641077553}
---- !u!4 &1448434877
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1448434875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 214.21117, y: 87.10389, z: 5.068062}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1476360170
 GameObject:
   m_ObjectHideFlags: 0
@@ -4402,7 +4486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1641077554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5274,7 +5358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1904929803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5942,6 +6026,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1448434876}
+        m_MethodName: SetPatientNameForReplay
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2100410600
@@ -5977,6 +6072,48 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2100410597}
+--- !u!1001 &2125455236
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 278.42752
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 111.443436
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 4.061448
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915915240322650, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9fa2db1f1657446a7afd26eb3bb2ebe7, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2137685608
 GameObject:
   m_ObjectHideFlags: 0
