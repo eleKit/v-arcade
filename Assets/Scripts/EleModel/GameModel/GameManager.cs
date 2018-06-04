@@ -387,8 +387,9 @@ public class GameManager : Singleton<GameManager>
 			m.gameType = GameMatch.GameType.Shooting;
 		}
 
-		string directoryPath = 
-			Path.Combine (Application.persistentDataPath, m.patientName);
+		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Patients", Path.Combine (m.patientName, m.gameType.ToString ())));
 
 		Directory.CreateDirectory (directoryPath);
 		string filePath = Path.Combine (
