@@ -897,6 +897,7 @@ GameObject:
   - component: {fileID: 472364382}
   - component: {fileID: 472364381}
   - component: {fileID: 472364385}
+  - component: {fileID: 472364386}
   m_Layer: 0
   m_Name: Car
   m_TagString: Player
@@ -1012,7 +1013,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472364380}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9acee67ec0cec4afa8f00e5a4d165a0c, type: 3}
   m_Name: 
@@ -1020,6 +1021,22 @@ MonoBehaviour:
   gravityValue: 19.6
   scale: 45
   handController: {fileID: 855330346}
+--- !u!114 &472364386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472364380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70762b5816e84a4b95e2ba4486a620e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: -0.2
+  threshold: -0.5
+  K: 10
+  x_movement: 1
+  hc: {fileID: 913721117}
 --- !u!1 &529813318
 GameObject:
   m_ObjectHideFlags: 0

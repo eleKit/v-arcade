@@ -14,6 +14,17 @@ public class DriveGesture : MonoBehaviour
 	 */
 
 
+
+	enum Drive_Phase
+	{
+		Null,
+		NoHands_phase,
+		Check_gesture_phase,
+		Gesture_happening_phase,
+	};
+
+
+
 	/* the hand should return around the original position after a push gesture, 
 	* no more gestures are accepted in case this offset condition is not respected
 	*/
@@ -36,18 +47,21 @@ public class DriveGesture : MonoBehaviour
 
 
 
-	private LinkedList<float> pitch = new LinkedList<float> ();
+	private LinkedList<float> pitch_list = new LinkedList<float> ();
 	private LinkedList<float> yaw = new LinkedList<float> ();
 
 	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
-	bool pushed;
+	Drive_Phase current_phase;
+	Drive_Phase previous_phase;
+
+	//TODO get this fro tuning as the zero position;
+	float tuning_pitch = 0f;
 
 	// Use this for initialization
 	void Start ()
 	{
-		pushed = false;
-
+		current_phase = Drive_Phase.NoHands_phase;
 		/*ninety_deg_hand = false;
 		one_hundred_and_eighty_hand = false;*/
 	}
@@ -55,26 +69,62 @@ public class DriveGesture : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		/*GetComponent<Rigidbody2D> ().AddForce (new Vector3 (0, 9.8f * 2, 0));*/
+		switch (current_phase) {
 
-		if (hc.GetFrame ().Hands.Count == 1) {
+		case Drive_Phase.NoHands_phase:
+			if (hc.GetFrame ().Hands.Count == 1) {
+				if (previous_phase == Drive_Phase.Null) {
+					current_phase = Drive_Phase.Check_gesture_phase;
+				} else {
+					current_phase = previous_phase;
+				}
+			}
+			break;
+		
+		case Drive_Phase.Check_gesture_phase:
 
+			previous_phase = current_phase;
 
-			if (!pushed) {
-				pushed = true;
-				if (pitch.Count >= K) {
+			if (hc.GetFrame ().Hands.Count == 1) {
+				if (pitch_list.Count >= K) {
 					// don't worry about leftmost, there is only one hand!!
 
 					CheckPitchDriveGesture (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-					pitch.RemoveFirst ();
+					pitch_list.RemoveFirst ();
 				}
-				pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-			} 
+				pitch_list.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+			} else {
+				current_phase = Drive_Phase.NoHands_phase;
+			}
 
-			pushed = false;
-
-		}
+			break;
 		
+		case Drive_Phase.Gesture_happening_phase:
+			
+			previous_phase = current_phase;
+
+			if (hc.GetFrame ().Hands.Count == 1) {
+
+				if (pitch_list.Count >= K) {
+					pitch_list.RemoveFirst ();
+				}
+				pitch_list.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+
+				float mean_pitch = (float)pitch_list.Average ();
+
+				//pay attention! offset is < 0!
+				// here i'm checking that the hand is came back to the horizontal status around an offset
+				if (mean_pitch < (tuning_pitch - offset) && mean_pitch > (tuning_pitch + offset)) {
+					current_phase = Drive_Phase.Check_gesture_phase;
+				}
+			
+		
+			} else {
+				current_phase = Drive_Phase.NoHands_phase;
+			}
+
+			break;
+		}
 	}
 
 
@@ -82,24 +132,29 @@ public class DriveGesture : MonoBehaviour
 	{
 		
 		
-		float max_pitch = pitch.Max ();
-		float min_pitch = pitch.Min ();
+		float max_pitch = pitch_list.Max ();
+		float min_pitch = pitch_list.Min ();
 
 		//down gesture --> see yaw description
 		if ((current_pitch - max_pitch) < threshold && current_pitch < offset) {
-			
+
+			current_phase = Drive_Phase.Gesture_happening_phase;
+
 			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
 
 			transform.position = new_position;
-			Debug.Log ("pushed car");
+			Debug.Log ("pushed left car");
 
 
 		} //up gesture --> see yaw description
 		else if ((current_pitch - min_pitch) > (-threshold) && current_pitch > (-offset)) {
+
+			current_phase = Drive_Phase.Gesture_happening_phase;
+
 			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
 			transform.position = new_position;
-			Debug.Log ("pushed car");
+			Debug.Log ("pushed right car");
 		}
 	}
 
