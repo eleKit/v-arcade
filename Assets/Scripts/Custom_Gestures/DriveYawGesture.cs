@@ -12,7 +12,9 @@ public class DriveYawGesture : MonoBehaviour
 	 * only the angle made by the hand movement is checked
 	 */
 
-
+	/* used average method seen in Leap Motion Forum topic: custom gesture cration guide
+	 * https://forums.leapmotion.com/t/creating-my-own-gesture/603/7
+	 */
 
 	/* the hand should return around the original position after a push gesture, 
 	* no more gestures are accepted in case this offset condition is not respected
@@ -26,8 +28,12 @@ public class DriveYawGesture : MonoBehaviour
 	public float threshold = -15f;
 
 	//no more than K previous frames are taken into account
-	[Range (0, 50)]
+	[Range (10, 50)]
 	public int K = 10;
+
+
+	[Range (0, 10)]
+	public int num_frames_in_average_list = 6;
 
 	[Range (0, 10)]
 	public int x_movement = 1;
@@ -36,6 +42,8 @@ public class DriveYawGesture : MonoBehaviour
 
 
 	private LinkedList<float> yaw_list = new LinkedList<float> ();
+	private LinkedList<float> yaw_average = new LinkedList<float> ();
+
 
 	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
@@ -60,15 +68,23 @@ public class DriveYawGesture : MonoBehaviour
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
+			if (yaw_average.Count >= num_frames_in_average_list) {
+				yaw_average.RemoveFirst ();
+			}
+
+			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+
 			if (yaw_list.Count >= K) {
 				if (frames_since_last_gesture >= N) {
-					CheckYawDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + tuning_offset);
+					CheckYawDriveGesture ();
 				} else {
 					frames_since_last_gesture++;
 				}
 				yaw_list.RemoveFirst ();
 			}
-			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + tuning_offset);
+
+			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+
 		}
 	}
 
@@ -79,11 +95,13 @@ public class DriveYawGesture : MonoBehaviour
 
 
 
-	void CheckYawDriveGesture (float current_yaw)
+	void CheckYawDriveGesture ()
 	{
 		//search for the max yaw in the previous K frames
 		float max_yaw = yaw_list.Max ();
 		float min_yaw = yaw_list.Min ();
+
+		float current_yaw = yaw_average.Average ();
 
 		/* if the hand in moved in the left direction the max yaw must be the around zero position
 		 * and if the (current_yaw - max_yaw) < threshold the gesture is recognized

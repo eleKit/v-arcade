@@ -13,7 +13,9 @@ public class DrivePitchGesture : MonoBehaviour
 	 * only the angle made by the hand movement is checked
 	 */
 
-
+	/* used average method seen in Leap Motion Forum topic: custom gesture cration guide
+	* https://forums.leapmotion.com/t/creating-my-own-gesture/603/7
+	*/
 
 	/* the hand should return around the original position after a push gesture, 
 	* no more gestures are accepted in case this offset condition is not respected
@@ -27,8 +29,13 @@ public class DrivePitchGesture : MonoBehaviour
 	public float threshold = -15f;
 
 	//no more than K previous frames are taken into account
-	[Range (0, 50)]
+	[Range (10, 50)]
 	public int K = 10;
+
+
+	[Range (0, 10)]
+	public int num_frames_in_average_list = 6;
+
 
 	[Range (0, 10)]
 	public int x_movement = 1;
@@ -38,6 +45,7 @@ public class DrivePitchGesture : MonoBehaviour
 
 
 	private LinkedList<float> pitch_list = new LinkedList<float> ();
+	private LinkedList<float> pitch_average = new LinkedList<float> ();
 
 	const int N = 60;
 
@@ -57,10 +65,15 @@ public class DrivePitchGesture : MonoBehaviour
 	void FixedUpdate ()
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
-			
+
+			if (pitch_average.Count >= num_frames_in_average_list) {
+				pitch_average.RemoveFirst ();
+			}
+			pitch_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+
 			if (pitch_list.Count >= K) {
 				if (frames_since_last_gesture >= N) {
-					CheckPitchDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+					CheckPitchDriveGesture ();
 				} else {
 					frames_since_last_gesture++;
 				}
@@ -73,12 +86,14 @@ public class DrivePitchGesture : MonoBehaviour
 
 
 
-	void CheckPitchDriveGesture (float current_pitch)
+	void CheckPitchDriveGesture ()
 	{
 		
 
 		float max_pitch = pitch_list.Max ();
 		float min_pitch = pitch_list.Min ();
+
+		float current_pitch = pitch_average.Average ();
 
 		//down gesture --> see yaw description
 		if ((current_pitch - max_pitch) < Mathf.Deg2Rad * threshold && current_pitch < offset) {
