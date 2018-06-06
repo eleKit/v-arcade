@@ -772,6 +772,11 @@ Prefab:
       propertyPath: handController
       value: 
       objectReference: {fileID: 2131279860}
+    - target: {fileID: 114823978121684426, guid: c6d46539417864cdbbcc70698dec587d,
+        type: 2}
+      propertyPath: hc
+      value: 
+      objectReference: {fileID: 1691396227}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6d46539417864cdbbcc70698dec587d, type: 2}
   m_IsPrefabParent: 0

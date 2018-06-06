@@ -1036,6 +1036,7 @@ MonoBehaviour:
   offset: -0.09
   threshold: -15
   K: 10
+  num_frames_in_average_list: 6
   x_movement: 4
   hc: {fileID: 913721117}
 --- !u!114 &472364387
@@ -3526,11 +3527,6 @@ Prefab:
     - target: {fileID: 4738627540273160, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}
       propertyPath: m_RootOrder
       value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 82929345177003446, guid: 469f6eafcd33a468fb259c13ee383e00,
-        type: 2}
-      propertyPath: m_Volume
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}
