@@ -1032,10 +1032,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70762b5816e84a4b95e2ba4486a620e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: -0.2
-  threshold: -0.5
+  offset: -0.09
+  threshold: -15
   K: 10
-  x_movement: 1
+  x_movement: 4
   hc: {fileID: 913721117}
 --- !u!1 &529813318
 GameObject:
@@ -3508,6 +3508,11 @@ Prefab:
     - target: {fileID: 4738627540273160, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}
       propertyPath: m_RootOrder
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 82929345177003446, guid: 469f6eafcd33a468fb259c13ee383e00,
+        type: 2}
+      propertyPath: m_Volume
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 469f6eafcd33a468fb259c13ee383e00, type: 2}

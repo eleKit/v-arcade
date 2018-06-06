@@ -15,16 +15,6 @@ public class DriveGesture : MonoBehaviour
 
 
 
-	enum Drive_Phase
-	{
-		Null,
-		NoHands_phase,
-		Check_gesture_phase,
-		Gesture_happening_phase,
-	};
-
-
-
 	/* the hand should return around the original position after a push gesture, 
 	* no more gestures are accepted in case this offset condition is not respected
 	*/
@@ -33,8 +23,8 @@ public class DriveGesture : MonoBehaviour
 
 
 	// In roder to recognize the gesture a minimum angle should be done by the hand movement
-	[Range (-5f, 0f)]
-	public float threshold = -0.5f;
+	[Range (-30f, 0f)]
+	public float threshold = -15f;
 
 	//no more than K previous frames are taken into account
 	[Range (0, 50)]
@@ -52,17 +42,16 @@ public class DriveGesture : MonoBehaviour
 
 	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
-	Drive_Phase current_phase;
-	Drive_Phase previous_phase;
 
-	int index = 0;
+
+	int frames_since_last_gesture;
 	//TODO get this fro tuning as the zero position;
-	float tuning_pitch = 0f;
+	float tuning_offset = -Mathf.Deg2Rad * 10f;
 
 	// Use this for initialization
 	void Start ()
 	{
-		current_phase = Drive_Phase.NoHands_phase;
+		frames_since_last_gesture = 20;
 		/*ninety_deg_hand = false;
 		one_hundred_and_eighty_hand = false;*/
 	}
@@ -70,53 +59,24 @@ public class DriveGesture : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		index++;
-		Debug.Log (current_phase.ToString () + " " + index.ToString ());
-
-		switch (current_phase) {
-
-
-		case Drive_Phase.NoHands_phase:
-			if (hc.GetFixedFrame ().Hands.Count == 1) {
-				if (previous_phase == Drive_Phase.Null) {
-					current_phase = Drive_Phase.Check_gesture_phase;
-				} else {
-					current_phase = previous_phase;
-				}
-			}
-			break;
-		
-		case Drive_Phase.Check_gesture_phase:
-
-			previous_phase = current_phase;
-
-			if (hc.GetFixedFrame ().Hands.Count == 1) {
-				if (pitch_list.Count >= K) {
-					// don't worry about leftmost, there is only one hand!!
-
-					StartCoroutine (CheckPitchDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch, index));
-					pitch_list.RemoveFirst ();
-				}
-				pitch_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch);
-			} else {
-				current_phase = Drive_Phase.NoHands_phase;
-			}
-
-			break;
-		
-		case Drive_Phase.Gesture_happening_phase:
+		if (hc.GetFixedFrame ().Hands.Count == 1) {
 			
-
-
-				//wait that coroutine ends and do nothing
-		
-
-			break;
+			if (pitch_list.Count >= K) {
+				if (frames_since_last_gesture >= 60) {
+					CheckPitchDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+				} else {
+					frames_since_last_gesture++;
+				}
+				pitch_list.RemoveFirst ();
+			}
+			pitch_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 		}
 	}
 
 
-	IEnumerator CheckPitchDriveGesture (float current_pitch, int i)
+
+
+	void CheckPitchDriveGesture (float current_pitch)
 	{
 		
 
@@ -124,35 +84,25 @@ public class DriveGesture : MonoBehaviour
 		float min_pitch = pitch_list.Min ();
 
 		//down gesture --> see yaw description
-		if ((current_pitch - max_pitch) < threshold && current_pitch < offset) {
+		if ((current_pitch - max_pitch) < Mathf.Deg2Rad * threshold && current_pitch < offset) {
 
-			current_phase = Drive_Phase.Gesture_happening_phase;
+			frames_since_last_gesture = 0;
 
 			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
 
 			transform.position = new_position;
-			Debug.Log ("pushed left car " + i.ToString ());
-	
-			pitch_list.Clear ();
 
-			yield return new WaitForSeconds (2f);
 
-		} else if ((current_pitch - min_pitch) > (-threshold) && current_pitch > (-offset)) {
+		} else if ((current_pitch - min_pitch) > Mathf.Deg2Rad * (-threshold) && current_pitch > (-offset)) {
 			
-			current_phase = Drive_Phase.Gesture_happening_phase;
+			frames_since_last_gesture = 0;
 
 			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
 			transform.position = new_position;
-			Debug.Log ("pushed right car " + i.ToString ());
 
-			pitch_list.Clear ();
 
-			yield return new WaitForSeconds (1f);
 		}
-
-		yield return new WaitForSeconds (0f);
-		current_phase = Drive_Phase.Check_gesture_phase;
 	}
 
 
