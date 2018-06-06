@@ -4,7 +4,7 @@ using UnityEngine;
 using Leap;
 using System.Linq;
 
-public class DriveGesture : MonoBehaviour
+public class DrivePitchGesture : MonoBehaviour
 {
 
 	/* Drive gesture: a sliding movement made by all the fingers and the palm,
@@ -22,7 +22,7 @@ public class DriveGesture : MonoBehaviour
 	public float offset = -0.2f;
 
 
-	// In roder to recognize the gesture a minimum angle should be done by the hand movement
+	// In order to recognize the gesture a minimum angle should be done by the hand movement
 	[Range (-30f, 0f)]
 	public float threshold = -15f;
 
@@ -38,22 +38,19 @@ public class DriveGesture : MonoBehaviour
 
 
 	private LinkedList<float> pitch_list = new LinkedList<float> ();
-	private LinkedList<float> yaw = new LinkedList<float> ();
 
-	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
-
+	const int N = 60;
 
 
 	int frames_since_last_gesture;
-	//TODO get this fro tuning as the zero position;
+
+	//TODO get this from tuning as the zero position;
 	float tuning_offset = -Mathf.Deg2Rad * 10f;
 
 	// Use this for initialization
 	void Start ()
 	{
-		frames_since_last_gesture = 20;
-		/*ninety_deg_hand = false;
-		one_hundred_and_eighty_hand = false;*/
+		frames_since_last_gesture = N;
 	}
 	
 	// Update is called once per frame
@@ -62,7 +59,7 @@ public class DriveGesture : MonoBehaviour
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 			
 			if (pitch_list.Count >= K) {
-				if (frames_since_last_gesture >= 60) {
+				if (frames_since_last_gesture >= N) {
 					CheckPitchDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 				} else {
 					frames_since_last_gesture++;
@@ -108,47 +105,4 @@ public class DriveGesture : MonoBehaviour
 
 
 
-
-	void CheckYawDriveGesture (float current_yaw)
-	{
-		//search for the max pitch in the previous K frames
-		float max_yaw = yaw.Max ();
-		float min_yaw = yaw.Min ();
-
-		/* if the hand in moved in the left direction the max yaw must be the around zero position
-		 * and if the (current_yaw - max_yaw) < threshold the gesture is recognized
-		 */
-		if ((current_yaw - max_yaw) < threshold && current_yaw < offset) {
-
-			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
-
-			transform.position = new_position;
-			Debug.Log (transform.position.x.ToString ());
-		} 
-
-		/* otherwise if the hand is moved in the right direction the min yaw must be around the zero position
-		 * and if the current_yaw - min_yaw) > threshold the gesture is recognized
-		 */
-		/*else if ((current_yaw - min_yaw) > threshold && min_yaw > (-offset)) {
-			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
-
-			transform.position = new_position;
-			Debug.Log (transform.position.x.ToString ());
-		}*/
-
-	}
-
-
-
-	/*public void NinetyTrue ()
-	{
-		ninety_deg_hand = true;
-		one_hundred_and_eighty_hand = false;
-	}
-
-	public void OneHundredEightyTrue ()
-	{
-		ninety_deg_hand = false;
-		one_hundred_and_eighty_hand = true;
-	}*/
 }
