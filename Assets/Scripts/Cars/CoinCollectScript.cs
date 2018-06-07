@@ -99,9 +99,8 @@ public class CoinCollectScript : MonoBehaviour
 	//after the duck is shooted it falls down
 	IEnumerator Fall ()
 	{
-		yield return new WaitForSeconds (max_duck_time);
-		
 		SfxManager.Instance.Play ("rumble");
+		yield return new WaitForSeconds (max_duck_time);
 
 		Rigidbody2D rb2d = GetComponent<Rigidbody2D> ();
 		Collider2D coll2d = GetComponent<Collider2D> ();
