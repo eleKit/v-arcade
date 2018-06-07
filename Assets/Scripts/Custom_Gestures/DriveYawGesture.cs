@@ -68,6 +68,8 @@ public class DriveYawGesture : MonoBehaviour
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
+			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+
 			if (yaw_average.Count >= num_frames_in_average_list) {
 				yaw_average.RemoveFirst ();
 			}

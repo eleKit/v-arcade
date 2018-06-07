@@ -64,7 +64,10 @@ public class DrivePitchGesture : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate ()
 	{
+
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
+
+			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
 
 			if (pitch_average.Count >= num_frames_in_average_list) {
 				pitch_average.RemoveFirst ();
