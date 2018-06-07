@@ -38,7 +38,7 @@ public class DrivePitchGesture : MonoBehaviour
 
 
 	[Range (0, 10)]
-	public int x_movement = 1;
+	public float x_movement = 1;
 
 	public HandController hc;
 

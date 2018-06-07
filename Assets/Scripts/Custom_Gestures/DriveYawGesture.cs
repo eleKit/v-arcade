@@ -36,7 +36,7 @@ public class DriveYawGesture : MonoBehaviour
 	public int num_frames_in_average_list = 6;
 
 	[Range (0, 10)]
-	public int x_movement = 1;
+	public float x_movement = 1;
 
 	public HandController hc;
 
