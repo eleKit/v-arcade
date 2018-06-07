@@ -3192,8 +3192,8 @@ MonoBehaviour:
   K_yaw: 30
   num_frames_in_pitch_average_list: 6
   num_frames_in_yaw_average_list: 10
-  x_movement: 1
-  y_movement: 1
+  x_movement: 1.9
+  y_movement: 2.25
   hc: {fileID: 1458756209}
 --- !u!1 &1997840180
 GameObject:

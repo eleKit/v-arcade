@@ -8,11 +8,12 @@ public class ShootingManager : Singleton<ShootingManager>
 {
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
+	Vector3 initial_player_pos = new Vector3 (0, 0.75f, 0);
 	// Use this for initialization
 	void Start ()
 	{
 
-		GameManager.Instance.player_initial_pos = Vector3.zero;
+		GameManager.Instance.player_initial_pos = initial_player_pos;
 		GameManager.Instance.BaseStart ("DuckGameMusic", GameMatch.GameType.Shooting);
 
 		/* set the bool of the current game in the game manager 

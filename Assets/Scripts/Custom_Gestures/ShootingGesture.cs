@@ -55,10 +55,10 @@ public class ShootingGesture : MonoBehaviour
 
 
 	[Range (0, 10)]
-	public int x_movement = 1;
+	public float x_movement = 1;
 
 	[Range (0, 10)]
-	public int y_movement = 1;
+	public float y_movement = 1;
 
 	public HandController hc;
 
@@ -92,6 +92,12 @@ public class ShootingGesture : MonoBehaviour
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
+			//change pointer colour
+			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.black)) {
+				gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
+			}
+
+			//save average list
 			if (pitch_average.Count >= num_frames_in_pitch_average_list) {
 				pitch_average.RemoveFirst ();
 			}
@@ -103,12 +109,15 @@ public class ShootingGesture : MonoBehaviour
 			pitch_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
 			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
+
+			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
 			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw && frames_since_last_gesture >= N) {
 				CheckShootGesture ();
 			} else {
 				frames_since_last_gesture++;
 			}
 
+			//save new data
 			if (pitch_list.Count >= K_pitch)
 				pitch_list.RemoveFirst ();
 			if (yaw_list.Count >= K_yaw)
@@ -116,6 +125,10 @@ public class ShootingGesture : MonoBehaviour
 			
 			pitch_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
 			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+
+		} else {
+			//if no hand is visible change colour in black
+			gameObject.GetComponent<SpriteRenderer> ().color = Color.black;
 		}
 	}
 
