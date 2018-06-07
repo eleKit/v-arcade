@@ -81,6 +81,12 @@ public class ShootingGesture : MonoBehaviour
 	float pitch_tuning_offset = -Mathf.Deg2Rad * 10f;
 	float yaw_tuning_offset = 0;
 
+
+	float y_max_player_position = 4.5f;
+	float y_min_player_position = -2.7f;
+	float x_max_player_position = 6.3f;
+	float x_min_player_posiion = -6.3f;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -155,36 +161,44 @@ public class ShootingGesture : MonoBehaviour
 
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position - new Vector3 (0, y_movement, 0);
+			if ((transform.position.y - y_movement) >= y_min_player_position) {
+				Vector3 new_position = transform.position - new Vector3 (0, y_movement, 0);
 
-			transform.position = new_position;
+				transform.position = new_position;
+			}
 
 
 		} else if ((current_pitch - min_pitch) > Mathf.Deg2Rad * (-pitch_threshold) && current_pitch > (-pitch_offset)) {
 
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position + new Vector3 (0, y_movement, 0);
+			if ((transform.position.y + y_movement) <= y_max_player_position) {
+				Vector3 new_position = transform.position + new Vector3 (0, y_movement, 0);
 
-			transform.position = new_position;
+				transform.position = new_position;
+			}
 
 
 		} else if ((current_yaw - max_yaw) < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
 
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
+			if ((transform.position.x - x_movement) >= x_min_player_posiion) {
+				Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+				transform.position = new_position;
+			}
 
 
 		} else if ((current_yaw - min_yaw) > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
 
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
+			if ((transform.position.x - x_movement) <= x_max_player_position) {
+				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+				transform.position = new_position;
+			}
 
 
 		}
