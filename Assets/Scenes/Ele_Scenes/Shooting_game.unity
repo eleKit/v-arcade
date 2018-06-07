@@ -3057,6 +3057,7 @@ GameObject:
   - component: {fileID: 1991778014}
   - component: {fileID: 1991778016}
   - component: {fileID: 1991778015}
+  - component: {fileID: 1991778017}
   m_Layer: 0
   m_Name: Pointer
   m_TagString: Player
@@ -3127,7 +3128,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1991778011}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7335412b8449459b8c9b1bf3641409e, type: 3}
   m_Name: 
@@ -3144,7 +3145,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1991778011}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -3172,6 +3173,28 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
+--- !u!114 &1991778017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1991778011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687b24bdfa48f46199e9b68ae97213ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pitch_offset: -0.09
+  yaw_offset: -0.2
+  pitch_threshold: -15
+  yaw_threshold: -5
+  K_pitch: 10
+  K_yaw: 30
+  num_frames_in_pitch_average_list: 6
+  num_frames_in_yaw_average_list: 10
+  x_movement: 1
+  y_movement: 1
+  hc: {fileID: 1458756209}
 --- !u!1 &1997840180
 GameObject:
   m_ObjectHideFlags: 0
