@@ -88,11 +88,13 @@ public class PathGeneratorUI : MonoBehaviour
 
 	/* load path generator screen script */
 
-	public void LoadCar ()
+	public void LoadCar (bool obstacles_mode)
 	{
 		ClearScreens ();
+		FisioCarPathGenerator.Instance.obstacles_mode = obstacles_mode;
 		m_car_screen.SetActive (true);
 		ResetCarScreens ();
+		FisioCarPathGenerator.Instance.ResetAll ();
 		m_car_path_screen.SetActive (true);
 	}
 

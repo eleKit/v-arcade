@@ -15,12 +15,16 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	const int CURVES = 4;
 
 
+	public bool obstacles_mode = false;
+
+
 	public Button[] m_start_buttons = new Button[CURVES - 1];
 
 	public Button[] m_middle_buttons = new Button[CURVES];
 
 	public Button[] m_final_buttons = new Button[CURVES];
 
+	//this slider appears only in the collect mode
 	public Slider[] diamonds_slider = new Slider[SECTIONS];
 	public Text[] diamonds_text = new Text[SECTIONS];
 
@@ -35,7 +39,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 
 
-	//Attributes used to activate|deactivate go_on button
+	/*Attributes used to activate|deactivate go_on button */
+
 	public Button button_go_on;
 
 	bool start_ok;
@@ -46,6 +51,8 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	bool activated;
 
+	/* end go_on button management attributes */
+
 
 	//num of scetions
 	const int INITIAL = 0;
@@ -53,14 +60,17 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	const int FINAL = 2;
 	const int SECTIONS = 3;
 
+	// curve_values contains the coeff. of position of the curve in each section
 	int[] curve_values = new int[SECTIONS];
+
+
 
 	// Use this for initialization
 	void Start ()
 	{ 
 		car_path = new CarPath ();
 
-		ResetAll ();
+		//ResetAll ();
 		
 	}
 
@@ -101,10 +111,9 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 		}
 
 
-
 		for (int i = 0; i < diamonds_slider.Length; i++) {
 			diamonds_slider [i].value = diamonds_slider [i].minValue;
-			diamonds_slider [i].interactable = true;
+			diamonds_slider [i].interactable = (!obstacles_mode);
 			diamonds_text [i].text = diamonds_slider [i].minValue.ToString ();
 		}
 
@@ -172,10 +181,13 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 				} else if (!m_final_buttons [h].interactable) {      //if "Target" has been pressed before
 
 					//reactivate the non iteractable item slider
-					for (int k = 0; k < diamonds_slider.Length; k++) {
-						if (!diamonds_slider [k].interactable)
-							diamonds_slider [k].interactable = true;
+					if (!obstacles_mode) {
+						for (int k = 0; k < diamonds_slider.Length; k++) {
+							if (!diamonds_slider [k].interactable)
+								diamonds_slider [k].interactable = true;
+						}
 					}
+
 				} else {
 					//do nothing
 				}
@@ -197,9 +209,11 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			m_final_buttons [h].interactable = true;
 		}
 
-		for (int h = 0; h < diamonds_slider.Length; h++) {
-			if (!diamonds_slider [h].interactable)
-				diamonds_slider [h].interactable = true;
+		if (!obstacles_mode) {
+			for (int h = 0; h < diamonds_slider.Length; h++) {
+				if (!diamonds_slider [h].interactable)
+					diamonds_slider [h].interactable = true;
+			}
 		}
 			
 
@@ -330,12 +344,22 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			DateTime gameDate = DateTime.UtcNow;
 			car_path.timestamp = gameDate.ToFileTimeUtc ();
 			car_path.doctorName = GlobalDoctorData.globalDoctorData.doctor;
+			car_path.obstacles_mode = obstacles_mode;
 
 			car_path.id_path = name_path;
 
+			string mode = "";
+
+			if (obstacles_mode) {
+				mode = "Obstacles";
+			} else {
+				mode = "Collect";
+			}
+
 			//TODO if the paths are divided into doctors substitute GameMatch.GameType.Car.ToString () with car_path.doctorName
 			string directoryPath = Path.Combine (Application.persistentDataPath,
-				                       Path.Combine ("Paths", GameMatch.GameType.Car.ToString ()));
+				                       Path.Combine ("Paths", 
+					                       Path.Combine (GameMatch.GameType.Car.ToString (), mode)));
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (

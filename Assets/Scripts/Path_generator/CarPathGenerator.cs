@@ -6,7 +6,12 @@ using POLIMIGameCollective;
 
 public class CarPathGenerator : Singleton<CarPathGenerator>
 {
+	//diamond mode attributes
 	public GameObject diamond;
+
+	//obstacles mode attributes
+	public GameObject[] obstacles;
+	public GameObject yes_arrow;
 
 
 	public GameObject goal;
@@ -14,9 +19,12 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 	//this two attributes are the whole length of the game must not be changed
 	float trajectory_length;
+	float obstacles_trajectory_length;
 
 	[Range (1, 50)]
 	public int coeff_trajectory_lenght = 30;
+
+
 
 
 
@@ -29,6 +37,7 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 	void Start ()
 	{
 		trajectory_length = Mathf.PI * coeff_trajectory_lenght;
+		obstacles_trajectory_length = 150f;
 		
 	}
 	
@@ -51,7 +60,11 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 		car_path = JsonUtility.FromJson<CarPath> (carPath);
 
-		LoadDiamonds ();
+		if (car_path.obstacles_mode) {
+			LoadObstacles ();
+		} else {
+			LoadDiamonds ();
+		}
 
 	}
 
@@ -89,6 +102,60 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 		goal.transform.position = new Vector3 (0, y_start + 5f, 0);
 
+		
+	}
+
+
+
+	void LoadObstacles ()
+	{
+		//diamond coordinates
+
+		int random_index_of_obstacles_array = 0;
+
+
+		float x = 0;
+	
+		float x_min = 4.5f;
+
+
+		float y = 10f;
+
+		float y_start = (obstacles_trajectory_length / car_path.car_sections.Length);
+
+		for (int h = 0; h < car_path.car_sections.Length; h++) {
+
+
+			x = (car_path.curve_amplitude + x_min) * car_path.car_sections [h].curve_position;
+
+			//new y is traslated of y_start based on the end of the previous curve
+
+
+			Instantiate (yes_arrow, new Vector3 (x, y, 0), Quaternion.identity);
+
+			if (car_path.car_sections [h].curve_position == 0) {
+
+				random_index_of_obstacles_array = Random.Range (0, obstacles.Length - 1);
+				Instantiate (obstacles [random_index_of_obstacles_array], new Vector3 ((car_path.curve_amplitude + x_min), y, 0), Quaternion.identity);
+
+				random_index_of_obstacles_array = Random.Range (0, obstacles.Length - 1);
+				Instantiate (obstacles [random_index_of_obstacles_array], new Vector3 (-(car_path.curve_amplitude + x_min), y, 0), Quaternion.identity);
+			
+			} else {
+
+				random_index_of_obstacles_array = Random.Range (0, obstacles.Length - 1);
+				Instantiate (obstacles [random_index_of_obstacles_array], new Vector3 (0, y, 0), Quaternion.identity);
+
+				random_index_of_obstacles_array = Random.Range (0, obstacles.Length - 1);
+				Instantiate (obstacles [random_index_of_obstacles_array], new Vector3 (-x, y, 0), Quaternion.identity);
+
+			}
+
+			y = y + y_start;
+
+		}
+
+		goal.transform.position = new Vector3 (0, obstacles_trajectory_length, 0);
 		
 	}
 }

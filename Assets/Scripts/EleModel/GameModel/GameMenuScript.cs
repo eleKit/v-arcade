@@ -24,8 +24,10 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public Text m_win_text;
 
 	//only for car game
+	public GameObject m_hand_mode_screen;
 	public GameObject m_mode_screen;
 	public GameObject m_car_colours_screen;
+	public bool obstacles_mode;
 
 
 	public Button[] m_level_button;
@@ -39,6 +41,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	int index_of_current_level_screen;
 
 	string directoryPath;
+
+	GameMatch.GameType current_game_type;
 
 	string music_dataPath = "Assets/MusicTexts";
 
@@ -83,10 +87,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			break;
 		}
 
+		current_game_type = game_type;
 
-		LoadLevelNames (game_type);
-		LoadFirstLevels ();
 		LoadMenu ();
+
+	}
+
+	void LoadLevelNamesAfterModeSelected ()
+	{
+		LoadLevelNames ();
+		LoadFirstLevels ();
 	}
 
 	void ClearScreens ()
@@ -109,10 +119,12 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (m_win_screen != null)
 			m_win_screen.SetActive (false);
 		if (car) {
-			if (m_mode_screen != null)
-				m_mode_screen.SetActive (false);
+			if (m_hand_mode_screen != null)
+				m_hand_mode_screen.SetActive (false);
 			if (m_car_colours_screen != null)
 				m_car_colours_screen.SetActive (false);
+			if (m_mode_screen != null)
+				m_mode_screen.SetActive (false);
 		}
 
 	}
@@ -178,9 +190,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public void LoadLevelScreen ()
 	{
+		LoadLevelNamesAfterModeSelected ();
 		ClearScreens ();
 		m_level_screen.SetActive (true);
 		LoadFirstLevels ();
+	}
+
+	public void LoadHandModeScreen ()
+	{
+		ClearScreens ();
+		m_hand_mode_screen.SetActive (true);
 	}
 
 	public void LoadModeScreen ()
@@ -192,6 +211,13 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			LoadLevelScreen ();
 		}
 	}
+
+	public void SetMode (bool mode)
+	{
+		obstacles_mode = mode;
+		LoadHandModeScreen ();
+	}
+
 
 	public void LoadCarColourScreen ()
 	{
@@ -306,11 +332,27 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	}
 
 
-	void LoadLevelNames (GameMatch.GameType game_type)
+	void LoadLevelNames ()
 	{
+		string car_mode_directory_path = "";
+
 		if (!music) {
-			directoryPath = Path.Combine (Application.persistentDataPath,
-				Path.Combine ("Paths", game_type.ToString ()));
+
+			if (car) {
+				if (obstacles_mode) {
+					car_mode_directory_path = "Obstacles";
+				} else {
+					car_mode_directory_path = "Collect";
+				}
+
+				directoryPath = Path.Combine (Application.persistentDataPath,
+					Path.Combine ("Paths", 
+						Path.Combine (current_game_type.ToString (), car_mode_directory_path)));
+				
+			} else {
+				directoryPath = Path.Combine (Application.persistentDataPath,
+					Path.Combine ("Paths", current_game_type.ToString ()));
+			}
 
 			if (Directory.Exists (directoryPath)) {
 				string[] game_paths = Directory.GetFiles (directoryPath, "*.json");

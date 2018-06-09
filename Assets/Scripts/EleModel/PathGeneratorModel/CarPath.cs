@@ -11,6 +11,8 @@ public class CarPath
 
 	public float curve_amplitude;
 
+	public bool obstacles_mode;
+
 	public string id_path;
 
 	public long timestamp;
