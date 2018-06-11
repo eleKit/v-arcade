@@ -26,30 +26,37 @@ public class PushGesture : MonoBehaviour
 	public float threshold = -0.5f;
 
 	//no more than K previous frames are taken into account
-	[Range (0, 50)]
+	[Range (10, 50)]
 	public int K = 10;
 
+	[Range (0, 10)]
+	public int num_frames_in_average_list = 6;
+
 	//the hand controller prefab in the scene
-	public GameObject handController;
+	[Header ("Hand conroller")]
+	public HandController hc;
 
 
-	private HandController hc;
+	float tuning_offset = -Mathf.Deg2Rad * 10f;
+
 
 	//save the past pitch angles of left and right hand in the previous K frames
 	private LinkedList<float> left_pitch = new LinkedList<float> ();
+	private LinkedList<float> left_pitch_average = new LinkedList<float> ();
+
 	private LinkedList<float> right_pitch = new LinkedList<float> ();
+	private LinkedList<float> right_pitch_average = new LinkedList<float> ();
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		hc = handController.GetComponent<HandController> ();
 		if (hc.GetFrame ().Hands.Count == 2) {
 			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 			}
 			if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
 			}
 		}
 
@@ -60,36 +67,58 @@ public class PushGesture : MonoBehaviour
 	void Update ()
 	{
 		if (hc.GetFrame ().Hands.Count == 2) {
+
+
 			//save left hand pitch and check left push gesture
 			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+				
+				if (left_pitch_average.Count >= num_frames_in_average_list) {
+					left_pitch_average.RemoveFirst ();
+				}
+				left_pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+
 				if (left_pitch.Count >= K) {
-					CheckLeftPushGesture (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+					CheckLeftPushGesture ();
 					left_pitch.RemoveFirst ();
 				}
-				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 			}
+
+
 
 			//save right hand pitch and check right push gesture
 			if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+
+				if (right_pitch_average.Count >= num_frames_in_average_list) {
+					right_pitch_average.RemoveFirst ();
+				}
+				right_pitch_average.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
+
 				if (right_pitch.Count >= K) {
-					CheckRightPushGesture (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+					CheckRightPushGesture ();
 					right_pitch.RemoveFirst ();
 				}
-				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
 			}
 				
+		} else {
+			left_pitch.Clear ();
+			left_pitch_average.Clear ();
+			right_pitch.Clear ();
+			right_pitch_average.Clear ();
 		}
-		//TODO fare i controlli se le due mani non sono viste o ne è vista una sola
-
-
 
 	}
 
-	void CheckLeftPushGesture (float pitch)
+
+	void CheckLeftPushGesture ()
 	{
 		//search for the max pitch in the previous K frames
 		float max_pitch = left_pitch.Max ();
-		if ((pitch - max_pitch) < threshold && pitch < offset) {
+		float pitch_average = left_pitch_average.Average ();
+
+
+		if ((pitch_average - max_pitch) < threshold && pitch_average < offset) {
 			Debug.Log ("left push" + " max " + max_pitch.ToString ());
 			if (MusicGameManager.Instance.left_trigger) {
 				MusicGameManager.Instance.AddPoints (true);
@@ -97,11 +126,13 @@ public class PushGesture : MonoBehaviour
 		}
 	}
 
-	void CheckRightPushGesture (float pitch)
+	void CheckRightPushGesture ()
 	{
 		//search for the max pitch in the previous K frames
 		float max_pitch = right_pitch.Max ();
-		if ((pitch - max_pitch) < threshold && pitch < offset) {
+		float pitch_average = right_pitch_average.Average ();
+
+		if ((pitch_average - max_pitch) < threshold && pitch_average < offset) {
 			Debug.Log ("right push" + " max " + max_pitch.ToString ());
 
 			if (MusicGameManager.Instance.right_trigger) {

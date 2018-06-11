@@ -51,6 +51,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1504c3835eb9b4c3ca9512d09dbaf01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diamond: {fileID: 1760637048425986, guid: f06938f44ada24bb0a63d8b5a1861852, type: 2}
   goal: {fileID: 0}
+  diamond: {fileID: 1760637048425986, guid: f06938f44ada24bb0a63d8b5a1861852, type: 2}
+  obstacles:
+  - {fileID: 1521640925599618, guid: 38d4cab5ece6e445b80def1756607791, type: 2}
+  - {fileID: 1110928532119212, guid: 48a8d9e1696544a778556cd139d033e6, type: 2}
+  - {fileID: 1404928859855050, guid: 4f56a111cd29844c89d161181b2499c1, type: 2}
+  - {fileID: 1601598106442832, guid: d2ebd3d83dd0b4e4b9fe87c88a66b904, type: 2}
+  - {fileID: 1047452217313210, guid: d977c7c94663f4642b1ca1aa2509f7d3, type: 2}
+  correct_street_arrow: {fileID: 1748294846276994, guid: e2d279f4ad8244aa69ba85ed5af17752,
+    type: 2}
+  obstacles_mode: 0
   coeff_trajectory_lenght: 15

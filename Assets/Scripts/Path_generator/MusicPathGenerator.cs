@@ -32,6 +32,9 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 	float spawn_time_right;
 
+	float pause_time;
+	float delta_pause_time;
+
 	//the time t0 used by the spauning calculator in the Update() to generate buttons
 	float t0;
 
@@ -100,6 +103,31 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	}
 
 
+	public void PauseHandGenerator ()
+	{
+		pause_time = Time.time;
+	}
+
+	public void ResumeHandGenerator ()
+	{
+
+		delta_pause_time = Time.time - pause_time;
+
+
+		/* it must be updated the starting time t0 in order to 
+		 * generate all the next hands in the right order at the right time
+		 * and this would be enough for all the hands but 
+		 * there are also the already calculated (before pausing the game) 
+		 * spaun_time_left and spawn_time_right
+		 * of two hands still not generated, 
+		 * also these two variables must be updated here
+		 * */
+
+		t0 = t0 + delta_pause_time;
+
+		spawn_time_left = spawn_time_left + delta_pause_time;
+		spawn_time_right = spawn_time_right + delta_pause_time;
+	}
 
 
 	void ReadPath (string filename)

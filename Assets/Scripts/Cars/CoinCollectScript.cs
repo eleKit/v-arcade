@@ -9,16 +9,11 @@ public class CoinCollectScript : MonoBehaviour
 
 	/* Shooting game attributes */
 
-	//the therapist must be able to change this paramether
-	[Range (50, 500)]
-	public int max_duck_time = 50;
 	//the time after the duck must fall down
+	[Range (0, 10)]
+	public float max_duck_time = 0.5f;
 
 
-	//the counter used to count the #frames in which the pointer is inside the duck collider
-	private int duck_time = 0;
-
-	private bool duck_already_shooted = false;
 
 
 	// Use this for initialization
@@ -62,6 +57,19 @@ public class CoinCollectScript : MonoBehaviour
 				MusicGameManager.Instance.right_hand_to_delete = other.gameObject;
 			}
 		}
+
+
+		if (SceneManager.GetActiveScene ().name.Equals ("Shooting_game")) {
+			if (other.gameObject.CompareTag ("Player")) {
+				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.white)) {
+
+					ShootingManager.Instance.AddPoints ();
+					StartCoroutine (Fall ());
+					Debug.Log ("duck shooted");
+				}
+			}
+		}
+
 	}
 
 	void OnTriggerExit2D (Collider2D other)
@@ -86,46 +94,23 @@ public class CoinCollectScript : MonoBehaviour
 	}
 		
 
-	/* Scripts used by shooting game */
-
-	//Sent each frame where another object is within a trigger collider attached to this object (2D physics only).
-	void OnTriggerStay2D (Collider2D other)
-	{
-
-		if (SceneManager.GetActiveScene ().name.Equals ("Shooting_game")) {
-			if (other.gameObject.CompareTag ("Player")) {
-				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.white)) {
-					duck_time++;
-					Debug.Log ("duck time " + duck_time.ToString ());
-
-					if (duck_time >= max_duck_time && !duck_already_shooted) {
-						duck_already_shooted = true;
-						ShootingManager.Instance.AddPoints ();
-						StartCoroutine (Fall ());
-						Debug.Log ("duck shooted");
-					}
-				}
-			}
-		}
-		
-	}
 
 
 	//after the duck is shooted it falls down
 	IEnumerator Fall ()
 	{
-		
 		SfxManager.Instance.Play ("rumble");
+		yield return new WaitForSeconds (max_duck_time);
 
 		Rigidbody2D rb2d = GetComponent<Rigidbody2D> ();
 		Collider2D coll2d = GetComponent<Collider2D> ();
-		duck_already_shooted = false;
-		duck_time = 0;
+
+
 
 		rb2d.isKinematic = false;
 		Destroy (coll2d);
 
-		yield return new WaitForSeconds (2.5f);
+		yield return new WaitForSeconds (2f);
 		gameObject.SetActive (false);
 
 	}
