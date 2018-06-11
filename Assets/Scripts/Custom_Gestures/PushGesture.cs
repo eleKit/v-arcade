@@ -101,6 +101,11 @@ public class PushGesture : MonoBehaviour
 				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
 			}
 				
+		} else {
+			left_pitch.Clear ();
+			left_pitch_average.Clear ();
+			right_pitch.Clear ();
+			right_pitch_average.Clear ();
 		}
 
 	}

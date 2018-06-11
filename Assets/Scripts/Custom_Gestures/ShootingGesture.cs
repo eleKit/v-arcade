@@ -47,6 +47,10 @@ public class ShootingGesture : MonoBehaviour
 	public int K_yaw = 10;
 
 
+	[Range (10, 100)]
+	public int K_lost = 30;
+
+
 	[Range (0, 20)]
 	public int num_frames_in_pitch_average_list = 6;
 
@@ -75,6 +79,8 @@ public class ShootingGesture : MonoBehaviour
 	const int N = 60;
 
 
+	int frames_since_last_reconnection;
+
 	int frames_since_last_gesture;
 
 	//TODO get this from tuning as the zero position;
@@ -91,6 +97,7 @@ public class ShootingGesture : MonoBehaviour
 	void Start ()
 	{
 		frames_since_last_gesture = N;
+		frames_since_last_reconnection = 0;
 	}
 
 	// Update is called once per frame
@@ -98,10 +105,14 @@ public class ShootingGesture : MonoBehaviour
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
+
 			//change pointer colour
 			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.black)) {
-				gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
+				gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
 			}
+
+			frames_since_last_reconnection++;	
+
 
 			//save average list
 			if (pitch_average.Count >= num_frames_in_pitch_average_list) {
@@ -117,8 +128,15 @@ public class ShootingGesture : MonoBehaviour
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
-			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw && frames_since_last_gesture >= N) {
+			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw && frames_since_last_gesture >= N
+			    && frames_since_last_reconnection >= K_lost) {
 				CheckShootGesture ();
+
+				//change pointer colour
+				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
+					gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
+				}
+
 			} else {
 				frames_since_last_gesture++;
 			}
@@ -135,6 +153,13 @@ public class ShootingGesture : MonoBehaviour
 		} else {
 			//if no hand is visible change colour in black
 			gameObject.GetComponent<SpriteRenderer> ().color = Color.black;
+
+			pitch_list.Clear ();
+			pitch_average.Clear ();
+			yaw_list.Clear ();
+			yaw_average.Clear ();
+
+			frames_since_last_reconnection = 0;
 		}
 	}
 

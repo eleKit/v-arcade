@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: -0.2
-  threshold: -0.5
+  threshold: -0.26
   K: 10
-  handController: {fileID: 0}
+  num_frames_in_average_list: 6
+  hc: {fileID: 0}

@@ -769,11 +769,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114823978121684426, guid: c6d46539417864cdbbcc70698dec587d,
         type: 2}
-      propertyPath: handController
-      value: 
-      objectReference: {fileID: 2131279860}
-    - target: {fileID: 114823978121684426, guid: c6d46539417864cdbbcc70698dec587d,
-        type: 2}
       propertyPath: hc
       value: 
       objectReference: {fileID: 1691396227}
@@ -3355,7 +3350,3 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224745200595573824, guid: 123b7f220eace46679290208186204e8,
     type: 2}
   m_PrefabInternal: {fileID: 2117907244}
---- !u!1 &2131279860 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: c9f2277f2b4414ff9abf05e783890171, type: 2}
-  m_PrefabInternal: {fileID: 1401890329}
