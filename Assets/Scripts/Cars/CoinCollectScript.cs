@@ -35,11 +35,18 @@ public class CoinCollectScript : MonoBehaviour
 	{
 		
 		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
-			this.gameObject.SetActive (false);
+			/*	this.gameObject.SetActive (false);
 			CarManager.Instance.AddPoints ();
 			Debug.Log ("Collect diamond");
 			SfxManager.Instance.Play ("pickup");
-			Debug.Log ("music");
+			Debug.Log ("music");*/
+			if (this.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
+				DrivePitchGesture.Instance.decelerate_trigger = true;
+			} else {
+				DrivePitchGesture.Instance.accelerate_trigger = true;
+			}
+
+			Debug.Log ("enter arrow trigger");
 		} 
 
 		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
@@ -90,6 +97,21 @@ public class CoinCollectScript : MonoBehaviour
 
 			
 		}
+
+		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
+			/*	this.gameObject.SetActive (false);
+			CarManager.Instance.AddPoints ();
+			Debug.Log ("Collect diamond");
+			SfxManager.Instance.Play ("pickup");
+			Debug.Log ("music");*/
+
+			Debug.Log ("exit arrow trigger");
+			if (this.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
+				DrivePitchGesture.Instance.decelerate_trigger = false;
+			} else {
+				DrivePitchGesture.Instance.accelerate_trigger = false;
+			}
+		} 
 		
 	}
 		

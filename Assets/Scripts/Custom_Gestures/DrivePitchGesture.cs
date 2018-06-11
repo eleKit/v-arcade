@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap;
 using System.Linq;
+using POLIMIGameCollective;
 
-public class DrivePitchGesture : MonoBehaviour
+public class DrivePitchGesture : Singleton<DrivePitchGesture>
 {
 
 	/* Drive gesture: a sliding movement made by all the fingers and the palm,
@@ -43,6 +44,13 @@ public class DrivePitchGesture : MonoBehaviour
 	public HandController hc;
 
 
+	public bool accelerate_trigger;
+
+	public bool decelerate_trigger;
+
+	private Vector3 y_movement_vector;
+
+
 
 	private LinkedList<float> pitch_list = new LinkedList<float> ();
 	private LinkedList<float> pitch_average = new LinkedList<float> ();
@@ -59,6 +67,7 @@ public class DrivePitchGesture : MonoBehaviour
 	void Start ()
 	{
 		frames_since_last_gesture = N;
+		y_movement_vector = new Vector3 (0f, 0.1f, 0f);
 	}
 	
 	// Update is called once per frame
@@ -67,7 +76,7 @@ public class DrivePitchGesture : MonoBehaviour
 
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
-			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+			transform.position = transform.position + y_movement_vector;
 
 			if (pitch_average.Count >= num_frames_in_average_list) {
 				pitch_average.RemoveFirst ();
@@ -103,18 +112,25 @@ public class DrivePitchGesture : MonoBehaviour
 
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
-
-			transform.position = new_position;
+			if (accelerate_trigger) {
+				y_movement_vector = y_movement_vector * 2;
+				CarManager.Instance.AddPoints ();
+				
+			}
 
 
 		} else if ((current_pitch - min_pitch) > Mathf.Deg2Rad * (-threshold) && current_pitch > (-offset)) {
 			
 			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
+			Debug.Log ("decelerate gesture");
 
-			transform.position = new_position;
+			if (decelerate_trigger) {
+
+				y_movement_vector = y_movement_vector / 2;
+				CarManager.Instance.AddPoints ();
+
+			}
 
 
 		}
