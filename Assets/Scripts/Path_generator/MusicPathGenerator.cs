@@ -22,8 +22,8 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	float[] instantiationTimer_right;
 	//= new float[5] { 1f, 10f, 10f, 10f, 10f };
 
-	Vector3 left_position = new Vector3 (-6f, 0f, 0f);
-	Vector3 right_position = new Vector3 (-6f, 2f, 0f);
+	Vector3 left_position = new Vector3 (-6f, 1f, 0f);
+	Vector3 right_position = new Vector3 (-6f, 1f, 0f);
 
 	int left;
 	int right;
