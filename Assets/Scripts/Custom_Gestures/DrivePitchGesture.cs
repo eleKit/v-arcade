@@ -57,6 +57,7 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 
 	const int N = 60;
 
+	bool car_velocity_already_reset;
 
 	int frames_since_last_gesture;
 
@@ -68,6 +69,7 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 	{
 		frames_since_last_gesture = N;
 		y_movement_vector = new Vector3 (0f, 0.1f, 0f);
+		car_velocity_already_reset = true;
 	}
 	
 	// Update is called once per frame
@@ -85,6 +87,10 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 
 			if (pitch_list.Count >= K) {
 				if (frames_since_last_gesture >= N) {
+
+					if (!car_velocity_already_reset)
+						ResetCarVelocity ();
+
 					CheckPitchDriveGesture ();
 				} else {
 					frames_since_last_gesture++;
@@ -115,6 +121,8 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 			if (accelerate_trigger) {
 				y_movement_vector = y_movement_vector * 2;
 				CarManager.Instance.AddPoints ();
+				accelerate_trigger = false;
+				car_velocity_already_reset = false;
 				
 			}
 
@@ -123,17 +131,24 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 			
 			frames_since_last_gesture = 0;
 
-			Debug.Log ("decelerate gesture");
-
 			if (decelerate_trigger) {
 
 				y_movement_vector = y_movement_vector / 2;
 				CarManager.Instance.AddPoints ();
+				decelerate_trigger = false;
+				car_velocity_already_reset = false;
 
 			}
 
 
 		}
+	}
+
+
+	void ResetCarVelocity ()
+	{
+		y_movement_vector = new Vector3 (0f, 0.1f, 0f);
+		car_velocity_already_reset = true;
 	}
 
 
