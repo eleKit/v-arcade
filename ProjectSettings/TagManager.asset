@@ -63,6 +63,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Asphalt
+    uniqueID: 1822306383
+    locked: 0
   - name: Background
     uniqueID: 3445981711
     locked: 0
