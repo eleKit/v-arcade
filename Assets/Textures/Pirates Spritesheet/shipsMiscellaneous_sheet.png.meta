@@ -14,6 +14,7 @@ TextureImporter:
     21300014: shipsMiscellaneous_sheet_7
     21300016: shipsMiscellaneous_sheet_8
     21300018: shipsMiscellaneous_sheet_9
+    21300020: shipsMiscellaneous_sheet_10
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -254,6 +255,20 @@ TextureImporter:
         y: 222
         width: 64
         height: 47
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: shipsMiscellaneous_sheet_10
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 325
+        width: 22
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

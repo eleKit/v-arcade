@@ -21,6 +21,7 @@ TextureImporter:
     21300028: red_audience
     21300030: orange_cone
     21300032: white_arrow
+    21300034: red_roof_small
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -359,6 +360,20 @@ TextureImporter:
         y: 354
         width: 166
         height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red_roof_small
+      rect:
+        serializedVersion: 2
+        x: 617
+        y: 426
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
