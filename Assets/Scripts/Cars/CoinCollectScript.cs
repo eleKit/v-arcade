@@ -40,7 +40,17 @@ public class CoinCollectScript : MonoBehaviour
 			Debug.Log ("Collect diamond");
 			SfxManager.Instance.Play ("pickup");
 			Debug.Log ("music");*/
-			if (this.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
+
+			//set the arrow (and arrow children element) color when the trigger is activated
+			//GetComponentsInchildren returns also the parent component in the array
+			SpriteRenderer[] renderers = this.gameObject.GetComponentsInChildren <SpriteRenderer> ();
+
+			foreach (SpriteRenderer rd in renderers) {
+				rd.color = new Color (1, 1, 1, 1);
+			}
+
+			
+			if (this.CompareTag ("DecelerateCar")) {
 				DrivePitchGesture.Instance.decelerate_trigger = true;
 			} else {
 				DrivePitchGesture.Instance.accelerate_trigger = true;
@@ -104,6 +114,14 @@ public class CoinCollectScript : MonoBehaviour
 			Debug.Log ("Collect diamond");
 			SfxManager.Instance.Play ("pickup");
 			Debug.Log ("music");*/
+
+			//set the arrow (and arrow children element) color when the trigger is deactivated
+			//GetComponentsInchildren returns also the parent component in the array
+			SpriteRenderer[] renderers = this.gameObject.GetComponentsInChildren <SpriteRenderer> ();
+
+			foreach (SpriteRenderer rd in renderers) {
+				rd.color = new Color (1, 1, 1, 0.33f);
+			}
 
 			Debug.Log ("exit arrow trigger");
 			if (this.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
