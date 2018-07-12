@@ -35,7 +35,7 @@ public class LightBarManager : MonoBehaviour
 			if (hc.GetFixedFrame ().Hands.Count == 2 && GameManager.Instance.music) {
 				colour_line.color = Color.green;
 			} else if (hc.GetFixedFrame ().Hands.Count == 1
-			           && (GameManager.Instance.shooting || GameManager.Instance.car)) {
+			           && (!GameManager.Instance.music)) {
 				colour_line.color = Color.green;
 			}
 		}
