@@ -35,12 +35,13 @@ public class CoinCollectScript : MonoBehaviour
 	{
 		
 		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
-			/*	this.gameObject.SetActive (false);
+			this.gameObject.SetActive (false);
 			CarManager.Instance.AddPoints ();
 			Debug.Log ("Collect diamond");
 			SfxManager.Instance.Play ("pickup");
-			Debug.Log ("music");*/
+			Debug.Log ("music");
 
+			/*
 			//set the arrow (and arrow children element) color when the trigger is activated
 			//GetComponentsInchildren returns also the parent component in the array
 			SpriteRenderer[] renderers = this.gameObject.GetComponentsInChildren <SpriteRenderer> ();
@@ -57,6 +58,7 @@ public class CoinCollectScript : MonoBehaviour
 			}
 
 			Debug.Log ("enter arrow trigger");
+			*/
 		} 
 
 		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
@@ -108,13 +110,8 @@ public class CoinCollectScript : MonoBehaviour
 			
 		}
 
-		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
-			/*	this.gameObject.SetActive (false);
-			CarManager.Instance.AddPoints ();
-			Debug.Log ("Collect diamond");
-			SfxManager.Instance.Play ("pickup");
-			Debug.Log ("music");*/
-
+		/*if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
+			
 			//set the arrow (and arrow children element) color when the trigger is deactivated
 			//GetComponentsInchildren returns also the parent component in the array
 			SpriteRenderer[] renderers = this.gameObject.GetComponentsInChildren <SpriteRenderer> ();
@@ -129,7 +126,7 @@ public class CoinCollectScript : MonoBehaviour
 			} else {
 				DrivePitchGesture.Instance.accelerate_trigger = false;
 			}
-		} 
+		} */
 		
 	}
 		

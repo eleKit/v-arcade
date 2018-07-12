@@ -156,6 +156,10 @@ Prefab:
       propertyPath: m_Name
       value: Accelerate_arrows (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -961,6 +965,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
   m_IsPrefabParent: 0
@@ -1277,7 +1285,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472364380}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9acee67ec0cec4afa8f00e5a4d165a0c, type: 3}
   m_Name: 
@@ -1291,7 +1299,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472364380}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e70762b5816e84a4b95e2ba4486a620e, type: 3}
   m_Name: 
@@ -1582,6 +1590,10 @@ Prefab:
       propertyPath: m_Name
       value: Accelerate_arrows (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -1798,6 +1810,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -1920,7 +1936,7 @@ GameObject:
   m_Component:
   - component: {fileID: 764734961}
   m_Layer: 0
-  m_Name: Firsti_side_of_ring
+  m_Name: First_side_of_ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1986,6 +2002,10 @@ Prefab:
       propertyPath: m_Name
       value: Decelerate_arrows (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
   m_IsPrefabParent: 0
@@ -2031,6 +2051,10 @@ Prefab:
     - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
       propertyPath: m_Name
       value: Decelerate_arrows (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
@@ -2092,6 +2116,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4980977082417104, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2901,6 +2929,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -2942,6 +2974,10 @@ Prefab:
     - target: {fileID: 4980977082417104, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
       propertyPath: m_RootOrder
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
@@ -3060,6 +3096,10 @@ Prefab:
     - target: {fileID: 4413380591994990, guid: 7da27f89119c844398fa46989335345b, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
@@ -3236,6 +3276,10 @@ Prefab:
     - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
       propertyPath: m_Name
       value: Accelerate_arrows (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
@@ -3873,6 +3917,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -4313,6 +4361,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -4419,6 +4471,10 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
   m_IsPrefabParent: 0
@@ -4511,6 +4567,10 @@ Prefab:
     - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
       propertyPath: m_Name
       value: Accelerate_arrows (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752284208965334, guid: 7da27f89119c844398fa46989335345b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7da27f89119c844398fa46989335345b, type: 2}
@@ -4671,6 +4731,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4980977082417104, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1934895515441154, guid: 3a44970e4a20540eaa266888e58bd806, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
