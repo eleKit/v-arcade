@@ -15,7 +15,6 @@ public class ShootInstantiate : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		Instantiate (shot, this.transform.position, Quaternion.identity);
 	}
 	
 	// Update is called once per frame

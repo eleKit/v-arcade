@@ -998,7 +998,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4407568940535404, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4407568940535404, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1472,7 +1472,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shot: {fileID: 1326243691151524, guid: c8f1aeb51134544ef990a84264a28e58, type: 2}
-  y_movement: 1
 --- !u!1 &1296379178
 GameObject:
   m_ObjectHideFlags: 0
