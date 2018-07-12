@@ -18,6 +18,8 @@ public class PathGeneratorUI : MonoBehaviour
 
 	public GameObject m_save_car_screen;
 
+	public GameObject m_save_space_screen;
+
 	public GameObject m_duck_screen;
 
 	public GameObject m_duck_path_screen;
@@ -26,18 +28,25 @@ public class PathGeneratorUI : MonoBehaviour
 
 	public GameObject m_car_screen;
 
+	public GameObject m_space_path_screen;
+
+	public GameObject m_space_screen;
+
 
 
 	public GameObject m_instructions_screen;
 	public GameObject m_car_instruction_screen;
 	public GameObject m_duck_instruction_screen;
+	public GameObject m_space_instruction_screen;
 	public GameObject m_instruction_menu;
 
 	public GameObject m_car_save_text;
 	public GameObject m_duck_save_text;
+	public GameObject m_space_save_text;
 
 	string duck_name = "";
 	string car_name = "";
+	string space_name = "";
 
 	// Use this for initialization
 	void Start ()
@@ -85,6 +94,12 @@ public class PathGeneratorUI : MonoBehaviour
 		m_duck_instruction_screen.SetActive (true);
 	}
 
+	public void LoadSpaceInstructions ()
+	{
+		ResetInstructionScreen ();
+		m_space_instruction_screen.SetActive (true);
+	}
+
 
 	/* load path generator screen script */
 
@@ -104,6 +119,15 @@ public class PathGeneratorUI : MonoBehaviour
 		m_duck_screen.SetActive (true);
 		ResetDuckScreens ();
 		m_duck_path_screen.SetActive (true);
+	}
+
+	public void LoadSpace ()
+	{
+		ClearScreens ();
+		m_space_screen.SetActive (true);
+		ResetSpaceScreens ();
+		m_space_path_screen.SetActive (true);
+
 	}
 
 
@@ -169,6 +193,33 @@ public class PathGeneratorUI : MonoBehaviour
 
 
 
+	//
+	public void SpacePathSaveScreen ()
+	{
+		m_save_space_screen.SetActive (true);
+		m_space_save_text.SetActive (false);
+
+	}
+
+	public void SpacePathSaveWithNoName ()
+	{
+		if (space_name.Equals (""))
+			m_space_save_text.SetActive (true);
+
+	}
+
+	public void SpaceNameInserted (string name)
+	{
+		space_name = name;
+	}
+
+	public void GoBackToSpace ()
+	{
+		m_save_space_screen.SetActive (false);
+	}
+
+
+
 	/* reset screen scripts */
 
 	void ClearScreens ()
@@ -184,6 +235,9 @@ public class PathGeneratorUI : MonoBehaviour
 
 		if (m_car_screen != null)
 			m_car_screen.SetActive (false);
+
+		if (m_space_screen != null)
+			m_space_screen.SetActive (false);
 
 
 	}
@@ -209,6 +263,17 @@ public class PathGeneratorUI : MonoBehaviour
 		}
 	}
 
+	void ResetSpaceScreens ()
+	{
+		if (m_space_screen != null) {
+			if (m_save_space_screen != null)
+				m_save_space_screen.SetActive (false);
+			if (m_space_path_screen != null)
+				m_space_path_screen.SetActive (false);
+
+		}
+	}
+
 	void ResetInstructionScreen ()
 	{
 		if (m_instructions_screen != null) {
@@ -216,6 +281,8 @@ public class PathGeneratorUI : MonoBehaviour
 				m_car_instruction_screen.SetActive (false);
 			if (m_duck_instruction_screen != null)
 				m_duck_instruction_screen.SetActive (false);
+			if (m_space_instruction_screen != null)
+				m_space_instruction_screen.SetActive (false);
 			if (m_instruction_menu != null)
 				m_instruction_menu.SetActive (false);
 		}

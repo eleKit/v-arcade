@@ -11,7 +11,9 @@ public class GameMatch
 		Shooting,
 		Car,
 		Music,
-	};
+		Space}
+
+	;
 
 	public GameType gameType;
 
