@@ -30,6 +30,7 @@ TagManager:
   - Goal
   - Diamond
   - DecelerateCar
+  - Shot
   layers:
   - Default
   - TransparentFX

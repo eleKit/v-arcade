@@ -81,7 +81,7 @@ public class SpaceGesture : MonoBehaviour
 
 			//change pointer colour
 			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.black)) {
-				gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
+				gameObject.GetComponent<SpriteRenderer> ().color = Color.grey;
 			}
 
 			frames_since_last_reconnection++;	
@@ -102,7 +102,7 @@ public class SpaceGesture : MonoBehaviour
 				CheckMoveSpaceshipGesture ();
 
 				//change pointer colour
-				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
+				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.grey)) {
 					gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
 				}
 

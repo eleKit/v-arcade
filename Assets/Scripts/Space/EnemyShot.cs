@@ -10,7 +10,13 @@ public class EnemyShot : MonoBehaviour
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		Instantiate (explosion, transform.position, Quaternion.identity);
+
+		other.gameObject.SetActive (false);
+		Collider2D coll = GetComponent <Collider2D> ();
+		coll.enabled = false;
+
 		StartCoroutine (WaitBeforeDeactivate ());
+
 	}
 
 	IEnumerator WaitBeforeDeactivate ()
