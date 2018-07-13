@@ -27,10 +27,12 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public GameObject m_mode_screen;
 	public GameObject m_car_colours_screen;
 
+	//only for space game
+	public GameObject m_space_colours_screen;
 
 	public Button[] m_level_button;
 
-	public bool car, music, shooting;
+	public bool car, music, shooting, space;
 
 	bool there_are_no_level;
 
@@ -49,6 +51,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		car = false;
 		shooting = false;
 		music = false;
+		space = false;
 		there_are_no_level = false;
 	}
 
@@ -80,6 +83,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			break;
 		case GameMatch.GameType.Music:
 			music = true;
+			break;
+		case GameMatch.GameType.Space:
+			space = true;
 			break;
 		}
 
@@ -113,6 +119,11 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				m_mode_screen.SetActive (false);
 			if (m_car_colours_screen != null)
 				m_car_colours_screen.SetActive (false);
+		}
+
+		if (space) {
+			if (m_space_colours_screen != null)
+				m_space_colours_screen.SetActive (false);
 		}
 
 	}
@@ -153,6 +164,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (music) {
 			MusicGameManager.Instance.ToMenu ();
 		}
+		if (space) {
+			SpaceGameManager.Instance.ToMenu ();
+		}
 		LoadMenu ();
 	}
 
@@ -188,6 +202,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (car) {
 			ClearScreens ();
 			m_mode_screen.SetActive (true);
+		} else if (space) {
+			LoadSpaceColourScreen ();
 		} else {
 			LoadLevelScreen ();
 		}
@@ -197,6 +213,12 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	{
 		ClearScreens ();
 		m_car_colours_screen.SetActive (true);
+	}
+
+	public void LoadSpaceColourScreen ()
+	{
+		ClearScreens ();
+		m_space_colours_screen.SetActive (true);
 	}
 
 
@@ -213,6 +235,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		if (music) {
 			MusicGameManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
+		if (space) {
+			SpaceGameManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
+		}
 	}
 
 
@@ -227,6 +252,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		}
 		if (shooting) {
 			ShootingManager.Instance.RestartLevel ();
+		}
+		if (space) {
+			SpaceGameManager.Instance.RestartLevel ();
 		}
 
 	}
@@ -243,6 +271,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		}
 		if (shooting) {
 			ShootingManager.Instance.ResumeLevel ();
+		}
+		if (space) {
+			SpaceGameManager.Instance.ResumeLevel ();
 		}
 	}
 
@@ -268,6 +299,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
 				if (car) {
 					LoadCarColourScreen ();
+				} else if (space) {
+					LoadSpaceColourScreen ();
 				} else {
 					LoadMenu ();
 				}

@@ -39,7 +39,7 @@ public class GameManager : Singleton<GameManager>
 	//name of the path chosen
 	public string current_path = "";
 
-	public bool car, music, shooting;
+	public bool car, music, shooting, space;
 
 
 
@@ -66,6 +66,7 @@ public class GameManager : Singleton<GameManager>
 		car = false;
 		shooting = false;
 		music = false;
+		space = false;
 
 	}
 
@@ -94,6 +95,9 @@ public class GameManager : Singleton<GameManager>
 			break;
 		case GameMatch.GameType.Music:
 			music = true;
+			break;
+		case GameMatch.GameType.Space:
+			space = true;
 			break;
 		}
 
@@ -345,7 +349,7 @@ public class GameManager : Singleton<GameManager>
 
 		SaveData ();
 
-		//EndLevel ();
+		//TODO EndLevel ();
 		is_playing = false;
 
 
@@ -386,6 +390,8 @@ public class GameManager : Singleton<GameManager>
 			m.gameType = GameMatch.GameType.Music;
 		} else if (shooting) {
 			m.gameType = GameMatch.GameType.Shooting;
+		} else if (space) {
+			m.gameType = GameMatch.GameType.Space;
 		}
 
 		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
@@ -431,7 +437,7 @@ public class GameManager : Singleton<GameManager>
 	}
 
 
-	//TODO this doesn't go here
+	//TODO this doesn't go here, used for debugging
 	public void ReplayWithouthPath ()
 	{
 		Debug.Log ("ReplayWithouthPath");

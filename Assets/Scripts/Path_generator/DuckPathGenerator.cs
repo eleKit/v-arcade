@@ -6,7 +6,7 @@ using POLIMIGameCollective;
 
 public class DuckPathGenerator : Singleton<DuckPathGenerator>
 {
-
+	//prefabs to instantiate
 	public GameObject m_back_duck_left;
 	public GameObject m_back_duck_right;
 
