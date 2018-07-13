@@ -74,7 +74,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;
 
-		//TODO SpacePathGenerator.Instance.LoadPath (path.file_path);
+		SpacePathGenerator.Instance.LoadPath (path.file_path);
 
 	}
 
