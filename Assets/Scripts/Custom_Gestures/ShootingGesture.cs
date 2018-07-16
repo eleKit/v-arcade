@@ -219,7 +219,7 @@ public class ShootingGesture : MonoBehaviour
 
 			frames_since_last_gesture = 0;
 
-			if ((transform.position.x - x_movement) <= x_max_player_position) {
+			if ((transform.position.x + x_movement) <= x_max_player_position) {
 				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
 				transform.position = new_position;
