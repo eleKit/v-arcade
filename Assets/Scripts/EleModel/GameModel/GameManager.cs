@@ -434,7 +434,34 @@ public class GameManager : Singleton<GameManager>
 
 		hand_data_file_path = framesPath;
 
+		Debug.Log ("enter save coroutine");
+		StartCoroutine (SaveCoroutine (framesPath, m, gameDate));
+
+
 	}
+
+
+	IEnumerator SaveCoroutine (string framesPath, GameMatch m, DateTime gameDate)
+	{
+
+		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		               + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json;";
+		// Upload the entire local file to the server.
+		ES2Web web = new ES2Web (myURL);
+
+		Debug.Log ("start saving");
+
+		yield return StartCoroutine (web.UploadFile (framesPath));
+
+		Debug.Log ("save ended");
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+		}
+	}
+
+
+
 
 
 	//TODO this doesn't go here, used for debugging
