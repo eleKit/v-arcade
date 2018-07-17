@@ -10,7 +10,7 @@ public class ShootInstantiate : MonoBehaviour
 
 	float spawn_time = 0f;
 
-	float delta_spawn_time = 1f;
+	float delta_spawn_time = 2f;
 
 	bool start_game;
 
@@ -31,7 +31,9 @@ public class ShootInstantiate : MonoBehaviour
 		}
 
 		if (start_game) {
-			if (GameManager.Instance.Get_Is_Playing ()) {
+			if (GameManager.Instance.Get_Is_Playing () &&
+			    !(GetComponent<SpriteRenderer> ().color.Equals (Color.black)
+			    || GetComponent<SpriteRenderer> ().color.Equals (Color.gray))) {
 				if (Time.time > spawn_time) {
 					Instantiate (shot, transform.position, Quaternion.identity);
 					spawn_time = spawn_time + delta_spawn_time;

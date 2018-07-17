@@ -14,6 +14,7 @@ public class EnemyShot : MonoBehaviour
 		other.gameObject.SetActive (false);
 		Collider2D coll = GetComponent <Collider2D> ();
 		coll.enabled = false;
+		SpaceGameManager.Instance.AddPoints ();
 
 		StartCoroutine (WaitBeforeDeactivate ());
 
