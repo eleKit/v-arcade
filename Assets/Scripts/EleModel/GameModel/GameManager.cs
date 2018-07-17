@@ -408,6 +408,10 @@ public class GameManager : Singleton<GameManager>
 		File.WriteAllText (filePath, jsonString);
 
 
+		//save match data on web
+		StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate));
+
+
 		// Now we save motion data
 		FrameSequence frame_sequence = new FrameSequence ();
 		frame_sequence.timestamp = gameDate.ToFileTimeUtc ();
@@ -434,26 +438,41 @@ public class GameManager : Singleton<GameManager>
 
 		hand_data_file_path = framesPath;
 
-		Debug.Log ("enter save coroutine");
-		StartCoroutine (SaveCoroutine (framesPath, m, gameDate));
+		//save hand data on web
+		StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate));
 
 
 	}
 
 
-	IEnumerator SaveCoroutine (string framesPath, GameMatch m, DateTime gameDate)
+	IEnumerator SaveMatchDataCoroutine (string filePath, GameMatch m, DateTime gameDate)
 	{
 
 		string myURL = "http://127.0.0.1/ES2.php?webfilename="
-		               + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json;";
+		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
 
-		Debug.Log ("start saving");
+		yield return StartCoroutine (web.UploadFile (filePath));
+
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+		}
+	}
+
+
+	IEnumerator SaveHandDataCoroutine (string framesPath, GameMatch m, DateTime gameDate)
+	{
+
+		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json;";
+		// Upload the entire local file to the server.
+		ES2Web web = new ES2Web (myURL);
+
 
 		yield return StartCoroutine (web.UploadFile (framesPath));
 
-		Debug.Log ("save ended");
 		if (web.isError) {
 			// Enter your own code to handle errors here.
 			Debug.LogError (web.errorCode + ":" + web.error);
