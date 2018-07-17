@@ -70,6 +70,6 @@ MonoBehaviour:
   encrypt: 0
   encryptionPassword: myPassword
   encryptionType: 0
-  webUsername: 
-  webPassword: 
+  webUsername: es2username
+  webPassword: es2password
   bufferSize: 4098
