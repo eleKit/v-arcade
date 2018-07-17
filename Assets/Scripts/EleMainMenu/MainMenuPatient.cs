@@ -13,6 +13,7 @@ public class MainMenuPatient : MonoBehaviour
 			"Car_game",
 			"Music_game",
 			"Shooting_game",
+			"Space_game",
 			"Tuning_scene"
 		};
 
