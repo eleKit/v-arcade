@@ -63,8 +63,8 @@ public class SpaceGesture : MonoBehaviour
 	//TODO get this from tuning as the zero position;
 	float yaw_tuning_offset = 0;
 
-	float x_max_player_position = 10f;
-	float x_min_player_posiion = -10f;
+	float x_max_player_position = 15f;
+	float x_min_player_posiion = -15f;
 
 	// Use this for initialization
 	void Start ()
