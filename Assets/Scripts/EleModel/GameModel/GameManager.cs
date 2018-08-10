@@ -10,6 +10,8 @@ using Leap;
 public class GameManager : Singleton<GameManager>
 {
 
+	public bool no_save;
+
 	public GameObject m_background;
 
 	public GameObject m_wait_background;
@@ -347,7 +349,10 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		SaveData ();
+		if (!no_save) {
+			Debug.Log ("is saving");
+			SaveData ();
+		}
 
 		//TODO EndLevel ();
 		is_playing = false;

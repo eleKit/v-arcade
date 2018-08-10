@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using POLIMIGameCollective;
 using System.IO;
+using UnityEngine.UI;
 
 public class SpaceGameManager : Singleton<SpaceGameManager>
 {
 
+	[Range (0f, 200f)]
+	public float m_time_of_Timer = 200f;
+
+	public Text m_timer_text;
+
+	float timer_of_game;
 
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
@@ -16,6 +23,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		timer_of_game = m_time_of_Timer;
 		GameManager.Instance.player_initial_pos = initial_player_pos;
 		GameManager.Instance.BaseStart ("SpaceGameMusic", GameMatch.GameType.Space);
 
@@ -34,9 +42,23 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	// Update is called once per frame
 	void Update ()
 	{
+
 		GameManager.Instance.BaseUpdate ();
 
-		if (GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 &&
+		/*if (GameManager.Instance.Get_Is_Playing () &&
+		!(GetComponent<SpriteRenderer> ().color.Equals (Color.black)
+			|| GetComponent<SpriteRenderer> ().color.Equals (Color.gray)))*/
+		
+		if (GameManager.Instance.Get_Is_Playing ()) {
+			timer_of_game -= Time.deltaTime;
+			int timer = (int)Mathf.Round (timer_of_game);
+			int min = timer / 60;
+			int sec = timer % 60;
+			m_timer_text.text = min.ToString () + ":" + sec.ToString ();
+		}
+
+
+		if ((GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 || timer_of_game < 0) &&
 		    GameManager.Instance.Get_Is_Playing ()) {
 			WinLevel ();
 		}
@@ -47,6 +69,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	public void WinLevel ()
 	{
 		//this function starts win jingle and then calls the win function
+		ResetPath ();
 		SfxManager.Instance.Play ("win_jigle");
 		GameManager.Instance.BaseWinLevel ();
 	}
@@ -60,6 +83,8 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 	void ResetPath ()
 	{
+		timer_of_game = m_time_of_Timer;
+
 		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag ("Enemy")) {
 			Destroy (enemy);
 		}
