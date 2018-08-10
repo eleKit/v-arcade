@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using POLIMIGameCollective;
 
 public class EnemyShot : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemyShot : MonoBehaviour
 	{
 		Instantiate (explosion, transform.position, Quaternion.identity);
 
+		SfxManager.Instance.Play ("rumble");
 		other.gameObject.SetActive (false);
 		Collider2D coll = GetComponent <Collider2D> ();
 		coll.enabled = false;

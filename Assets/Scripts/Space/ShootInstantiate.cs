@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using POLIMIGameCollective;
 
 public class ShootInstantiate : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class ShootInstantiate : MonoBehaviour
 			    || GetComponent<SpriteRenderer> ().color.Equals (Color.gray))) {
 				if (Time.time > spawn_time) {
 					Instantiate (shot, transform.position, Quaternion.identity);
+					SfxManager.Instance.Play ("laser");
 					spawn_time = spawn_time + delta_spawn_time;
 				}
 			} else {
