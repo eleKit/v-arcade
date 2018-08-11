@@ -114,6 +114,7 @@ public class GameManager : Singleton<GameManager>
 
 	}
 
+	//called when the game menu is loaded
 	public void BaseToMenu ()
 	{
 		ClearScreens ();
@@ -152,10 +153,12 @@ public class GameManager : Singleton<GameManager>
 
 
 
-
+	//called to load a level
 	public void BaseChooseLevel (string name)
 	{
 		SfxManager.Instance.Unmute ();
+		SfxManager.Instance.Stop ();
+
 		current_path = name;
 		StartCoroutine (LoadLevel ());
 	}
@@ -329,6 +332,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		is_playing = false;
 
+		SfxManager.Instance.Play ("win_jingle");
 		GameMenuScript.Instance.LoadWinScreen (score);
 
 		StartCoroutine (WinCoroutine ());
@@ -353,25 +357,12 @@ public class GameManager : Singleton<GameManager>
 			Debug.Log ("is saving");
 			SaveData ();
 		}
-
-		//TODO EndLevel ();
+			
 		is_playing = false;
 
-
-	}
-
-	// called to destroy the current level path
-	// never called directly by the UI
-
-	// TODO this myst be called
-	void EndLevel ()
-	{
-		
-
-		SfxManager.Instance.Unmute ();
+		yield return new WaitForSeconds (3.5f);
 		SfxManager.Instance.Stop ();
 
-		MusicManager.Instance.UnmuteAll ();
 
 	}
 
