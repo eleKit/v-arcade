@@ -3,15 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using POLIMIGameCollective;
 using System.IO;
+using UnityEngine.UI;
 
 public class ShootingManager : Singleton<ShootingManager>
 {
+	//timer attributes
+	[Range (0f, 200f)]
+	public float m_time_of_Timer = 200f;
+
+	public Text m_timer_text;
+
+	float timer_of_game;
+
+
+
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
 	Vector3 initial_player_pos = new Vector3 (0, 0.75f, 0);
 	// Use this for initialization
 	void Start ()
 	{
+		//set the timer
+		timer_of_game = m_time_of_Timer;
+		int timer = (int)Mathf.Round (timer_of_game);
+		int min = timer / 60;
+		int sec = timer % 60;
+		m_timer_text.text = min.ToString () + ":" + sec.ToString ();
 
 		GameManager.Instance.player_initial_pos = initial_player_pos;
 		GameManager.Instance.BaseStart ("DuckGameMusic", GameMatch.GameType.Shooting);
@@ -36,7 +53,19 @@ public class ShootingManager : Singleton<ShootingManager>
 	{
 		GameManager.Instance.BaseUpdate ();
 
-		if (GameObject.FindGameObjectsWithTag ("Duck").Length == 0 &&
+
+		if (GameManager.Instance.Get_Is_Playing () &&
+		    !(GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().color.Equals (Color.black)
+		    || GameObject.FindGameObjectWithTag ("Player").GetComponent <SpriteRenderer> ().color.Equals (Color.red))) {
+			timer_of_game -= Time.deltaTime;
+			int timer = (int)Mathf.Round (timer_of_game);
+			int min = timer / 60;
+			int sec = timer % 60;
+			m_timer_text.text = min.ToString () + ":" + sec.ToString ();
+		}
+
+
+		if ((GameObject.FindGameObjectsWithTag ("Duck").Length == 0 || timer_of_game < 0) &&
 		    GameManager.Instance.Get_Is_Playing ()) {
 			WinLevel ();
 		}
@@ -50,6 +79,9 @@ public class ShootingManager : Singleton<ShootingManager>
 
 	void ResetPath ()
 	{
+		//reset timer
+		timer_of_game = m_time_of_Timer;
+
 		foreach (GameObject duck in GameObject.FindGameObjectsWithTag ("Duck")) {
 			Destroy (duck);
 		}

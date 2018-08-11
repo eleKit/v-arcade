@@ -23,7 +23,13 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		//set timer
 		timer_of_game = m_time_of_Timer;
+		int timer = (int)Mathf.Round (timer_of_game);
+		int min = timer / 60;
+		int sec = timer % 60;
+		m_timer_text.text = min.ToString () + ":" + sec.ToString ();
+
 		GameManager.Instance.player_initial_pos = initial_player_pos;
 		GameManager.Instance.BaseStart ("SpaceGameMusic", GameMatch.GameType.Space);
 
@@ -44,12 +50,9 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	{
 
 		GameManager.Instance.BaseUpdate ();
-
-		/*if (GameManager.Instance.Get_Is_Playing () &&
-		!(GetComponent<SpriteRenderer> ().color.Equals (Color.black)
-			|| GetComponent<SpriteRenderer> ().color.Equals (Color.gray)))*/
-		
-		if (GameManager.Instance.Get_Is_Playing ()) {
+		if (GameManager.Instance.Get_Is_Playing () &&
+		    !(GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().color.Equals (Color.black)
+		    || GameObject.FindGameObjectWithTag ("Player").GetComponent <SpriteRenderer> ().color.Equals (Color.grey))) {
 			timer_of_game -= Time.deltaTime;
 			int timer = (int)Mathf.Round (timer_of_game);
 			int min = timer / 60;

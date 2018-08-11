@@ -138,13 +138,13 @@ TextureImporter:
       name: Up_Curtain
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 721
-        width: 256
+        width: 254
         height: 81
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 1, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0

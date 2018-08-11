@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1050962161257926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.433484, y: 2.5700002, z: -0.52295285}
+  m_LocalPosition: {x: 8.3935, y: 2.5700002, z: -0.52295285}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4422566574789602}
@@ -160,8 +160,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1050041828728686}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.48348415, y: 3.1540713, z: 0.52295285}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.8156185, y: -259.7801, z: 5.5742245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4669975617158662}
@@ -206,7 +206,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1787687283573588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.9265156, y: 2.5700002, z: -0.52295285}
+  m_LocalPosition: {x: -6.8465, y: 2.5700002, z: -0.52295285}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4422566574789602}
@@ -219,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1243119415162856}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.8065158, y: 2.57, z: -0.52295285}
+  m_LocalPosition: {x: -1.7665, y: 2.57, z: -0.52295285}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 4422566574789602}
@@ -239,9 +239,9 @@ PolygonCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0.01, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 0.81}
+    oldSize: {x: 2.54, y: 0.81}
     newSize: {x: 2.56, y: 0.81}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -279,9 +279,9 @@ PolygonCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0.01, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 0.81}
+    oldSize: {x: 2.54, y: 0.81}
     newSize: {x: 2.56, y: 0.81}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -319,9 +319,9 @@ PolygonCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0.01, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 0.81}
+    oldSize: {x: 2.54, y: 0.81}
     newSize: {x: 2.56, y: 0.81}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -359,9 +359,9 @@ PolygonCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0.01, w: 0}
+    border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.56, y: 0.81}
+    oldSize: {x: 2.54, y: 0.81}
     newSize: {x: 2.56, y: 0.81}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
