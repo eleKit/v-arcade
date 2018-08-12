@@ -139,4 +139,9 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	{
 		return GameManager.Instance.Get_Is_Playing ();
 	}
+
+	public float GetTimer ()
+	{
+		return timer_of_game;
+	}
 }
