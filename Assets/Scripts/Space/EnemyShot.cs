@@ -6,10 +6,18 @@ using POLIMIGameCollective;
 public class EnemyShot : MonoBehaviour
 {
 	public GameObject explosion;
+	public bool is_shot;
+
+	void Awake ()
+	{
+		is_shot = false;
+	}
+
 
 	// Use this for initialization
 	void OnTriggerEnter2D (Collider2D other)
 	{
+		is_shot = true;
 		Instantiate (explosion, transform.position, Quaternion.identity);
 
 		SfxManager.Instance.Play ("rumble");

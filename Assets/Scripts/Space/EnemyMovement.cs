@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-	[Range (1, 5)]
+	[Range (1, 10)]
 	public int m_num_of_enemies_movements = 3;
 
 	//delta time between enemies movements
@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
 	void Start ()
 	{
 		t0 = SpaceGameManager.Instance.m_time_of_Timer;
-		delta_t = t0 / 3;
+		delta_t = t0 / m_num_of_enemies_movements;
 		Debug.Log ("inital delta t " + delta_t.ToString ());
 		t1 = t0 - delta_t;
 		already_going_down = false;
@@ -32,7 +32,7 @@ public class EnemyMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (SpaceGameManager.Instance.GetTimer () < t1 && !already_going_down) {
+		if (SpaceGameManager.Instance.GetTimer () < t1 && !already_going_down && !GetComponent<EnemyShot> ().is_shot) {
 
 			already_going_down = true;
 

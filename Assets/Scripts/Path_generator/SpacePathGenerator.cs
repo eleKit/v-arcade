@@ -43,19 +43,19 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	{
 		for (int i = 0; i < space_path.back.enemies.Length; i++) {
 			if (space_path.back.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 2, 0), Quaternion.identity);
+				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 4, 0), Quaternion.identity);
 			}
 		}
 
 		for (int i = 0; i < space_path.middle.enemies.Length; i++) {
 			if (space_path.middle.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD, 0), Quaternion.identity);
+				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.middle.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 3, 0), Quaternion.identity);
 			}
 		}
 
 		for (int i = 0; i < space_path.front.enemies.Length; i++) {
 			if (space_path.front.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i], Quaternion.identity);
+				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.front.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 2, 0), Quaternion.identity);
 			}
 		}
 	}

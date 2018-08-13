@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c3dc28962cb4cab9a1fcca5141b047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delta_t: 10
+  m_num_of_enemies_movements: 5
 --- !u!212 &212066407868178858
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -212,7 +212,7 @@ public class GameManager : Singleton<GameManager>
 
 		score = 0;
 
-		m_score_text.text = "Punteggio: " + score.ToString ();
+		m_score_text.text = "Punti: " + score.ToString ();
 
 
 		/* reset the recorder before start playing:
