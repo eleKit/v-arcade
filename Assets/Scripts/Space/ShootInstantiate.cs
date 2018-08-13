@@ -9,9 +9,11 @@ public class ShootInstantiate : MonoBehaviour
 
 	public GameObject shot;
 
+	[Range (0f, 5f)]
+	public float delta_t = 2f;
+
 	float spawn_time = 0f;
 
-	float delta_spawn_time = 2f;
 
 	bool start_game;
 
@@ -35,15 +37,15 @@ public class ShootInstantiate : MonoBehaviour
 			if (GameManager.Instance.Get_Is_Playing () &&
 			    !(GetComponent<SpriteRenderer> ().color.Equals (Color.black)
 			    || GetComponent<SpriteRenderer> ().color.Equals (Color.gray))) {
-				if (Time.time > spawn_time) {
+
+				spawn_time += Time.deltaTime;
+
+				if (spawn_time > delta_t) {
 					Instantiate (shot, transform.position, Quaternion.identity);
 					SfxManager.Instance.Play ("laser");
-					spawn_time = spawn_time + delta_spawn_time;
+					spawn_time = 0f;
 				}
-			} else {
-				if (Time.time > spawn_time)
-					spawn_time = spawn_time + delta_spawn_time;
-			}
+			} 
 		}
 
 
@@ -53,6 +55,11 @@ public class ShootInstantiate : MonoBehaviour
 
 	void StartShootTimer ()
 	{
-		spawn_time = Time.time + delta_spawn_time;
+		spawn_time = 0f;
+	}
+
+	public void ResetShootTimer ()
+	{
+		start_game = false;
 	}
 }
