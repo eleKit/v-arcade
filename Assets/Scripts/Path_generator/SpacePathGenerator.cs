@@ -10,6 +10,8 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	//prefabs to instantiate
 	public GameObject[] m_enemies_prefabs;
 
+	public GameObject[] m_big_enemies_prefabs;
+
 	SpacePath space_path;
 
 	// Use this for initialization
@@ -43,7 +45,7 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	{
 		for (int i = 0; i < space_path.back.enemies.Length; i++) {
 			if (space_path.back.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 4, 0), Quaternion.identity);
+				Instantiate (m_big_enemies_prefabs [Random.Range (0, m_big_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 4, 0), Quaternion.identity);
 			}
 		}
 

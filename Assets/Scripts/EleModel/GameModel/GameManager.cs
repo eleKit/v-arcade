@@ -240,7 +240,7 @@ public class GameManager : Singleton<GameManager>
 	public void BaseAddPoints ()
 	{
 		score = score + 10;
-		m_score_text.text = "Punteggio: " + score.ToString ();
+		m_score_text.text = "Punti: " + score.ToString ();
 
 	}
 

@@ -92,6 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 1715540233132746, guid: a1054bd5f1a3d455fa10ec974b0ec82b, type: 2}
+  hit: {fileID: 1771209642181526, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
+  big_alien: 0
+  is_shot: 0
 --- !u!212 &212488930461913784
 SpriteRenderer:
   m_ObjectHideFlags: 1
