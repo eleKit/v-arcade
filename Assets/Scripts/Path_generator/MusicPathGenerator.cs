@@ -12,9 +12,12 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	public GameObject right_hand;
 
 
-	/* in the txt file the distance between two spauned buttons must be >= 5f
+	/* To be playable in the txt file the distance between two spauned buttons must be >= 5f
 	 */
-	//this changes for every music
+
+
+
+	//these two arrays change for every music
 
 	float[] instantiationTimer_left;
 	//= new float[5] { 1f, 10f, 20f, 30f, 10f };
@@ -25,18 +28,13 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	Vector3 left_position = new Vector3 (-6f, 1f, 0f);
 	Vector3 right_position = new Vector3 (-6f, 1f, 0f);
 
-	int left;
-	int right;
+	//index of the two arrays of intantiationTimer
+	int left = 0;
+	int right = 0;
 
-	float spawn_time_left;
-
-	float spawn_time_right;
-
-	float pause_time;
-	float delta_pause_time;
-
-	//the time t0 used by the spauning calculator in the Update() to generate buttons
-	float t0;
+	//delta time of frames passed between an hand instantiation
+	float delta_spawn_time_left = 0f;
+	float delta_spawn_time_right = 0f;
 
 
 
@@ -56,29 +54,58 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	void FixedUpdate ()
 	{
 		if (GameManager.Instance.Get_Is_Playing ()) {
-			if (Time.time > spawn_time_left && left < instantiationTimer_left.Length) {
-				//do stuff here (like instantiate)
-				Instantiate (left_hand, left_position, Quaternion.identity);
+
+			//at every update the time goes down to
+			delta_spawn_time_left += Time.deltaTime;
+			delta_spawn_time_right += Time.deltaTime;
+
+			if (left < instantiationTimer_left.Length) {
+				
+				if (delta_spawn_time_left > instantiationTimer_left [left]) {
+					//do stuff here (like instantiate)
+
+					Debug.Log ("delta spawn time left " + Mathf.Round (delta_spawn_time_left).ToString ());
+					Debug.Log ("delta arrat time left " + Mathf.Round (instantiationTimer_left [left]).ToString ());
 
 
-				//increment next_spawn_time
-				left++;
-				if (left < instantiationTimer_left.Length)
-					spawn_time_left = t0 + instantiationTimer_left [left];
+					Instantiate (left_hand, left_position, Quaternion.identity);
+
+					//reset delta_spawn_time
+					//delta_spawn_time_left = 0;
+
+					//increment next_spawn_time
+					left++;
+
+				}
 			}
-			
-			if (Time.time > spawn_time_right && right < instantiationTimer_right.Length) {
-				Instantiate (right_hand, right_position, Quaternion.identity);
 
-				right++;
-				if (right < instantiationTimer_right.Length)
-					spawn_time_right = t0 + instantiationTimer_right [right];
+			if (right < instantiationTimer_right.Length) {
+
+				if (delta_spawn_time_right > instantiationTimer_right [right]) {
+					//do stuff here (like instantiate)
+
+					Debug.Log ("delta spawn time right " + Mathf.Round (delta_spawn_time_right).ToString ());
+					Debug.Log ("delta arrat time right " + Mathf.Round (instantiationTimer_right [right]).ToString ());
+
+
+					Instantiate (right_hand, right_position, Quaternion.identity);
+
+					//reset delta_spawn_time
+					//delta_spawn_time_right = 0;
+
+					//increment next_spawn_time
+					right++;
+
+				}
 			}
+
 
 			if (left >= instantiationTimer_left.Length && right >= instantiationTimer_right.Length) {
 				MusicGameManager.Instance.no_more_hands = true;
+
 			}
 		}
+
 	}
 
 
@@ -90,44 +117,17 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 		left = 0;
 		right = 0;
 
-		/* the moment in which the next hand_button will be spauned is calculated as
-		 * t0 + x (t0 = the starting time, x= the seconds to wait)
-		 * when the current time t1 = t0 + x the button is spauned
+		/* after a correct delta time is passed a new hand button is spawned,
+		 * at the beginning the delta time of every hand is set to 0f
 		 */
 
-		t0 = Time.time;
 
-		spawn_time_left = t0 + instantiationTimer_left [left];
+		delta_spawn_time_left = 0f;
 
-		spawn_time_right = t0 + instantiationTimer_right [right];
+		delta_spawn_time_right = 0f;
+
 	}
 
-
-	public void PauseHandGenerator ()
-	{
-		pause_time = Time.time;
-	}
-
-	public void ResumeHandGenerator ()
-	{
-
-		delta_pause_time = Time.time - pause_time;
-
-
-		/* it must be updated the starting time t0 in order to 
-		 * generate all the next hands in the right order at the right time
-		 * and this would be enough for all the hands but 
-		 * there are also the already calculated (before pausing the game) 
-		 * spaun_time_left and spawn_time_right
-		 * of two hands still not generated, 
-		 * also these two variables must be updated here
-		 * */
-
-		t0 = t0 + delta_pause_time;
-
-		spawn_time_left = spawn_time_left + delta_pause_time;
-		spawn_time_right = spawn_time_right + delta_pause_time;
-	}
 
 
 	void ReadPath (string filename)

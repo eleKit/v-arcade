@@ -109,7 +109,6 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	//function called after pause the game
 	public void ResumeLevel ()
 	{
-		MusicPathGenerator.Instance.ResumeHandGenerator ();
 		GameManager.Instance.BaseResumeLevel ();
 
 	}

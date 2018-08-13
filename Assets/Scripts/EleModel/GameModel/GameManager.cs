@@ -269,7 +269,6 @@ public class GameManager : Singleton<GameManager>
 		SfxManager.Instance.Mute ();
 
 		if (music) {
-			MusicPathGenerator.Instance.PauseHandGenerator ();
 			//pause the current path level music
 			MusicManager.Instance.PauseAll ();
 		}
