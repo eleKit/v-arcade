@@ -59,3 +59,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Ele_Scenes/Main_menu.unity
     guid: 78feab790c19e4f129040a36ad9fd1c8
+  - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Space_game.unity
+    guid: e8cbd7a9bf26848f8af5379fda975e7d
+  - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Car_game.unity
+    guid: 5909990efa46f4330b9186888fc52a1b
+  - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Main_Menu_Patient.unity
+    guid: 462d01ecd31f0495d90435254ad4c9fd
+  - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Music_game.unity
+    guid: 91bb8ab4608d146bca9590e83963b445
+  - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Shooting_game.unity
+    guid: 6647cbba754bf4869818c07d3794eb1b

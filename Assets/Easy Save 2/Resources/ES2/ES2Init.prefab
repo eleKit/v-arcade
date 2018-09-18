@@ -70,6 +70,6 @@ MonoBehaviour:
   encrypt: 0
   encryptionPassword: myPassword
   encryptionType: 0
-  webUsername: es2username
-  webPassword: es2password
+  webUsername: leap_user
+  webPassword: ERQc94XwPb5Vz
   bufferSize: 4098

@@ -3221,7 +3221,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: no_save
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}
@@ -5245,8 +5245,8 @@ MonoBehaviour:
     - {fileID: 212344142233088860, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
     - {fileID: 4388879411551828, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
     - {fileID: 95299547838206676, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
-    - {fileID: 9100000, guid: e10d3bb9ac2c54dc6aac6b2d381b4140, type: 2}
-    - {fileID: 7400000, guid: 8301ff2e87cdb4c2c99aa9df83843422, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 21300142, guid: 2fbe9c78841a641b09dd7b39349a784b, type: 3}
     - {fileID: 21300138, guid: 2fbe9c78841a641b09dd7b39349a784b, type: 3}
     - {fileID: 21300144, guid: 2fbe9c78841a641b09dd7b39349a784b, type: 3}
