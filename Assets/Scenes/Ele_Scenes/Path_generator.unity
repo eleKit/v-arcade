@@ -6682,8 +6682,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020981, y: -83.8}
-  m_SizeDelta: {x: 255.7, y: 92.6}
+  m_AnchoredPosition: {x: 0.000011444, y: -83.8}
+  m_SizeDelta: {x: 339.5, y: 92.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &603719632
 MonoBehaviour:
@@ -6717,7 +6717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Inserire il nome del percorso prima di salvare
+  m_Text: "Nome del percorso gi\xE0 utilizzato oppure nome non inserito!"
 --- !u!222 &603719633
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7838,8 +7838,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000020981, y: -83.8}
-  m_SizeDelta: {x: 255.7, y: 92.6}
+  m_AnchoredPosition: {x: -0.000015259, y: -82.1}
+  m_SizeDelta: {x: 345.1, y: 89.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &681148274
 MonoBehaviour:
@@ -7873,7 +7873,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Inserire il nome del percorso prima di salvare
+  m_Text: "Nome del percorso gi\xE0 utilizzato oppure nome non inserito!"
 --- !u!222 &681148275
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20247,7 +20247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1819410101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23729,8 +23729,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -84}
-  m_SizeDelta: {x: 261.8, y: 89.5}
+  m_AnchoredPosition: {x: 0.000019073, y: -85}
+  m_SizeDelta: {x: 352.3, y: 89.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2083001302
 MonoBehaviour:
@@ -23764,7 +23764,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Inserire il nome del percorso prima di salvare
+  m_Text: "Nome del percorso gi\xE0 utilizzato oppure nome non inserito!"
 --- !u!222 &2083001303
 CanvasRenderer:
   m_ObjectHideFlags: 0

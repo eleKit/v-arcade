@@ -84,11 +84,32 @@ public class FisioSpacePathGenerator :Singleton<FisioSpacePathGenerator>
 
 	}
 
+	string FromFilenameToName (string name)
+	{
+		return name.Replace ("-", " ");
 
+	}
 
 	public void SavePath ()
 	{
-		if (name_path.Equals ("")) {
+		bool found_equal_name = false;
+
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Paths", GameMatch.GameType.Space.ToString ()));
+		
+		if (Directory.Exists (directoryPath)) {
+			string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
+
+			for (int i = 0; i < game_paths.Length; i++) {
+				if (FromFilenameToName (name_path).Equals 
+					(FromFilenameToName 
+						(Path.GetFileName (game_paths [i]).Split ('_') [1]))) {
+					found_equal_name = true;
+				}
+			}
+		}
+
+		if (name_path.Equals ("") || found_equal_name) {
 			//do nothing
 		} else {
 			DateTime gameDate = DateTime.UtcNow;
@@ -97,9 +118,7 @@ public class FisioSpacePathGenerator :Singleton<FisioSpacePathGenerator>
 
 			space_path.id_path = name_path;
 
-			string directoryPath = Path.Combine (Application.persistentDataPath,
-				                       Path.Combine ("Paths", GameMatch.GameType.Space.ToString ()));
-
+			
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (
 				                  directoryPath,

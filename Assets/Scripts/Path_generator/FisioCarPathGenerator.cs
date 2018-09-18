@@ -320,9 +320,36 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	}
 
 
+	string FromFilenameToName (string name)
+	{
+		return name.Replace ("-", " ");
+
+	}
+
 	public void SaveCarPath ()
 	{
-		if (name_path.Equals ("")) {
+		//different paths with the same name are avoided!
+
+		bool found_equal_name = false;
+
+		//TODO if the paths are divided into doctors substitute GameMatch.GameType.Car.ToString () with car_path.doctorName
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Paths", GameMatch.GameType.Car.ToString ()));
+		
+
+		if (Directory.Exists (directoryPath)) {
+			string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
+
+			for (int i = 0; i < game_paths.Length; i++) {
+				if (FromFilenameToName (name_path).Equals 
+					(FromFilenameToName 
+						(Path.GetFileName (game_paths [i]).Split ('_') [1]))) {
+					found_equal_name = true;
+				}
+			}
+		}
+
+		if (name_path.Equals ("") || found_equal_name) {
 			//do nothing
 		} else {
 
@@ -333,9 +360,6 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 			car_path.id_path = name_path;
 
-			//TODO if the paths are divided into doctors substitute GameMatch.GameType.Car.ToString () with car_path.doctorName
-			string directoryPath = Path.Combine (Application.persistentDataPath,
-				                       Path.Combine ("Paths", GameMatch.GameType.Car.ToString ()));
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (

@@ -96,9 +96,33 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	}
 
 
+	string FromFilenameToName (string name)
+	{
+		return name.Replace ("-", " ");
+
+	}
+
 	public void SavePath ()
 	{
-		if (name_path.Equals ("")) {
+		bool found_equal_name = false;
+
+		//TODO if the paths are divided into doctors substitute GameMatch.GameType.Shooting.ToString () with duck_path.doctorName
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Paths", GameMatch.GameType.Shooting.ToString ()));
+
+		if (Directory.Exists (directoryPath)) {
+			string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
+
+			for (int i = 0; i < game_paths.Length; i++) {
+				if (FromFilenameToName (name_path).Equals 
+					(FromFilenameToName 
+						(Path.GetFileName (game_paths [i]).Split ('_') [1]))) {
+					found_equal_name = true;
+				}
+			}
+		}
+
+		if (name_path.Equals ("") || found_equal_name) {
 			//do nothing
 		} else {
 			DateTime gameDate = DateTime.UtcNow;
@@ -107,9 +131,6 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 
 			duck_path.id_path = name_path;
 
-			//TODO if the paths are divided into doctors substitute GameMatch.GameType.Shooting.ToString () with duck_path.doctorName
-			string directoryPath = Path.Combine (Application.persistentDataPath,
-				                       Path.Combine ("Paths", GameMatch.GameType.Shooting.ToString ()));
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (
