@@ -29,24 +29,20 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	bool car, music, shooting;
 
 
+	void Awake ()
+	{
+		
+		directoryPath = Path.Combine (Application.persistentDataPath, 
+			Path.Combine ("Patients", Path.Combine (GlobalReplayData.globalReplayData.patient_folder_name, gameType.ToString ())));
+
+		there_are_no_replay = false;
+	}
+
 
 
 	// Use this for initialization
 	void Start ()
 	{
-		car = false;
-		shooting = false;
-		music = false;
-		there_are_no_replay = false;
-
-	
-		directoryPath = Path.Combine (Application.persistentDataPath,
-			Path.Combine ("Patients", Path.Combine (GlobalReplayData.globalReplayData.patient_folder_name, gameType.ToString ())));
-		ClearScreens ();
-		there_are_no_replay = false;
-
-		LoadReplayNames ();
-		LoadReplayListScreen ();
 
 	}
 	
@@ -68,6 +64,19 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 		if (end_screen != null)
 			end_screen.SetActive (false);
+	}
+
+
+	public void LoadReplayUI ()
+	{
+
+
+		ClearScreens ();
+
+		//TODO load replay from web
+
+		LoadReplayNames ();
+		LoadReplayListScreen ();
 	}
 
 	public void LoadDoctorMenu ()
