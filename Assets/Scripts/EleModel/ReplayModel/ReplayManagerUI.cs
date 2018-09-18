@@ -43,7 +43,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	// Use this for initialization
 	void Start ()
 	{
-
+		LoadReplayUI ();
 	}
 	
 	// Update is called once per frame

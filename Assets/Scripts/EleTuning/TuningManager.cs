@@ -106,7 +106,7 @@ public class TuningManager : MonoBehaviour
 
 		public int getCounterFrame ()
 		{
-			return counter_frames;
+			return counter_frames / 60;
 		}
 	}
 
