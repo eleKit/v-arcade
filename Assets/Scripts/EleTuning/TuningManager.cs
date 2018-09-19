@@ -153,11 +153,10 @@ public class TuningManager : MonoBehaviour
 
 		/* the phases are in this order:
 		 * 1. no hands on the leap
-		 * 2. Initial instruction of tuning
-		 * 3. yaw recording
-		 * 4. roll recording
-		 * 5. pitch recording
-		 * 6. End notes with data results
+		 * 2. Initial instruction of tuning / Error restart tuning
+		 * 3. pitch recording (up and down)
+		 * 5. yaw recording (left and right)
+		 * 6. End notes with data results (if Error restart from 2.)
 		 * if the player removes the hand the state becomes again 1. no hands on the leap
 		 * but then restarts from the previous (2.-5.) phase and not from the beginning
 		 */
@@ -261,7 +260,7 @@ public class TuningManager : MonoBehaviour
 				m_up_hands_image.SetActive (true);
 
 				m_timer_object.SetActive (true);
-				m_timer.text = "Pronti?...Iniziamo!";
+				m_timer.text = "Pronti? ... Iniziamo!";
 				m_up_instructions_screen.SetActive (true);
 
 			} else if (counter.instructionTimeIsUp ()) {
@@ -317,7 +316,7 @@ public class TuningManager : MonoBehaviour
 				m_down_hands_image.SetActive (true);
 
 				m_timer_object.SetActive (true);
-				m_timer.text = "Pronti?...Iniziamo!";
+				m_timer.text = "Pronti? ... Iniziamo!";
 				m_down_instructions_screen.SetActive (true);
 
 			} else if (counter.instructionTimeIsUp ()) {
@@ -372,7 +371,7 @@ public class TuningManager : MonoBehaviour
 				ClearScreens ();
 				m_left_hands_image.SetActive (true);
 				m_timer_object.SetActive (true);
-				m_timer.text = "Pronti?...Iniziamo!";
+				m_timer.text = "Pronti? ... Iniziamo!";
 				m_left_instructions_screen.SetActive (true);
 
 			} else if (counter.instructionTimeIsUp ()) {
@@ -428,7 +427,7 @@ public class TuningManager : MonoBehaviour
 				m_right_hands_image.SetActive (true);
 
 				m_timer_object.SetActive (true);
-				m_timer.text = "Pronti?...Iniziamo!";
+				m_timer.text = "Pronti? ... Iniziamo!";
 
 				m_right_instructions_screen.SetActive (true);
 
