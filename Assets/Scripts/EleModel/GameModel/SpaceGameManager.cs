@@ -73,7 +73,6 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	{
 		//this function starts win jingle and then calls the win function
 		ResetPath ();
-		SfxManager.Instance.Play ("win_jigle");
 		GameManager.Instance.BaseWinLevel ();
 	}
 

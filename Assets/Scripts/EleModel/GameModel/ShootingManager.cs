@@ -89,8 +89,8 @@ public class ShootingManager : Singleton<ShootingManager>
 
 	public void WinLevel ()
 	{
+		ResetPath ();
 		//this function starts win jingle and then calls the win function
-		SfxManager.Instance.Play ("win_jigle");
 		GameManager.Instance.BaseWinLevel ();
 	}
 
