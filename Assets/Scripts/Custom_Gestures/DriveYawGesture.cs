@@ -27,6 +27,16 @@ public class DriveYawGesture : MonoBehaviour
 	[Range (-30f, 0f)]
 	public float threshold = -15f;
 
+
+
+	[Range (-5f, 0f)]
+	public float pitch_offset = -0.2f;
+
+
+	// In roder to recognize the gesture a minimum angle should be done by the hand movement
+	[Range (-30f, 0f)]
+	public float pitch_threshold = -15f;
+
 	//no more than K previous frames are taken into account
 	[Range (10, 50)]
 	public int K = 10;
@@ -40,9 +50,12 @@ public class DriveYawGesture : MonoBehaviour
 
 	public HandController hc;
 
+	bool yaw;
 
-	private LinkedList<float> yaw_list = new LinkedList<float> ();
 	private LinkedList<float> yaw_average = new LinkedList<float> ();
+
+
+	private LinkedList<float> pitch_average = new LinkedList<float> ();
 
 
 	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
@@ -60,6 +73,7 @@ public class DriveYawGesture : MonoBehaviour
 	void Start ()
 	{
 		frames_since_last_gesture = N;
+		yaw = false;
 	
 	}
 
@@ -70,24 +84,37 @@ public class DriveYawGesture : MonoBehaviour
 
 			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
 
-			if (yaw_average.Count >= num_frames_in_average_list) {
-				yaw_average.RemoveFirst ();
-			}
 
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+			if (yaw) {
+				if (yaw_average.Count >= num_frames_in_average_list) {
+					yaw_average.RemoveFirst ();
+				}
 
-			if (yaw_list.Count >= K) {
+				yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+
 				if (frames_since_last_gesture >= N) {
 					CheckYawDriveGesture ();
 				} else {
 					frames_since_last_gesture++;
 				}
-				yaw_list.RemoveFirst ();
+				
+
+			} else {
+				
+
+				if (pitch_average.Count >= num_frames_in_average_list) {
+					pitch_average.RemoveFirst ();
+				}
+				pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+
+				if (frames_since_last_gesture >= N) {
+					CheckPitchPushGesture ();
+				} else {
+					frames_since_last_gesture++;
+				}
 			}
-
-			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
-
 		}
+
 	}
 
 
@@ -99,16 +126,14 @@ public class DriveYawGesture : MonoBehaviour
 
 	void CheckYawDriveGesture ()
 	{
-		//search for the max yaw in the previous K frames
-		float max_yaw = yaw_list.Max ();
-		float min_yaw = yaw_list.Min ();
+
 
 		float current_yaw = yaw_average.Average ();
 
 		/* if the hand in moved in the left direction the max yaw must be the around zero position
 		 * and if the (current_yaw - max_yaw) < threshold the gesture is recognized
 		 */
-		if ((current_yaw - max_yaw) < Mathf.Deg2Rad * threshold && current_yaw < offset) {
+		if (current_yaw < Mathf.Deg2Rad * threshold && current_yaw < offset) {
 
 			frames_since_last_gesture = 0;
 
@@ -117,7 +142,7 @@ public class DriveYawGesture : MonoBehaviour
 			transform.position = new_position;
 
 
-		} else if ((current_yaw - min_yaw) > Mathf.Deg2Rad * (-threshold) && current_yaw > (-offset)) {
+		} else if (current_yaw > Mathf.Deg2Rad * (-threshold) && current_yaw > (-offset)) {
 
 			frames_since_last_gesture = 0;
 
@@ -133,5 +158,53 @@ public class DriveYawGesture : MonoBehaviour
 		 */
 
 
+	}
+
+
+
+
+	void CheckPitchPushGesture ()
+	{
+
+
+
+		float current_pitch = pitch_average.Average ();
+
+		/* if the hand in moved in the left direction the max yaw must be the around zero position
+		 * and if the (current_yaw - max_yaw) < threshold the gesture is recognized
+		 */
+		if (current_pitch < Mathf.Deg2Rad * threshold && current_pitch < offset) {
+
+			frames_since_last_gesture = 0;
+
+			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
+
+			transform.position = new_position;
+
+
+		} else if (current_pitch > Mathf.Deg2Rad * (-threshold) && current_pitch > (-offset)) {
+
+			frames_since_last_gesture = 0;
+
+			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
+
+			transform.position = new_position;
+
+
+		}
+
+		
+	}
+
+
+
+	public void TrueYawBool ()
+	{
+		yaw = true;
+	}
+
+	public void FalseYawBool ()
+	{
+		yaw = false;
 	}
 }

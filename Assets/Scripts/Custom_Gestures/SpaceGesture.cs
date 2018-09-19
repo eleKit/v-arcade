@@ -139,7 +139,7 @@ public class SpaceGesture : MonoBehaviour
 		float current_yaw = yaw_average.Average ();
 
 
-		if ((current_yaw - max_yaw) < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
+		if (current_yaw < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
 
 			frames_since_last_gesture = 0;
 
@@ -150,7 +150,7 @@ public class SpaceGesture : MonoBehaviour
 			}
 
 
-		} else if ((current_yaw - min_yaw) > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
+		} else if (current_yaw > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
 
 			frames_since_last_gesture = 0;
 
