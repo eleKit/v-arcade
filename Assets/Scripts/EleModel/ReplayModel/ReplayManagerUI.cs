@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
 using POLIMIGameCollective;
+using System.Linq;
 
 public class ReplayManagerUI : Singleton<ReplayManagerUI>
 {
@@ -20,7 +21,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 	string directoryPath;
 
-	FileNamesOfPaths[] names_of_replays;
+	ReplayNamesOfPaths[] names_of_replays;
 
 	int index_of_current_replay_screen;
 
@@ -114,14 +115,19 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 		ClearScreens ();
 
-		/*if (car) {
-			CarReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+
+		if (car) {
+			CarManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 		}
-		if (shooting) {
+
+		/*if (shooting) {
 			ShootingReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
-		}
+			+ loadreplay
+			}
+		
 		if (music) {
 			MusicGameReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+			 loadreplay
 		}*/
 	}
 
@@ -167,7 +173,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 			for (int i = 0; i < replay_list_buttons.Length; i++) {
 				if (i + index_of_current_replay_screen < names_of_replays.Length) {
-					replay_list_buttons [i].GetComponentInChildren<Text> ().text = names_of_replays [i + index_of_current_replay_screen].name;
+					replay_list_buttons [i].GetComponentInChildren<Text> ().text = names_of_replays [i + index_of_current_replay_screen].button_name;
 				} else {
 					//if there are no more replays
 					replay_list_buttons [i].GetComponentInChildren<Text> ().text = "";
@@ -188,20 +194,65 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	void LoadReplayNames ()
 	{
 		if (Directory.Exists (directoryPath)) {
-			string[] game_paths = Directory.GetFiles (directoryPath, "*_hand_data.json");
+
+			//save the hand data files
+			string[] replay_paths = Directory.GetFiles (directoryPath, "*_hand_data.json");
 
 
-			names_of_replays = new FileNamesOfPaths[game_paths.Length];
+			names_of_replays = new ReplayNamesOfPaths[replay_paths.Length];
 
 			for (int i = 0; i < names_of_replays.Length; i++) {
-				names_of_replays [i] = new FileNamesOfPaths ();
-				names_of_replays [i].file_path = game_paths [i];
 
-				//DateTime replay_date = DateTime.FromFileTimeUtc (Int64.Parse (Path.GetFileName (game_paths [i]).Split ('_') [1])).ToLocalTime ();
+				/* every time i instantiate a new Class[] array
+				 * i have also to instantiate every element of the array [i] as a new Class
+				 */
 
-				//names_of_replays [i].name = replay_date.ToLongDateString () + " " + replay_date.ToLongTimeString ();
+				names_of_replays [i] = new ReplayNamesOfPaths ();
+		
+				// save hand data file path 
+				names_of_replays [i].hand_data_path = replay_paths [i];
 
-				names_of_replays [i].name = Path.GetFileName (game_paths [i]).Split ('_') [1];
+
+				// using the 
+				string match_date = Path.GetFileName (replay_paths [i]).Split ('_') [1];
+				string match_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");
+
+
+				names_of_replays [i].match_data_path = Path.GetFileName (match_path);
+
+			
+
+
+
+
+				/*convert the TimeStamp FileTimeUtc into a uman readable string
+				 * the readable TS string is saved into the button_name attribute 
+				*/
+				char[] date_chars = Path.GetFileName (replay_paths [i]).Split ('_') [1].Split ('T') [0].ToCharArray ();
+
+				char[] time_chars = Path.GetFileName (replay_paths [i]).Split ('_') [1].Split ('T') [1].ToCharArray ();
+
+				for (int j = 0; j < date_chars.Length; j++) {
+					if (j < 4 || !(j % 2 == 0)) {
+						names_of_replays [i].button_name = names_of_replays [i].button_name + date_chars [j];
+					} else {
+						names_of_replays [i].button_name = names_of_replays [i].button_name + "/" + date_chars [j];
+					}
+				}
+					
+				names_of_replays [i].button_name = names_of_replays [i].button_name + "\n";
+
+				for (int j = 0; j < time_chars.Length; j++) {
+					if (!(j % 2 == 0) || j == 0) {
+						names_of_replays [i].button_name = names_of_replays [i].button_name + time_chars [j];
+					} else {
+						names_of_replays [i].button_name = names_of_replays [i].button_name + ":" + time_chars [j];
+					}
+				}
+
+				/* end conversion */
+
+
 			}
 
 		}

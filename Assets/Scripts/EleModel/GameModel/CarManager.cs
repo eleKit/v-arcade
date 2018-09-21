@@ -14,7 +14,12 @@ public class CarManager : Singleton<CarManager>
 
 	Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
 
+	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+
+	//attribute used to load a replay
+	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
+
 
 	// Use this for initialization
 	void Start ()
@@ -67,6 +72,7 @@ public class CarManager : Singleton<CarManager>
 		}
 	}
 
+	//method used to load the level of the game
 	public void ChooseLevel (FileNamesOfPaths path)
 	{
 		loaded_path = path;
@@ -75,6 +81,12 @@ public class CarManager : Singleton<CarManager>
 		ResetPlayer ();
 		CarPathGenerator.Instance.LoadPath (path.file_path);
 
+	}
+
+	//method overloaded for the Replay of a match
+	public void ChooseLevel (ReplayNamesOfPaths path)
+	{
+		
 	}
 
 	//This method is used to set the point where the game ends
