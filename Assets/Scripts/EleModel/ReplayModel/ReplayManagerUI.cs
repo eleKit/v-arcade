@@ -27,7 +27,6 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 	bool there_are_no_replay;
 
-	bool car, music, shooting;
 
 
 	void Awake ()
@@ -85,6 +84,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 		SceneManager.LoadSceneAsync ("Main_Menu_Doctor");
 	}
 
+
 	public void LoadReplayListScreen ()
 	{
 		ClearScreens ();
@@ -99,6 +99,9 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 		ClearScreens ();
 		pause_screen.SetActive (true);
 	}
+
+
+
 
 	public void LoadEndScreen ()
 	{
@@ -116,7 +119,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 		ClearScreens ();
 
 
-		if (car) {
+		if (gameType.Equals (GameMatch.GameType.Car)) {
 			CarManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 		}
 
@@ -184,11 +187,13 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 	}
 
+
 	public void LoadFirstReplayButtons ()
 	{
 		index_of_current_replay_screen = 0;
 		LoadReplayButtons ();
 	}
+
 
 
 	void LoadReplayNames ()

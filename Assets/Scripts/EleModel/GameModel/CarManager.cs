@@ -12,7 +12,7 @@ public class CarManager : Singleton<CarManager>
 	//attribute used to set the winning point coordinates
 	public GameObject winning_Point;
 
-	Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
+	public Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
 
 	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
@@ -26,16 +26,11 @@ public class CarManager : Singleton<CarManager>
 	{
 		GameManager.Instance.player_initial_pos = initial_pos;
 
-		/* set the bool of the current game in the game manager 
+		/* set the bool of the current game in the game manager passing the GameType
 		 * and in the UI manager
 		 */
 
 		GameManager.Instance.BaseStart ("CarGameMusic", GameMatch.GameType.Car);
-
-	
-
-
-
 
 
 		ResetPlayer ();

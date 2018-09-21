@@ -9,9 +9,28 @@ using Leap;
 
 public class GameManager : Singleton<GameManager>
 {
+	[Header ("Check this bool if this is a replay scene")]
+	public bool replay;
 
+	/* in case of a REPLAY SCENE: 
+	 * 
+	 * all the calls to the GameMenuScript must be substitued with calls to the ReplayManagerUI
+	 * 
+	 * all the HandController recording instructions must be substitued with PlayRecording instructions
+	 * 
+	 * the SaveData () method MUST NOT be called (system crashes trying to save a recoding thas is played) 
+	 * 
+	 * 
+	 * when a level is loaded (reloaded) the hc.ResetRecording must be called
+	 */
+
+
+
+	[Header ("Use for debug, if checked the match is not saved")]
 	public bool no_save;
 
+
+	//UI GameObjects
 	public GameObject m_background;
 
 	public GameObject m_wait_background;
@@ -25,14 +44,17 @@ public class GameManager : Singleton<GameManager>
 	public Text m_score_text;
 
 
-	[Header ("Loading time for Level")]
+	//UI loading time attribute
+	[Header ("Loading time for a Level")]
 	[Range (0f, 4f)]
 	public float m_loading_time = 0.5f;
+
+
+	//Game managing attributes
 
 	public GameObject player;
 
 	public Vector3 player_initial_pos;
-
 
 	public HandController hc;
 
@@ -41,6 +63,7 @@ public class GameManager : Singleton<GameManager>
 	//name of the path chosen
 	public string current_path = "";
 
+	//bool used to check what type of game the kid is playing
 	public bool car, music, shooting, space;
 
 
@@ -65,6 +88,7 @@ public class GameManager : Singleton<GameManager>
 
 	void Awake ()
 	{
+		//initialize all game type bool as false
 		car = false;
 		shooting = false;
 		music = false;
@@ -87,6 +111,7 @@ public class GameManager : Singleton<GameManager>
 
 	public void BaseStart (string music_title, GameMatch.GameType game_type)
 	{
+		//set the gametype, method called by the NameGameManager class
 		switch (game_type) {
 
 		case GameMatch.GameType.Car:
@@ -106,7 +131,12 @@ public class GameManager : Singleton<GameManager>
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
 
-		GameMenuScript.Instance.LoadUIOfGame (game_type);
+
+		if (replay) {
+			ReplayManagerUI.Instance.LoadReplayUI ();
+		} else {
+			GameMenuScript.Instance.LoadUIOfGame (game_type);
+		}
 
 		//the scene begins with the game main menu
 		BaseToMenu ();
@@ -153,15 +183,33 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	//called to load a level
+	//method used in case of a match scene
 	public void BaseChooseLevel (string name)
 	{
 		SfxManager.Instance.Unmute ();
 		SfxManager.Instance.Stop ();
 
+		//the path the kid is playing is saved here
 		current_path = name;
+
 		StartCoroutine (LoadLevel ());
 	}
+
+
+	//overload of BaseChooseLevel, method used in case of a replay scene
+	public void BaseChooseLevel (ReplayNamesOfPaths replay_path)
+	{
+		
+
+		SfxManager.Instance.Unmute ();
+		SfxManager.Instance.Stop ();
+
+		//save the recording path used to load the replay inside the hand controller
+		hand_data_file_path = replay_path.hand_data_path;
+
+		StartCoroutine (LoadLevel ());
+	}
+
 
 	IEnumerator LoadLevel ()
 	{
@@ -214,15 +262,24 @@ public class GameManager : Singleton<GameManager>
 
 		m_score_text.text = "Punti: " + score.ToString ();
 
+		if (replay) {
 
-		/* reset the recorder before start playing:
-		 * this function is also called by the RestartLevel function 
-		 * of the specific game manager ( CarManager | ShootingManager | MusicGameManager )
-		 */
-		hc.ResetRecording ();
+			/* the recording is loaded from the chosen file and then the playback starts
+			 */
+			ReplayFromFile ();
+			hc.PlayRecording ();
 
-		// the recorder starts to save all the Frames
-		hc.Record ();
+		} else {
+
+			/* reset the recorder before start playing:
+			 * BaseChooseLevel() method is also called by the RestartLevel function 
+			* in the NameGameManager
+			 */
+			hc.ResetRecording ();
+
+			// the recorder starts to save all the Frames
+			hc.Record ();
+		}
 
 
 	}
@@ -261,7 +318,15 @@ public class GameManager : Singleton<GameManager>
 	//called when the player pauses the game
 	void BasePauseLevel ()
 	{
-		//pause the recording when the game is in pause
+		/* here i'm using the SAME METHOD FOR BOTH REPLAY AND RECORD
+		 * this happens because:
+		 * 
+		 * PauseRecording()
+		 * Summary
+		 * Stops playback or recording without resetting the frame counter
+		 */
+	
+		//pause the recording(playback) when the game is in pause
 		hc.PauseRecording ();
 
 		is_playing = false;
@@ -311,8 +376,15 @@ public class GameManager : Singleton<GameManager>
 
 		m_score_canvas.SetActive (true);
 
-		//resume the recording when the game is resumed by the player
-		hc.Record ();
+
+		//resume the recording|playback when the game is resumed by the player
+		if (replay) {
+			//resume the playback
+			hc.PlayRecording ();
+		} else {
+			//resume the recording
+			hc.Record ();
+		}
 
 
 
@@ -352,9 +424,16 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		if (!no_save) {
+		//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
+		if (!replay || !no_save) {
 			Debug.Log ("is saving");
 			SaveData ();
+		}
+			
+
+		//every time the game s
+		if (replay) {
+			hc.ResetRecording ();
 		}
 			
 		is_playing = false;
@@ -477,24 +556,18 @@ public class GameManager : Singleton<GameManager>
 
 
 
-
-	//TODO this doesn't go here, used for debugging
-	public void ReplayWithouthPath ()
-	{
-		Debug.Log ("ReplayWithouthPath");
-		ReplayFromFile (hand_data_file_path);
-	}
-
-
-	public void ReplayFromFile (string filePath)
+	//function used to load a replay inside the Hand Controller
+	public void ReplayFromFile ()
 	{
 
-		Debug.Log (filePath.ToString ());
+		Debug.Log (hand_data_file_path.ToString ());
 
-		string frameString = File.ReadAllText (filePath);
+		string frameString = File.ReadAllText (hand_data_file_path);
 
 		FrameSequence frame_sequence = JsonUtility.FromJson<FrameSequence> (frameString);
 
+
+		//before save new frames the recording must be clear
 		hc.ResetRecording ();
 
 		foreach (Frame frame in frame_sequence.GetFrames ()) {
@@ -504,8 +577,6 @@ public class GameManager : Singleton<GameManager>
 
 
 		firstTime = false;
-		BaseChooseLevel ("Na");
-		hc.PlayRecording ();
 	}
 
 
