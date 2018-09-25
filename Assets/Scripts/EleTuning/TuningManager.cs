@@ -32,6 +32,7 @@ public class TuningManager : MonoBehaviour
 	public Text m_left_result_text;
 	public GameObject m_right_result;
 	public Text m_right_result_text;
+	public GameObject m_menu_button;
 
 
 
@@ -529,6 +530,8 @@ public class TuningManager : MonoBehaviour
 
 			SaveTuningData ();
 
+			m_menu_button.SetActive (true);
+
 			break;
 
 		}
@@ -580,6 +583,7 @@ public class TuningManager : MonoBehaviour
 		GlobalPlayerData.globalPlayerData.player_data.yaw_right_max = data_right_ulnar;
 		GlobalPlayerData.globalPlayerData.player_data.yaw_right_min = data_right_radial;
 
+		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
 		Debug.Log ("Dati tuning:" + GlobalPlayerData.globalPlayerData.player_data.pitch_left_max * Mathf.Rad2Deg);
 	}
 
@@ -625,6 +629,9 @@ public class TuningManager : MonoBehaviour
 
 		if (m_right_result != null)
 			m_right_result.SetActive (false);
+
+		if (m_menu_button != null)
+			m_menu_button.SetActive (false);
 	}
 
 
@@ -676,6 +683,7 @@ public class TuningManager : MonoBehaviour
 
 	public void LoadMainMenu ()
 	{
+		m_menu_button.GetComponent<Button> ().interactable = false;
 		SceneManager.LoadSceneAsync ("Main_Menu_Patient");
 	}
 

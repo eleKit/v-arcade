@@ -9,7 +9,9 @@ public class GlobalPlayer
 
 	public string name;
 
-	//data used to set game angles
+	/* data used to set game angles
+	 * Pay attention! yaw scale and pitch scale are now saved in RADIANTS
+	 */
 	public float yaw_scale;
 	public float pitch_scale;
 
