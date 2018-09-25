@@ -71,7 +71,7 @@ public class SpaceGesture : MonoBehaviour
 	{
 		frames_since_last_gesture = N;
 		frames_since_last_reconnection = 0;
-		yaw_threshold = GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
+		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
 		Debug.Log ("New yaw scale" + yaw_threshold);
 	}
 

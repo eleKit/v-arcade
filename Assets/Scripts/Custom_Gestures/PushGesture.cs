@@ -21,7 +21,7 @@ public class PushGesture : MonoBehaviour
 	public float offset = -0.2f;
 
 
-	// In roder to recognize the gesture a minimum angle should be done by the hand movement
+	// In roder to recognize the gesture a minimum angle should be done by the hand movement RAD
 	[Range (-5f, 0f)]
 	public float threshold = -0.5f;
 
@@ -51,6 +51,9 @@ public class PushGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale;
+		Debug.Log ("New pitch scale" + threshold);
+
 		if (hc.GetFrame ().Hands.Count == 2) {
 			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
 				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);

@@ -23,7 +23,7 @@ public class DriveYawGesture : MonoBehaviour
 	public float offset = -0.2f;
 
 
-	// In roder to recognize the gesture a minimum angle should be done by the hand movement
+	// In roder to recognize the gesture a minimum angle should be done by the hand movement DEG
 	[Range (-30f, 0f)]
 	public float threshold = -15f;
 
@@ -74,6 +74,8 @@ public class DriveYawGesture : MonoBehaviour
 	{
 		frames_since_last_gesture = N;
 		yaw = false;
+		threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
+		Debug.Log ("New yaw scale" + threshold);
 	
 	}
 

@@ -20,6 +20,7 @@ public class ShootingGesture : MonoBehaviour
 
 	/* the hand should return around the original position after a push gesture, 
 	* no more gestures are accepted in case this offset condition is not respected
+	* 
 	*/
 
 	[Range (-5f, 0f)]
@@ -29,7 +30,7 @@ public class ShootingGesture : MonoBehaviour
 	public float yaw_offset = -0.2f;
 
 
-	// In order to recognize the gesture a minimum angle should be done by the hand movement
+	// In order to recognize the gesture a minimum angle should be done by the hand movement DEG
 	[Range (-30f, 0f)]
 	public float pitch_threshold = -15f;
 
@@ -98,6 +99,13 @@ public class ShootingGesture : MonoBehaviour
 	{
 		frames_since_last_gesture = N;
 		frames_since_last_reconnection = 0;
+
+		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale * Mathf.Rad2Deg;
+		Debug.Log ("New pitch scale" + pitch_threshold);
+
+		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
+		Debug.Log ("New yaw scale" + yaw_threshold);
+
 	}
 
 	// Update is called once per frame
