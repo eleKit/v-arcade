@@ -526,12 +526,14 @@ public class TuningManager : MonoBehaviour
 				+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
 				+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
 				+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("n2") + "°";
+			
+				SaveTuningData ();
+
+				m_menu_button.SetActive (true);
+
+			
 			}
-
-			SaveTuningData ();
-
-			m_menu_button.SetActive (true);
-
+				
 			break;
 
 		}

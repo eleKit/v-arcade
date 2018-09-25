@@ -100,10 +100,10 @@ public class ShootingGesture : MonoBehaviour
 		frames_since_last_gesture = N;
 		frames_since_last_reconnection = 0;
 
-		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale * Mathf.Rad2Deg;
+		//pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale * Mathf.Rad2Deg;
 		Debug.Log ("New pitch scale" + pitch_threshold);
 
-		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
+//		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
 		Debug.Log ("New yaw scale" + yaw_threshold);
 
 	}

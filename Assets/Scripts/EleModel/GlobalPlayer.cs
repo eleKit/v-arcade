@@ -15,6 +15,7 @@ public class GlobalPlayer
 	public float yaw_scale;
 	public float pitch_scale;
 
+
 	//most recent tuning data
 	public float pitch_left_max;
 	public float pitch_left_min;
@@ -31,6 +32,7 @@ public class GlobalPlayer
 
 	public void ComputeGesturesDeltas ()
 	{
+			
 		yaw_scale = Mathf.Min (Mathf.Abs (yaw_left_max), Mathf.Abs (yaw_left_min),
 			Mathf.Abs (yaw_right_max), Mathf.Abs (yaw_right_min)) / YAW_SCALE;
 
