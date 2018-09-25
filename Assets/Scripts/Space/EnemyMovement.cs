@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-	[Range (1, 10)]
+	[Range (1, 100)]
 	public int m_num_of_enemies_movements = 3;
+
+
+	[Range (-10, 0)]
+	public float y_movement = 1;
 
 	//delta time between enemies movements
 	float delta_t = 10f;
@@ -15,6 +19,9 @@ public class EnemyMovement : MonoBehaviour
 
 	//time of next movement
 	float t1;
+
+	//minimum y after that line the object is destroyed
+	float min_boundary = -10f;
 
 	bool already_going_down;
 
@@ -36,11 +43,17 @@ public class EnemyMovement : MonoBehaviour
 
 			already_going_down = true;
 
-			Vector3 next_pos = transform.position + new Vector3 (0f, -5f, 0f); 
+			Vector3 next_pos = transform.position + new Vector3 (0f, y_movement, 0f); 
 			transform.position = next_pos;
 			t1 = t1 - delta_t;
 
 			already_going_down = false;
+
+			if (transform.position.y < min_boundary) {
+				Destroy (gameObject);
+			}
+
+
 		}
 
 	}

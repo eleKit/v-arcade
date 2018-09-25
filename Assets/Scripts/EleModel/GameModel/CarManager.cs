@@ -78,9 +78,10 @@ public class CarManager : Singleton<CarManager>
 
 	}
 
-	//method overloaded for the Replay of a match
+	//@Overload for the Replay of a match
 	public void ChooseLevel (ReplayNamesOfPaths path)
 	{
+		path_to_replay = path;
 		
 	}
 
