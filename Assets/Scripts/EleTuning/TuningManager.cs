@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System;
+using System.IO;
 
 public class TuningManager : MonoBehaviour
 {
@@ -587,8 +589,58 @@ public class TuningManager : MonoBehaviour
 
 		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
 		Debug.Log ("Dati tuning:" + GlobalPlayerData.globalPlayerData.player_data.pitch_left_max * Mathf.Rad2Deg);
+
+
+		TuningSession s = new TuningSession ();
+
+		DateTime gameDate = DateTime.UtcNow;
+		s.patientName = GlobalPlayerData.globalPlayerData.player;
+		s.timestamp = gameDate.ToFileTimeUtc ();
+
+		s.pitch_left_max = data_left_estension;
+		s.pitch_left_min = data_left_flexion;
+		s.pitch_right_max = data_right_estension;
+		s.pitch_right_min = data_right_flexion;
+
+		s.yaw_left_max = data_left_radial;
+		s.yaw_left_min = data_left_ulnar;
+		s.yaw_right_max = data_right_ulnar;
+		s.yaw_right_min = data_right_radial;
+
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Tunings", s.patientName));
+		
+		Directory.CreateDirectory (directoryPath);
+
+		string filePath = Path.Combine (
+			                  directoryPath,
+			                  s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json");
+
+		string jsonString = JsonUtility.ToJson (s);
+		File.WriteAllText (filePath, jsonString);
+
+		Debug.Log ("file saved" + s.yaw_left_max);
+		//save match data on web
+		StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate));
+	
 	}
 
+
+	IEnumerator SaveTuningDataCoroutine (string filePath, TuningSession s, DateTime gameDate)
+	{
+
+		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		               + "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+		// Upload the entire local file to the server.
+		ES2Web web = new ES2Web (myURL);
+
+		yield return StartCoroutine (web.UploadFile (filePath));
+
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+		}
+	}
 
 
 	void ClearScreens ()
