@@ -49,7 +49,17 @@ public class TuningManager : MonoBehaviour
 
 	private HandController hc;
 
+	float data_left_estension = 0f;
+	float data_right_estension = 0f;
 
+	float data_left_flexion = 0f;
+	float data_right_flexion = 0f;
+
+	float data_left_radial = 0f;
+	float data_right_radial = 0f;
+
+	float data_left_ulnar = 0f;
+	float data_right_ulnar = 0f;
 
 	//save the past yaw down angles of left and right hand in the previous K frames
 	private List<float> left_flexion = new List<float> ();
@@ -468,6 +478,7 @@ public class TuningManager : MonoBehaviour
 		case Tuning_Phase.End_phase:
 			
 		
+			//check for errors
 			if (left_estension.Count == 0 ||
 			    right_estension.Count == 0 ||
 			    left_flexion.Count == 0 ||
@@ -487,17 +498,17 @@ public class TuningManager : MonoBehaviour
 
 				ClearScreens ();
 
-				float data_left_estension = left_estension.Average ();
-				float data_right_estension = right_estension.Average ();
+				data_left_estension = left_estension.Average ();
+				data_right_estension = right_estension.Average ();
 
-				float data_left_flexion = left_flexion.Average ();
-				float data_right_flexion = right_flexion.Average ();
+				data_left_flexion = left_flexion.Average ();
+				data_right_flexion = right_flexion.Average ();
 
-				float data_left_radial = left_radial.Average ();
-				float data_right_radial = right_radial.Average ();
+				data_left_radial = left_radial.Average ();
+				data_right_radial = right_radial.Average ();
 
-				float data_left_ulnar = left_ulnar.Average ();
-				float data_right_ulnar = right_ulnar.Average ();
+				data_left_ulnar = left_ulnar.Average ();
+				data_right_ulnar = right_ulnar.Average ();
 
 				m_left_result.SetActive (true);
 
@@ -515,6 +526,8 @@ public class TuningManager : MonoBehaviour
 				+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
 				+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("n2") + "°";
 			}
+
+			SaveTuningData ();
 
 			break;
 
@@ -550,14 +563,24 @@ public class TuningManager : MonoBehaviour
 
 	void SaveTuningData ()
 	{
-		/* TODO 
+		/* TODO salvare su file e online
 		 * deve esserci la funzione che calcola le tre variabili nei giochi:
 		 * * CarControllerScript: scale
 		 * * PushGesture: threshold (and offset?)
 		 * * PointerController: vertical_scale, horizontal_scale
 		 */
 
+		GlobalPlayerData.globalPlayerData.player_data.pitch_left_max = data_left_estension;
+		GlobalPlayerData.globalPlayerData.player_data.pitch_left_min = data_left_flexion;
+		GlobalPlayerData.globalPlayerData.player_data.pitch_right_max = data_right_estension;
+		GlobalPlayerData.globalPlayerData.player_data.pitch_right_min = data_right_flexion;
 
+		GlobalPlayerData.globalPlayerData.player_data.yaw_left_max = data_left_radial;
+		GlobalPlayerData.globalPlayerData.player_data.yaw_left_min = data_left_ulnar;
+		GlobalPlayerData.globalPlayerData.player_data.yaw_right_max = data_right_ulnar;
+		GlobalPlayerData.globalPlayerData.player_data.yaw_right_min = data_right_radial;
+
+		Debug.Log ("Dati tuning:" + GlobalPlayerData.globalPlayerData.player_data.pitch_left_max * Mathf.Rad2Deg);
 	}
 
 
