@@ -377,8 +377,8 @@ public class TuningManager : MonoBehaviour
 
 				previous_phase = current_phase;
 
-				left_radial.Clear ();
-				right_ulnar.Clear ();
+				left_ulnar.Clear ();
+				right_radial.Clear ();
 
 				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
@@ -408,10 +408,10 @@ public class TuningManager : MonoBehaviour
 					//save pitch gestures
 
 					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-						left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 					}
 					if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-						right_ulnar.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
+						right_radial.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
 					}
 				}
 			} else {
@@ -431,8 +431,8 @@ public class TuningManager : MonoBehaviour
 
 				previous_phase = current_phase;
 
-				left_ulnar.Clear ();
-				right_radial.Clear ();
+				left_radial.Clear ();
+				right_ulnar.Clear ();
 
 				counter = new Counter (m_timeout_s, m_instruction_timeout_s);
 				ClearScreens ();
@@ -465,10 +465,10 @@ public class TuningManager : MonoBehaviour
 					//save pitch gestures
 
 					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-						left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 					}
 					if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-						right_radial.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
+						right_ulnar.Add (hc.GetFrame ().Hands.Rightmost.Direction.Yaw);
 					}
 				}
 			} else {
