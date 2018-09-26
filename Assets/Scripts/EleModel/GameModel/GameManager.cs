@@ -522,7 +522,7 @@ public class GameManager : Singleton<GameManager>
 	IEnumerator SaveMatchDataCoroutine (string filePath, GameMatch m, DateTime gameDate)
 	{
 
-		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
 		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
@@ -539,7 +539,7 @@ public class GameManager : Singleton<GameManager>
 	IEnumerator SaveHandDataCoroutine (string framesPath, GameMatch m, DateTime gameDate)
 	{
 
-		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
 		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json;";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);

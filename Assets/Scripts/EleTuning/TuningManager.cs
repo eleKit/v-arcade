@@ -629,7 +629,7 @@ public class TuningManager : MonoBehaviour
 	IEnumerator SaveTuningDataCoroutine (string filePath, TuningSession s, DateTime gameDate)
 	{
 
-		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
 		               + "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);

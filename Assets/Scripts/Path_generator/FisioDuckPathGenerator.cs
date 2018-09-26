@@ -154,7 +154,7 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 	IEnumerator SavePathDataCoroutine (string filePath, DateTime gameDate)
 	{
 
-		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
 		               + "path_" + GameMatch.GameType.Shooting.ToString () + "_" + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
