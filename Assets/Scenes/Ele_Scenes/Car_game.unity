@@ -8201,6 +8201,10 @@ Prefab:
       objectReference: {fileID: 644018521}
     - target: {fileID: 1712811782514446, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214937497069846, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -18142,6 +18146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winning_Point: {fileID: 944359810}
+  initial_pos: {x: 0, y: -5.7, z: 0}
 --- !u!4 &1461273588
 Transform:
   m_ObjectHideFlags: 0

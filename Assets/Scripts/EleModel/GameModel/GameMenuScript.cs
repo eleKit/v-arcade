@@ -345,7 +345,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			directoryPath = Path.Combine (Application.persistentDataPath,
 				Path.Combine ("Paths", game_type.ToString ()));
 
-			if (Directory.Exists (directoryPath)) {
+			/*if (Directory.Exists (directoryPath)) {
 				string[] game_paths = Directory.GetFiles (directoryPath, "*.json");
 
 				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
@@ -356,7 +356,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
 				}
 
-			}
+			}*/
+
+			StartCoroutine (LogFilenames (game_type));
 		} else {
 			if (Directory.Exists (music_dataPath)) {
 				string[] game_paths = Directory.GetFiles (music_dataPath, "*.txt");
@@ -374,7 +376,48 @@ public class GameMenuScript : Singleton<GameMenuScript>
 		}
 
 
+
+
 	}
+
+
+
+	public IEnumerator LogFilenames (GameMatch.GameType game_type)
+	{
+		string myURL = "http://127.0.0.1/ES2.php?webfilename=" + "path_*";
+		ES2Web web = new ES2Web (myURL);
+
+		// Start downloading our filenames and wait for it to finish.
+		yield return StartCoroutine (web.DownloadFilenames ());
+
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+		}
+
+		// Now get our filenames as an array ...
+		string[] filenames = web.GetFilenames ();
+
+		List<string> file_n = new List<string> ();
+		foreach (string filename in filenames) {
+			if (filename.StartsWith ("path_" + game_type.ToString ())) {
+				file_n.Add (filename);
+			}
+		}
+
+
+		file_names_of_paths = new FileNamesOfPaths[file_n.Count];
+
+		// ... and log them to console.
+		for (int i = 0; i < file_names_of_paths.Length; i++) {
+			
+			file_names_of_paths [i] = new FileNamesOfPaths ();
+			file_names_of_paths [i].file_path = file_n [i];
+			file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (file_n [i]).Split ('_') [2]);
+		}
+
+	}
+
 
 
 	string FromFilenameToName (string name)
