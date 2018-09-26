@@ -371,12 +371,31 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			string jsonString = JsonUtility.ToJson (car_path);
 			File.WriteAllText (filePath, jsonString);
 
-
+			StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
 
 
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		}
 		
+	}
+
+
+
+	IEnumerator SavePathDataCoroutine (string filePath, DateTime gameDate)
+	{
+
+		string myURL = "http://127.0.0.1/ES2.php?webfilename="
+		               + "path_" + GameMatch.GameType.Car.ToString () + "_" + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+		// Upload the entire local file to the server.
+		ES2Web web = new ES2Web (myURL);
+
+
+		yield return StartCoroutine (web.UploadFile (filePath));
+
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+		}
 	}
 
 	string FromNameToFilename (string name)

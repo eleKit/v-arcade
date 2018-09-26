@@ -51,4 +51,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3127da50185415cab12bb271e0d3b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: prova
+  player: player1
+  player_data:
+    name: 
+    yaw_scale: 0
+    pitch_scale: 0
+    pitch_left_max: 0
+    pitch_left_min: 0
+    pitch_right_max: 0
+    pitch_right_min: 0
+    yaw_left_max: 0
+    yaw_left_min: 0
+    yaw_right_max: 0
+    yaw_right_min: 0
