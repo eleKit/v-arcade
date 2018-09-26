@@ -36,4 +36,14 @@ public class MainMenuPatient : MonoBehaviour
 		SceneManager.LoadSceneAsync (scenes_names [i]);
 	}
 
+
+
+	public void LoadMainScene ()
+	{
+		//everytime a new scene is loaded the MusicManager must stop 
+		MusicManager.Instance.StopAll ();
+
+		SceneManager.LoadSceneAsync ("Insert_player_name");
+	}
+
 }

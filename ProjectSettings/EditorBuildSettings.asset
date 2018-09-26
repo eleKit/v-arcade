@@ -60,6 +60,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Ele_Scenes/Main_menu.unity
     guid: 78feab790c19e4f129040a36ad9fd1c8
   - enabled: 1
+    path: Assets/Scenes/Ele_Scenes/Insert_player_name.unity
+    guid: 71156dbb5faa7461aa5755449fe9e805
+  - enabled: 1
     path: Assets/Scenes/Ele_Scenes/Tuning_scene.unity
     guid: e5ca36c8fa8eb424ea26b407f48ba0d4
   - enabled: 1
