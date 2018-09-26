@@ -4320,7 +4320,7 @@ MonoBehaviour:
     - {fileID: 1256184491}
     - {fileID: 1256184490}
     - {fileID: 1516651205}
-    - {fileID: 1721426805}
+    - {fileID: 0}
     - {fileID: 720555271}
     - {fileID: 334961698}
     - {fileID: 334961697}
@@ -4387,7 +4387,7 @@ MonoBehaviour:
     - {fileID: 1824537504}
     - {fileID: 727296185}
     - {fileID: 1579996199}
-    - {fileID: 1721426807}
+    - {fileID: 0}
     - {fileID: 1238430549}
     - {fileID: 1238430548}
     - {fileID: 1996256694}
@@ -4766,7 +4766,7 @@ MonoBehaviour:
     - {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
     - {fileID: 2100000, guid: 3b66e0324423c42fdba887556ea3ee3f, type: 2}
     - {fileID: 2800000, guid: 5091cb7722c574329a1fe8ed1fa446cf, type: 3}
-    - {fileID: 1721426806}
+    - {fileID: 0}
     - {fileID: 1933417777}
     - {fileID: 456321971}
     - {fileID: 1688574668}
@@ -7353,21 +7353,6 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224125119647821674, guid: 828e6339aff3546869223b91f9a7c6d3,
     type: 2}
   m_PrefabInternal: {fileID: 2043626598}
---- !u!1 &1721426805 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1007328708105492, guid: 469f6eafcd33a468fb259c13ee383e00,
-    type: 2}
-  m_PrefabInternal: {fileID: 800137916}
---- !u!82 &1721426806 stripped
-AudioSource:
-  m_PrefabParentObject: {fileID: 82318586063802788, guid: 469f6eafcd33a468fb259c13ee383e00,
-    type: 2}
-  m_PrefabInternal: {fileID: 800137916}
---- !u!4 &1721426807 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4621070780731918, guid: 469f6eafcd33a468fb259c13ee383e00,
-    type: 2}
-  m_PrefabInternal: {fileID: 800137916}
 --- !u!1 &1722581402
 GameObject:
   m_ObjectHideFlags: 0
@@ -8238,6 +8223,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1487129208}
     - target: {fileID: 1268112264906866, guid: 828e6339aff3546869223b91f9a7c6d3, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901917502397898, guid: 828e6339aff3546869223b91f9a7c6d3, type: 2}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

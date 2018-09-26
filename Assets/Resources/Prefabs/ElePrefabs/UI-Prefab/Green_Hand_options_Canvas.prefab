@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1100685032128776
 GameObject:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1293018899706772
 GameObject:
   m_ObjectHideFlags: 1
@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1698962230509214
 GameObject:
   m_ObjectHideFlags: 1
@@ -434,6 +434,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: FalseYawBool
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114648791035383184
@@ -468,7 +479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Allenamento estensione e flessione del polso
+  m_Text: Allenamento deviazione ulnare e radiale
 --- !u!114 &114658846792996390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -870,6 +881,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 0}
         m_MethodName: LoadCarColourScreen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: TrueYawBool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
