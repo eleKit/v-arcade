@@ -27,6 +27,9 @@ public class DriveYawGesture : MonoBehaviour
 	[Range (-30f, 0f)]
 	public float threshold = -15f;
 
+	[Range (0f, 30f)]
+	public float speed = 10f;
+
 
 
 	[Range (-5f, 0f)]
@@ -60,10 +63,9 @@ public class DriveYawGesture : MonoBehaviour
 
 	//public bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
-	const int N = 60;
+	//const int N = 60;
 
 
-	int frames_since_last_gesture;
 
 	//TODO get this fro tuning as the zero position;
 	float tuning_offset = -Mathf.Deg2Rad * 10f;
@@ -72,7 +74,6 @@ public class DriveYawGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		frames_since_last_gesture = N;
 		yaw = false;
 		threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
 		Debug.Log ("New yaw scale" + threshold);
@@ -93,12 +94,8 @@ public class DriveYawGesture : MonoBehaviour
 				}
 
 				yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+				CheckYawDriveGesture ();
 
-				if (frames_since_last_gesture >= N) {
-					CheckYawDriveGesture ();
-				} else {
-					frames_since_last_gesture++;
-				}
 				
 
 			} else {
@@ -109,11 +106,9 @@ public class DriveYawGesture : MonoBehaviour
 				}
 				pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 
-				if (frames_since_last_gesture >= N) {
-					CheckPitchPushGesture ();
-				} else {
-					frames_since_last_gesture++;
-				}
+
+				CheckPitchPushGesture ();
+
 			}
 		}
 
@@ -137,20 +132,18 @@ public class DriveYawGesture : MonoBehaviour
 		 */
 		if (current_yaw < Mathf.Deg2Rad * threshold && current_yaw < offset) {
 
-			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+			transform.Translate (Vector3.left * Time.deltaTime * speed);
+
 
 
 		} else if (current_yaw > Mathf.Deg2Rad * (-threshold) && current_yaw > (-offset)) {
 
-			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+			transform.Translate (Vector3.right * Time.deltaTime * speed);
+
 
 
 		}
@@ -177,20 +170,16 @@ public class DriveYawGesture : MonoBehaviour
 		 */
 		if (current_pitch < Mathf.Deg2Rad * threshold && current_pitch < offset) {
 
-			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+			transform.Translate (Vector3.right * Time.deltaTime * speed);
 
 
 		} else if (current_pitch > Mathf.Deg2Rad * (-threshold) && current_pitch > (-offset)) {
 
-			frames_since_last_gesture = 0;
 
-			Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
 
-			transform.position = new_position;
+			transform.Translate (Vector3.left * Time.deltaTime * speed);
 
 
 		}

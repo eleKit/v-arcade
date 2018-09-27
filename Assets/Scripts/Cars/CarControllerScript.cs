@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CarControllerScript : MonoBehaviour
 {
+	//DEPRECATED!!
 
 	/* Roll gesture 180°: a roll movement made by all the fingers and the palm,
 	 * substitutes the old plane controller gesture. 

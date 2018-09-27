@@ -55,7 +55,6 @@ public class CarManager : Singleton<CarManager>
 
 	public void ResetPlayer ()
 	{
-		GameManager.Instance.player.GetComponent<CarControllerScript> ().SetGravityToZero ();
 		GameManager.Instance.player.transform.position = GameManager.Instance.player_initial_pos;
 
 	}

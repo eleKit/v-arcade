@@ -38,6 +38,10 @@ public class SpaceGesture : MonoBehaviour
 	public int K_lost = 30;
 
 
+	[Range (0f, 30f)]
+	public float speed = 10f;
+
+
 	[Range (0, 20)]
 	public int num_frames_in_yaw_average_list = 6;
 
@@ -58,7 +62,6 @@ public class SpaceGesture : MonoBehaviour
 
 	int frames_since_last_reconnection;
 
-	int frames_since_last_gesture;
 
 	//TODO get this from tuning as the zero position;
 	float yaw_tuning_offset = 0;
@@ -69,7 +72,6 @@ public class SpaceGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		frames_since_last_gesture = N;
 		frames_since_last_reconnection = 0;
 		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
 		Debug.Log ("New yaw scale" + yaw_threshold);
@@ -99,8 +101,7 @@ public class SpaceGesture : MonoBehaviour
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
-			if (yaw_list.Count >= K_yaw && frames_since_last_gesture >= N
-			    && frames_since_last_reconnection >= K_lost) {
+			if (yaw_list.Count >= K_yaw && frames_since_last_reconnection >= K_lost) {
 				CheckMoveSpaceshipGesture ();
 
 				//change pointer colour
@@ -108,8 +109,6 @@ public class SpaceGesture : MonoBehaviour
 					gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
 				}
 
-			} else {
-				frames_since_last_gesture++;
 			}
 
 			//save new data
@@ -140,26 +139,22 @@ public class SpaceGesture : MonoBehaviour
 
 		float current_yaw = yaw_average.Average ();
 
-
+		//move left
 		if (current_yaw < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
 
-			frames_since_last_gesture = 0;
 
-			if ((transform.position.x - x_movement) >= x_min_player_posiion) {
-				Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
 
-				transform.position = new_position;
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
 
-
+			//move right
 		} else if (current_yaw > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
+			
 
-			frames_since_last_gesture = 0;
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
 
-			if ((transform.position.x + x_movement) <= x_max_player_position) {
-				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
-
-				transform.position = new_position;
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 			}
 
 

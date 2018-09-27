@@ -11,6 +11,7 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 	public GameObject goal;
 
+	bool yaw = true;
 
 	//this two attributes are the whole length of the game must not be changed
 	float trajectory_length;
@@ -39,6 +40,15 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 	}
 
 
+	public void TrueYawBool ()
+	{
+		yaw = true;
+	}
+
+	public void FalseYawBool ()
+	{
+		yaw = false;
+	}
 
 
 	//TODO this is called by UI and used to load the path data
@@ -78,7 +88,11 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 				//new y is traslated of y_start based on the end of the previous curve
 				y = y + y_start;
 
-				Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
+				if (yaw) {
+					Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.identity);
+				} else {
+					Instantiate (diamond, new Vector3 (x, y, 0), Quaternion.Euler (0f, 0f, 90f));
+				}
 
 			}
 
