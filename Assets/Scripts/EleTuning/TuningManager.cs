@@ -12,6 +12,9 @@ public class TuningManager : MonoBehaviour
 	[Header ("Line at bottom indicated if leap sees the hands")]
 	public Image colour_line;
 
+	[Header ("Use for debug, if checked the match is not saved")]
+	public bool no_save;
+
 	[Header ("Images about the hand movement")]
 	public GameObject m_simple_hands_image;
 	public GameObject m_up_hands_image;
@@ -619,9 +622,13 @@ public class TuningManager : MonoBehaviour
 		string jsonString = JsonUtility.ToJson (s);
 		File.WriteAllText (filePath, jsonString);
 
-		Debug.Log ("file saved" + s.yaw_left_max);
+
 		//save match data on web
-		StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate));
+		if (no_save) {
+			Debug.Log ("not saving!! no_save is active");
+		} else {
+			StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate));
+		}
 	
 	}
 
@@ -631,8 +638,11 @@ public class TuningManager : MonoBehaviour
 
 		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
 		               + "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
+
+		Debug.Log ("file saved " + myURL);
 
 		yield return StartCoroutine (web.UploadFile (filePath));
 

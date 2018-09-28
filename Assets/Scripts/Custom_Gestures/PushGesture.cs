@@ -21,10 +21,6 @@ public class PushGesture : MonoBehaviour
 	public float offset = -0.2f;
 
 
-	// In roder to recognize the gesture a minimum angle should be done by the hand movement RAD
-	[Range (-5f, 0f)]
-	public float threshold = -0.5f;
-
 	//no more than K previous frames are taken into account
 	[Range (10, 50)]
 	public int K = 10;
@@ -37,8 +33,12 @@ public class PushGesture : MonoBehaviour
 	public HandController hc;
 
 
-	float tuning_offset = -Mathf.Deg2Rad * 10f;
+	//the pitch of every sensor has not the 0 in the correct point but at 10 DEG up
+	private float tuning_offset = -Mathf.Deg2Rad * 10f;
 
+	// In roder to recognize the gesture a minimum angle should be done by the hand movement RAD
+	private float left_threshold = -0.5f;
+	private float right_threshold = -0.5f;
 
 	//save the past pitch angles of left and right hand in the previous K frames
 	private LinkedList<float> left_pitch = new LinkedList<float> ();
@@ -51,8 +51,8 @@ public class PushGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale;
-		Debug.Log ("New pitch scale" + threshold);
+		left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
 
 		if (hc.GetFrame ().Hands.Count == 2) {
 			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
@@ -121,7 +121,7 @@ public class PushGesture : MonoBehaviour
 		float pitch_average = left_pitch_average.Average ();
 
 
-		if ((pitch_average - max_pitch) < threshold && pitch_average < offset) {
+		if ((pitch_average - max_pitch) < left_threshold && pitch_average < offset) {
 			Debug.Log ("left push" + " max " + max_pitch.ToString ());
 			if (MusicGameManager.Instance.left_trigger) {
 				MusicGameManager.Instance.AddPoints (true);
@@ -135,7 +135,7 @@ public class PushGesture : MonoBehaviour
 		float max_pitch = right_pitch.Max ();
 		float pitch_average = right_pitch_average.Average ();
 
-		if ((pitch_average - max_pitch) < threshold && pitch_average < offset) {
+		if ((pitch_average - max_pitch) < right_threshold && pitch_average < offset) {
 			Debug.Log ("right push" + " max " + max_pitch.ToString ());
 
 			if (MusicGameManager.Instance.right_trigger) {

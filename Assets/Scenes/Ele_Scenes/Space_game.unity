@@ -2450,6 +2450,11 @@ Prefab:
       propertyPath: x_movement
       value: 1.65
       objectReference: {fileID: 0}
+    - target: {fileID: 114438171383173098, guid: 14a98dac12d1a41549a16164e825a022,
+        type: 2}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14a98dac12d1a41549a16164e825a022, type: 2}
   m_IsPrefabParent: 0
@@ -3103,7 +3108,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: no_save
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}

@@ -3218,6 +3218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour_line: {fileID: 1905181461}
+  no_save: 1
   m_simple_hands_image: {fileID: 949630036}
   m_up_hands_image: {fileID: 2038365065}
   m_down_hands_image: {fileID: 290501944}

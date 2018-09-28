@@ -12,8 +12,11 @@ public class GlobalPlayer
 	/* data used to set game angles
 	 * Pay attention! yaw scale and pitch scale are now saved in RADIANTS
 	 */
-	public float yaw_scale;
-	public float pitch_scale;
+	public float left_yaw_scale;
+	public float right_yaw_scale;
+
+	public float left_pitch_scale;
+	public float right_pitch_scale;
 
 
 	//most recent tuning data
@@ -33,11 +36,12 @@ public class GlobalPlayer
 	public void ComputeGesturesDeltas ()
 	{
 			
-		yaw_scale = Mathf.Min (Mathf.Abs (yaw_left_max), Mathf.Abs (yaw_left_min),
-			Mathf.Abs (yaw_right_max), Mathf.Abs (yaw_right_min)) / YAW_SCALE;
+		left_yaw_scale = Mathf.Min (Mathf.Abs (yaw_left_max), Mathf.Abs (yaw_left_min)) / YAW_SCALE;
+		right_yaw_scale = Mathf.Min (Mathf.Abs (yaw_right_max), Mathf.Abs (yaw_right_min)) / YAW_SCALE;
 
-		pitch_scale = Mathf.Min (Mathf.Abs (pitch_left_max), Mathf.Abs (pitch_left_min),
-			Mathf.Abs (pitch_right_max), Mathf.Abs (pitch_right_min)) / PITCH_SCALE;
+
+		left_pitch_scale = Mathf.Min (Mathf.Abs (pitch_left_max), Mathf.Abs (pitch_left_min)) / PITCH_SCALE;
+		right_pitch_scale = Mathf.Min (Mathf.Abs (pitch_right_max), Mathf.Abs (pitch_right_min)) / PITCH_SCALE;
 
 
 		

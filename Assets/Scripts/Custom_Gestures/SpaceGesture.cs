@@ -25,10 +25,6 @@ public class SpaceGesture : MonoBehaviour
 	public float yaw_offset = -0.2f;
 
 
-	// In order to recognize the gesture a minimum angle should be done by the hand movement
-	[Range (-30f, 0f)]
-	public float yaw_threshold = -15f;
-
 	//no more than K previous frames are taken into account
 	[Range (10, 100)]
 	public int K_yaw = 10;
@@ -60,21 +56,23 @@ public class SpaceGesture : MonoBehaviour
 	const int N = 60;
 
 
-	int frames_since_last_reconnection;
+	private int frames_since_last_reconnection;
 
 
-	//TODO get this from tuning as the zero position;
-	float yaw_tuning_offset = 0;
+	// In order to recognize the gesture a minimum angle should be done by the hand movement in RAD
+	private float left_yaw_threshold = -15f;
+	private float right_yaw_threshold = -15f;
 
-	float x_max_player_position = 15f;
-	float x_min_player_posiion = -15f;
+	private float x_max_player_position = 15f;
+	private float x_min_player_posiion = -15f;
 
 	// Use this for initialization
 	void Start ()
 	{
 		frames_since_last_reconnection = 0;
-		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
-		Debug.Log ("New yaw scale" + yaw_threshold);
+		left_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
+		right_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
+
 	}
 
 	// Update is called once per frame
@@ -97,12 +95,12 @@ public class SpaceGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
 			if (yaw_list.Count >= K_yaw && frames_since_last_reconnection >= K_lost) {
-				CheckMoveSpaceshipGesture ();
+				CheckMoveSpaceshipGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
 
 				//change pointer colour
 				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.grey)) {
@@ -115,7 +113,7 @@ public class SpaceGesture : MonoBehaviour
 			if (yaw_list.Count >= K_yaw)
 				yaw_list.RemoveFirst ();
 
-			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
 
 		} else {
 			//if no hand is visible change colour in black
@@ -131,8 +129,17 @@ public class SpaceGesture : MonoBehaviour
 
 
 
-	void CheckMoveSpaceshipGesture ()
+	void CheckMoveSpaceshipGesture (bool is_left)
 	{
+		float threshold;
+
+		if (is_left) {
+			threshold = left_yaw_threshold;
+		} else {
+			threshold = right_yaw_threshold;
+		}
+
+		Debug.Log ("threshold: " + threshold);
 
 		float max_yaw = yaw_list.Max ();
 		float min_yaw = yaw_list.Min ();
@@ -140,7 +147,7 @@ public class SpaceGesture : MonoBehaviour
 		float current_yaw = yaw_average.Average ();
 
 		//move left
-		if (current_yaw < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
+		if (current_yaw < threshold && current_yaw < yaw_offset) {
 
 
 			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
@@ -149,7 +156,7 @@ public class SpaceGesture : MonoBehaviour
 			}
 
 			//move right
-		} else if (current_yaw > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
+		} else if (current_yaw > (-threshold) && current_yaw > (-yaw_offset)) {
 			
 
 			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
