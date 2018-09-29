@@ -425,9 +425,9 @@ public class GameManager : Singleton<GameManager>
 		player.SetActive (false);
 
 		//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
-		if (!replay || !no_save) {
+		if (!replay && !no_save) {
 			Debug.Log ("is saving");
-			SaveData ();
+			//SaveData ();
 		}
 			
 

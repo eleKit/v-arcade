@@ -6,13 +6,16 @@ using System;
 [Serializable]
 public class SpacePath
 {
-	public SpaceSection back;
-	public SpaceSection middle;
-	public SpaceSection front;
+	public SpaceSection[] space_sections;
+
+	public float curve_amplitude;
 
 	public string id_path;
 
 	public long timestamp;
 
 	public string doctorName;
+
+	public const float Y_OFFSET_COORD = 10f;
+	//the enemy must start from upper than the top of the scene
 }

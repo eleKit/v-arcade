@@ -9,6 +9,8 @@ using System.IO;
 
 public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
+	[Header ("Check this bool to debug without saving online")]
+	public bool no_save;
 
 	DuckPath duck_path;
 
@@ -142,7 +144,11 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 			string jsonString = JsonUtility.ToJson (duck_path);
 			File.WriteAllText (filePath, jsonString);
 
-			StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
+			if (!no_save) {
+				StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
+			} else {
+				Debug.Log ("not saving!");
+			}
 
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		}

@@ -12,12 +12,18 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 
 	public GameObject[] m_big_enemies_prefabs;
 
+	//these two attributes are the whole length of the game must not be changed
+
+	[Range (1, 50)]
+	public int coeff_trajectory_lenght = 30;
+	float trajectory_length;
+
 	SpacePath space_path;
 
 	// Use this for initialization
 	void Start ()
 	{
-		
+		trajectory_length = Mathf.PI * coeff_trajectory_lenght;
 	}
 	
 	// Update is called once per frame
@@ -43,22 +49,39 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 
 	void LoadEnemies ()
 	{
-		for (int i = 0; i < space_path.back.enemies.Length; i++) {
-			if (space_path.back.enemies [i]) {
-				Instantiate (m_big_enemies_prefabs [Random.Range (0, m_big_enemies_prefabs.Length)], space_path.back.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 4, 0), Quaternion.identity);
+		//diamond coordinates
+		float y = SpacePath.Y_OFFSET_COORD;
+		float x = 0f;
+
+		float y_start = y;
+
+		for (int h = 0; h < space_path.space_sections.Length; h++) {
+
+			for (int i = 0; i < space_path.space_sections [h].num_enemies; i++) {
+
+
+				y = i * (trajectory_length / space_path.space_sections [h].num_enemies);
+				x = space_path.curve_amplitude *
+				(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * space_path.space_sections [h].curve_position))
+				+ space_path.space_sections [h].curve_position);
+
+				//new y is traslated of y_start based on the end of the previous curve
+				y = y + y_start;
+
+
+				//if (i < Mathf.RoundToInt (3 / 4 * space_path.space_sections [h].num_enemies)) {
+				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
+				/*} else {
+					Instantiate (m_big_enemies_prefabs [Random.Range (0, m_big_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
+				}*/
 			}
+
+			//y starts from the previous end curve + 5f of offset
+			y_start = y + 5f;
+
+		
 		}
 
-		for (int i = 0; i < space_path.middle.enemies.Length; i++) {
-			if (space_path.middle.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.middle.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 3, 0), Quaternion.identity);
-			}
-		}
-
-		for (int i = 0; i < space_path.front.enemies.Length; i++) {
-			if (space_path.front.enemies [i]) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], space_path.front.front_enemies_coord [i] + new Vector3 (0, SpaceSection.Y_OFFSET_COORD * 2, 0), Quaternion.identity);
-			}
-		}
+	
 	}
 }

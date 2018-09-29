@@ -10,7 +10,8 @@ using System.IO;
 public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 {
 	
-
+	[Header ("Check this bool to debug without saving online")]
+	public bool no_save;
 	//num of possible curve positions for each section
 	const int CURVES = 4;
 
@@ -53,6 +54,12 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	const int FINAL = 2;
 	const int SECTIONS = 3;
 
+	/* direction of each curve, it can be:
+	 * Left cuve value -1
+	 * Right curve value 1
+	 * Centre curve value 0
+	 * Stop value -2
+	 */
 	int[] curve_values = new int[SECTIONS];
 
 	// Use this for initialization
@@ -67,6 +74,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	// Update is called once per frame
 	void Update ()
 	{
+		//activates the save button since the path chosen is accepted as correct
 		if (start_ok && middle_ok && final_ok && !activated) {
 			activated = true;
 			button_go_on.interactable = true;
@@ -116,7 +124,12 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	}
 
 
-
+	/*it is passed i as the idex of button pressed inside the m_start_buttons array  :
+	 * VALID FOR StartPressed (int i)
+	 * 0 Left curve button index 
+	 * 1 Centre curve button index 
+	 * 2 Right curve button index
+	 */
 	public void StartPressed (int i)
 	{
 		start_ok = true;
@@ -132,6 +145,13 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 	}
 
 
+	/*it is passed i as the idex of button pressed inside the m_start_buttons array:
+	 * VALID FOR MiddlePressed (int i) and FinalPressed (int i)
+	 * 0 Stop button index 
+	 * 1 Left curve button index 
+	 * 2 Centre curve button index
+	 * 3 Right
+	 */
 	public void MiddlePressed (int i)
 	{
 		middle_ok = true;
@@ -157,7 +177,7 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 
 	}
 
-
+	//see MiddlePressed(int i)
 	public void FinalPressed (int i)
 	{
 		final_ok = true;
@@ -371,8 +391,11 @@ public class FisioCarPathGenerator : Singleton<FisioCarPathGenerator>
 			string jsonString = JsonUtility.ToJson (car_path);
 			File.WriteAllText (filePath, jsonString);
 
-			StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
-
+			if (!no_save) {
+				StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
+			} else {
+				Debug.Log ("not saving!");
+			}
 
 			SceneManager.LoadSceneAsync (SceneManager.GetActiveScene ().name);
 		}
