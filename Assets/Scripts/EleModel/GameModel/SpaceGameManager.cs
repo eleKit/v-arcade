@@ -50,6 +50,8 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	{
 
 		GameManager.Instance.BaseUpdate ();
+
+		//Timer text update
 		if (GameManager.Instance.Get_Is_Playing () &&
 		    !(GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().color.Equals (Color.black)
 		    || GameObject.FindGameObjectWithTag ("Player").GetComponent <SpriteRenderer> ().color.Equals (Color.grey))) {
@@ -60,7 +62,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 			m_timer_text.text = min.ToString () + ":" + sec.ToString ();
 		}
 
-
+		//Win conditions check
 		if ((GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 || timer_of_game < 0) &&
 		    GameManager.Instance.Get_Is_Playing ()) {
 			WinLevel ();

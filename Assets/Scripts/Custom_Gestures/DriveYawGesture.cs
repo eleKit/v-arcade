@@ -79,7 +79,6 @@ public class DriveYawGesture : MonoBehaviour
 
 		pitch_left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
 		pitch_right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
-		Debug.Log ("New yaw scale" + yaw_left_threshold);
 	
 	}
 
@@ -139,9 +138,7 @@ public class DriveYawGesture : MonoBehaviour
 		} else {
 			threshold = yaw_right_threshold;
 		}
-
-		Debug.Log ("threshold: " + threshold);
-
+			
 		float current_yaw = yaw_average.Average ();
 
 		/* if the hand in moved in the left direction the max yaw must be the around zero position
@@ -185,8 +182,6 @@ public class DriveYawGesture : MonoBehaviour
 		} else {
 			threshold = yaw_right_threshold;
 		}
-		Debug.Log ("threshold: " + threshold);
-
 		float current_pitch = pitch_average.Average ();
 
 		/* if the hand in moved in the left direction the max yaw must be the around zero position

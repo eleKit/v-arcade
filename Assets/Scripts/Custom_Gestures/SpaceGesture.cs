@@ -139,8 +139,6 @@ public class SpaceGesture : MonoBehaviour
 			threshold = right_yaw_threshold;
 		}
 
-		Debug.Log ("threshold: " + threshold);
-
 		float max_yaw = yaw_list.Max ();
 		float min_yaw = yaw_list.Min ();
 

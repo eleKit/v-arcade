@@ -573,12 +573,6 @@ public class TuningManager : MonoBehaviour
 
 	void SaveTuningData ()
 	{
-		/* TODO salvare su file e online
-		 * deve esserci la funzione che calcola le tre variabili nei giochi:
-		 * * CarControllerScript: scale
-		 * * PushGesture: threshold (and offset?)
-		 * * PointerController: vertical_scale, horizontal_scale
-		 */
 
 		GlobalPlayerData.globalPlayerData.player_data.pitch_left_max = data_left_estension;
 		GlobalPlayerData.globalPlayerData.player_data.pitch_left_min = data_left_flexion;
@@ -591,7 +585,6 @@ public class TuningManager : MonoBehaviour
 		GlobalPlayerData.globalPlayerData.player_data.yaw_right_min = data_right_radial;
 
 		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
-		Debug.Log ("Dati tuning:" + GlobalPlayerData.globalPlayerData.player_data.pitch_left_max * Mathf.Rad2Deg);
 
 
 		TuningSession s = new TuningSession ();
