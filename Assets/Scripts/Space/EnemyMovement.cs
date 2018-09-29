@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-	[Range (1, 100)]
+	[Range (1, 200)]
 	public int m_num_of_enemies_movements = 3;
 
 
