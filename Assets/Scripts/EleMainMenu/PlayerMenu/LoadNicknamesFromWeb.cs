@@ -2,32 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-using System.Linq;
-using UnityEngine.UI;
 
-public class LoadPathsFromWeb : MonoBehaviour
+public class LoadNicknamesFromWeb : MonoBehaviour
 {
+
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
-	public Button go_on_button;
-
-	public Text m_welcome_text;
-	//the list where all the web addresses of file paths are saved
-	List<string> file_n = new List<string> ();
+	string file_n;
 	string directoryPath;
-
-
-
+	string filePath;
 
 	// Use this for initialization
 	void Start ()
 	{
-		StartCoroutine (LoadFilenames ());
+		directoryPath = Path.Combine (Application.persistentDataPath, "Patient_List");
+		filePath = Path.Combine (directoryPath, "patients_list.json");
+		StartCoroutine (LoadFileOfNicknames ());
 
-		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
-
-		go_on_button.interactable = false;
 		
 	}
 	
@@ -37,22 +29,8 @@ public class LoadPathsFromWeb : MonoBehaviour
 		
 	}
 
-	string FromFilenameToName (string name)
+	public IEnumerator LoadFileOfNicknames ()
 	{
-		return name.Replace ("-", " ");
-
-	}
-
-	string FromNameToFilename (string name)
-	{
-		return name.Replace (" ", "-");
-
-	}
-
-
-	public IEnumerator LoadFilenames ()
-	{
-		m_welcome_text.text = "Scaricamento dati...";
 
 		string address;
 		if (debugging_save) {
@@ -76,58 +54,25 @@ public class LoadPathsFromWeb : MonoBehaviour
 		// Now get our filenames as an array ...
 		string[] filenames = web.GetFilenames ();
 
-	
+
 		foreach (string filename in filenames) {
-			if (filename.StartsWith ("path_")) {
-				file_n.Add (filename);
+			if (filename.Equals ("patients_list.json")) {
+				file_n = filename;
+				Debug.Log (filename);
 			}
 		}
 
-		yield return StartCoroutine (DownloadAllPaths ());
+		yield return StartCoroutine (DownloadEntireFile ());
 
-		Debug.Log (" end downloading paths");
-		yield return new WaitForSeconds (0.5f);
-		m_welcome_text.text = "Benvenuti!";
-		go_on_button.interactable = true;
+	
 
 	}
 
 
-
-	public IEnumerator  DownloadAllPaths ()
-	{
-
-		/* on web paths are saved as path_GameType_pathName_TS.json
-		 */
-
-
-
-		foreach (string webfile in file_n) {
-
-			string new_directory_path = Path.Combine (directoryPath, webfile.Split ('_') [1]); //get GameType from file name
-
-			if (!Directory.Exists (new_directory_path)) {
-				Directory.CreateDirectory (new_directory_path);
-			}
-
-			string tmp = string.Join ("_", webfile.Split ('_').Skip (1).ToArray ());
-
-			string filepath = Path.Combine (new_directory_path, tmp);
-
-			yield return StartCoroutine (DownloadEntireFile (webfile, filepath));
-
-		}
-			
-		
-	}
-
-
-
-	public IEnumerator DownloadEntireFile (string webpath, string filepath)
+	public IEnumerator DownloadEntireFile ()
 	{
 		// As we don't specify a tag, it will download everything
 		// within the file 'myFile.txt'.
-
 		string address;
 		if (debugging_save) {
 			address = "http://127.0.0.1/ES2.php?webfilename=";
@@ -136,7 +81,7 @@ public class LoadPathsFromWeb : MonoBehaviour
 			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
 		}
 
-		string myURL = address + webpath;
+		string myURL = address + file_n;
 		ES2Web web = new ES2Web (myURL);
 
 		// Start downloading our data and wait for it to finish.
@@ -147,7 +92,14 @@ public class LoadPathsFromWeb : MonoBehaviour
 			Debug.LogError (web.errorCode + ":" + web.error);
 		}
 
+		if (!Directory.Exists (directoryPath)) {
+			Directory.CreateDirectory (directoryPath);
+		}
+
 		// Now save our data to file so we can use ES2.Load to load it.
-		web.SaveToFile (filepath);
+		web.SaveToFile (filePath);
 	}
+
+
+
 }

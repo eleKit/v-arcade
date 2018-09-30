@@ -57,12 +57,13 @@ public class WelcomeMenuUI : Singleton<WelcomeMenuUI>
 	public void LoadNextMenu ()
 	{
 
-		ClearScreens ();
+
 
 		//If the not_repeatable is true the name of the player can be loaded only one time forever
 		if (not_repeatable) {
 			if (first_access == 0) {
 				//save new player
+				ClearScreens ();
 				m_insert_name_canvas.SetActive (true);
 			} else {
 				//load existing player
@@ -99,6 +100,7 @@ public class WelcomeMenuUI : Singleton<WelcomeMenuUI>
 	public void DebuggingResetPlayerPrefs ()
 	{
 		PlayerPrefs.SetInt (p_prefs_name, 0);
+		Debug.Log (PlayerPrefs.GetInt (p_prefs_name));
 		// PlayerPrefs.DeleteAll();
 	}
 		

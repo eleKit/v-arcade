@@ -308,7 +308,6 @@ public class DoctorMenuUI : MonoBehaviour
 	public void SaveNewPatientName (string n)
 	{
 		m_new_patient_name = n;
-		Debug.Log (n);
 	}
 
 
@@ -335,7 +334,6 @@ public class DoctorMenuUI : MonoBehaviour
 
 			//if the directory does not exist the name is added into an empty list
 			all_saved_patients.patients.Add (m_new_patient_name);
-			Debug.Log (all_saved_patients.patients [0]);
 
 			Directory.CreateDirectory (directoryPath);
 
