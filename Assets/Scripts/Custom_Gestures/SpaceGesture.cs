@@ -17,12 +17,6 @@ public class SpaceGesture : MonoBehaviour
 	* https://forums.leapmotion.com/t/creating-my-own-gesture/603/7
 	*/
 
-	/* the hand should return around the original position after a push gesture, 
-	* no more gestures are accepted in case this offset condition is not respected
-	*/
-
-	[Range (-5f, 0f)]
-	public float yaw_offset = -0.2f;
 
 
 	//no more than K previous frames are taken into account
@@ -146,7 +140,7 @@ public class SpaceGesture : MonoBehaviour
 		float current_yaw = yaw_average.Average ();
 
 		//move left
-		if (current_yaw < threshold && current_yaw < yaw_offset) {
+		if (current_yaw < threshold) {
 
 
 			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
@@ -155,7 +149,7 @@ public class SpaceGesture : MonoBehaviour
 			}
 
 			//move right
-		} else if (current_yaw > (-threshold) && current_yaw > (-yaw_offset)) {
+		} else if (current_yaw > (-threshold)) {
 			
 
 			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
