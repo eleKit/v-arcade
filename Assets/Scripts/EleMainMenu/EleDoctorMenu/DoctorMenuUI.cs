@@ -328,7 +328,7 @@ public class DoctorMenuUI : MonoBehaviour
 				}
 			}		
 		}
-		if (m_new_patient_name.Equals ("") || found_equal_name) {
+		if (m_new_patient_name.Equals ("") || found_equal_name || m_new_patient_name.Contains (" ") || m_new_patient_name.Contains ("_")) {
 			m_wrong_patient_not_saved.SetActive (true);
 		} else {
 
