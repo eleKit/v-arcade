@@ -641,7 +641,7 @@ public class TuningManager : MonoBehaviour
 			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
 		}
 
-		string myURL = address + webfilename + ";";
+		string myURL = address + webfilename;
 
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);

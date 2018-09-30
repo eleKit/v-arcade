@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEngine.UI;
 
 public class LoadPathsFromWeb : MonoBehaviour
 {
+	public Text m_welcome_text;
 	//the list where all the web addresses of file paths are saved
 	List<string> file_n = new List<string> ();
 	string directoryPath;
@@ -40,6 +42,7 @@ public class LoadPathsFromWeb : MonoBehaviour
 
 	public IEnumerator LoadFilenames ()
 	{
+		m_welcome_text.text = "Scaricamento dati...";
 		string myURL = "http://127.0.0.1/ES2.php?webfilename=";
 		ES2Web web = new ES2Web (myURL);
 
@@ -62,13 +65,17 @@ public class LoadPathsFromWeb : MonoBehaviour
 			}
 		}
 
-		DownloadAllPaths ();
+		yield return StartCoroutine (DownloadAllPaths ());
+
+		Debug.Log (" end downloading paths");
+		yield return new WaitForSeconds (0.5f);
+		m_welcome_text.text = "Benvenuti!";
 
 	}
 
 
 
-	public void DownloadAllPaths ()
+	public IEnumerator  DownloadAllPaths ()
 	{
 
 		/* on web paths are saved as path_GameType_pathName_TS.json
@@ -92,10 +99,10 @@ public class LoadPathsFromWeb : MonoBehaviour
 
 			string filepath = Path.Combine (new_directory_path, tmp);
 
-			StartCoroutine (DownloadEntireFile (webfile, filepath));
-			Debug.Log ("downloading paths");
+			yield return StartCoroutine (DownloadEntireFile (webfile, filepath));
 
 		}
+			
 		
 	}
 
