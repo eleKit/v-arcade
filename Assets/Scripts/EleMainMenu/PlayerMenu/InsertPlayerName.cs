@@ -40,11 +40,15 @@ public class InsertPlayerName : MonoBehaviour
 		if (!name_player.Equals ("")) {
 			
 
-			GlobalPlayerData.globalPlayerData.player = name_player;
-			GlobalPlayerData.globalPlayerData.player_data.name = name_player;
+			GlobalPlayerData.globalPlayerData.InitPlayer (name_player);
+			/* NB InitPlayer sets only th player name, 
+			 * all the player values are taken from the Tuning that is always the sceneafter this one
+			 */
+			WelcomeMenuUI.Instance.AccessDone ();
 
 			button.GetComponent<Button> ().interactable = false;
 			SceneManager.LoadSceneAsync ("Tuning_scene");
+
 		}
 	}
 

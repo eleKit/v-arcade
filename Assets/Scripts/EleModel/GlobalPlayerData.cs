@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class GlobalPlayerData : MonoBehaviour
 {
+	//The player name
 	public string player;
 
-	public GlobalPlayer player_data;
+	public const string player_prefs_name_child = "Name";
+
+	public GlobalPlayer player_data = new GlobalPlayer ();
 
 	public static GlobalPlayerData globalPlayerData;
 
@@ -21,11 +24,23 @@ public class GlobalPlayerData : MonoBehaviour
 	}
 
 
-	public void SetPlayer (GlobalPlayer pl)
+
+	//use this for the first input of the player name
+	public void InitPlayer (string pl)
 	{
+		player = pl;
+		player_data.name = pl;
+		PlayerPrefs.SetString (GlobalPlayerData.player_prefs_name_child, pl);
 
-		player_data = pl;
-		player = pl.name;
+	}
 
+
+	//use this to load an existing player name
+	public void LoadPlayer ()
+	{
+		string pl = PlayerPrefs.GetString (GlobalPlayerData.player_prefs_name_child);
+		player = pl;
+		player_data.name = pl;
+		
 	}
 }

@@ -33,6 +33,24 @@ public class GlobalPlayer
 	private const int PITCH_SCALE = 2;
 	private const int YAW_SCALE = 3;
 
+
+	public GlobalPlayer ()
+	{
+		name = "player1";
+		left_yaw_scale = 0;
+		left_pitch_scale = 0;
+		right_yaw_scale = 0;
+		right_pitch_scale = 0;
+		pitch_left_max = 0;
+		pitch_left_min = 0;
+		pitch_right_max = 0;
+		pitch_right_min = 0;
+		yaw_left_max = 0;
+		yaw_left_min = 0;
+		yaw_right_max = 0;
+		yaw_right_min = 0;
+	}
+
 	public void ComputeGesturesDeltas ()
 	{
 			
