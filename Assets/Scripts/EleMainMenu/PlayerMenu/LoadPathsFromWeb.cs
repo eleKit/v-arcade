@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class LoadPathsFromWeb : MonoBehaviour
 {
+	[Header ("Use for debug, if checked the match is saved into test server")]
+	public bool debugging_save;
+
 	public Text m_welcome_text;
 	//the list where all the web addresses of file paths are saved
 	List<string> file_n = new List<string> ();
@@ -43,7 +46,16 @@ public class LoadPathsFromWeb : MonoBehaviour
 	public IEnumerator LoadFilenames ()
 	{
 		m_welcome_text.text = "Scaricamento dati...";
-		string myURL = "http://127.0.0.1/ES2.php?webfilename=";
+
+		string address;
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+
+		string myURL = address;
 		ES2Web web = new ES2Web (myURL);
 
 		// Start downloading our filenames and wait for it to finish.
@@ -113,7 +125,15 @@ public class LoadPathsFromWeb : MonoBehaviour
 		// As we don't specify a tag, it will download everything
 		// within the file 'myFile.txt'.
 		Debug.Log ("downloading path " + webpath);
-		string myURL = "http://127.0.0.1/ES2.php?webfilename=" + webpath;
+		string address;
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+
+		string myURL = address + webpath;
 		ES2Web web = new ES2Web (myURL);
 
 		// Start downloading our data and wait for it to finish.

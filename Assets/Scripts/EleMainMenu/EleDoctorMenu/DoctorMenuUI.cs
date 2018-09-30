@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class DoctorMenuUI : MonoBehaviour
 {
+
+	[Header ("Use for debug, if checked the match is saved into test server")]
+	public bool debugging_save;
 
 	public GameObject m_actions_screen;
 	public GameObject m_manage_patients_screen;
@@ -19,10 +23,18 @@ public class DoctorMenuUI : MonoBehaviour
 	public GameObject m_patiens_replay_screen;
 	public Button[] m_button_patients_list;
 
+	public GameObject m_patient_saved_correctly;
+	public GameObject m_wrong_patient_not_saved;
 
 	public GameObject m_replay_games_screen;
 
+	//attributes used for retreiving and saving new patients
+	string m_new_patient_name = "";
 
+	string directoryPath;
+	string filePath;
+
+	PatientsList all_saved_patients;
 
 	int index_of_current_patients_screen;
 	int index_of_current_replay_patients_screen;
@@ -31,9 +43,15 @@ public class DoctorMenuUI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+
+		directoryPath = Path.Combine (Application.persistentDataPath, "Patient_List");
+		filePath = Path.Combine (directoryPath, "patients_list.json");
+
 		LoadActionsMenu ();
 
 		patients = RetreivePatientsName ();
+
+		all_saved_patients = new PatientsList ();
 
 	}
 	
@@ -62,6 +80,17 @@ public class DoctorMenuUI : MonoBehaviour
 			m_replay_games_screen.SetActive (false);
 	}
 
+	void ClearTexts ()
+	{
+		if (m_patient_saved_correctly != null)
+			m_patient_saved_correctly.SetActive (false);
+
+		if (m_wrong_patient_not_saved != null)
+			m_wrong_patient_not_saved.SetActive (false);
+
+
+	}
+
 
 	public void LoadActionsMenu ()
 	{
@@ -73,12 +102,14 @@ public class DoctorMenuUI : MonoBehaviour
 	{
 		ClearScreens ();
 		m_manage_patients_screen.SetActive (true);
+		ClearTexts ();
 	}
 
 	public void LoadPatienstListScreen ()
 	{
 		ClearScreens ();
 		m_patients_list_screen.SetActive (true);
+		patients = RetreivePatientsName ();
 		index_of_current_patients_screen = 0;
 		LoadNamePatientsText ();
 	}
@@ -229,7 +260,7 @@ public class DoctorMenuUI : MonoBehaviour
 
 
 
-	string[] RetreivePatientsName ()
+	/*string[] RetreivePatientsName ()
 	{
 		string directoryPath = Path.Combine (Application.persistentDataPath, "Patients");
 
@@ -248,8 +279,102 @@ public class DoctorMenuUI : MonoBehaviour
 		}
 		
 	}
+	*/
+
+	//Retreive patients name from the list of names
+	string[] RetreivePatientsName ()
+	{
+		
+		if (Directory.Exists (directoryPath)) {
+
+			string patients_list = File.ReadAllText (filePath);
+
+			all_saved_patients = JsonUtility.FromJson<PatientsList> (patients_list);
+
+			string[] patients_names = new string[all_saved_patients.patients.Count]; 
+
+			for (int i = 0; i < all_saved_patients.patients.Count; i++) {
+				patients_names [i] = all_saved_patients.patients [i];
+			}
+
+			return patients_names;
+		} else {
+			return new string[] { " " };
+		}
+			
+	}
 
 
+	public void SaveNewPatientName (string n)
+	{
+		m_new_patient_name = n;
+		Debug.Log (n);
+	}
 
 
+	public void SaveNewPatient ()
+	{
+		ClearTexts ();
+
+		bool found_equal_name = false;
+
+		//if directory exists check for duplicated files
+		if (Directory.Exists (directoryPath)) {
+			string patients_list = File.ReadAllText (filePath);
+
+			all_saved_patients = JsonUtility.FromJson<PatientsList> (patients_list);
+			foreach (string name in all_saved_patients.patients) {
+				if (m_new_patient_name.Equals (name)) {
+					found_equal_name = true;
+				}
+			}		
+		}
+		if (m_new_patient_name.Equals ("") || found_equal_name) {
+			m_wrong_patient_not_saved.SetActive (true);
+		} else {
+
+			//if the directory does not exist the name is added into an empty list
+			all_saved_patients.patients.Add (m_new_patient_name);
+			Debug.Log (all_saved_patients.patients [0]);
+
+			Directory.CreateDirectory (directoryPath);
+
+			string jsonString = JsonUtility.ToJson (all_saved_patients);
+			File.WriteAllText (filePath, jsonString);
+
+
+			StartCoroutine (SaveNewPatientCoroutine (filePath, jsonString));
+			m_patient_saved_correctly.SetActive (true);
+		}
+	}
+
+
+	IEnumerator SaveNewPatientCoroutine (string namesfilePath, string namesString)
+	{
+		string address; 
+		string webfilename = "patients_list" + ".json";
+
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+
+		string myURL = address + webfilename;
+		// Upload the entire local file to the server.
+		ES2Web web = new ES2Web (myURL);
+
+
+		yield return StartCoroutine (web.UploadFile (namesfilePath));
+
+		if (web.isError) {
+			// Enter your own code to handle errors here.
+			Debug.LogError (web.errorCode + ":" + web.error);
+			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+			Directory.CreateDirectory (directoryPath);
+			string path = Path.Combine (directoryPath, webfilename);
+			File.WriteAllText (path, namesString);
+		}
+	}
 }
