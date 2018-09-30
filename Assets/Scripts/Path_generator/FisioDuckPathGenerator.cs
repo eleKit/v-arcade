@@ -11,6 +11,8 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 {
 	[Header ("Check this bool to debug without saving online")]
 	public bool no_save;
+	[Header ("Use for debug, if checked the match is saved into test server")]
+	public bool debugging_save;
 
 	DuckPath duck_path;
 
@@ -145,7 +147,7 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 			File.WriteAllText (filePath, jsonString);
 
 			if (!no_save) {
-				StartCoroutine (SavePathDataCoroutine (filePath, gameDate));
+				StartCoroutine (SavePathDataCoroutine (filePath, gameDate, jsonString));
 			} else {
 				Debug.Log ("not saving!");
 			}
@@ -157,11 +159,19 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 
 
 
-	IEnumerator SavePathDataCoroutine (string filePath, DateTime gameDate)
+	IEnumerator SavePathDataCoroutine (string filePath, DateTime gameDate, string pathString)
 	{
+		string address; 
+		string webfilename = "path_" + GameMatch.GameType.Shooting.ToString () + "_" + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json";
 
-		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
-		               + "path_" + GameMatch.GameType.Shooting.ToString () + "_" + FromNameToFilename (name_path) + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+
+		string myURL = address + webfilename + ";";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
 
@@ -171,6 +181,10 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 		if (web.isError) {
 			// Enter your own code to handle errors here.
 			Debug.LogError (web.errorCode + ":" + web.error);
+			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+			Directory.CreateDirectory (directoryPath);
+			string path = Path.Combine (directoryPath, webfilename);
+			File.WriteAllText (path, pathString);
 		}
 	}
 

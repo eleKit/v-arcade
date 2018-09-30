@@ -9,6 +9,9 @@ using System.IO;
 
 public class TuningManager : MonoBehaviour
 {
+	[Header ("Use for debug, if checked the match is saved into test server")]
+	public bool debugging_save;
+
 	[Header ("Line at bottom indicated if leap sees the hands")]
 	public Image colour_line;
 
@@ -620,17 +623,25 @@ public class TuningManager : MonoBehaviour
 		if (no_save) {
 			Debug.Log ("not saving!! no_save is active");
 		} else {
-			StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate));
+			StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate, jsonString));
 		}
 	
 	}
 
 
-	IEnumerator SaveTuningDataCoroutine (string filePath, TuningSession s, DateTime gameDate)
+	IEnumerator SaveTuningDataCoroutine (string filePath, TuningSession s, DateTime gameDate, string tuningString)
 	{
+		string address; 
+		string webfilename = "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json";
 
-		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
-		               + "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+
+		string myURL = address + webfilename + ";";
 
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
@@ -642,6 +653,10 @@ public class TuningManager : MonoBehaviour
 		if (web.isError) {
 			// Enter your own code to handle errors here.
 			Debug.LogError (web.errorCode + ":" + web.error);
+			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+			Directory.CreateDirectory (directoryPath);
+			string path = Path.Combine (directoryPath, webfilename);
+			File.WriteAllText (path, tuningString);
 		}
 	}
 

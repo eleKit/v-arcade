@@ -63,8 +63,9 @@ public class SpaceGesture : MonoBehaviour
 	private float left_yaw_threshold = -15f;
 	private float right_yaw_threshold = -15f;
 
-	private float x_max_player_position = 15f;
-	private float x_min_player_posiion = -15f;
+	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
+	private float x_max_player_position = 16f;
+	private float x_min_player_posiion = -16f;
 
 	// Use this for initialization
 	void Start ()

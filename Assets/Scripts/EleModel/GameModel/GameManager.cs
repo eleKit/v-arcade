@@ -28,6 +28,8 @@ public class GameManager : Singleton<GameManager>
 
 	[Header ("Use for debug, if checked the match is not saved")]
 	public bool no_save;
+	[Header ("Use for debug, if checked the match is saved into test server")]
+	public bool debugging_save;
 
 
 	//UI GameObjects
@@ -424,10 +426,11 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
-		if (!replay && !no_save) {
-			Debug.Log ("is saving");
-			//SaveData ();
+		if (!replay) {
+			//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
+			if (!no_save) {
+				SaveData ();
+			}
 		}
 			
 
@@ -483,7 +486,7 @@ public class GameManager : Singleton<GameManager>
 
 
 		//save match data on web
-		StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate));
+		StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate, jsonString));
 
 
 		// Now we save motion data
@@ -513,17 +516,29 @@ public class GameManager : Singleton<GameManager>
 		hand_data_file_path = framesPath;
 
 		//save hand data on web
-		StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate));
+		StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate, frameString));
 
 
 	}
 
-
-	IEnumerator SaveMatchDataCoroutine (string filePath, GameMatch m, DateTime gameDate)
+	/* string filePath : the path of the original file
+	 * GameMatch m : the m GameMatch object saved on file
+	 * DateTime gameDate : the TS when the match has been played
+	 * string matchString : the json string saved on the original file
+	 */
+	IEnumerator SaveMatchDataCoroutine (string filePath, GameMatch m, DateTime gameDate, string matchString)
 	{
+		string address; 
+		string webfilename = "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json";
 
-		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
-		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json;";
+
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+		string myURL = address + webfilename + ";";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
 
@@ -532,15 +547,26 @@ public class GameManager : Singleton<GameManager>
 		if (web.isError) {
 			// Enter your own code to handle errors here.
 			Debug.LogError (web.errorCode + ":" + web.error);
+			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+			Directory.CreateDirectory (directoryPath);
+			string path = Path.Combine (directoryPath, webfilename);
+			File.WriteAllText (path, matchString);
 		}
 	}
 
 
-	IEnumerator SaveHandDataCoroutine (string framesPath, GameMatch m, DateTime gameDate)
+	IEnumerator SaveHandDataCoroutine (string framesPath, GameMatch m, DateTime gameDate, string frameString)
 	{
+		string address; 
+		string webfilename = "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json";
 
-		string myURL = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename="
-		               + "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json;";
+		if (debugging_save) {
+			address = "http://127.0.0.1/ES2.php?webfilename=";
+			Debug.Log ("Debugging save");
+		} else {
+			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
+		}
+		string myURL = address + webfilename + ";";
 		// Upload the entire local file to the server.
 		ES2Web web = new ES2Web (myURL);
 
@@ -550,6 +576,10 @@ public class GameManager : Singleton<GameManager>
 		if (web.isError) {
 			// Enter your own code to handle errors here.
 			Debug.LogError (web.errorCode + ":" + web.error);
+			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+			Directory.CreateDirectory (directoryPath);
+			string path = Path.Combine (directoryPath, webfilename);
+			File.WriteAllText (path, frameString);
 		}
 	}
 
