@@ -9,7 +9,7 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
-	string file_n;
+	string file_n = "";
 	string directoryPath;
 	string filePath;
 
@@ -81,23 +81,26 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
 		}
 
-		string myURL = address + file_n;
-		ES2Web web = new ES2Web (myURL);
-
-		// Start downloading our data and wait for it to finish.
-		yield return StartCoroutine (web.Download ());
-
-		if (web.isError) {
-			// Enter your own code to handle errors here.
-			Debug.LogError (web.errorCode + ":" + web.error);
-		}
-
 		if (!Directory.Exists (directoryPath)) {
 			Directory.CreateDirectory (directoryPath);
 		}
+		yield return new WaitForSeconds (0f);
 
-		// Now save our data to file so we can use ES2.Load to load it.
-		web.SaveToFile (filePath);
+		if (!file_n.Equals ("")) {
+			string myURL = address + file_n;
+			ES2Web web = new ES2Web (myURL);
+
+			// Start downloading our data and wait for it to finish.
+			yield return StartCoroutine (web.Download ());
+
+			if (web.isError) {
+				// Enter your own code to handle errors here.
+				Debug.LogError (web.errorCode + ":" + web.error);
+			}
+
+			// Now save our data to file so we can use ES2.Load to load it.
+			web.SaveToFile (filePath);
+		}
 	}
 
 
