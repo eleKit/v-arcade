@@ -4039,9 +4039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d42f3e7a70e44b9698ac65b6edc988b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: -0.2
   speed: 5
-  pitch_offset: -0.2
   K: 30
   num_frames_in_average_list: 10
   x_movement: 1
@@ -6014,7 +6012,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: no_save
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}

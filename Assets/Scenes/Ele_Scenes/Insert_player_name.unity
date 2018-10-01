@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21d31a2d6e8eb41b1bbc231efe179633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugging_save: 1
+  debugging_save: 0
 --- !u!4 &61640564
 Transform:
   m_ObjectHideFlags: 0
@@ -1719,7 +1719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2854b457b02d44458be0fb3d030ba014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugging_save: 1
+  debugging_save: 0
   go_on_button: {fileID: 188386734}
   m_welcome_text: {fileID: 992780415}
 --- !u!4 &1625583318
