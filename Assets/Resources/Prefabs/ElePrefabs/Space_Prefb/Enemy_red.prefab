@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61544346702992878}
   - component: {fileID: 114834771113733556}
   - component: {fileID: 114120390386215632}
+  - component: {fileID: 95520131974703076}
   m_Layer: 0
   m_Name: Enemy_red
   m_TagString: Enemy
@@ -68,6 +69,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.33, y: 0.33}
   m_EdgeRadius: 0
+--- !u!95 &95520131974703076
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1575528852473362}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 289689f652ca14722b28d33d4dde0c20, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114120390386215632
 MonoBehaviour:
   m_ObjectHideFlags: 1
