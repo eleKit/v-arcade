@@ -3217,7 +3217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 106ddbc717f0846fa853f4579f000c1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugging_save: 0
+  debugging_save: 1
   colour_line: {fileID: 1905181461}
   no_save: 0
   m_simple_hands_image: {fileID: 949630036}

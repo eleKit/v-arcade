@@ -35,14 +35,12 @@ public class DriveYawGesture : MonoBehaviour
 	[Range (0, 10)]
 	public float x_movement = 1;
 
-	public HandController hc;
+	private HandController hc;
 
-	bool yaw;
+
 
 	private LinkedList<float> yaw_average = new LinkedList<float> ();
 
-
-	private LinkedList<float> pitch_average = new LinkedList<float> ();
 
 	/* THRESHOLD: In roder to recognize the gesture a minimum angle should be done by the hand movement in RAD
 	 * since the hands have different abilities each hand has it own threshold and 
@@ -51,60 +49,47 @@ public class DriveYawGesture : MonoBehaviour
 	private float yaw_left_threshold = -15f;
 	private float yaw_right_threshold = -15f;
 
-	private float pitch_left_threshold = -15f;
-	private float pitch_right_threshold = -15f;
+
+	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
+	private float x_max_player_position = 11.5f;
+	private float x_min_player_posiion = -11.5f;
 
 
 
 
 	// Use this for initialization
-	void Start ()
+	public void YawStart (HandController handController)
 	{
-		yaw = false;
+		
 		yaw_left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 		yaw_right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
+		hc = handController;
 
-		pitch_left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
-		pitch_right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
-	
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	public void YawFixedUpdate ()
 	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
 			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
 
 
-			if (yaw) {
-				if (yaw_average.Count >= num_frames_in_average_list) {
-					yaw_average.RemoveFirst ();
-				}
 
-				yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
-
-				/*if this is a right hand the bool is false and in the CheckYawDriveGesture (left)
-				 * it is used the right_yaw_threshold 
-				 */
-				CheckYawDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
-
-				
-
-			} else {
-				
-
-				if (pitch_average.Count >= num_frames_in_average_list) {
-					pitch_average.RemoveFirst ();
-				}
-				pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-
-				/*if this is a right hand the bool is false and in the CheckYawDriveGesture (left)
-				 * it is used the right_yaw_threshold 
-				 */
-				CheckPitchPushGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
-
+			if (yaw_average.Count >= num_frames_in_average_list) {
+				yaw_average.RemoveFirst ();
 			}
+
+			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+
+			/*if this is a right hand the bool is false and in the CheckYawDriveGesture (left)
+				 * it is used the right_yaw_threshold 
+				 */
+			CheckYawDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
+
+				
+
+			
 		}
 
 	}
@@ -134,24 +119,22 @@ public class DriveYawGesture : MonoBehaviour
 		if (current_yaw < threshold) {
 
 
-
-			transform.Translate (Vector3.left * Time.deltaTime * speed);
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
+			}
 
 
 
 		} else if (current_yaw > (-threshold)) {
 
 
-
-			transform.Translate (Vector3.right * Time.deltaTime * speed);
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
+			}
 
 
 
 		}
-
-		/* otherwise if the hand is moved in the right direction the min yaw must be around the zero position
-		 * and if the current_yaw - min_yaw) > threshold the gesture is recognized
-		 */
 
 
 	}
@@ -159,49 +142,8 @@ public class DriveYawGesture : MonoBehaviour
 
 
 
-	void CheckPitchPushGesture (bool is_left)
-	{
 
-		float threshold;
-
-		if (is_left) {
-			threshold = yaw_left_threshold;
-		} else {
-			threshold = yaw_right_threshold;
-		}
-		float current_pitch = pitch_average.Average ();
-
-		/* if the hand in moved in the left direction the max yaw must be the around zero position
-		 * and if the (current_yaw - max_yaw) < threshold the gesture is recognized
-		 */
-		if (current_pitch < threshold) {
-
-
-
-			transform.Translate (Vector3.right * Time.deltaTime * speed);
-
-
-		} else if (current_pitch > (-threshold)) {
-
-
-
-			transform.Translate (Vector3.left * Time.deltaTime * speed);
-
-
-		}
 
 		
-	}
 
-
-
-	public void TrueYawBool ()
-	{
-		yaw = true;
-	}
-
-	public void FalseYawBool ()
-	{
-		yaw = false;
-	}
 }

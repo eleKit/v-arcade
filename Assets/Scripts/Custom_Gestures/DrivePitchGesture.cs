@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Leap;
 using System.Linq;
-using POLIMIGameCollective;
 
-public class DrivePitchGesture : Singleton<DrivePitchGesture>
+
+public class DrivePitchGesture : MonoBehaviour
 {
 
 	/* Drive gesture: a sliding movement made by all the fingers and the palm,
@@ -18,16 +18,12 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 	* https://forums.leapmotion.com/t/creating-my-own-gesture/603/7
 	*/
 
-	/* the hand should return around the original position after a push gesture, 
-	* no more gestures are accepted in case this offset condition is not respected
-	*/
-	[Range (-5f, 0f)]
-	public float offset = -0.2f;
+
+	//car speed
+	[Range (0f, 30f)]
+	public float speed = 10f;
 
 
-	// In order to recognize the gesture a minimum angle should be done by the hand movement
-	[Range (-30f, 0f)]
-	public float threshold = -15f;
 
 	//no more than K previous frames are taken into account
 	[Range (10, 50)]
@@ -37,121 +33,106 @@ public class DrivePitchGesture : Singleton<DrivePitchGesture>
 	[Range (0, 10)]
 	public int num_frames_in_average_list = 6;
 
-
 	[Range (0, 10)]
 	public float x_movement = 1;
 
-	public HandController hc;
+	private HandController hc;
 
-
-	public bool accelerate_trigger;
-
-	public bool decelerate_trigger;
-
-	private Vector3 y_movement_vector;
-
-
-
-	private LinkedList<float> pitch_list = new LinkedList<float> ();
 	private LinkedList<float> pitch_average = new LinkedList<float> ();
 
-	const int N = 60;
+	/* THRESHOLD: In roder to recognize the gesture a minimum angle should be done by the hand movement in RAD
+	 * since the hands have different abilities each hand has it own threshold and 
+	 * before checking the gesture it is checked what hand is in use
+	 */
 
-	bool car_velocity_already_reset;
 
-	int frames_since_last_gesture;
+	private float pitch_left_threshold = -15f;
+	private float pitch_right_threshold = -15f;
 
-	//TODO get this from tuning as the zero position;
-	float tuning_offset = -Mathf.Deg2Rad * 10f;
+
+	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
+	private float x_max_player_position = 11.5f;
+	private float x_min_player_posiion = -11.5f;
+
+
+
 
 	// Use this for initialization
-	void Start ()
+	public void PitchStart (HandController handController)
 	{
-		frames_since_last_gesture = N;
-		y_movement_vector = new Vector3 (0f, 0.1f, 0f);
-		car_velocity_already_reset = true;
+		
+		pitch_left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		pitch_right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+		hc = handController;
 	}
-	
-	// Update is called once per frame
-	void FixedUpdate ()
-	{
 
+	// Update is called once per frame
+	public void PitchFixedUpdate ()
+	{
 		if (hc.GetFixedFrame ().Hands.Count == 1) {
 
-			transform.position = transform.position + y_movement_vector;
+			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+
+
+
+
 
 			if (pitch_average.Count >= num_frames_in_average_list) {
 				pitch_average.RemoveFirst ();
 			}
-			pitch_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
 
-			if (pitch_list.Count >= K) {
-				if (frames_since_last_gesture >= N) {
+	
+			CheckPitchPushGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
 
-					if (!car_velocity_already_reset)
-						ResetCarVelocity ();
 
-					CheckPitchDriveGesture ();
-				} else {
-					frames_since_last_gesture++;
-				}
-				pitch_list.RemoveFirst ();
-			}
-			pitch_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
 		}
+
 	}
 
 
 
 
-	void CheckPitchDriveGesture ()
+
+
+
+
+	void CheckPitchPushGesture (bool is_left)
 	{
-		
 
-		float max_pitch = pitch_list.Max ();
-		float min_pitch = pitch_list.Min ();
+		float threshold;
 
+		if (is_left) {
+			threshold = pitch_left_threshold;
+		} else {
+			threshold = pitch_right_threshold;
+		}
 		float current_pitch = pitch_average.Average ();
 
-		//down gesture --> see yaw description
-		if ((current_pitch - max_pitch) < Mathf.Deg2Rad * threshold && current_pitch < offset) {
 
-			frames_since_last_gesture = 0;
+		if (current_pitch < threshold) {
 
-			if (accelerate_trigger) {
-				y_movement_vector = y_movement_vector * 2;
-				CarManager.Instance.AddPoints ();
-				accelerate_trigger = false;
-				car_velocity_already_reset = false;
-				
+
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 			}
 
 
-		} else if ((current_pitch - min_pitch) > Mathf.Deg2Rad * (-threshold) && current_pitch > (-offset)) {
+		} else if (current_pitch > (-threshold)) {
+
 			
-			frames_since_last_gesture = 0;
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
 
-			if (decelerate_trigger) {
-
-				y_movement_vector = y_movement_vector / 2;
-				CarManager.Instance.AddPoints ();
-				decelerate_trigger = false;
-				car_velocity_already_reset = false;
-
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
 
 
 		}
+
+
 	}
-
-
-	void ResetCarVelocity ()
-	{
-		y_movement_vector = new Vector3 (0f, 0.1f, 0f);
-		car_velocity_already_reset = true;
-	}
-
-
 
 
 }
+
+
