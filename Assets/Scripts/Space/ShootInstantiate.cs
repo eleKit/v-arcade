@@ -9,11 +9,16 @@ public class ShootInstantiate : MonoBehaviour
 
 	public GameObject shot;
 
+	public GameObject[] loading_bar;
+
 	[Range (0f, 5f)]
 	public float delta_t = 2f;
 
 	float spawn_time = 0f;
 
+	int index = 0;
+	float one_step_value;
+	float steps_counter = 0;
 
 	bool start_game;
 
@@ -21,6 +26,9 @@ public class ShootInstantiate : MonoBehaviour
 	void Start ()
 	{
 		start_game = false;
+		one_step_value = delta_t / loading_bar.Length;
+
+
 	}
 
 
@@ -31,6 +39,10 @@ public class ShootInstantiate : MonoBehaviour
 		if (GameManager.Instance.Get_Is_Playing () && !start_game) {
 			StartShootTimer ();
 			start_game = true;
+
+			ClearLoadingBar ();
+			ResetLoadingBar ();
+
 		}
 
 		if (start_game) {
@@ -40,10 +52,22 @@ public class ShootInstantiate : MonoBehaviour
 
 				spawn_time += Time.deltaTime;
 
+				if (spawn_time > steps_counter) {
+					index++;
+					steps_counter = one_step_value * (index + 1);
+					if (index < loading_bar.Length) {
+						ClearLoadingBar ();
+						loading_bar [index].SetActive (true);
+					}
+				}
+
 				if (spawn_time > delta_t) {
 					Instantiate (shot, transform.position, Quaternion.identity);
 					SfxManager.Instance.Play ("laser");
 					spawn_time = 0f;
+
+					ClearLoadingBar ();
+					ResetLoadingBar ();
 				}
 			} 
 		}
@@ -58,8 +82,23 @@ public class ShootInstantiate : MonoBehaviour
 		spawn_time = 0f;
 	}
 
-	public void ResetShootTimer ()
+	void ClearLoadingBar ()
 	{
-		start_game = false;
+		for (int i = 0; i < loading_bar.Length; i++) {
+			if (loading_bar [i] != null) {
+				loading_bar [i].SetActive (false);
+			}
+		}
+			
 	}
+
+	void ResetLoadingBar ()
+	{
+		index = 0;
+		steps_counter = one_step_value;
+		loading_bar [index].SetActive (true);
+	}
+
+
+
 }
