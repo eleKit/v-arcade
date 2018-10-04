@@ -61,9 +61,14 @@ public class SpaceGesture : MonoBehaviour
 	private float x_max_player_position = 16f;
 	private float x_min_player_posiion = -16f;
 
+
+	//spaceship movements animator
+	private Animator m_animator;
+
 	// Use this for initialization
 	void Start ()
 	{
+		m_animator = this.GetComponent<Animator> ();
 		frames_since_last_reconnection = 0;
 		left_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 		right_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
@@ -146,6 +151,11 @@ public class SpaceGesture : MonoBehaviour
 			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
 
 				transform.Translate (Vector3.left * Time.deltaTime * speed);
+
+				//if spaceship is not already moving left the left-movement animation starts
+				if (!(m_animator.GetInteger ("direction") == 0)) {
+					m_animator.SetInteger ("direction", 0);
+				}
 			}
 
 			//move right
@@ -155,6 +165,11 @@ public class SpaceGesture : MonoBehaviour
 			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
 
 				transform.Translate (Vector3.right * Time.deltaTime * speed);
+
+				//if spaceship is not already moving right the right-movement animation starts
+				if (!(m_animator.GetInteger ("direction") == 1)) {
+					m_animator.SetInteger ("direction", 1);
+				}
 			}
 
 

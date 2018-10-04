@@ -96,9 +96,9 @@ TextureImporter:
     21300178: spritesheet_89
     21300180: spritesheet_90
     21300182: spritesheet_91
-    21300184: spritesheet_92
+    21300184: spritesheet_94
     21300186: spritesheet_93
-    21300188: spritesheet_94
+    21300188: spritesheet_92
     21300190: spritesheet_95
     21300192: spritesheet_96
     21300194: spritesheet_97
@@ -1509,7 +1509,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spritesheet_92
+      name: spritesheet_94
       rect:
         serializedVersion: 2
         x: 178
@@ -1537,7 +1537,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spritesheet_94
+      name: spritesheet_92
       rect:
         serializedVersion: 2
         x: 303

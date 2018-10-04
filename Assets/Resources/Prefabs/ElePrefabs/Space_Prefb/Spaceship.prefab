@@ -22,9 +22,10 @@ GameObject:
   - component: {fileID: 212805774301810066}
   - component: {fileID: 114438171383173098}
   - component: {fileID: 114470315329339644}
+  - component: {fileID: 95738787457285330}
   m_Layer: 0
   m_Name: Spaceship
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,6 +43,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95738787457285330
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000444880401114}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c477ce3798e7c4a0c9b7c7a42d07fd63, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114438171383173098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,12 +71,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224c91f00052d43cf90d547dbd6abf6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yaw_offset: -0.2
-  yaw_threshold: -5
   K_yaw: 10
   K_lost: 30
+  speed: 5
   num_frames_in_yaw_average_list: 6
-  x_movement: 5
+  x_movement: 1.65
   hc: {fileID: 0}
 --- !u!114 &114470315329339644
 MonoBehaviour:
@@ -72,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shot: {fileID: 1326243691151524, guid: c8f1aeb51134544ef990a84264a28e58, type: 2}
+  delta_t: 1.5
 --- !u!212 &212805774301810066
 SpriteRenderer:
   m_ObjectHideFlags: 1
