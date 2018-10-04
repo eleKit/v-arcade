@@ -56,8 +56,8 @@ public class ShootInstantiate : MonoBehaviour
 					index++;
 					steps_counter = one_step_value * (index + 1);
 					if (index < loading_bar.Length) {
-						ClearLoadingBar ();
-						loading_bar [index].SetActive (true);
+						//ClearLoadingBar ();
+						loading_bar [index].GetComponent<SpriteRenderer> ().color = Color.yellow;
 					}
 				}
 
@@ -85,9 +85,8 @@ public class ShootInstantiate : MonoBehaviour
 	void ClearLoadingBar ()
 	{
 		for (int i = 0; i < loading_bar.Length; i++) {
-			if (loading_bar [i] != null) {
-				loading_bar [i].SetActive (false);
-			}
+			loading_bar [i].GetComponent<SpriteRenderer> ().color = Color.white;
+
 		}
 			
 	}
@@ -96,7 +95,7 @@ public class ShootInstantiate : MonoBehaviour
 	{
 		index = 0;
 		steps_counter = one_step_value;
-		loading_bar [index].SetActive (true);
+		loading_bar [index].GetComponent<SpriteRenderer> ().color = Color.yellow;
 	}
 
 
