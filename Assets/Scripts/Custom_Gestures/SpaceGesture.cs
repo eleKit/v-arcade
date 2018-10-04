@@ -62,7 +62,11 @@ public class SpaceGesture : MonoBehaviour
 	private float x_min_player_posiion = -16f;
 
 
-	//spaceship movements animator
+	/* spaceship movements animator:
+	 * direction = 1 left movement
+	 * direction = 2 right movement
+	 * there are 2 animators set with the CarColorUI script, one for the blue spaceship, one for the red spaceship
+	 */
 	private Animator m_animator;
 
 	// Use this for initialization
@@ -153,8 +157,8 @@ public class SpaceGesture : MonoBehaviour
 				transform.Translate (Vector3.left * Time.deltaTime * speed);
 
 				//if spaceship is not already moving left the left-movement animation starts
-				if (!(m_animator.GetInteger ("direction") == 0)) {
-					m_animator.SetInteger ("direction", 0);
+				if (!(m_animator.GetInteger ("direction") == 1)) {
+					m_animator.SetInteger ("direction", 1);
 				}
 			}
 
@@ -167,8 +171,8 @@ public class SpaceGesture : MonoBehaviour
 				transform.Translate (Vector3.right * Time.deltaTime * speed);
 
 				//if spaceship is not already moving right the right-movement animation starts
-				if (!(m_animator.GetInteger ("direction") == 1)) {
-					m_animator.SetInteger ("direction", 1);
+				if (!(m_animator.GetInteger ("direction") == 2)) {
+					m_animator.SetInteger ("direction", 2);
 				}
 			}
 
