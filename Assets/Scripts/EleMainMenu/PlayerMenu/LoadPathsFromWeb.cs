@@ -10,9 +10,7 @@ public class LoadPathsFromWeb : MonoBehaviour
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
-	public Button go_on_button;
 
-	public Text m_welcome_text;
 	//the list where all the web addresses of file paths are saved
 	List<string> file_n = new List<string> ();
 	string directoryPath;
@@ -23,11 +21,11 @@ public class LoadPathsFromWeb : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		StartCoroutine (LoadFilenames ());
+		
 
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
 
-		go_on_button.interactable = false;
+
 		
 	}
 	
@@ -36,6 +34,8 @@ public class LoadPathsFromWeb : MonoBehaviour
 	{
 		
 	}
+
+
 
 	string FromFilenameToName (string name)
 	{
@@ -49,10 +49,10 @@ public class LoadPathsFromWeb : MonoBehaviour
 
 	}
 
-
+	//this is called from the WebConnectionController
 	public IEnumerator LoadFilenames ()
 	{
-		m_welcome_text.text = "Scaricamento dati...";
+		
 
 		string address;
 		if (debugging_save) {
@@ -84,17 +84,13 @@ public class LoadPathsFromWeb : MonoBehaviour
 		}
 
 		yield return StartCoroutine (DownloadAllPaths ());
-
-		Debug.Log (" end downloading paths");
-		yield return new WaitForSeconds (0.5f);
-		m_welcome_text.text = "Benvenuti!";
-		go_on_button.interactable = true;
+	
 
 	}
 
 
 
-	public IEnumerator  DownloadAllPaths ()
+	IEnumerator  DownloadAllPaths ()
 	{
 
 		/* on web paths are saved as path_GameType_pathName_TS.json
@@ -117,13 +113,15 @@ public class LoadPathsFromWeb : MonoBehaviour
 			yield return StartCoroutine (DownloadEntireFile (webfile, filepath));
 
 		}
+
+		yield return new WaitForSeconds (0f);
 			
 		
 	}
 
 
 
-	public IEnumerator DownloadEntireFile (string webpath, string filepath)
+	IEnumerator DownloadEntireFile (string webpath, string filepath)
 	{
 		// As we don't specify a tag, it will download everything
 		// within the file 'myFile.txt'.

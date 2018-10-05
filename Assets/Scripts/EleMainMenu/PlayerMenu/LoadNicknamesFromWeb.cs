@@ -18,7 +18,7 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Patient_List");
 		filePath = Path.Combine (directoryPath, "patients_list.json");
-		StartCoroutine (LoadFileOfNicknames ());
+
 
 		
 	}
@@ -28,6 +28,8 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 	{
 		
 	}
+
+	//this is called from the WebConnectionController
 
 	public IEnumerator LoadFileOfNicknames ()
 	{
@@ -69,7 +71,7 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 	}
 
 
-	public IEnumerator DownloadEntireFile ()
+	IEnumerator DownloadEntireFile ()
 	{
 		// As we don't specify a tag, it will download everything
 		// within the file 'myFile.txt'.
