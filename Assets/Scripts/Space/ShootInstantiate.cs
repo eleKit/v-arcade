@@ -14,7 +14,7 @@ public class ShootInstantiate : MonoBehaviour
 	public Color m_loading_bar_shoot_color;
 
 	public GameObject[] loading_bar;
-	public GameObject loading_bar_empty;
+
 
 
 
@@ -85,11 +85,15 @@ public class ShootInstantiate : MonoBehaviour
 	IEnumerator Shoot ()
 	{
 		coroutine_started = true;
-		ColorLoadingBarShoot ();
+
+		if (index < loading_bar.Length) {
+			//ClearLoadingBar ();
+			loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
+		}
 
 		yield return new WaitForSeconds (0.5f);
 
-		loading_bar_empty.GetComponent<SpriteRenderer> ().color = m_loading_bar_shoot_color;
+		ColorLoadingBarShoot ();
 
 		yield return new WaitForSeconds (0.5f);
 
@@ -110,7 +114,7 @@ public class ShootInstantiate : MonoBehaviour
 
 	void ClearLoadingBar ()
 	{
-		loading_bar_empty.GetComponent<SpriteRenderer> ().color = Color.white;
+		
 		for (int i = 0; i < loading_bar.Length; i++) {
 			loading_bar [i].GetComponent<SpriteRenderer> ().color = Color.white;
 
