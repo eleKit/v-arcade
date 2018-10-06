@@ -51,10 +51,12 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 		GameManager.Instance.BaseUpdate ();
 
+		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
+
 		//Timer text update
 		if (GameManager.Instance.Get_Is_Playing () &&
-		    !(GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().color.Equals (Color.black)
-		    || GameObject.FindGameObjectWithTag ("Player").GetComponent <SpriteRenderer> ().color.Equals (Color.grey))) {
+		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
+		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
 			timer_of_game -= Time.deltaTime;
 			int timer = (int)Mathf.Round (timer_of_game);
 			int min = timer / 60;

@@ -2768,6 +2768,11 @@ Prefab:
       propertyPath: m_loading_bar_color.Array.data[3].b
       value: 0.99264705
       objectReference: {fileID: 0}
+    - target: {fileID: 212805774301810066, guid: 14a98dac12d1a41549a16164e825a022,
+        type: 2}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 14a98dac12d1a41549a16164e825a022, type: 2}
   m_IsPrefabParent: 0
