@@ -52,11 +52,11 @@ public class ShootingManager : Singleton<ShootingManager>
 	void Update ()
 	{
 		GameManager.Instance.BaseUpdate ();
-
+		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 
 		if (GameManager.Instance.Get_Is_Playing () &&
-		    !(GameObject.FindGameObjectWithTag ("Player").GetComponent<SpriteRenderer> ().color.Equals (Color.black)
-		    || GameObject.FindGameObjectWithTag ("Player").GetComponent <SpriteRenderer> ().color.Equals (Color.red))) {
+		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
+		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().medium_white))) {
 			timer_of_game -= Time.deltaTime;
 			int timer = (int)Mathf.Round (timer_of_game);
 			int min = timer / 60;

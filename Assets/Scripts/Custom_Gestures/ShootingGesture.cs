@@ -68,6 +68,12 @@ public class ShootingGesture : MonoBehaviour
 	public HandController hc;
 
 
+	[Header ("Colors used when leap does/does not see the hands")]
+	public Color transparent_white = new Color (1f, 1f, 1f, 0.2f);
+	public Color medium_white = new Color (1f, 1f, 1f, 0.5f);
+	public Color solid_white = new Color (1f, 1f, 1f, 1f);
+
+
 
 	private LinkedList<float> pitch_list = new LinkedList<float> ();
 	private LinkedList<float> pitch_average = new LinkedList<float> ();
@@ -115,8 +121,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 			//change pointer colour
-			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.black)) {
-				gameObject.GetComponent<SpriteRenderer> ().color = Color.red;
+			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (transparent_white)) {
+				gameObject.GetComponent<SpriteRenderer> ().color = medium_white;
 			}
 
 			frames_since_last_reconnection++;	
@@ -141,8 +147,8 @@ public class ShootingGesture : MonoBehaviour
 				CheckShootGesture ();
 
 				//change pointer colour
-				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.red)) {
-					gameObject.GetComponent<SpriteRenderer> ().color = Color.white;
+				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (medium_white)) {
+					gameObject.GetComponent<SpriteRenderer> ().color = solid_white;
 				}
 
 			} else {
@@ -160,7 +166,7 @@ public class ShootingGesture : MonoBehaviour
 
 		} else {
 			//if no hand is visible change colour in black
-			gameObject.GetComponent<SpriteRenderer> ().color = Color.black;
+			gameObject.GetComponent<SpriteRenderer> ().color = transparent_white;
 
 			pitch_list.Clear ();
 			pitch_average.Clear ();

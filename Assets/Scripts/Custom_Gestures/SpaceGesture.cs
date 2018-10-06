@@ -42,6 +42,11 @@ public class SpaceGesture : MonoBehaviour
 
 	public HandController hc;
 
+	[Header ("Colors used when leap does/does not see the hands")]
+	public Color transparent_white = new Color (1f, 1f, 1f, 0.2f);
+	public Color medium_white = new Color (1f, 1f, 1f, 0.5f);
+	public Color solid_white = new Color (1f, 1f, 1f, 1f);
+
 	private LinkedList<float> yaw_list = new LinkedList<float> ();
 	private LinkedList<float> yaw_average = new LinkedList<float> ();
 
@@ -70,9 +75,7 @@ public class SpaceGesture : MonoBehaviour
 	private Animator m_animator;
 
 
-	public Color transparent_white = new Color (1f, 1f, 1f, 0.2f);
-	public Color medium_white = new Color (1f, 1f, 1f, 0.5f);
-	public Color solid_white = new Color (1f, 1f, 1f, 1f);
+
 
 	// Use this for initialization
 	void Start ()
