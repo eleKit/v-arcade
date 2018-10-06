@@ -9,7 +9,14 @@ public class ShootInstantiate : MonoBehaviour
 
 	public GameObject shot;
 
+
+	public Color[] m_loading_bar_color;
+	public Color m_loading_bar_shoot_color;
+
 	public GameObject[] loading_bar;
+	public GameObject loading_bar_empty;
+
+
 
 	[Range (0f, 5f)]
 	public float delta_t = 2f;
@@ -20,12 +27,13 @@ public class ShootInstantiate : MonoBehaviour
 	float one_step_value;
 	float steps_counter = 0;
 
-	bool start_game;
+	bool start_game, coroutine_started;
 
 	// Use this for initialization
 	void Start ()
 	{
 		start_game = false;
+		coroutine_started = false;
 		one_step_value = delta_t / loading_bar.Length;
 
 
@@ -53,27 +61,45 @@ public class ShootInstantiate : MonoBehaviour
 				spawn_time += Time.deltaTime;
 
 				if (spawn_time > steps_counter) {
-					index++;
-					steps_counter = one_step_value * (index + 1);
+					
 					if (index < loading_bar.Length) {
 						//ClearLoadingBar ();
-						loading_bar [index].GetComponent<SpriteRenderer> ().color = Color.yellow;
+						loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
 					}
+					index++;
+					steps_counter = one_step_value * (index + 1);
 				}
 
-				if (spawn_time > delta_t) {
-					Instantiate (shot, transform.position, Quaternion.identity);
-					SfxManager.Instance.Play ("laser");
-					spawn_time = 0f;
+				if (spawn_time > delta_t && !coroutine_started) {
 
-					ClearLoadingBar ();
-					ResetLoadingBar ();
+					StartCoroutine (Shoot ());
 				}
 			} 
 		}
 
 
 
+	}
+
+
+	IEnumerator Shoot ()
+	{
+		coroutine_started = true;
+		ColorLoadingBarShoot ();
+
+		yield return new WaitForSeconds (0.5f);
+
+		loading_bar_empty.GetComponent<SpriteRenderer> ().color = m_loading_bar_shoot_color;
+
+		yield return new WaitForSeconds (0.5f);
+
+		Instantiate (shot, transform.position, Quaternion.identity);
+		SfxManager.Instance.Play ("laser");
+		spawn_time = 0f;
+
+		ClearLoadingBar ();
+		ResetLoadingBar ();
+		coroutine_started = false;
 	}
 
 
@@ -84,6 +110,7 @@ public class ShootInstantiate : MonoBehaviour
 
 	void ClearLoadingBar ()
 	{
+		loading_bar_empty.GetComponent<SpriteRenderer> ().color = Color.white;
 		for (int i = 0; i < loading_bar.Length; i++) {
 			loading_bar [i].GetComponent<SpriteRenderer> ().color = Color.white;
 
@@ -95,7 +122,16 @@ public class ShootInstantiate : MonoBehaviour
 	{
 		index = 0;
 		steps_counter = one_step_value;
-		loading_bar [index].GetComponent<SpriteRenderer> ().color = Color.yellow;
+		//loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color;
+	}
+
+
+	void ColorLoadingBarShoot ()
+	{
+		for (int i = 0; i < loading_bar.Length; i++) {
+			loading_bar [i].GetComponent<SpriteRenderer> ().color = m_loading_bar_shoot_color;
+
+		}
 	}
 
 
