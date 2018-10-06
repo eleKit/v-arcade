@@ -29,6 +29,16 @@ public class ShootInstantiate : MonoBehaviour
 
 	bool start_game, coroutine_started;
 
+	/*player gameobject used to instantiate the shot in the correct position even if the game is paused but the Shoot () instantiation 
+	 * Coroutine is already started
+	 */
+	GameObject pl;
+
+	void Awake ()
+	{
+		pl = GameObject.FindGameObjectWithTag ("Player");
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -55,30 +65,25 @@ public class ShootInstantiate : MonoBehaviour
 
 		if (start_game) {
 			if (GameManager.Instance.Get_Is_Playing ()) {
+			
+				if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
+				    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
 
-				GameObject pl = GameObject.FindGameObjectWithTag ("Player");
+					spawn_time += Time.deltaTime;
 
-				if (pl != null) {
-
-					if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-					    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
-
-						spawn_time += Time.deltaTime;
-
-						if (spawn_time > steps_counter) {
+					if (spawn_time > steps_counter) {
 					
-							if (index < loading_bar.Length) {
-								//ClearLoadingBar ();
-								loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
-							}
-							index++;
-							steps_counter = one_step_value * (index + 1);
+						if (index < loading_bar.Length) {
+							//ClearLoadingBar ();
+							loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
 						}
+						index++;
+						steps_counter = one_step_value * (index + 1);
+					}
 
-						if (spawn_time > delta_t && !coroutine_started) {
+					if (spawn_time > delta_t && !coroutine_started) {
 
-							StartCoroutine (Shoot ());
-						}
+						StartCoroutine (Shoot ());
 					}
 				}
 			}
@@ -102,13 +107,12 @@ public class ShootInstantiate : MonoBehaviour
 
 		ColorLoadingBarShoot ();
 
-		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 
-		if (pl != null) {
-			Transform player_pos = pl.GetComponent<Transform> ();
-			Instantiate (shot, player_pos.position, Quaternion.identity);
-			SfxManager.Instance.Play ("laser");
-		}
+		//if (pl != null) {
+		Transform player_pos = pl.GetComponent<Transform> ();
+		Instantiate (shot, player_pos.position, Quaternion.identity);
+		SfxManager.Instance.Play ("laser");
+		//}
 
 
 		yield return new WaitForSeconds (0.5f);

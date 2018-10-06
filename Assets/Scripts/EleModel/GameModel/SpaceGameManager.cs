@@ -17,9 +17,17 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
+	//gameobject of the player used to check if the leap sees the hand so the timer can go on
+	GameObject pl;
 
+	//value never changed
 	Vector3 initial_player_pos = new Vector3 (0, -7f, 0);
 
+
+	void Awake ()
+	{
+		pl = GameObject.FindGameObjectWithTag ("Player");
+	}
 	// Use this for initialization
 	void Start ()
 	{
@@ -51,7 +59,6 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 		GameManager.Instance.BaseUpdate ();
 
-		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 
 		//Timer text update
 		if (GameManager.Instance.Get_Is_Playing () &&

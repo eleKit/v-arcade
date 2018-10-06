@@ -19,7 +19,16 @@ public class ShootingManager : Singleton<ShootingManager>
 
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
 
+	//gameobject of the player used to check if the leap sees the hand so the timer can go on
+	GameObject pl;
+
+	//CONSTANT (recall vector3 cannot be declared costant
 	Vector3 initial_player_pos = new Vector3 (0, 0.75f, 0);
+
+	void Awake ()
+	{
+		pl = GameObject.FindGameObjectWithTag ("Player");
+	}
 	// Use this for initialization
 	void Start ()
 	{
@@ -52,7 +61,7 @@ public class ShootingManager : Singleton<ShootingManager>
 	void Update ()
 	{
 		GameManager.Instance.BaseUpdate ();
-		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
+
 
 		if (GameManager.Instance.Get_Is_Playing () &&
 		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
