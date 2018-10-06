@@ -54,27 +54,34 @@ public class ShootInstantiate : MonoBehaviour
 		}
 
 		if (start_game) {
-			if (GameManager.Instance.Get_Is_Playing () &&
-			    !(GetComponent<SpriteRenderer> ().color.Equals (GetComponent<SpaceGesture> ().transparent_white)
-			    || GetComponent<SpriteRenderer> ().color.Equals (GetComponent<SpaceGesture> ().medium_white))) {
+			if (GameManager.Instance.Get_Is_Playing ()) {
 
-				spawn_time += Time.deltaTime;
+				GameObject pl = GameObject.FindGameObjectWithTag ("Player");
 
-				if (spawn_time > steps_counter) {
+				if (pl != null) {
+
+					if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
+					    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
+
+						spawn_time += Time.deltaTime;
+
+						if (spawn_time > steps_counter) {
 					
-					if (index < loading_bar.Length) {
-						//ClearLoadingBar ();
-						loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
+							if (index < loading_bar.Length) {
+								//ClearLoadingBar ();
+								loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
+							}
+							index++;
+							steps_counter = one_step_value * (index + 1);
+						}
+
+						if (spawn_time > delta_t && !coroutine_started) {
+
+							StartCoroutine (Shoot ());
+						}
 					}
-					index++;
-					steps_counter = one_step_value * (index + 1);
 				}
-
-				if (spawn_time > delta_t && !coroutine_started) {
-
-					StartCoroutine (Shoot ());
-				}
-			} 
+			}
 		}
 
 
@@ -95,12 +102,19 @@ public class ShootInstantiate : MonoBehaviour
 
 		ColorLoadingBarShoot ();
 
+		GameObject pl = GameObject.FindGameObjectWithTag ("Player");
+
+		if (pl != null) {
+			Transform player_pos = pl.GetComponent<Transform> ();
+			Instantiate (shot, player_pos.position, Quaternion.identity);
+			SfxManager.Instance.Play ("laser");
+		}
+
+
 		yield return new WaitForSeconds (0.5f);
 
-		Instantiate (shot, transform.position, Quaternion.identity);
-		SfxManager.Instance.Play ("laser");
-		spawn_time = 0f;
 
+		spawn_time = 0f;
 		ClearLoadingBar ();
 		ResetLoadingBar ();
 		coroutine_started = false;
