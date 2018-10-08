@@ -9,14 +9,11 @@ using System.IO;
 
 public class TuningManager : MonoBehaviour
 {
-	[Header ("Use for debug, if checked the match is saved into test server")]
-	public bool debugging_save;
 
 	[Header ("Line at bottom indicated if leap sees the hands")]
 	public Image colour_line;
 
-	[Header ("Use for debug, if checked the match is not saved")]
-	public bool no_save;
+
 
 	[Header ("Images about the hand movement")]
 	public GameObject m_simple_hands_image;
@@ -36,11 +33,16 @@ public class TuningManager : MonoBehaviour
 	public GameObject m_timer_object;
 	public Text m_timer;
 
+
+	[Header ("Result canvas")]
+	public GameObject m_results_canvas;
+	[Header ("Result texts")]
 	public GameObject m_left_result;
 	public Text m_left_result_text;
 	public GameObject m_right_result;
 	public Text m_right_result_text;
-	public GameObject m_menu_button;
+
+
 
 
 
@@ -194,40 +196,6 @@ public class TuningManager : MonoBehaviour
 
 
 
-
-		case Tuning_Phase.Error_phase:
-			
-			if (counter == null) {
-				previous_phase = current_phase;
-				counter = new Counter (2f, 0f);
-
-				ClearScreens ();
-
-				m_simple_hands_image.SetActive (true);
-				m_timer_object.SetActive (true);
-				m_timer.text = "Tra poco ricominciamo!";
-				m_simple_instructions_screen.SetActive (true);
-				m_simple_instructions_screen.GetComponent<Text> ().text = "Qualcosa è andato storto con i risultati!";
-
-			}
-
-			if (counter.timeIsUp ()) {
-
-				current_phase = Tuning_Phase.Up_phase;
-
-				counter = null;
-
-
-			} else if (!HandsOk ()) {
-				current_phase = Tuning_Phase.NoHands_phase;
-
-				counter = null;
-
-			} else {
-				counter.countFrame ();
-			} 
-
-			break;
 
 		case Tuning_Phase.Start_phase:
 
@@ -486,74 +454,86 @@ public class TuningManager : MonoBehaviour
 
 		case Tuning_Phase.End_phase:
 			
-		
-			//check for errors
-			if (left_estension.Count == 0 ||
-			    right_estension.Count == 0 ||
-			    left_flexion.Count == 0 ||
-			    right_flexion.Count == 0 ||
-			    left_radial.Count == 0 ||
-			    right_radial.Count == 0 ||
-			    left_ulnar.Count == 0 ||
-			    right_ulnar.Count == 0) {
+			ClearScreens ();
+			m_results_canvas.SetActive (true);
 
-				current_phase = Tuning_Phase.Error_phase;
-				counter = null;
+			//check for errors
+			if (left_estension.Count == 0) {
+				left_estension.Add (0f);
+			}
+			if (right_estension.Count == 0) {
+				right_estension.Add (0f);
+			} 
+			if (left_flexion.Count == 0) {
+				left_flexion.Add (0f);
+			} 
+			if (right_flexion.Count == 0) {
+				right_flexion.Add (0f);
+			} 
+			if (left_radial.Count == 0) {
+				left_radial.Add (0f);
+			} 
+			if (right_radial.Count == 0) {
+				right_radial.Add (0f);
+			} 
+			if (left_ulnar.Count == 0) {
+				left_ulnar.Add (0f);
+			} 
+			if (right_ulnar.Count == 0) {
+				right_ulnar.Add (0f);
+			}
+
 			
-			} else {
+			
 
 	
-				current_phase = Tuning_Phase.Finished_tuning;
+			current_phase = Tuning_Phase.Finished_tuning;
 
-				ClearScreens ();
 
-				data_left_estension = left_estension.Average ();
-				data_right_estension = right_estension.Average ();
 
-				data_left_flexion = left_flexion.Average ();
-				data_right_flexion = right_flexion.Average ();
+			data_left_estension = left_estension.Average ();
+			data_right_estension = right_estension.Average ();
 
-				data_left_radial = left_radial.Average ();
-				data_right_radial = right_radial.Average ();
+			data_left_flexion = left_flexion.Average ();
+			data_right_flexion = right_flexion.Average ();
 
-				data_left_ulnar = left_ulnar.Average ();
-				data_right_ulnar = right_ulnar.Average ();
+			data_left_radial = left_radial.Average ();
+			data_right_radial = right_radial.Average ();
 
-				m_left_result.SetActive (true);
+			data_left_ulnar = left_ulnar.Average ();
+			data_right_ulnar = right_ulnar.Average ();
 
-				m_right_result.SetActive (true);
+			m_left_result.SetActive (true);
 
-				m_right_result_text.text =
-				"Estensione destra: " + Mathf.Abs (data_right_estension * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Flessione destra: " + Mathf.Abs (data_right_flexion * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare destra: " + Mathf.Abs (data_right_ulnar * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale destra: " + Mathf.Abs (data_right_radial * Mathf.Rad2Deg).ToString ("n2") + "°";
+			m_right_result.SetActive (true);
 
-				m_left_result_text.text =
-				"Estensione sinistra: " + Mathf.Abs (data_left_estension * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("n2") + "°" + "\n"
-				+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("n2") + "°";
+			m_right_result_text.text =
+				"Estensione destra: " + Mathf.Abs (data_right_estension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Flessione destra: " + Mathf.Abs (data_right_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Dev ulnare destra: " + Mathf.Abs (data_right_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Dev radiale destra: " + Mathf.Abs (data_right_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
+
+			m_left_result_text.text =
+				"Estensione sinistra: " + Mathf.Abs (data_left_estension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+			+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
 			
-				SaveTuningData ();
-
-				m_menu_button.SetActive (true);
-
-			
-			}
-				
 			break;
 
+			
 		}
-		
+				
+
+
 	}
 
 
 
 
-	void StartLevel ()
+	//called by Start() and by the Restart Tuning button
+	public void StartLevel ()
 	{
-
 
 		counter = null;
 
@@ -574,95 +554,11 @@ public class TuningManager : MonoBehaviour
 
 
 
-	void SaveTuningData ()
-	{
-
-		GlobalPlayerData.globalPlayerData.player_data.pitch_left_max = data_left_estension;
-		GlobalPlayerData.globalPlayerData.player_data.pitch_left_min = data_left_flexion;
-		GlobalPlayerData.globalPlayerData.player_data.pitch_right_max = data_right_estension;
-		GlobalPlayerData.globalPlayerData.player_data.pitch_right_min = data_right_flexion;
-
-		GlobalPlayerData.globalPlayerData.player_data.yaw_left_max = data_left_radial;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_left_min = data_left_ulnar;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_right_max = data_right_ulnar;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_right_min = data_right_radial;
-
-		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
-
-
-		TuningSession s = new TuningSession ();
-
-		DateTime gameDate = DateTime.UtcNow;
-		s.patientName = GlobalPlayerData.globalPlayerData.player;
-		s.timestamp = gameDate.ToFileTimeUtc ();
-
-		s.pitch_left_max = data_left_estension;
-		s.pitch_left_min = data_left_flexion;
-		s.pitch_right_max = data_right_estension;
-		s.pitch_right_min = data_right_flexion;
-
-		s.yaw_left_max = data_left_radial;
-		s.yaw_left_min = data_left_ulnar;
-		s.yaw_right_max = data_right_ulnar;
-		s.yaw_right_min = data_right_radial;
-
-		string directoryPath = Path.Combine (Application.persistentDataPath,
-			                       Path.Combine ("Tunings", s.patientName));
-		
-		Directory.CreateDirectory (directoryPath);
-
-		string filePath = Path.Combine (
-			                  directoryPath,
-			                  s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json");
-
-		string jsonString = JsonUtility.ToJson (s);
-		File.WriteAllText (filePath, jsonString);
-
-
-		//save match data on web
-		if (no_save) {
-			Debug.Log ("not saving!! no_save is active");
-		} else {
-			StartCoroutine (SaveTuningDataCoroutine (filePath, s, gameDate, jsonString));
-		}
-	
-	}
-
-
-	IEnumerator SaveTuningDataCoroutine (string filePath, TuningSession s, DateTime gameDate, string tuningString)
-	{
-		string address; 
-		string webfilename = "tuning_" + s.patientName + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json";
-
-		if (debugging_save) {
-			address = "http://127.0.0.1/ES2.php?webfilename=";
-			Debug.Log ("Debugging save");
-		} else {
-			address = "http://data.polimigamecollective.org/demarchi/ES2.php?webfilename=";
-		}
-
-		string myURL = address + webfilename;
-
-		// Upload the entire local file to the server.
-		ES2Web web = new ES2Web (myURL);
-
-		Debug.Log ("file saved " + myURL);
-
-		yield return StartCoroutine (web.UploadFile (filePath));
-
-		if (web.isError) {
-			// Enter your own code to handle errors here.
-			Debug.LogError (web.errorCode + ":" + web.error);
-			string directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
-			Directory.CreateDirectory (directoryPath);
-			string path = Path.Combine (directoryPath, webfilename);
-			File.WriteAllText (path, tuningString);
-		}
-	}
 
 
 	void ClearScreens ()
 	{
+		//clear phases instructions hands images
 		if (m_simple_hands_image != null)
 			m_simple_hands_image.SetActive (false);
 		
@@ -677,7 +573,8 @@ public class TuningManager : MonoBehaviour
 		
 		if (m_right_hands_image != null)
 			m_right_hands_image.SetActive (false);
-		
+
+		//clear phases instruction texts
 		if (m_simple_instructions_screen != null)
 			m_simple_instructions_screen.SetActive (false);
 		
@@ -693,17 +590,19 @@ public class TuningManager : MonoBehaviour
 		if (m_right_instructions_screen != null)
 			m_right_instructions_screen.SetActive (false);
 
+		//clear timer
 		if (m_timer_object != null)
 			m_timer_object.SetActive (false);
 
+		//clear results 
 		if (m_left_result != null)
 			m_left_result.SetActive (false);
 
 		if (m_right_result != null)
 			m_right_result.SetActive (false);
 
-		if (m_menu_button != null)
-			m_menu_button.SetActive (false);
+		if (m_results_canvas != null)
+			m_results_canvas.SetActive (false);
 	}
 
 
@@ -726,7 +625,6 @@ public class TuningManager : MonoBehaviour
 		Left_phase,
 		Right_phase,
 		End_phase,
-		Error_phase,
 		Finished_tuning,
 	};
 
@@ -753,11 +651,7 @@ public class TuningManager : MonoBehaviour
 	}
 
 
-	public void LoadMainMenu ()
-	{
-		m_menu_button.GetComponent<Button> ().interactable = false;
-		SceneManager.LoadSceneAsync ("Main_Menu_Patient");
-	}
+
 
 
 
