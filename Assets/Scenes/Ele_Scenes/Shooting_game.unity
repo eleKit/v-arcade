@@ -571,7 +571,7 @@ Prefab:
     - target: {fileID: 114720489969358804, guid: a37d6d3f80f4e492f93d477dc684d801,
         type: 2}
       propertyPath: m_ScreenMatchMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a37d6d3f80f4e492f93d477dc684d801, type: 2}
@@ -4537,7 +4537,7 @@ Prefab:
     - target: {fileID: 114875810109671450, guid: 45196cac5826d49cbb73423be85c43f3,
         type: 2}
       propertyPath: m_ScreenMatchMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 45196cac5826d49cbb73423be85c43f3, type: 2}
@@ -4904,7 +4904,7 @@ Prefab:
     - target: {fileID: 114824744174122724, guid: 6bf59971192814b1dbbf0ff4da0fbbe6,
         type: 2}
       propertyPath: m_ScreenMatchMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6bf59971192814b1dbbf0ff4da0fbbe6, type: 2}
@@ -5782,7 +5782,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 1
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -6061,7 +6061,7 @@ Prefab:
     - target: {fileID: 114299353734847232, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
       propertyPath: m_ScreenMatchMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca5927aa9bc904545837ce56b916263b, type: 2}
@@ -6393,7 +6393,7 @@ Prefab:
     - target: {fileID: 114604111498375836, guid: be2f8987eed394068b8179127254eda4,
         type: 2}
       propertyPath: m_ScreenMatchMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: be2f8987eed394068b8179127254eda4, type: 2}
@@ -6716,7 +6716,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 1
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -6811,7 +6811,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 1
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -7213,7 +7213,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 1
+  m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
