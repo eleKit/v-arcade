@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor.Animations;
+#endif
 
 public class CarColourUI : MonoBehaviour
 {
@@ -13,9 +16,10 @@ public class CarColourUI : MonoBehaviour
 		player.GetComponent<SpriteRenderer> ().sprite = car;
 	}
 
-
+	#if UNITY_EDITOR
 	public void SetCarAnimator (AnimatorController animator)
 	{
 		player.GetComponent<Animator> ().runtimeAnimatorController = animator;
 	}
+	#endif
 }
