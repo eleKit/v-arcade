@@ -88,7 +88,7 @@ public class ShootingGesture : MonoBehaviour
 
 	int frames_since_last_reconnection;
 
-	int frames_since_last_gesture;
+
 
 	//TODO get this from tuning as the zero position;
 	float pitch_tuning_offset = -Mathf.Deg2Rad * 10f;
@@ -103,14 +103,12 @@ public class ShootingGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		frames_since_last_gesture = N;
+		
 		frames_since_last_reconnection = 0;
 
-		//pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.pitch_scale * Mathf.Rad2Deg;
-		Debug.Log ("New pitch scale" + pitch_threshold);
+		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
 
-//		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.yaw_scale * Mathf.Rad2Deg;
-		Debug.Log ("New yaw scale" + yaw_threshold);
+		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 
 	}
 
@@ -142,7 +140,7 @@ public class ShootingGesture : MonoBehaviour
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
-			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw && frames_since_last_gesture >= N
+			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw
 			    && frames_since_last_reconnection >= K_lost) {
 				CheckShootGesture ();
 
@@ -151,9 +149,7 @@ public class ShootingGesture : MonoBehaviour
 					gameObject.GetComponent<SpriteRenderer> ().color = solid_white;
 				}
 
-			} else {
-				frames_since_last_gesture++;
-			}
+			} 
 
 			//save new data
 			if (pitch_list.Count >= K_pitch)
@@ -196,9 +192,9 @@ public class ShootingGesture : MonoBehaviour
 
 
 		//down gesture --> see yaw description
-		if (current_pitch < Mathf.Deg2Rad * pitch_threshold && current_pitch < pitch_offset) {
+		if (current_pitch < pitch_threshold) {
 
-			frames_since_last_gesture = 0;
+
 
 			if ((transform.position.y - y_movement) >= y_min_player_position) {
 				Vector3 new_position = transform.position - new Vector3 (0, y_movement, 0);
@@ -207,9 +203,9 @@ public class ShootingGesture : MonoBehaviour
 			}
 
 
-		} else if (current_pitch > Mathf.Deg2Rad * (-pitch_threshold) && current_pitch > (-pitch_offset)) {
+		} else if (current_pitch > (-pitch_threshold)) {
 
-			frames_since_last_gesture = 0;
+
 
 			if ((transform.position.y + y_movement) <= y_max_player_position) {
 				Vector3 new_position = transform.position + new Vector3 (0, y_movement, 0);
@@ -218,9 +214,11 @@ public class ShootingGesture : MonoBehaviour
 			}
 
 
-		} else if (current_yaw < Mathf.Deg2Rad * yaw_threshold && current_yaw < yaw_offset) {
+		}
 
-			frames_since_last_gesture = 0;
+		if (current_yaw < yaw_threshold) {
+
+
 
 			if ((transform.position.x - x_movement) >= x_min_player_posiion) {
 				Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
@@ -229,9 +227,9 @@ public class ShootingGesture : MonoBehaviour
 			}
 
 
-		} else if (current_yaw > Mathf.Deg2Rad * (-yaw_threshold) && current_yaw > (-yaw_offset)) {
+		} else if (current_yaw > (-yaw_threshold)) {
 
-			frames_since_last_gesture = 0;
+
 
 			if ((transform.position.x + x_movement) <= x_max_player_position) {
 				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
