@@ -32,7 +32,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public Button[] m_level_button;
 
-	public bool car, music, shooting, space;
+	//bool used to check what type of game is playing
+	bool car, music, shooting, space;
 
 	bool there_are_no_level;
 

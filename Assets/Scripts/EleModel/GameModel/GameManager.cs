@@ -66,7 +66,7 @@ public class GameManager : Singleton<GameManager>
 	public string current_path = "";
 
 	//bool used to check what type of game the kid is playing
-	public bool car, music, shooting, space;
+	GameMatch.GameType current_game_type;
 
 
 
@@ -88,15 +88,6 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	void Awake ()
-	{
-		//initialize all game type bool as false
-		car = false;
-		shooting = false;
-		music = false;
-		space = false;
-
-	}
 
 	// Use this for initialization
 	void Start ()
@@ -114,21 +105,7 @@ public class GameManager : Singleton<GameManager>
 	public void BaseStart (string music_title, GameMatch.GameType game_type)
 	{
 		//set the gametype, method called by the NameGameManager class
-		switch (game_type) {
-
-		case GameMatch.GameType.Car:
-			car = true;
-			break;
-		case GameMatch.GameType.Shooting:
-			shooting = true;
-			break;
-		case GameMatch.GameType.Music:
-			music = true;
-			break;
-		case GameMatch.GameType.Space:
-			space = true;
-			break;
-		}
+		current_game_type = game_type;
 
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
@@ -215,7 +192,7 @@ public class GameManager : Singleton<GameManager>
 
 	IEnumerator LoadLevel ()
 	{
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			//now stops the music menuu
 			MusicManager.Instance.StopAll ();
 		}
@@ -244,7 +221,7 @@ public class GameManager : Singleton<GameManager>
 		yield return new WaitForSeconds (0.5f);
 
 
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			//now plays the music correspondent to the level chosen
 			MusicManager.Instance.PlayMusic (current_path);
 		}
@@ -309,6 +286,11 @@ public class GameManager : Singleton<GameManager>
 		return is_playing;
 	}
 
+	public GameMatch.GameType GetCurrentGameType ()
+	{
+		return current_game_type;
+	}
+
 
 	/* end common functions */
 		
@@ -335,7 +317,7 @@ public class GameManager : Singleton<GameManager>
 
 		SfxManager.Instance.Mute ();
 
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			//pause the current path level music
 			MusicManager.Instance.PauseAll ();
 		}
@@ -390,7 +372,7 @@ public class GameManager : Singleton<GameManager>
 
 
 
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			//unpause the current path level music
 			MusicManager.Instance.UnPauseAll ();
 		}
@@ -461,15 +443,9 @@ public class GameManager : Singleton<GameManager>
 		m.id_path = current_path;
 
 
-		if (car) {
-			m.gameType = GameMatch.GameType.Car;
-		} else if (music) {
-			m.gameType = GameMatch.GameType.Music;
-		} else if (shooting) {
-			m.gameType = GameMatch.GameType.Shooting;
-		} else if (space) {
-			m.gameType = GameMatch.GameType.Space;
-		}
+
+		m.gameType = current_game_type;
+
 
 		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
 		string directoryPath = Path.Combine (Application.persistentDataPath,
