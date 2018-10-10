@@ -39,6 +39,8 @@ public class SaveTuningManager : MonoBehaviour
 
 	[Header ("Save&Go to main menu button")]
 	public GameObject m_menu_button;
+	[Header ("Repeat tuning button")]
+	public GameObject m_repeat_tuning_button;
 
 
 	// Use this for initialization
@@ -109,13 +111,16 @@ public class SaveTuningManager : MonoBehaviour
 
 	public void SaveDataAndLoadMain ()
 	{
+		m_menu_button.GetComponent<Button> ().interactable = false;
+		m_repeat_tuning_button.GetComponent<Button> ().interactable = false;
+
 		StartCoroutine (LoadMain ());
 	}
 
 
 	IEnumerator LoadMain ()
 	{
-		m_menu_button.GetComponent<Button> ().interactable = false;
+		//wait for saving data before loading the next scene
 		yield return StartCoroutine (SaveTuningData ());
 		SceneManager.LoadSceneAsync ("Main_Menu_Patient");
 
@@ -123,7 +128,7 @@ public class SaveTuningManager : MonoBehaviour
 
 	IEnumerator SaveTuningData ()
 	{
-		
+		//save data in the global player object
 		GlobalPlayerData.globalPlayerData.player_data.pitch_left_max = left_extension_slider.value * Mathf.Deg2Rad;
 		GlobalPlayerData.globalPlayerData.player_data.pitch_left_min = left_flexion_slider.value * Mathf.Deg2Rad;
 		GlobalPlayerData.globalPlayerData.player_data.yaw_left_max = left_radial_slider.value * Mathf.Deg2Rad;
@@ -136,7 +141,7 @@ public class SaveTuningManager : MonoBehaviour
 
 		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
 
-
+		//save data on file (and web) as TuningSession class type 
 		TuningSession s = new TuningSession ();
 
 		DateTime gameDate = DateTime.UtcNow;

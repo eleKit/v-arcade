@@ -80,9 +80,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Ele_Scenes/Music_game.unity
     guid: 91bb8ab4608d146bca9590e83963b445
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ele_Scenes/Main_Menu_Doctor.unity
     guid: c8d49cd8ba6534f37a9827399a21b76f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ele_Scenes/Path_generator.unity
     guid: c821e20aa3b824382b50862b5bebfb7a
