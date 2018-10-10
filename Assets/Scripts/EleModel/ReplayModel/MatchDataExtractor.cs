@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class MatchDataExtractor
+public class MatchDataExtractor : MonoBehaviour
 {
-	string directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
+	string directoryPath;
+
+	void Start ()
+	{
+		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
+
+	}
+
+	void Update ()
+	{
+		
+	}
 
 
 	string FromFilenameToName (string name)
@@ -59,6 +70,7 @@ public class MatchDataExtractor
 						
 		}
 
+		Debug.Log (game_paths [index]);
 		return game_paths [index];
 			
 			

@@ -220,11 +220,9 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 				// using the 
 				string match_date = Path.GetFileName (replay_paths [i]).Split ('_') [1];
-				string match_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");
 
-
-				names_of_replays [i].match_data_path = Path.GetFileName (match_path);
-
+				names_of_replays [i].match_data_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");
+				Debug.Log ("complete match_path " + names_of_replays [i].match_data_path);
 			
 
 

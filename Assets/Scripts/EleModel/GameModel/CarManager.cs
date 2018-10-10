@@ -83,7 +83,7 @@ public class CarManager : Singleton<CarManager>
 		path_to_replay = path;
 		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
 
-		GameManager.Instance.BaseChooseLevel (extractor.FromMatchDataToLevelName (path.match_data_path));
+		GameManager.Instance.BaseChooseLevel (path);
 		ResetPlayer ();
 		CarPathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Car));
 		
