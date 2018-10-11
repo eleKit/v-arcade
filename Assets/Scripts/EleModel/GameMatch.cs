@@ -15,7 +15,19 @@ public class GameMatch
 
 	;
 
+
+	public enum HandAngle
+	{
+		One_hundred,
+		Ninety,
+		Roll,
+		None}
+
+	;
+
 	public GameType gameType;
+
+	public HandAngle handAngle;
 
 	public long timestamp;
 

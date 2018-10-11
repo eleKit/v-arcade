@@ -648,7 +648,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1119867203725746, guid: 91b02f330e1164d39ae3050c7aaf4684, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114392980510864366, guid: 91b02f330e1164d39ae3050c7aaf4684,
         type: 2}
@@ -658,7 +658,7 @@ Prefab:
     - target: {fileID: 114392980510864366, guid: 91b02f330e1164d39ae3050c7aaf4684,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114392980510864366, guid: 91b02f330e1164d39ae3050c7aaf4684,
         type: 2}
@@ -1553,7 +1553,7 @@ Prefab:
       objectReference: {fileID: 644018521}
     - target: {fileID: 1989097169598208, guid: 18e5808b059154a21b65fff4d4c27c16, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114473781804448988, guid: 18e5808b059154a21b65fff4d4c27c16,
         type: 2}
@@ -1563,7 +1563,7 @@ Prefab:
     - target: {fileID: 114473781804448988, guid: 18e5808b059154a21b65fff4d4c27c16,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114473781804448988, guid: 18e5808b059154a21b65fff4d4c27c16,
         type: 2}
@@ -4085,7 +4085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c6c8874fb38416983e164efbb91d18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hc: {fileID: 913721117}
+  m_hand_controller: {fileID: 0}
 --- !u!114 &472364387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4577,7 +4577,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &529813319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4605,7 +4605,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.5
   m_ReferenceResolution: {x: 800, y: 600}
@@ -6027,7 +6027,7 @@ Prefab:
     - target: {fileID: 114789189335549310, guid: 7249fa5434f2e4ada8ed9505f609b4a1,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114789189335549310, guid: 7249fa5434f2e4ada8ed9505f609b4a1,
         type: 2}
@@ -8749,7 +8749,7 @@ Prefab:
       objectReference: {fileID: 644018521}
     - target: {fileID: 1712811782514446, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1214937497069846, guid: 9ab05614d571b44118c7af88d76c1767, type: 2}
       propertyPath: m_IsActive
@@ -8763,7 +8763,7 @@ Prefab:
     - target: {fileID: 114047456899945456, guid: 9ab05614d571b44118c7af88d76c1767,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114047456899945456, guid: 9ab05614d571b44118c7af88d76c1767,
         type: 2}
@@ -9677,7 +9677,7 @@ Prefab:
       objectReference: {fileID: 644018521}
     - target: {fileID: 1657198525082430, guid: 690c5508ef5754f0494a488771db0d28, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114153410727325088, guid: 690c5508ef5754f0494a488771db0d28,
         type: 2}
@@ -9687,7 +9687,7 @@ Prefab:
     - target: {fileID: 114153410727325088, guid: 690c5508ef5754f0494a488771db0d28,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114153410727325088, guid: 690c5508ef5754f0494a488771db0d28,
         type: 2}
@@ -11431,7 +11431,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.5
   m_ReferenceResolution: {x: 800, y: 600}
@@ -11995,7 +11995,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1237780310344516, guid: d1c817e0494f440cc8450ae5bfb6b908, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114693649380087578, guid: d1c817e0494f440cc8450ae5bfb6b908,
         type: 2}
@@ -12005,7 +12005,7 @@ Prefab:
     - target: {fileID: 114693649380087578, guid: d1c817e0494f440cc8450ae5bfb6b908,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114693649380087578, guid: d1c817e0494f440cc8450ae5bfb6b908,
         type: 2}
@@ -18896,7 +18896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1448980011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18924,7 +18924,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.5
   m_ReferenceResolution: {x: 800, y: 600}
@@ -19562,7 +19562,7 @@ Prefab:
       objectReference: {fileID: 644018521}
     - target: {fileID: 1991398309223772, guid: 49b1e94ec9a3544d49f6416ecab36da8, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114220323034462068, guid: 49b1e94ec9a3544d49f6416ecab36da8,
         type: 2}
@@ -19597,7 +19597,7 @@ Prefab:
     - target: {fileID: 114301660340601862, guid: 49b1e94ec9a3544d49f6416ecab36da8,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114301660340601862, guid: 49b1e94ec9a3544d49f6416ecab36da8,
         type: 2}
@@ -23835,7 +23835,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.5
   m_ReferenceResolution: {x: 800, y: 600}

@@ -68,6 +68,7 @@ public class GameManager : Singleton<GameManager>
 	//bool used to check what type of game the kid is playing
 	GameMatch.GameType current_game_type;
 
+	GameMatch.HandAngle current_hand_angle = GameMatch.HandAngle.None;
 
 
 	//bool to deactivate player if the game is paused
@@ -102,12 +103,21 @@ public class GameManager : Singleton<GameManager>
 	{
 		
 	}
+		
+
+	//call this by UI Play Mode buttons to set the angle of the game
+	public void SetGameMathcHandAngle (GameMatch.HandAngle hand_angle)
+	{
+		current_hand_angle = hand_angle;
+		Debug.Log ("current_hand_angle " + current_hand_angle);
+	}
 
 
 	public void BaseStart (string music_title, GameMatch.GameType game_type)
 	{
 		//set the gametype, method called by the NameGameManager class
 		current_game_type = game_type;
+
 
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
@@ -340,11 +350,8 @@ public class GameManager : Singleton<GameManager>
 
 		SfxManager.Instance.Unmute ();
 
-
-
-
-
 	}
+
 
 	IEnumerator Resume ()
 	{
@@ -447,6 +454,7 @@ public class GameManager : Singleton<GameManager>
 
 
 		m.gameType = current_game_type;
+		m.handAngle = current_hand_angle;
 
 
 		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
