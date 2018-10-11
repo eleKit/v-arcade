@@ -92,6 +92,8 @@ public class GameManager : Singleton<GameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		//This bool is very important, without setting this the recording is lost
+		hc.enableRecordPlayback = true;
 		
 	}
 	
