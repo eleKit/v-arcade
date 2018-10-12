@@ -2227,7 +2227,7 @@ Prefab:
       objectReference: {fileID: 1487129208}
     - target: {fileID: 1873527200016450, guid: e121e969189f246c8b62b20a3efd6aa8, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114272292711086266, guid: e121e969189f246c8b62b20a3efd6aa8,
         type: 2}
@@ -2237,7 +2237,7 @@ Prefab:
     - target: {fileID: 114272292711086266, guid: e121e969189f246c8b62b20a3efd6aa8,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114272292711086266, guid: e121e969189f246c8b62b20a3efd6aa8,
         type: 2}
@@ -2916,7 +2916,7 @@ Prefab:
     - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114198012041737152, guid: 360f5290580e4437b9e94ad77ecf9433,
         type: 2}
@@ -3110,12 +3110,37 @@ Prefab:
     - target: {fileID: 114126831609095504, guid: 360f5290580e4437b9e94ad77ecf9433,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114126831609095504, guid: 360f5290580e4437b9e94ad77ecf9433,
         type: 2}
       propertyPath: m_ScaleFactor
       value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1170100721}
+    - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: OneHundredEightyTrue
+      objectReference: {fileID: 0}
+    - target: {fileID: 114976390668758772, guid: 360f5290580e4437b9e94ad77ecf9433,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 360f5290580e4437b9e94ad77ecf9433, type: 2}
@@ -5937,7 +5962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1096427947
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5985,7 +6010,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.6
   m_ReferenceResolution: {x: 800, y: 600}
@@ -6172,6 +6197,18 @@ SpriteRenderer:
   m_PrefabParentObject: {fileID: 212805774301810066, guid: 14a98dac12d1a41549a16164e825a022,
     type: 2}
   m_PrefabInternal: {fileID: 707227163}
+--- !u!114 &1170100721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1170100717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c15b0c6efadc4b71ac09737a4da52f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hand_controller: {fileID: 874154854}
 --- !u!95 &1170100722 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95738787457285330, guid: 14a98dac12d1a41549a16164e825a022,
@@ -6480,7 +6517,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1277734240254358, guid: 1bf034e253c594a2294a132d68a8dfed, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 223919168663899832, guid: 1bf034e253c594a2294a132d68a8dfed,
         type: 2}
@@ -6495,7 +6532,7 @@ Prefab:
     - target: {fileID: 114566233280840582, guid: 1bf034e253c594a2294a132d68a8dfed,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114566233280840582, guid: 1bf034e253c594a2294a132d68a8dfed,
         type: 2}
@@ -6813,7 +6850,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1341683096
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6860,7 +6897,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.6
   m_ReferenceResolution: {x: 800, y: 600}
@@ -7221,7 +7258,7 @@ Prefab:
     - target: {fileID: 114380055371809106, guid: 505c510b0388f48509fd6d58960b2d09,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114380055371809106, guid: 505c510b0388f48509fd6d58960b2d09,
         type: 2}
@@ -7758,7 +7795,7 @@ Prefab:
       objectReference: {fileID: 1487129208}
     - target: {fileID: 1733626621821752, guid: ab978db347fab47eba95597c626c4c1f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114835187926361282, guid: ab978db347fab47eba95597c626c4c1f,
         type: 2}
@@ -7768,7 +7805,7 @@ Prefab:
     - target: {fileID: 114835187926361282, guid: ab978db347fab47eba95597c626c4c1f,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114835187926361282, guid: ab978db347fab47eba95597c626c4c1f,
         type: 2}
@@ -8775,7 +8812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1989834899
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8823,7 +8860,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1.6
   m_ReferenceResolution: {x: 800, y: 600}
@@ -9161,7 +9198,7 @@ Prefab:
     - target: {fileID: 114857035466153308, guid: 828e6339aff3546869223b91f9a7c6d3,
         type: 2}
       propertyPath: m_UiScaleMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114857035466153308, guid: 828e6339aff3546869223b91f9a7c6d3,
         type: 2}
