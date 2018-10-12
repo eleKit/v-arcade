@@ -17,7 +17,7 @@ public class CarManageGestureRecognizer : MonoBehaviour
 
 
 	// Use this for initialization
-	void Awake ()
+	void Start ()
 	{
 		hc = m_hand_controller.GetComponent<HandController> ();
 		ResetGesturesBool ();

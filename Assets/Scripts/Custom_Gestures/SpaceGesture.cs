@@ -73,7 +73,7 @@ public class SpaceGesture : MonoBehaviour
 
 
 	// Use this for initialization
-	void Awake ()
+	void Start ()
 	{
 		m_animator = this.GetComponent<Animator> ();
 		m_renderer = this.GetComponent<SpriteRenderer> ();
