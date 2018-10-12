@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceManageGestureRecognizer : MonoBehaviour
+public class SpaceManagerGestureRecognizer : MonoBehaviour
 {
 
 	public GameObject m_hand_controller;
@@ -65,4 +65,3 @@ public class SpaceManageGestureRecognizer : MonoBehaviour
 		one_hundred_and_eighty_hand = false;
 	}
 }
-
