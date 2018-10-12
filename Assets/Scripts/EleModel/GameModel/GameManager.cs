@@ -109,7 +109,6 @@ public class GameManager : Singleton<GameManager>
 	public void SetGameMathcHandAngle (GameMatch.HandAngle hand_angle)
 	{
 		current_hand_angle = hand_angle;
-		Debug.Log ("current_hand_angle " + current_hand_angle);
 	}
 
 
@@ -187,7 +186,7 @@ public class GameManager : Singleton<GameManager>
 	}
 
 
-	//overload of BaseChooseLevel, method used in case of a replay scene
+	//@Overload of BaseChooseLevel, method used in case of a replay scene
 	public void BaseChooseLevel (ReplayNamesOfPaths replay_path)
 	{
 		

@@ -33,7 +33,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	{
 		
 		directoryPath = Path.Combine (Application.persistentDataPath, 
-			Path.Combine ("Patients", Path.Combine (GlobalReplayData.globalReplayData.patient_folder_name, gameType.ToString ())));
+			Path.Combine ("Patients", Path.Combine (GlobalPlayerData.globalPlayerData.player, gameType.ToString ())));
 
 		there_are_no_replay = false;
 	}

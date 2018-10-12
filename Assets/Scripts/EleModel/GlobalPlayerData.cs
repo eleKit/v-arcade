@@ -25,7 +25,9 @@ public class GlobalPlayerData : MonoBehaviour
 
 
 
-	//use this for the first input of the player name
+	/* use this to select a player name 
+	 * function used in the Insert_player_name scene
+	 */
 	public void InitPlayer (string pl)
 	{
 		player = pl;
@@ -35,7 +37,9 @@ public class GlobalPlayerData : MonoBehaviour
 	}
 
 
-	//use this to load an existing player name
+	/* use this to load an existing player name
+	 * function used in the Main_Menu_Patient scene if the game has the not_repeatable (not repeatable name insertion) flag
+	 */
 	public void LoadPlayer ()
 	{
 		string pl = PlayerPrefs.GetString (GlobalPlayerData.player_prefs_name_child);

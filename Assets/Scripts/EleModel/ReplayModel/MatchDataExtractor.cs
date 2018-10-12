@@ -43,6 +43,17 @@ public class MatchDataExtractor : MonoBehaviour
 		
 	}
 
+	public GameMatch.HandAngle FromMatchDataToHandAngle (string match_data_path)
+	{
+
+		string matchString = File.ReadAllText (match_data_path);
+
+		GameMatch match_data = JsonUtility.FromJson<GameMatch> (matchString);
+
+		return match_data.handAngle;
+
+	}
+
 
 	public string FromMatchDataToLevelFilePath (string match_data_path, GameMatch.GameType g_type)
 	{

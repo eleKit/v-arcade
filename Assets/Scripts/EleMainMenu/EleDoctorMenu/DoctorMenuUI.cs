@@ -153,7 +153,8 @@ public class DoctorMenuUI : MonoBehaviour
 
 	public void SetPatientNameForReplay (int index)
 	{
-		GlobalReplayData.globalReplayData.patient_folder_name = patients [index + index_of_current_replay_patients_screen];
+		//TODO recuperare qui tutti i dati di tuning da inserire nel globar player data e usare lo stesso metodo nella futura scena di tuning threshold selections fatte dal medico
+		GlobalPlayerData.globalPlayerData.player = patients [index + index_of_current_replay_patients_screen];
 	}
 
 
