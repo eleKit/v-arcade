@@ -95,6 +95,11 @@ public class GameManager : Singleton<GameManager>
 	{
 		//This bool is very important, without setting this the recording is lost
 		hc.enableRecordPlayback = true;
+		hc.recorderLoop = false;
+		hc.recorderSpeed = 1.0f;
+		hc.handMovementScale = new Vector3 (1f, 1f, 1f);
+		if (replay)
+			hc.GetLeapRecorder ().speed = 1.0f;
 		
 	}
 	
@@ -335,7 +340,11 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		GameMenuScript.Instance.LoadPauseScreen ();
+		if (replay) {
+			ReplayManagerUI.Instance.LoadPauseScren ();
+		} else {
+			GameMenuScript.Instance.LoadPauseScreen ();
+		}
 
 	}
 
@@ -396,7 +405,12 @@ public class GameManager : Singleton<GameManager>
 		is_playing = false;
 
 		SfxManager.Instance.Play ("win_jingle");
-		GameMenuScript.Instance.LoadWinScreen (score);
+
+		if (replay) {
+			ReplayManagerUI.Instance.LoadEndScreen ();
+		} else {
+			GameMenuScript.Instance.LoadWinScreen (score);
+		}
 
 		StartCoroutine (WinCoroutine ());
 	}

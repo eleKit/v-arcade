@@ -6,6 +6,15 @@ using POLIMIGameCollective;
 
 public class CoinCollectScript : MonoBehaviour
 {
+	/* This class is used by all the games (and the replays), 
+	 * it add points when the coin is collected.
+	 * When instantiated in the scene the bool indicating what kind of game is playing is set as True
+	 * 
+	 * N.B since aliens are enemies the Space Game uses a different script (EnemyShot.cs)
+	 */
+
+	//bool used to check what type of game is playing
+	bool car, music, shooting;
 
 	/* Shooting game attributes */
 
@@ -19,6 +28,29 @@ public class CoinCollectScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		SetBoolToFalse ();
+		string current_scene = SceneManager.GetActiveScene ().name;
+
+		switch (current_scene) {
+		case ("Car_game"):
+			car = true;
+			break;
+		case ("Car_replay"):
+			car = true;
+			break;
+		case ("Shooting_game"):
+			shooting = true;
+			break;
+		case ("Shooting_replay"):
+			shooting = true;
+			break;
+		case ("Music_game"):
+			music = true;
+			break;
+		case ("Music_replay"):
+			music = true;
+			break;
+		}
 		
 	}
 	
@@ -28,13 +60,20 @@ public class CoinCollectScript : MonoBehaviour
 		
 	}
 
+	//used inside the start function
+	void SetBoolToFalse ()
+	{
+		car = false;
+		music = false;
+		shooting = false;
+	}
 
 	/* Scripts used by car game */
 
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		
-		if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
+		if (car) {
 			this.gameObject.SetActive (false);
 			CarManager.Instance.AddPoints ();
 			Debug.Log ("Collect diamond");
@@ -61,7 +100,7 @@ public class CoinCollectScript : MonoBehaviour
 			*/
 		} 
 
-		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
+		if (music) {
 
 			Debug.Log ("inside trigger");
 
@@ -78,7 +117,7 @@ public class CoinCollectScript : MonoBehaviour
 		}
 
 
-		if (SceneManager.GetActiveScene ().name.Equals ("Shooting_game")) {
+		if (shooting) {
 			if (other.gameObject.CompareTag ("Player")) {
 				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.white)) {
 
@@ -94,7 +133,7 @@ public class CoinCollectScript : MonoBehaviour
 	void OnTriggerExit2D (Collider2D other)
 	{
 		
-		if (SceneManager.GetActiveScene ().name.Equals ("Music_game")) {
+		if (music) {
 
 			//deactivate the pink hand | blue hand
 			other.gameObject.SetActive (false);
@@ -110,7 +149,7 @@ public class CoinCollectScript : MonoBehaviour
 			
 		}
 
-		/*if (SceneManager.GetActiveScene ().name.Equals ("Car_game")) {
+		/*if (car) {
 			
 			//set the arrow (and arrow children element) color when the trigger is deactivated
 			//GetComponentsInchildren returns also the parent component in the array
