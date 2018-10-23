@@ -12,7 +12,7 @@ public class CarManager : Singleton<CarManager>
 	//attribute used to set the winning point coordinates
 	public GameObject winning_Point;
 
-	public Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
+	Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
 
 	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();

@@ -132,6 +132,10 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 			MusicGameReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 			 loadreplay
 		}*/
+
+		if (gameType.Equals (GameMatch.GameType.Space)) {
+			SpaceGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+		}
 	}
 
 
