@@ -16,7 +16,7 @@ public class SpaceManagerGestureRecognizer : MonoBehaviour
 
 
 	// Use this for initialization
-	void Start ()
+	void Awake ()
 	{
 		hc = m_hand_controller.GetComponent<HandController> ();
 

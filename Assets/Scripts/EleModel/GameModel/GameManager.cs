@@ -96,7 +96,7 @@ public class GameManager : Singleton<GameManager>
 		//This bool is very important, without setting this the recording is lost
 		hc.enableRecordPlayback = true;
 		hc.recorderLoop = false;
-		hc.recorderSpeed = 1.0f;
+		hc.recorderSpeed = 1f;
 		hc.handMovementScale = new Vector3 (1f, 1f, 1f);
 		if (replay)
 			hc.GetLeapRecorder ().speed = 1.0f;
