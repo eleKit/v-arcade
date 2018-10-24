@@ -68,9 +68,9 @@ public class DriveYawGesture : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	public void YawFixedUpdate ()
+	public void YawUpdate ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		if (hc.GetFrame ().Hands.Count == 1) {
 
 			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
 
@@ -80,12 +80,12 @@ public class DriveYawGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 
 			/*if this is a right hand the bool is false and in the CheckYawDriveGesture (left)
 				 * it is used the right_yaw_threshold 
 				 */
-			CheckYawDriveGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
+			CheckYawDriveGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
 
 				
 

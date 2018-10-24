@@ -30,12 +30,12 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		if (ninety_deg_hand) {
 			drive_pitch_gesture.PitchFixedUpdate ();
 		} else if (one_hundred_and_eighty_hand) {
-			drive_yaw_gesture.YawFixedUpdate ();
+			drive_yaw_gesture.YawUpdate ();
 		} else if (roll_hand) {
 			car_controller_script.RollFixedUpdate ();
 		}
