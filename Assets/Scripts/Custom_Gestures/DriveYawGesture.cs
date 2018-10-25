@@ -87,8 +87,6 @@ public class DriveYawGesture : MonoBehaviour
 				 */
 			CheckYawDriveGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
 
-				
-
 			
 		}
 
@@ -119,8 +117,8 @@ public class DriveYawGesture : MonoBehaviour
 		if (current_yaw < threshold) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
-				transform.Translate (Vector3.left * Time.deltaTime * speed);
+			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
+				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
 			}
 
 
@@ -128,8 +126,8 @@ public class DriveYawGesture : MonoBehaviour
 		} else if (current_yaw > (-threshold)) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
-				transform.Translate (Vector3.right * Time.deltaTime * speed);
+			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
 			}
 
 

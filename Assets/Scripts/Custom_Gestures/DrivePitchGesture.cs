@@ -113,17 +113,17 @@ public class DrivePitchGesture : MonoBehaviour
 		if (current_pitch < threshold) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
-				transform.Translate (Vector3.right * Time.deltaTime * speed);
+			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
 			}
 
 
 		} else if (current_pitch > (-threshold)) {
 
 			
-			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
 
-				transform.Translate (Vector3.left * Time.deltaTime * speed);
+				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
 			}
 
 
