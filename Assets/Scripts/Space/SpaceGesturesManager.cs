@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpaceManagerGestureRecognizer : MonoBehaviour
+public class SpaceGesturesManager : MonoBehaviour
 {
+
 
 	public GameObject m_hand_controller;
 
@@ -14,9 +15,8 @@ public class SpaceManagerGestureRecognizer : MonoBehaviour
 
 	bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
-
 	// Use this for initialization
-	void Awake ()
+	void Start ()
 	{
 		hc = m_hand_controller.GetComponent<HandController> ();
 
@@ -25,19 +25,23 @@ public class SpaceManagerGestureRecognizer : MonoBehaviour
 		space_yaw_gesture = this.GetComponent<SpaceGesture> ();
 		//space_pitch_gesture = this.GetComponent<SpacePitchGesture> ();
 
+		Debug.Log ("start space gesture here");
+		//TODO make a choose button after (before?) the choose spaceship colour screen 
+		OneHundredEightyTrue ();
 
+		
 	}
-
+	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		if (ninety_deg_hand) {
 			//space_pitch_gesture.PitchFixedUpdate ();
 		} else if (one_hundred_and_eighty_hand) {
-			space_yaw_gesture.YawFixedUpdate ();
+			space_yaw_gesture.YawUpdate ();
 		}
+		
 	}
-
 
 	public void NinetyTrue ()
 	{
@@ -53,11 +57,10 @@ public class SpaceManagerGestureRecognizer : MonoBehaviour
 		ninety_deg_hand = false;
 
 		one_hundred_and_eighty_hand = true;
-		space_yaw_gesture.SetHandController (hc);
+		space_yaw_gesture.YawStart (hc);
 		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.One_hundred);
 
 	}
-
 
 	public void ResetGesturesBool ()
 	{

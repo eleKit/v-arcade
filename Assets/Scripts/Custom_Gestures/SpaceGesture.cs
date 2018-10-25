@@ -73,7 +73,7 @@ public class SpaceGesture : MonoBehaviour
 
 
 	// Use this for initialization
-	void Start ()
+	public void YawStart (HandController hand_controller)
 	{
 		m_animator = this.GetComponent<Animator> ();
 		m_renderer = this.GetComponent<SpriteRenderer> ();
@@ -84,23 +84,16 @@ public class SpaceGesture : MonoBehaviour
 		left_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 		right_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
 
-	}
-
-	// Update is called once per frame
-	void Update ()
-	{
-		
-	}
-
-	public void SetHandController (HandController hand_controller)
-	{
 		hc = hand_controller;
+
 	}
+
+
 
 	//method called by the SpaceGestureREcognizerManager
-	public void YawFixedUpdate ()
+	public void YawUpdate ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		if (hc.GetFrame ().Hands.Count == 1) {
 
 
 			//change pointer colour
@@ -114,7 +107,7 @@ public class SpaceGesture : MonoBehaviour
 			//save average list
 			if (yaw_average.Count >= num_frames_in_yaw_average_list && frames_since_last_reconnection >= K_lost) {
 
-				CheckMoveSpaceshipGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
+				CheckMoveSpaceshipGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
 
 				//change pointer colour
 				if (m_renderer.color.Equals (medium_white)) {
@@ -126,7 +119,7 @@ public class SpaceGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 
 
 

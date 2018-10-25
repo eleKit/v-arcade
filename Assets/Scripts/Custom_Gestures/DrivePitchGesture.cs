@@ -67,9 +67,9 @@ public class DrivePitchGesture : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	public void PitchFixedUpdate ()
+	public void PitchUpdate ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		if (hc.GetFrame ().Hands.Count == 1) {
 
 			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
 
@@ -83,7 +83,7 @@ public class DrivePitchGesture : MonoBehaviour
 			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
 
 	
-			CheckPitchPushGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
+			CheckPitchPushGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
 
 
 		}

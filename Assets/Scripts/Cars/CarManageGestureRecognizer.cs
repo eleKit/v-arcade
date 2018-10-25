@@ -33,7 +33,7 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	void Update ()
 	{
 		if (ninety_deg_hand) {
-			drive_pitch_gesture.PitchFixedUpdate ();
+			drive_pitch_gesture.PitchUpdate ();
 		} else if (one_hundred_and_eighty_hand) {
 			drive_yaw_gesture.YawUpdate ();
 		} else if (roll_hand) {
