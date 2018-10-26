@@ -138,7 +138,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		
 		ResetPath ();
 		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
-		SpacePathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Car));
+		SpacePathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Space));
 
 		//Set the hand angle in the gesture recognizer to use the correct Custom_Gesture recognizer
 		angle_setter.SetHandAngleInGestureRecognizer (extractor.FromMatchDataToHandAngle (path.match_data_path));

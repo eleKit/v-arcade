@@ -341,7 +341,7 @@ public class GameManager : Singleton<GameManager>
 		player.SetActive (false);
 
 		if (replay) {
-			ReplayManagerUI.Instance.LoadPauseScren ();
+			ReplayManagerUI.Instance.LoadPauseScreen ();
 		} else {
 			GameMenuScript.Instance.LoadPauseScreen ();
 		}

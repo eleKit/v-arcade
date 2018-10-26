@@ -139,7 +139,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	}
 
 	/* use this only from Instruction Screen and from Level Screen
-	 * otherwise use FromGameToMenu()
+	 * otherwise use FromGameToMenu() --> see below
 	 */
 	public void LoadMenu ()
 	{
@@ -151,6 +151,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 			m_no_level_text.SetActive (true);
 	}
 
+	/*Use this function inside the game to clear the game scene 
+	 * and then load the Menu Screen
+	 */
 	public void FromGameToMenu ()
 	{
 		if (car) {

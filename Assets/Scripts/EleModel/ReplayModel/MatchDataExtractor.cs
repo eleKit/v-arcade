@@ -71,7 +71,8 @@ public class MatchDataExtractor : MonoBehaviour
 			                      g_type.ToString () + "_" + FromNameToFilename (level_name) + "_*.json");
 
 		int index = 0;
-		
+
+
 		for (int i = 0; i < game_paths.Length; i++) {
 			//check for the level with the correspondent name inside the directory of levels
 			string i_level_name = Path.GetFileName (game_paths [i]).Split ('_') [1];

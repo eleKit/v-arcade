@@ -8,7 +8,7 @@ public class SetReplayHandAngle : MonoBehaviour
 
 
 	public CarManageGestureRecognizer car_g_recognizer;
-	//TODO public SpaceManageGestureRecognizer space_g_recognizer;
+	public SpaceGesturesManager space_g_recognizer;
 
 	// Use this for initialization
 	void Start ()
@@ -43,8 +43,8 @@ public class SetReplayHandAngle : MonoBehaviour
 				Debug.LogError ("wrong HandAngle!");
 				break;
 			}
-		} /* TODO else if (space_g_recognizer != null) {
-				switch (hand_angle) {
+		} else if (space_g_recognizer != null) {
+			switch (hand_angle) {
 			case GameMatch.HandAngle.Ninety:
 				space_g_recognizer.NinetyTrue ();
 				break;
@@ -60,6 +60,6 @@ public class SetReplayHandAngle : MonoBehaviour
 				Debug.LogError ("wrong HandAngle!");
 				break;
 			}
-		}*/
+		}
 	}
 }

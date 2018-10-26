@@ -85,6 +85,9 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	}
 
 
+
+
+	//use this to load the first screen in the scene, the one with the list of the player replays
 	public void LoadReplayListScreen ()
 	{
 		ClearScreens ();
@@ -92,9 +95,31 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 		LoadFirstReplayButtons ();
 	}
 
+	/*Use this function inside the replay to clear the game scene 
+	 * and then load the Replay List Screen
+	 */
+	public void FromGameToReplayList ()
+	{
+		switch (gameType) {
+		case GameMatch.GameType.Car:
+			CarManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Shooting:
+			ShootingManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Music:
+			MusicGameManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Space:
+			SpaceGameManager.Instance.ToMenu ();
+			break;
+		}
+		LoadReplayListScreen ();
+	}
 
 
-	public void LoadPauseScren ()
+
+	public void LoadPauseScreen ()
 	{
 		ClearScreens ();
 		pause_screen.SetActive (true);
@@ -139,7 +164,50 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 	}
 
 
+	public void RestartReplay ()
+	{
+		ClearScreens ();
+		Debug.LogError ("RestartLevel function is absent! do the overload");
 
+		//TODO overload the RestartLevel () in order to use the replay instead of the path
+		/*if (car) {
+			CarManager.Instance.RestartLevel ();
+		}
+		if (music) {
+			MusicGameManager.Instance.RestartLevel ();
+		}
+		if (shooting) {
+			ShootingManager.Instance.RestartLevel ();
+		}
+		if (space) {
+			SpaceGameManager.Instance.RestartLevel ();
+		}
+		*/
+
+	}
+
+	/* observe that ResumeLevel() is the same for game and replay:
+	 * see GameManager > BaseResumeLevel ()
+	 */
+	public void ResumeReplay ()
+	{
+		ClearScreens ();
+
+		switch (gameType) {
+		case GameMatch.GameType.Car:
+			CarManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Music:
+			MusicGameManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Shooting:
+			ShootingManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Space:
+			SpaceGameManager.Instance.ResumeLevel ();
+			break;
+		}
+	}
 
 
 	public void PushedOnArrow ()
