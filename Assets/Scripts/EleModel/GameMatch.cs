@@ -35,7 +35,11 @@ public class GameMatch
 
 	public string id_path;
 
-	public int score;
+	public float left_yaw_scale;
+	public float right_yaw_scale;
+
+	public float left_pitch_scale;
+	public float right_pitch_scale;
 
 }
 

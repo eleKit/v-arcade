@@ -465,9 +465,17 @@ public class GameManager : Singleton<GameManager>
 		m.id_path = current_path;
 
 
-
+		//save the game type
 		m.gameType = current_game_type;
+
+		//save the hand orientation
 		m.handAngle = current_hand_angle;
+
+		//set the thresholds used in the match 
+		m.left_pitch_scale = GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		m.right_pitch_scale = GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+		m.left_yaw_scale = GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
+		m.right_yaw_scale = GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
 
 
 		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
