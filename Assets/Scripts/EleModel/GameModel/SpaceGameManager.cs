@@ -131,7 +131,7 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
 		SetReplayHandAngle angle_setter = GetComponent<SetReplayHandAngle> ();
 
-		GameManager.Instance.BaseChooseLevel (path);
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
 
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;

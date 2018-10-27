@@ -84,7 +84,7 @@ public class CarManager : Singleton<CarManager>
 		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
 		SetReplayHandAngle angle_setter = GetComponent<SetReplayHandAngle> ();
 
-		GameManager.Instance.BaseChooseLevel (path);
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
 		ResetPlayer ();
 		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
 		CarPathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Car));

@@ -7,6 +7,8 @@ public class MatchDataExtractor : MonoBehaviour
 {
 	string directoryPath;
 
+	string music_dataPath = "Assets/MusicTexts";
+
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
@@ -54,7 +56,20 @@ public class MatchDataExtractor : MonoBehaviour
 
 	}
 
+	//used to extract the path of the music game level (it is inside the assets in local)
+	public string FromMatchDataToMusicFilePath (string match_data_path)
+	{
 
+		// the name of the level i'm searching for
+		string music_name = FromMatchDataToLevelName (match_data_path);
+
+		string music_path = Path.Combine (music_dataPath, music_name + ".txt");
+
+		return music_path;
+
+	}
+
+	//used to extract the path of the any game level that uses the Persistent Data Path
 	public string FromMatchDataToLevelFilePath (string match_data_path, GameMatch.GameType g_type)
 	{
 		

@@ -22,7 +22,12 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public bool no_more_hands;
 
+	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+
+	//attribute used to load a replay
+	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
+
 
 	// Use this for initialization
 	void Start ()
@@ -42,7 +47,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		GameManager.Instance.BaseUpdate ();
 
@@ -83,18 +88,22 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 		loaded_path = path;
 
-
-
-
-
 		MusicPathGenerator.Instance.SetupMusicPath (path.file_path);
-
-
-
 		GameManager.Instance.BaseChooseLevel (path.name);
 
+	}
 
 
+	//@Overload for the Replay of a match
+	public void ChooseLevel (ReplayNamesOfPaths path)
+	{
+		path_to_replay = path;
+		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+		ResetPath ();
+
+		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
+		MusicPathGenerator.Instance.SetupMusicPath (extractor.FromMatchDataToMusicFilePath (path.match_data_path));
 
 	}
 

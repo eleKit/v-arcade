@@ -194,7 +194,7 @@ public class GameManager : Singleton<GameManager>
 
 
 	//@Overload of BaseChooseLevel, method used in case of a replay scene
-	public void BaseChooseLevel (ReplayNamesOfPaths replay_path)
+	public void BaseChooseLevel (ReplayNamesOfPaths replay_path, string name)
 	{
 		
 
@@ -203,6 +203,8 @@ public class GameManager : Singleton<GameManager>
 
 		//save the recording path used to load the replay inside the hand controller
 		hand_data_file_path = replay_path.hand_data_path;
+
+		current_path = name;
 
 		StartCoroutine (LoadLevel ());
 	}

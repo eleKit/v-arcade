@@ -146,11 +146,12 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 			ShootingReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 			+ loadreplay
 			}
+			*/
 		
-		if (music) {
-			MusicGameReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
-			 loadreplay
-		}*/
+		if (gameType.Equals (GameMatch.GameType.Music)) {
+			MusicGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+
+		}
 
 		if (gameType.Equals (GameMatch.GameType.Space)) {
 			SpaceGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
@@ -297,9 +298,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 				// using the 
 				string match_date = Path.GetFileName (replay_paths [i]).Split ('_') [1];
 
-				names_of_replays [i].match_data_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");
-				Debug.Log ("complete match_path " + names_of_replays [i].match_data_path);
-			
+				names_of_replays [i].match_data_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");			
 
 
 

@@ -2361,7 +2361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0.8078432, b: 0.6313726, a: 1}
+  m_Color: {r: 0.21176471, g: 0.49019608, b: 0.7647059, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2391,6 +2391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687643549}
   - component: {fileID: 687643548}
+  - component: {fileID: 687643550}
   m_Layer: 0
   m_Name: MusicGameManager
   m_TagString: Untagged
@@ -2430,6 +2431,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &687643550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 687643547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b52c74e4367b046e3a111fa0428398b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &709644409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4622,7 +4634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: e22f642b3a48d4d4298ff1018a758c62, type: 3}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6600,7 +6612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1652666520
 RectTransform:
   m_ObjectHideFlags: 0
