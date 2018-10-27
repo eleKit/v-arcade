@@ -97,9 +97,11 @@ public class GameManager : Singleton<GameManager>
 		hc.enableRecordPlayback = true;
 		hc.recorderLoop = false;
 		hc.recorderSpeed = 1f;
+		//TODO check what of these is fundamental
 		hc.handMovementScale = new Vector3 (1f, 1f, 1f);
-		if (replay)
+		/*if (replay)
 			hc.GetLeapRecorder ().speed = 1.0f;
+			*/
 		
 	}
 	

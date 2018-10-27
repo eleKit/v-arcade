@@ -31,10 +31,12 @@ public class SpaceGesturesManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (ninety_deg_hand) {
-			//space_pitch_gesture.PitchFixedUpdate ();
-		} else if (one_hundred_and_eighty_hand) {
-			space_yaw_gesture.YawUpdate ();
+		if (GameManager.Instance.Get_Is_Playing ()) {
+			if (ninety_deg_hand) {
+				//space_pitch_gesture.PitchFixedUpdate ();
+			} else if (one_hundred_and_eighty_hand) {
+				space_yaw_gesture.YawUpdate ();
+			}
 		}
 		
 	}
