@@ -29,20 +29,14 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 
 
-	void Awake ()
+	// Use this for initialization
+	void Start ()
 	{
-		
 		directoryPath = Path.Combine (Application.persistentDataPath, 
 			Path.Combine ("Patients", Path.Combine (GlobalPlayerData.globalPlayerData.player, gameType.ToString ())));
 
 		there_are_no_replay = false;
-	}
-
-
-
-	// Use this for initialization
-	void Start ()
-	{
+	
 		LoadReplayUI ();
 	}
 	
@@ -254,6 +248,16 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 					replay_list_buttons [i].GetComponentInChildren<Text> ().text = "";
 					replay_list_buttons [i].interactable = false;
 				}
+			}
+		} else {
+			/* if the names_of_replays is null then:
+			 * It doesn't exist the Replays folder of the game
+			 * So all the buttons must be non-interactable
+			 */
+			for (int i = 0; i < replay_list_buttons.Length; i++) {
+				//if there are no more replays
+				replay_list_buttons [i].GetComponentInChildren<Text> ().text = "";
+				replay_list_buttons [i].interactable = false;
 			}
 		}
 
