@@ -11,12 +11,13 @@ public class SpaceGesturesManager : MonoBehaviour
 	private HandController hc;
 
 	SpaceGesture space_yaw_gesture;
-	//SpacePitchGesture space_pitch_gesture;
+	//TODO SpacePitchGesture space_pitch_gesture;
 
 	bool ninety_deg_hand, one_hundred_and_eighty_hand;
 
 	// Use this for initialization
-	void Start ()
+	//Awake is called even if the GO in the scene is not active like in this case)
+	void Awake ()
 	{
 		hc = m_hand_controller.GetComponent<HandController> ();
 
@@ -25,11 +26,6 @@ public class SpaceGesturesManager : MonoBehaviour
 		space_yaw_gesture = this.GetComponent<SpaceGesture> ();
 		//space_pitch_gesture = this.GetComponent<SpacePitchGesture> ();
 
-		Debug.Log ("start space gesture here");
-		//TODO make a choose button after (before?) the choose spaceship colour screen 
-		OneHundredEightyTrue ();
-
-		
 	}
 	
 	// Update is called once per frame

@@ -115,16 +115,18 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 		if (m_win_screen != null)
 			m_win_screen.SetActive (false);
-		if (car) {
+		if (car || space) {
 			if (m_mode_screen != null)
 				m_mode_screen.SetActive (false);
-			if (m_car_colours_screen != null)
-				m_car_colours_screen.SetActive (false);
-		}
+			if (car) {
+				if (m_car_colours_screen != null)
+					m_car_colours_screen.SetActive (false);
+			}
 
-		if (space) {
-			if (m_space_colours_screen != null)
-				m_space_colours_screen.SetActive (false);
+			if (space) {
+				if (m_space_colours_screen != null)
+					m_space_colours_screen.SetActive (false);
+			}
 		}
 
 	}
@@ -200,11 +202,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public void LoadModeScreen ()
 	{
-		if (car) {
+		if (car || space) {
 			ClearScreens ();
 			m_mode_screen.SetActive (true);
-		} else if (space) {
-			LoadSpaceColourScreen ();
 		} else {
 			LoadLevelScreen ();
 		}
