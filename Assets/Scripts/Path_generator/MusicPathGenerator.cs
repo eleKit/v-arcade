@@ -56,8 +56,8 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 		if (GameManager.Instance.Get_Is_Playing ()) {
 
 			//at every update the time goes down to
-			delta_spawn_time_left += Time.deltaTime;
-			delta_spawn_time_right += Time.deltaTime;
+			delta_spawn_time_left += Time.smoothDeltaTime;
+			delta_spawn_time_right += Time.smoothDeltaTime;
 
 			if (left < instantiationTimer_left.Length) {
 				

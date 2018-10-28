@@ -2410,7 +2410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24c112bbf1be46409486591307bc8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_button_movement_offset: 0.02
+  m_button_movement_offset: 1
   right_trigger: 0
   left_trigger: 0
   m_left_yeah: {fileID: 1567027020}
@@ -10087,7 +10087,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.4784314, g: 0.654902, b: 0.82745105, a: 0}
+  m_BackGroundColor: {r: 0.21176471, g: 0.49019608, b: 0.7647059, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

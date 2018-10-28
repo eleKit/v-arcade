@@ -6,7 +6,7 @@ using System.IO;
 
 public class MusicGameManager : Singleton<MusicGameManager>
 {
-	[Range (0f, 0.5f)]
+	[Range (0f, 5f)]
 	public float m_button_movement_offset = 0.1f;
 
 	public bool right_trigger;
@@ -27,6 +27,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	//attribute used to load a replay
 	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
+
+	string current_music_name = "";
 
 
 	// Use this for initialization
@@ -55,14 +57,14 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("LeftButton")) {
 				button.transform.position = new Vector3 (
-					button.transform.position.x + m_button_movement_offset,
+					button.transform.position.x + (Time.deltaTime * m_button_movement_offset),
 					button.transform.position.y,
 					button.transform.position.z);
 			}
 
 			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("RightButton")) {
 				button.transform.position = new Vector3 (
-					button.transform.position.x + m_button_movement_offset,
+					button.transform.position.x + (Time.deltaTime * m_button_movement_offset),
 					button.transform.position.y,
 					button.transform.position.z);
 			}
@@ -70,7 +72,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 			if (GameObject.FindGameObjectsWithTag ("RightButton").Length == 0
 			    && GameObject.FindGameObjectsWithTag ("LeftButton").Length == 0
-			    && no_more_hands && !MusicManager.Instance.isPlaying (loaded_path.name)) {
+			    && no_more_hands && !MusicManager.Instance.isPlaying (current_music_name)) {
 				WinLevel ();		
 			}
 		} else {
@@ -87,6 +89,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		no_more_hands = false;
 
 		loaded_path = path;
+		current_music_name = loaded_path.name;
 
 		MusicPathGenerator.Instance.SetupMusicPath (path.file_path);
 		GameManager.Instance.BaseChooseLevel (path.name);
@@ -99,6 +102,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		path_to_replay = path;
 		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		current_music_name = extractor.FromMatchDataToLevelName (path.match_data_path);
+
 		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
 		ResetPath ();
 

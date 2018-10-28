@@ -3581,7 +3581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24c112bbf1be46409486591307bc8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_button_movement_offset: 0.02
+  m_button_movement_offset: 1
   right_trigger: 0
   left_trigger: 0
   m_left_yeah: {fileID: 1686708142}
