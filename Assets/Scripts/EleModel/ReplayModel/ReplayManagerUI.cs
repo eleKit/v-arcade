@@ -142,11 +142,11 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 			CarManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 		}
 
-		/*if (shooting) {
-			ShootingReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
-			+ loadreplay
-			}
-			*/
+		if (gameType.Equals (GameMatch.GameType.Shooting)) {
+			ShootingManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+
+		}
+			
 		
 		if (gameType.Equals (GameMatch.GameType.Music)) {
 			MusicGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);

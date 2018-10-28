@@ -7832,22 +7832,22 @@ Prefab:
     - target: {fileID: 224484932840109366, guid: 01b341018f7c14b84ad659448072b868,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224484932840109366, guid: 01b341018f7c14b84ad659448072b868,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224484932840109366, guid: 01b341018f7c14b84ad659448072b868,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 399.99997
       objectReference: {fileID: 0}
     - target: {fileID: 224484932840109366, guid: 01b341018f7c14b84ad659448072b868,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -253.96016
       objectReference: {fileID: 0}
     - target: {fileID: 224487943191190606, guid: 01b341018f7c14b84ad659448072b868,
         type: 2}
@@ -7958,6 +7958,10 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936679816857568, guid: 01b341018f7c14b84ad659448072b868, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01b341018f7c14b84ad659448072b868, type: 2}
