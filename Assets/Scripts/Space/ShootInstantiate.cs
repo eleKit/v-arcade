@@ -18,7 +18,7 @@ public class ShootInstantiate : MonoBehaviour
 
 
 
-	[Range (0f, 5f)]
+	[Range (0f, 10f)]
 	public float delta_t = 2f;
 
 	float spawn_time = 0f;
@@ -27,7 +27,9 @@ public class ShootInstantiate : MonoBehaviour
 	float one_step_value;
 	float steps_counter = 0;
 
-	bool start_game, coroutine_started;
+	bool coroutine_started;
+
+	float t, t1;
 
 	/*player gameobject used to instantiate the shot in the correct position even if the game is paused but the Shoot () instantiation 
 	 * Coroutine is already started
@@ -42,9 +44,15 @@ public class ShootInstantiate : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		start_game = false;
+		t = TimerManager.Instance.m_time_of_Timer - delta_t;
+
 		coroutine_started = false;
 		one_step_value = delta_t / loading_bar.Length;
+
+		t1 = TimerManager.Instance.m_time_of_Timer - one_step_value;
+
+		ClearLoadingBar ();
+		ResetLoadingBar ();
 
 
 	}
@@ -54,44 +62,35 @@ public class ShootInstantiate : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (GameManager.Instance.Get_Is_Playing () && !start_game) {
-			StartShootTimer ();
-			start_game = true;
 
-			ClearLoadingBar ();
-			ResetLoadingBar ();
 
-		}
 
-		if (start_game) {
-			if (GameManager.Instance.Get_Is_Playing ()) {
+		if (GameManager.Instance.Get_Is_Playing ()) {
 			
-				if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-				    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
+			if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
+			    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
 
-					spawn_time += Time.deltaTime;
 
-					if (spawn_time > steps_counter) {
+				if (TimerManager.Instance.GetTimer () < t1) {
 					
-						if (index < loading_bar.Length) {
-							//ClearLoadingBar ();
-							loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
-						}
-						index++;
-						steps_counter = one_step_value * (index + 1);
+					if (index < loading_bar.Length) {
+						//ClearLoadingBar ();
+						loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color [index];
 					}
+					index++;
+					t1 = t1 - one_step_value;
+				}
 
-					if (spawn_time > delta_t && !coroutine_started) {
+				if (TimerManager.Instance.GetTimer () < t && !coroutine_started) {
 
-						StartCoroutine (Shoot ());
-					}
+					StartCoroutine (Shoot ());
 				}
 			}
 		}
-
-
-
 	}
+
+
+
 
 
 	IEnumerator Shoot ()
@@ -118,17 +117,14 @@ public class ShootInstantiate : MonoBehaviour
 		yield return new WaitForSeconds (0.5f);
 
 
-		spawn_time = 0f;
+		t = TimerManager.Instance.GetTimer () - delta_t;
 		ClearLoadingBar ();
 		ResetLoadingBar ();
 		coroutine_started = false;
 	}
 
 
-	void StartShootTimer ()
-	{
-		spawn_time = 0f;
-	}
+
 
 	void ClearLoadingBar ()
 	{
@@ -143,7 +139,7 @@ public class ShootInstantiate : MonoBehaviour
 	void ResetLoadingBar ()
 	{
 		index = 0;
-		steps_counter = one_step_value;
+		t1 = TimerManager.Instance.GetTimer () - one_step_value;
 		//loading_bar [index].GetComponent<SpriteRenderer> ().color = m_loading_bar_color;
 	}
 

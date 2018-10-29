@@ -29,7 +29,7 @@ public class EnemyMovement : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		t0 = SpaceGameManager.Instance.m_time_of_Timer;
+		t0 = TimerManager.Instance.m_time_of_Timer;
 		delta_t = t0 / m_num_of_enemies_movements;
 		Debug.Log ("inital delta t " + delta_t.ToString ());
 		t1 = t0 - delta_t;
@@ -39,7 +39,7 @@ public class EnemyMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (SpaceGameManager.Instance.GetTimer () < t1 && !already_going_down && !GetComponent<EnemyShot> ().is_shot) {
+		if (TimerManager.Instance.GetTimer () < t1 && !already_going_down && !GetComponent<EnemyShot> ().is_shot) {
 
 			already_going_down = true;
 

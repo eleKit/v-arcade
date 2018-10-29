@@ -8,12 +8,6 @@ using UnityEngine.UI;
 public class SpaceGameManager : Singleton<SpaceGameManager>
 {
 
-	[Range (0f, 200f)]
-	public float m_time_of_Timer = 200f;
-
-	public Text m_timer_text;
-
-	float timer_of_game;
 
 	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
@@ -21,38 +15,27 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
 
 
-	//gameobject of the player used to check if the leap sees the hand so the timer can go on
-	GameObject pl;
+
 
 	//value never changed
 	Vector3 initial_player_pos = new Vector3 (0, -7f, 0);
 
 
-	void Awake ()
-	{
-		pl = GameObject.FindGameObjectWithTag ("Player");
-	}
+
 	// Use this for initialization
 	void Start ()
 	{
-		//set timer
-		timer_of_game = m_time_of_Timer;
-		int timer = (int)Mathf.Round (timer_of_game);
-		int min = timer / 60;
-		int sec = timer % 60;
-		m_timer_text.text = min.ToString () + ":" + sec.ToString ();
+		
+		/* set the GameType of the current game in the GameManager.cs 
+		 * (N.B. the UI manager that takes data from the gameManager.cs)
+		 */
 
 		GameManager.Instance.player_initial_pos = initial_player_pos;
 		GameManager.Instance.BaseStart ("SpaceGameMusic", GameMatch.GameType.Space);
 
-		/* set the bool of the current game in the game manager 
-		 * and in the GUI manager
-		 */
-
-
-		GameManager.Instance.player.transform.position = 
-			GameManager.Instance.player_initial_pos;
-
+	
+		// set the position of Player and then Deactivate it
+		GameManager.Instance.player.transform.position = GameManager.Instance.player_initial_pos;
 		GameManager.Instance.player.SetActive (false);
 		
 	}
@@ -64,19 +47,9 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		GameManager.Instance.BaseUpdate ();
 
 
-		//Timer text update
-		if (GameManager.Instance.Get_Is_Playing () &&
-		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
-			timer_of_game -= Time.deltaTime;
-			int timer = (int)Mathf.Round (timer_of_game);
-			int min = timer / 60;
-			int sec = timer % 60;
-			m_timer_text.text = min.ToString () + ":" + sec.ToString ();
-		}
 
 		//Win conditions check
-		if ((GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 || timer_of_game < 0) &&
+		if ((GameObject.FindGameObjectsWithTag ("Enemy").Length == 0 || TimerManager.Instance.GetTimer () < 0) &&
 		    GameManager.Instance.Get_Is_Playing ()) {
 			WinLevel ();
 		}
@@ -100,7 +73,8 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 	void ResetPath ()
 	{
-		timer_of_game = m_time_of_Timer;
+		//Reset the timer of the game
+		TimerManager.Instance.ResetTimer ();
 
 		foreach (GameObject enemy in GameObject.FindGameObjectsWithTag ("Enemy")) {
 			Destroy (enemy);
@@ -175,8 +149,5 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		return GameManager.Instance.Get_Is_Playing ();
 	}
 
-	public float GetTimer ()
-	{
-		return timer_of_game;
-	}
+
 }
