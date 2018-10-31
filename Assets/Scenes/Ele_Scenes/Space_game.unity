@@ -9220,12 +9220,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507f9b2d0402b4a2fa47c453b40c19ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparent_white: {r: 1, g: 1, b: 1, a: 0.2}
+  medium_white: {r: 1, g: 1, b: 1, a: 0.5}
+  solid_white: {r: 1, g: 1, b: 1, a: 1}
   m_hand_controller: {fileID: 874154854}
 --- !u!95 &1170100722 stripped
 Animator:
   m_PrefabParentObject: {fileID: 95738787457285330, guid: 14a98dac12d1a41549a16164e825a022,
     type: 2}
   m_PrefabInternal: {fileID: 707227163}
+--- !u!114 &1170100723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1170100717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c447711bd25049ca8b782bc846af634, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  K_lost: 30
+  num_frames_in_pitch_average_list: 6
+  speed: 5
+  x_movement: 1.65
 --- !u!1 &1170413928 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1923029551665296, guid: ef62540567cbd473497af13cc23da86d,

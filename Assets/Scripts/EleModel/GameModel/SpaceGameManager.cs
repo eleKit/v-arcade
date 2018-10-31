@@ -66,8 +66,8 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 		//Timer text update
 		if (GameManager.Instance.Get_Is_Playing () &&
-		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
+		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().transparent_white)
+		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().medium_white))) {
 			timer_of_game -= Time.deltaTime;
 			int timer = (int)Mathf.Round (timer_of_game);
 			int min = timer / 60;

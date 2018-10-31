@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Leap;
 using System.Linq;
 
-public class SpaceGesture : MonoBehaviour
+public class SpacePitchGesture : MonoBehaviour
 {
 
 	/* Space Gesture: a sliding movement made by all the fingers and the palm 
-	 * The wrist is not moved and the palm goes left and right (like the yaw part of the shooting gesture)
+	 * The wrist is not moved and the palm goes up and down (like the pitch part of the shooting gesture)
 	 * 
 	 * N.B. it can be done one gesture per second
 	 */
@@ -25,7 +24,7 @@ public class SpaceGesture : MonoBehaviour
 
 	//no more than K previous frames are taken into account
 	[Range (0, 20)]
-	public int num_frames_in_yaw_average_list = 6;
+	public int num_frames_in_pitch_average_list = 6;
 
 	//spaceship movements speed
 	[Range (0f, 30f)]
@@ -37,14 +36,14 @@ public class SpaceGesture : MonoBehaviour
 	private Color solid_white;
 
 	private HandController hc;
-	private LinkedList<float> yaw_average = new LinkedList<float> ();
+	private LinkedList<float> pitch_average = new LinkedList<float> ();
 
 	private int frames_since_last_reconnection;
 
 
 	// In order to recognize the gesture a minimum angle should be done by the hand movement in RAD
-	private float left_yaw_threshold = -15f;
-	private float right_yaw_threshold = -15f;
+	private float left_pitch_threshold = -15f;
+	private float right_pitch_threshold = -15f;
 
 	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
 	private float x_max_player_position = 16f;
@@ -66,29 +65,27 @@ public class SpaceGesture : MonoBehaviour
 
 
 
-
 	// Use this for initialization
-	public void YawStart (HandController hand_controller, Color t_white, Color m_white, Color s_white)
+	public void PitchStart (HandController handController, Color t_white, Color m_white, Color s_white)
 	{
+
 		m_animator = this.GetComponent<Animator> ();
 		m_renderer = this.GetComponent<SpriteRenderer> ();
 
 		frames_since_last_reconnection = 0;
 
-		//retreive hand thresholds
-		left_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
-		right_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
 
-		hc = hand_controller;
+		left_pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		right_pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+		hc = handController;
+
 		transparent_white = t_white;
 		medium_white = m_white;
 		solid_white = s_white;
 	}
 
-
-
-	//method called by the SpaceGestureREcognizerManager
-	public void YawUpdate ()
+	// Update is called once per frame
+	public void PitchUpdate ()
 	{
 		if (hc.GetFrame ().Hands.Count == 1) {
 
@@ -102,7 +99,7 @@ public class SpaceGesture : MonoBehaviour
 
 
 			//save average list
-			if (yaw_average.Count >= num_frames_in_yaw_average_list && frames_since_last_reconnection >= K_lost) {
+			if (pitch_average.Count >= num_frames_in_pitch_average_list && frames_since_last_reconnection >= K_lost) {
 
 				CheckMoveSpaceshipGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
 
@@ -111,12 +108,12 @@ public class SpaceGesture : MonoBehaviour
 					m_renderer.color = solid_white;
 				}
 			}
-			if (yaw_average.Count >= num_frames_in_yaw_average_list) {
+			if (pitch_average.Count >= num_frames_in_pitch_average_list) {
 
-				yaw_average.RemoveFirst ();
+				pitch_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
 
 
 
@@ -124,11 +121,16 @@ public class SpaceGesture : MonoBehaviour
 		} else {
 			//if no hand is visible change colour in black
 			m_renderer.color = transparent_white;
-			yaw_average.Clear ();
+			pitch_average.Clear ();
 
 			frames_since_last_reconnection = 0;
 		}
 	}
+
+
+
+
+
 
 
 
@@ -138,44 +140,42 @@ public class SpaceGesture : MonoBehaviour
 		float threshold;
 
 		if (is_left) {
-			threshold = left_yaw_threshold;
+			threshold = left_pitch_threshold;
 		} else {
-			threshold = right_yaw_threshold;
+			threshold = right_pitch_threshold;
 		}
 
-		float current_yaw = yaw_average.Average ();
+		float current_pitch = pitch_average.Average ();
 
 		//move left
-		if (current_yaw < threshold) {
+		if (current_pitch < threshold) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
 
-				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
 
 				//if spaceship is not already moving left the left-movement animation starts
-				if (!(m_animator.GetInteger ("direction") == 1)) {
-					m_animator.SetInteger ("direction", 1);
+				if (!(m_animator.GetInteger ("direction") == 2)) {
+					m_animator.SetInteger ("direction", 2);
 				}
 			}
 
 			//move right
-		} else if (current_yaw > (-threshold)) {
-			
+		} else if (current_pitch > (-threshold)) {
 
-			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
 
-				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
+			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
+
+				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
 
 				//if spaceship is not already moving right the right-movement animation starts
-				if (!(m_animator.GetInteger ("direction") == 2)) {
-					m_animator.SetInteger ("direction", 2);
+				if (!(m_animator.GetInteger ("direction") == 1)) {
+					m_animator.SetInteger ("direction", 1);
 				}
 			}
 
 
 		}
 	}
-
-
 }

@@ -66,8 +66,8 @@ public class ShootInstantiate : MonoBehaviour
 		if (start_game) {
 			if (GameManager.Instance.Get_Is_Playing ()) {
 			
-				if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-				    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
+				if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().transparent_white)
+				    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().medium_white))) {
 
 					spawn_time += Time.deltaTime;
 
