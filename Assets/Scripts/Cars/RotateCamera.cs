@@ -10,6 +10,11 @@ public class RotateCamera : MonoBehaviour
 	 * if the player is trainid ulnar/radial dev. the game camera is at 0 and the car moves up
 	 */
 
+	[Range (10f, 30f)]
+	public float m_rotated_camera_size = 14f;
+	public Vector3 m_rotated_camera_position;
+
+	Vector3 original_position;
 	Quaternion original_rotation;
 	float original_size;
 
@@ -18,6 +23,7 @@ public class RotateCamera : MonoBehaviour
 	void Start ()
 	{
 		original_rotation = transform.rotation;
+		original_position = transform.position;
 		original_size = this.GetComponent<Camera> ().orthographicSize;
 		
 	}
@@ -32,7 +38,8 @@ public class RotateCamera : MonoBehaviour
 	public void Rotate ()
 	{
 		this.transform.Rotate (Vector3.forward, 90f);
-		this.GetComponent<Camera> ().orthographicSize = 14f;
+		this.GetComponent<Camera> ().orthographicSize = m_rotated_camera_size;
+		this.transform.position = m_rotated_camera_position;
 
 	}
 
@@ -47,6 +54,7 @@ public class RotateCamera : MonoBehaviour
 	public void Reset ()
 	{
 		this.transform.rotation = original_rotation;
+		this.transform.position = original_position;
 		this.GetComponent<Camera> ().orthographicSize = original_size;
 	}
 }
