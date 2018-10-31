@@ -8384,6 +8384,16 @@ Prefab:
       propertyPath: debugging_save
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
+        type: 2}
+      propertyPath: win_UI_button_restart
+      value: 
+      objectReference: {fileID: 1029154901}
+    - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
+        type: 2}
+      propertyPath: win_UI_button_menu
+      value: 
+      objectReference: {fileID: 2010049546}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}
   m_IsPrefabParent: 0

@@ -25,9 +25,6 @@ public class GameManager : Singleton<GameManager>
 	 */
 
 
-
-	[Header ("Use for debug, if checked the match is not saved")]
-	public bool no_save;
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
@@ -44,6 +41,11 @@ public class GameManager : Singleton<GameManager>
 
 	public GameObject m_score_canvas;
 	public Text m_score_text;
+
+
+	[Header ("Win buttons activated only when the file has been saved")]
+	public Button win_UI_button_restart;
+	public Button win_UI_button_menu;
 
 
 	//UI loading time attribute
@@ -93,14 +95,18 @@ public class GameManager : Singleton<GameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		if (!replay) {
+			//set the win buttons not interactable
+			SetButtonsInteractable (false);
+		}
+
 		//This bool is very important, without setting this the recording is lost
 		hc.enableRecordPlayback = true;
 		hc.recorderLoop = false;
 		hc.recorderSpeed = 1f;
 		//TODO check what of these is fundamental
 		hc.handMovementScale = new Vector3 (1f, 1f, 1f);
-		if (replay)
-			hc.GetLeapRecorder ().speed = 1.0f;
+	
 
 		
 	}
@@ -162,6 +168,11 @@ public class GameManager : Singleton<GameManager>
 
 	}
 
+	void SetButtonsInteractable (bool b)
+	{
+		win_UI_button_menu.interactable = b;
+		win_UI_button_restart.interactable = b;
+	}
 
 	void ClearScreens ()
 	{
@@ -423,11 +434,7 @@ public class GameManager : Singleton<GameManager>
 	IEnumerator WinCoroutine ()
 	{
 
-		//menu_GUI.win = true;
-
 		ClearScreens ();
-
-		yield return new WaitForSeconds (0.5f);
 
 
 		m_background.SetActive (true);
@@ -436,14 +443,11 @@ public class GameManager : Singleton<GameManager>
 
 		if (!replay) {
 			//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
-			if (!no_save) {
-				SaveData ();
-			}
-		}
-			
 
-		//every time the game s
-		if (replay) {
+			yield return StartCoroutine (SaveData ());
+			SetButtonsInteractable (true);
+
+		} else if (replay) {
 			hc.ResetRecording ();
 		}
 			
@@ -457,7 +461,7 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	void SaveData ()
+	IEnumerator SaveData ()
 	{ 
 
 		GameMatch m = new GameMatch ();
@@ -497,7 +501,7 @@ public class GameManager : Singleton<GameManager>
 
 
 		//save match data on web
-		StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate, jsonString));
+		yield return StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate, jsonString));
 
 
 		// Now we save motion data
@@ -527,7 +531,7 @@ public class GameManager : Singleton<GameManager>
 		hand_data_file_path = framesPath;
 
 		//save hand data on web
-		StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate, frameString));
+		yield return StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate, frameString));
 
 
 	}

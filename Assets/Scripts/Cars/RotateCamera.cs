@@ -41,6 +41,9 @@ public class RotateCamera : MonoBehaviour
 	 * if it is called 2 times without resetting the total rotation is of 180 deg
 	 */
 
+	/* Reset() is called by the "Scegli Prescorso" button in the Intro UI 
+	 * and by the "Indietro" button in the CarColour UI
+	 */
 	public void Reset ()
 	{
 		this.transform.rotation = original_rotation;
