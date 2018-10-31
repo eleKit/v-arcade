@@ -41,6 +41,11 @@ public class SpaceGesturesManager : MonoBehaviour
 		
 	}
 
+	/* these functions are called 
+	 * Game Scene: by a button in the UI menu screen
+	 * Replay Scene: inside the ChooseLevel() by the angle_setter.SetHandAngleInGestureRecognizer(...) of the SetReplayHandAngle.cs
+	 */
+
 	public void NinetyTrue ()
 	{
 		ninety_deg_hand = true;

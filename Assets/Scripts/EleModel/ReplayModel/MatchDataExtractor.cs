@@ -33,7 +33,7 @@ public class MatchDataExtractor : MonoBehaviour
 
 	}
 
-
+	//extracts the Level Name string from the file containing the GameMatch element
 	public string FromMatchDataToLevelName (string match_data_path)
 	{
 
@@ -45,6 +45,24 @@ public class MatchDataExtractor : MonoBehaviour
 		
 	}
 
+	/* set in the GlobalPlayedData instance the attributes of the yaw and pitch thresholds, 
+	 * these thresholds are read from the file containing the GameMatch element
+	 */
+	public void FromMatchDataSetGlobalPlayerData (string match_data_path)
+	{
+
+		string matchString = File.ReadAllText (match_data_path);
+
+		GameMatch match_data = JsonUtility.FromJson<GameMatch> (matchString);
+
+		GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale = match_data.left_yaw_scale;
+		GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale = match_data.right_yaw_scale;
+		GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale = match_data.left_pitch_scale;
+		GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale = match_data.right_pitch_scale;
+
+	}
+
+	//extracts the HandAngle enum value from the file containing the GameMatch element
 	public GameMatch.HandAngle FromMatchDataToHandAngle (string match_data_path)
 	{
 

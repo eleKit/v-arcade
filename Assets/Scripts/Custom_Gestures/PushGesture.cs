@@ -51,19 +51,7 @@ public class PushGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
-		right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
-
-		if (hc.GetFrame ().Hands.Count == 2) {
-			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
-			}
-			if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
-			}
-		}
-
-		
+		SetPushThresholds ();
 	}
 	
 	// Update is called once per frame
@@ -140,6 +128,19 @@ public class PushGesture : MonoBehaviour
 			}
 		}
 		
+	}
+
+
+
+
+
+
+	public void SetPushThresholds ()
+	{
+		left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+
+
 	}
 
 

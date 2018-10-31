@@ -2392,6 +2392,7 @@ GameObject:
   - component: {fileID: 687643549}
   - component: {fileID: 687643548}
   - component: {fileID: 687643550}
+  - component: {fileID: 687643551}
   m_Layer: 0
   m_Name: MusicGameManager
   m_TagString: Untagged
@@ -2442,6 +2443,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52c74e4367b046e3a111fa0428398b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &687643551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 687643547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307a712663a8c40889789ad2030ad838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  push_gesture: {fileID: 1781531167}
+  shooting_gesture: {fileID: 0}
 --- !u!1 &709644409
 GameObject:
   m_ObjectHideFlags: 0

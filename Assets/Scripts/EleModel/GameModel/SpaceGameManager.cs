@@ -140,6 +140,14 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
 		SpacePathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Space));
 
+
+		/* the Yaw and Pitch Thresholds must be set in the GlobalPlayerData instance (xusing extractor.FromMatchDataSetGlobalPlayerData)
+		 * BEFORE the angle_setter.SetHandAngleInGestureRecognizer call
+		 * because this function calls the YawStart() in the GestureRecongizerManager
+		 * that set the Thresholds that taken from the GlobalPlayerData instance 
+		 * in the GestureRecognizer script  
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
 		//Set the hand angle in the gesture recognizer to use the correct Custom_Gesture recognizer
 		angle_setter.SetHandAngleInGestureRecognizer (extractor.FromMatchDataToHandAngle (path.match_data_path));
 

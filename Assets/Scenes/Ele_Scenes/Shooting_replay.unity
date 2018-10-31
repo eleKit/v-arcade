@@ -7279,6 +7279,7 @@ GameObject:
   - component: {fileID: 1954935262}
   - component: {fileID: 1954935261}
   - component: {fileID: 1954935263}
+  - component: {fileID: 1954935264}
   m_Layer: 0
   m_Name: ShootingManager
   m_TagString: Untagged
@@ -7323,6 +7324,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b52c74e4367b046e3a111fa0428398b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1954935264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1954935260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307a712663a8c40889789ad2030ad838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  push_gesture: {fileID: 0}
+  shooting_gesture: {fileID: 1812169919}
 --- !u!1 &1975531076 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1755435156596320, guid: 8ca48913c2e8b4804ae343e92f942474,

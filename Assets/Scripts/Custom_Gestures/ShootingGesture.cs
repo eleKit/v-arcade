@@ -105,10 +105,8 @@ public class ShootingGesture : MonoBehaviour
 	{
 		
 		frames_since_last_reconnection = 0;
+		SetShootingThresholds ();
 
-		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
-
-		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 
 	}
 
@@ -239,6 +237,16 @@ public class ShootingGesture : MonoBehaviour
 
 
 		}
+	}
+
+
+
+
+	public void SetShootingThresholds ()
+	{
+		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
+
 	}
 
 

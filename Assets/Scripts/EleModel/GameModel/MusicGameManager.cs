@@ -102,6 +102,8 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	{
 		path_to_replay = path;
 		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		SetGestureThresholds thresholds_setter = GetComponent<SetGestureThresholds> ();
+
 		current_music_name = extractor.FromMatchDataToLevelName (path.match_data_path);
 
 		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
@@ -109,6 +111,15 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
 		MusicPathGenerator.Instance.SetupMusicPath (extractor.FromMatchDataToMusicFilePath (path.match_data_path));
+
+
+		/* the extractor.FromMatchDataSetGlobalPlayerData(path.match_data_path) sets the Thresholds in the GlobalPlayerData instance
+		 * 
+		 * the thresholds_setter.SetThresholds () call the function in the GestureRecognizer script 
+		 * that takes the thresholds from the GlobalPlayerData instance and writes them in the thesholds private attributes
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
+		thresholds_setter.SetThresholds ();
 
 	}
 
