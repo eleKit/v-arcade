@@ -127,43 +127,47 @@ public class GameManager : Singleton<GameManager>
 	{
 		//https://github.com/richjoyce/LeapRecorder/blob/6c6d988f5dc99463360c4d9c660ac439194b7356/LeapRecorder.cpp#L116
 
-		if (loaded_file) {
-			if (replay) {
-				Frame last = replay_frames [playback_index];
-				Frame next = last;
+		if (loaded_file && replay) {
+			Frame last = replay_frames [playback_index];
+			Frame next = last;
 
-				float leap_time = next.Timestamp / 1e6f - leap_start_time;
-				if (leap_start_time == 0 && leap_time != 0) {
-					leap_start_time = leap_time;
-				} else if (leap_start_time != 0 && leap_time == 0) {
-					leap_start_time = 0;
-				}
-
-				float game_time = Time.time - game_start_time;
-
-				while (game_time > leap_time) {
-					if (playback_index + 1 >= replay_frames.Count) {
-						Debug.Log ("Reached end of playback.");
-						return hc.GetFrame ();
-					}
-					playback_index++;
-					hc.GetLeapRecorder ().NextFrame ();
-					last = next;
-					next = replay_frames [playback_index];
-					leap_time = next.Timestamp / 1e6f - leap_start_time;
-				}
-
-				float diff = leap_time - game_time;
-				if (leap_time != 0) {
-					Debug.Log ("Hc Time: " + leap_time.ToString () + " - Game Time : " + game_time.ToString () + " - Diff: " + diff.ToString ());
-				}
-
-				return last;
-
-			} else {
-				return hc.GetFrame ();
+			float leap_time = next.Timestamp / 1e6f - leap_start_time;
+			if (leap_start_time == 0 && leap_time != 0) {
+				leap_start_time = leap_time;
+			} else if (leap_start_time != 0 && leap_time == 0) {
+				leap_start_time = 0;
 			}
+
+			float game_time = Time.time - game_start_time;
+
+			if (replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp > 1e6f) {
+				Debug.Log ("Skipping :" + ((replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f).ToString ("F2"));
+				leap_start_time += (replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f;
+				next = last = replay_frames [playback_index + 1];
+				leap_time = next.Timestamp / 1e6f - leap_start_time;
+			}
+
+			while (game_time > leap_time) {
+				if (playback_index + 1 >= replay_frames.Count) {
+					return hc.GetFrame ();
+				}
+
+				playback_index++;
+				hc.GetLeapRecorder ().NextFrame ();
+				last = next;
+				next = replay_frames [playback_index];
+				leap_time = next.Timestamp / 1e6f - leap_start_time;
+			}
+
+			/*Debug.Log (
+				"Game time: " + game_time.ToString ("F2")
+				+ " - Leap time: " + leap_time.ToString ("F2")
+				+ " - Delta: " + (leap_time - game_time).ToString ("F2")
+			);*/
+
+			return last;
 		} else {
+			leap_start_time = 0;
 			return hc.GetFrame ();
 		}
 	}
@@ -331,9 +335,11 @@ public class GameManager : Singleton<GameManager>
 			 */
 			ReplayFromFile ();
 			//hc.PlayRecording ();
-			hc.PauseRecording ();
+			//hc.PauseRecording ();
+			hc.GetLeapRecorder ().Pause ();
+			hc.GetLeapRecorder ().SetIndex (0);
 
-			leap_start_time = hc.GetFrame ().Timestamp / 1e6f;
+			leap_start_time = 0;
 			game_start_time = Time.time;
 			playback_index = 0;
 

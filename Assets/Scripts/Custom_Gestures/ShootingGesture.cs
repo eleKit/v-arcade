@@ -113,7 +113,8 @@ public class ShootingGesture : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
 
 			//change pointer colour
@@ -133,8 +134,8 @@ public class ShootingGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
@@ -155,8 +156,8 @@ public class ShootingGesture : MonoBehaviour
 			if (yaw_list.Count >= K_yaw)
 				yaw_list.RemoveFirst ();
 			
-			pitch_list.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_list.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			pitch_list.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+			yaw_list.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
 		} else {
 			//if no hand is visible change colour in black
