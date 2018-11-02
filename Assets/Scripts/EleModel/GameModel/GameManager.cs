@@ -86,7 +86,12 @@ public class GameManager : Singleton<GameManager>
 	//TODO cancellare fa crashare Unity
 	private string hand_data_file_path;
 
-	private bool firstTime = true;
+	private bool loaded_file = false;
+
+	private float leap_start_time;
+	private float game_start_time;
+	private List<Frame> replay_frames;
+	private int playback_index;
 
 
 
@@ -115,6 +120,51 @@ public class GameManager : Singleton<GameManager>
 	void Update ()
 	{
 		
+	}
+
+
+	public Frame GetCurrentFrame ()
+	{
+		//https://github.com/richjoyce/LeapRecorder/blob/6c6d988f5dc99463360c4d9c660ac439194b7356/LeapRecorder.cpp#L116
+
+		if (loaded_file) {
+			if (replay) {
+				Frame last = replay_frames [playback_index];
+				Frame next = last;
+
+				float leap_time = next.Timestamp / 1e6f - leap_start_time;
+				if (leap_start_time == 0 && leap_time != 0) {
+					leap_start_time = leap_time;
+				} else if (leap_start_time != 0 && leap_time == 0) {
+					leap_start_time = 0;
+				}
+
+				float game_time = Time.time - game_start_time;
+
+				while (game_time > leap_time) {
+					if (playback_index + 1 >= replay_frames.Count) {
+						Debug.Log ("Reached end of playback.");
+						return hc.GetFrame ();
+					}
+					playback_index++;
+					last = next;
+					next = replay_frames [playback_index];
+					leap_time = next.Timestamp / 1e6f - leap_start_time;
+				}
+
+				float diff = leap_time - game_time;
+				if (leap_time != 0) {
+					Debug.Log ("Hc Time: " + leap_time.ToString () + " - Game Time : " + game_time.ToString () + " - Diff: " + diff.ToString ());
+				}
+
+				return last;
+
+			} else {
+				return hc.GetFrame ();
+			}
+		} else {
+			return hc.GetFrame ();
+		}
 	}
 		
 
@@ -272,12 +322,18 @@ public class GameManager : Singleton<GameManager>
 
 		m_score_text.text = "Punti: " + score.ToString ();
 
+
+
 		if (replay) {
 
 			/* the recording is loaded from the chosen file and then the playback starts
 			 */
 			ReplayFromFile ();
 			hc.PlayRecording ();
+
+			leap_start_time = hc.GetFrame ().Timestamp / 1e6f;
+			game_start_time = Time.time;
+			playback_index = 0;
 
 		} else {
 
@@ -620,8 +676,9 @@ public class GameManager : Singleton<GameManager>
 			hc.GetLeapRecorder ().AddFrame (frame);
 		}
 
+		replay_frames = hc.GetLeapRecorder ().GetFrames ();
 
-		firstTime = false;
+		loaded_file = true;
 	}
 
 

@@ -102,9 +102,6 @@ public class CoinCollectScript : MonoBehaviour
 
 		if (music) {
 
-			Debug.Log ("inside trigger");
-
-
 			if (other.gameObject.tag.Equals ("LeftButton")) {
 				MusicGameManager.Instance.left_trigger = true;
 				MusicGameManager.Instance.left_hand_to_delete = other.gameObject;
