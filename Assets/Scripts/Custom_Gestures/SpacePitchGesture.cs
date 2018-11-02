@@ -47,7 +47,7 @@ public class SpacePitchGesture : MonoBehaviour
 
 	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
 	private float x_max_player_position = 16f;
-	private float x_min_player_posiion = -16f;
+	private float x_min_player_position = -16f;
 
 
 	/* spaceship movements animator:
@@ -87,7 +87,8 @@ public class SpacePitchGesture : MonoBehaviour
 	// Update is called once per frame
 	public void PitchUpdate ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
 
 			//change pointer colour
@@ -101,7 +102,7 @@ public class SpacePitchGesture : MonoBehaviour
 			//save average list
 			if (pitch_average.Count >= num_frames_in_pitch_average_list && frames_since_last_reconnection >= K_lost) {
 
-				CheckMoveSpaceshipGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
+				CheckMoveSpaceshipGesture (current_frame.Hands.Leftmost.IsLeft);
 
 				//change pointer colour
 				if (m_renderer.color.Equals (medium_white)) {
@@ -113,7 +114,7 @@ public class SpacePitchGesture : MonoBehaviour
 				pitch_average.RemoveFirst ();
 			}
 
-			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch);
 
 
 
@@ -126,13 +127,6 @@ public class SpacePitchGesture : MonoBehaviour
 			frames_since_last_reconnection = 0;
 		}
 	}
-
-
-
-
-
-
-
 
 
 	void CheckMoveSpaceshipGesture (bool is_left)
@@ -151,9 +145,9 @@ public class SpacePitchGesture : MonoBehaviour
 		if (current_pitch < threshold) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
 
-				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 
 				//if spaceship is not already moving left the left-movement animation starts
 				if (!(m_animator.GetInteger ("direction") == 2)) {
@@ -165,9 +159,9 @@ public class SpacePitchGesture : MonoBehaviour
 		} else if (current_pitch > (-threshold)) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_position) {
 
-				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 
 				//if spaceship is not already moving right the right-movement animation starts
 				if (!(m_animator.GetInteger ("direction") == 1)) {

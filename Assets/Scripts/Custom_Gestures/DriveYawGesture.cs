@@ -70,9 +70,10 @@ public class DriveYawGesture : MonoBehaviour
 	// Update is called once per frame
 	public void YawUpdate ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		var current_frame = hc.GetFrame ();
+		if (current_frame.Hands.Count == 1) {
 
-			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+			transform.Translate (Vector3.up * Time.deltaTime * 6f);
 
 
 
@@ -80,12 +81,12 @@ public class DriveYawGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw);
 
 			/*if this is a right hand the bool is false and in the CheckYawDriveGesture (left)
 				 * it is used the right_yaw_threshold 
 				 */
-			CheckYawDriveGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
+			CheckYawDriveGesture (current_frame.Hands.Leftmost.IsLeft);
 
 			
 		}
@@ -117,8 +118,8 @@ public class DriveYawGesture : MonoBehaviour
 		if (current_yaw < threshold) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
-				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
 
 
@@ -126,8 +127,8 @@ public class DriveYawGesture : MonoBehaviour
 		} else if (current_yaw > (-threshold)) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
-				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 			}
 
 

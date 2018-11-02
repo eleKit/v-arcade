@@ -69,9 +69,10 @@ public class DrivePitchGesture : MonoBehaviour
 	// Update is called once per frame
 	public void PitchUpdate ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
-			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+			transform.Translate (Vector3.up * Time.deltaTime * 6f);
 
 
 
@@ -80,10 +81,10 @@ public class DrivePitchGesture : MonoBehaviour
 			if (pitch_average.Count >= num_frames_in_average_list) {
 				pitch_average.RemoveFirst ();
 			}
-			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch);
 
 	
-			CheckPitchPushGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
+			CheckPitchPushGesture (current_frame.Hands.Leftmost.IsLeft);
 
 
 		}
@@ -113,17 +114,17 @@ public class DrivePitchGesture : MonoBehaviour
 		if (current_pitch < threshold) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
-				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 			}
 
 
 		} else if (current_pitch > (-threshold)) {
 
 			
-			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
 
-				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
 
 

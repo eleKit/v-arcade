@@ -90,7 +90,8 @@ public class SpaceGesture : MonoBehaviour
 	//method called by the SpaceGestureREcognizerManager
 	public void YawUpdate ()
 	{
-		if (hc.GetFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
 
 			//change pointer colour
@@ -104,7 +105,7 @@ public class SpaceGesture : MonoBehaviour
 			//save average list
 			if (yaw_average.Count >= num_frames_in_yaw_average_list && frames_since_last_reconnection >= K_lost) {
 
-				CheckMoveSpaceshipGesture (hc.GetFrame ().Hands.Leftmost.IsLeft);
+				CheckMoveSpaceshipGesture (current_frame.Hands.Leftmost.IsLeft);
 
 				//change pointer colour
 				if (m_renderer.color.Equals (medium_white)) {
@@ -116,7 +117,7 @@ public class SpaceGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw);
 
 
 
@@ -149,9 +150,9 @@ public class SpaceGesture : MonoBehaviour
 		if (current_yaw < threshold) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.smoothDeltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
 
-				transform.Translate (Vector3.left * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.left * Time.deltaTime * speed);
 
 				//if spaceship is not already moving left the left-movement animation starts
 				if (!(m_animator.GetInteger ("direction") == 1)) {
@@ -163,9 +164,9 @@ public class SpaceGesture : MonoBehaviour
 		} else if (current_yaw > (-threshold)) {
 			
 
-			if ((transform.position.x + (Vector3.right * Time.smoothDeltaTime * speed).x) <= x_max_player_position) {
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
 
-				transform.Translate (Vector3.right * Time.smoothDeltaTime * speed);
+				transform.Translate (Vector3.right * Time.deltaTime * speed);
 
 				//if spaceship is not already moving right the right-movement animation starts
 				if (!(m_animator.GetInteger ("direction") == 2)) {

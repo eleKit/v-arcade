@@ -195,10 +195,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.y - y_movement) >= y_min_player_position) {
-				Vector3 new_position = transform.position - new Vector3 (0, y_movement, 0);
-
-				transform.position = new_position;
+			if (transform.position.y + (Vector3.down * Time.deltaTime * 3f).y >= y_min_player_position) {
+				transform.Translate (Vector3.down * Time.deltaTime * 3f);
 			}
 
 
@@ -206,10 +204,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.y + y_movement) <= y_max_player_position) {
-				Vector3 new_position = transform.position + new Vector3 (0, y_movement, 0);
-
-				transform.position = new_position;
+			if (transform.position.y + (Vector3.up * Time.deltaTime * 3f).y <= y_max_player_position) {
+				transform.Translate (Vector3.up * Time.deltaTime * 3f);
 			}
 
 
@@ -219,10 +215,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.x - x_movement) >= x_min_player_posiion) {
-				Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
-
-				transform.position = new_position;
+			if (transform.position.x + (Vector3.left * Time.deltaTime * 3f).x >= x_min_player_posiion) {
+				transform.Translate (Vector3.left * Time.deltaTime * 3f);
 			}
 
 
@@ -230,10 +224,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.x + x_movement) <= x_max_player_position) {
-				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
-
-				transform.position = new_position;
+			if (transform.position.x + (Vector3.right * Time.deltaTime * 3f).x <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * 3f);
 			}
 
 
