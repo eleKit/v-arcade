@@ -147,6 +147,7 @@ public class GameManager : Singleton<GameManager>
 						return hc.GetFrame ();
 					}
 					playback_index++;
+					hc.GetLeapRecorder ().NextFrame ();
 					last = next;
 					next = replay_frames [playback_index];
 					leap_time = next.Timestamp / 1e6f - leap_start_time;
@@ -329,7 +330,8 @@ public class GameManager : Singleton<GameManager>
 			/* the recording is loaded from the chosen file and then the playback starts
 			 */
 			ReplayFromFile ();
-			hc.PlayRecording ();
+			//hc.PlayRecording ();
+			hc.PauseRecording ();
 
 			leap_start_time = hc.GetFrame ().Timestamp / 1e6f;
 			game_start_time = Time.time;
@@ -397,8 +399,10 @@ public class GameManager : Singleton<GameManager>
 		 * Stops playback or recording without resetting the frame counter
 		 */
 	
-		//pause the recording(playback) when the game is in pause
-		hc.PauseRecording ();
+		if (!replay) {
+			//pause the recording(playback) when the game is in pause
+			hc.PauseRecording ();
+		}
 
 		is_playing = false;
 
@@ -450,10 +454,10 @@ public class GameManager : Singleton<GameManager>
 
 
 		//resume the recording|playback when the game is resumed by the player
-		if (replay) {
-			//resume the playback
+		if (!replay) {
+			/*		//resume the playback
 			hc.PlayRecording ();
-		} else {
+		} else {*/
 			//resume the recording
 			hc.Record ();
 		}
