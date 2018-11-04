@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using POLIMIGameCollective;
 
 public class DoctorMenuUI : MonoBehaviour
 {
@@ -136,16 +137,25 @@ public class DoctorMenuUI : MonoBehaviour
 
 	public void LoadCarReplayScene ()
 	{
+		MusicManager.Instance.StopAll ();
 		SceneManager.LoadSceneAsync ("Car_replay");
 	}
 
 	public void LoadShootingReplayScene ()
 	{
-		//SceneManager.LoadSceneAsync ("Shooting_replay");
+		MusicManager.Instance.StopAll ();
+		SceneManager.LoadSceneAsync ("Shooting_replay");
+	}
+
+	public void LoadSpaceReplayScene ()
+	{
+		MusicManager.Instance.StopAll ();
+		SceneManager.LoadSceneAsync ("Space_replay");
 	}
 
 	public void LoadMusicReplayScene ()
 	{
+		MusicManager.Instance.StopAll ();
 		SceneManager.LoadSceneAsync ("Music_replay");
 		
 	}

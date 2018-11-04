@@ -75,6 +75,7 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 	public void LoadDoctorMenu ()
 	{
+		MusicManager.Instance.StopAll ();
 		SceneManager.LoadSceneAsync ("Main_Menu_Doctor");
 	}
 
