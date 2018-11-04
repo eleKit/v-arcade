@@ -83,7 +83,21 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	//TODO cancellare fa crashare Unity
+	/* Replay: 
+	 * instead of using the LeapRecorder Play() it is used the NextFrame() inside the  GetCurrentFrame () function [see below]
+	 * 
+	 * leap_start_time and game_start_time 
+	 * are used in the GetCurrentFrame () function 
+	 * to calculate the correct instant t when the next frame of the LeapRecorder must be loaded
+	 * in order to obtain a replay perfectly synchronized with the original match
+	 * 
+	 * playback_index
+	 * is the index of the replay_frames list, it is used to load the next frame
+	 *
+	 * GetCurrentFrame () function is called by the Gesture Recognizer scripts instead of hc.GetFrame()
+	 * and the behaviuor inside that function is different in case of Replay or Match
+	 */
+
 	private string hand_data_file_path;
 
 	private bool loaded_file = false;
@@ -122,24 +136,57 @@ public class GameManager : Singleton<GameManager>
 		
 	}
 
+	/* This function is called in the Update of each Gesture Recognizer script
+	 * 
+	 * https://github.com/richjoyce/LeapRecorder/blob/6c6d988f5dc99463360c4d9c660ac439194b7356/LeapRecorder.cpp#L116
+	 * 
+	 */
 
 	public Frame GetCurrentFrame ()
 	{
-		//https://github.com/richjoyce/LeapRecorder/blob/6c6d988f5dc99463360c4d9c660ac439194b7356/LeapRecorder.cpp#L116
-
+		/* this is the behaviour in case this is a Replay scene 
+			 * (i.e. replay == true)
+			 * and in case the Hand Data have been already loaded inside the LeapRecorder 
+			 * (i.e loaded_file == true)
+			 * 
+			 * 
+			 * leap_start_time, game_start_time, playback_index 
+			 * are setup in the LoadLevel() Coroutine
+			 * 
+			 */
 		if (loaded_file && replay) {
+			
+			//last and next frames setup
 			Frame last = replay_frames [playback_index];
 			Frame next = last;
 
 			float leap_time = next.Timestamp / 1e6f - leap_start_time;
+
+			/*
+			 * equalize the leap_start_time and the leap_time
+			 */
 			if (leap_start_time == 0 && leap_time != 0) {
 				leap_start_time = leap_time;
 			} else if (leap_start_time != 0 && leap_time == 0) {
 				leap_start_time = 0;
 			}
 
+			/* 
+			 * setup the game_time as the current time - the time when the UI has been loaded
+			 * in order to not consider the time of navigating the UI before loading the level
+			 * 
+			 */
 			float game_time = Time.time - game_start_time;
 
+			/* 
+			 * If there is a "jump in time" from the current frame TS and the next frame TS (the replay_frames [playback_index + 1])
+			 * it means that in the Match the player has paused and resumed the game
+			 * 
+			 * In the Replay scene this gap is filled adding the time difference in the leap_start_time
+			 * updating the leap_time, and setting the next and last frames as the replay_frames [playback_index + 1]
+			 * like in the last and next setup
+			 * 
+			 */
 			if (playback_index + 1 < replay_frames.Count && replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp > 1e6f) {
 				Debug.Log ("Skipping :" + ((replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f).ToString ("F2"));
 				leap_start_time += (replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f;
@@ -147,15 +194,24 @@ public class GameManager : Singleton<GameManager>
 				leap_time = next.Timestamp / 1e6f - leap_start_time;
 			}
 
+
 			while (game_time > leap_time) {
+				//if there are other frames in the list
 				if (playback_index + 1 >= replay_frames.Count) {
 					return hc.GetFrame ();
 				}
 
+				//update play_back index
 				playback_index++;
+
+				//load the next frame in the LeapRecorder
 				hc.GetLeapRecorder ().NextFrame ();
+
+				//update last and next frames
 				last = next;
 				next = replay_frames [playback_index];
+
+				//update leap_time as next frame TS - leap_start_time
 				leap_time = next.Timestamp / 1e6f - leap_start_time;
 			}
 
@@ -165,9 +221,16 @@ public class GameManager : Singleton<GameManager>
 				+ " - Delta: " + (leap_time - game_time).ToString ("F2")
 			);*/
 
+			//return the last frame to the Gesture Recognizer script
 			return last;
 		} else {
+			/* 
+			 * If this is a Match (i.e. replay == false)
+			 * or the hand data have not been already loaded (i.e.loaded_file == false)
+			 * 
+			 */
 			leap_start_time = 0;
+			// return the current frame of LeapController
 			return hc.GetFrame ();
 		}
 	}
