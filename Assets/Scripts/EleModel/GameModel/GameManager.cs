@@ -108,6 +108,9 @@ public class GameManager : Singleton<GameManager>
 	private int playback_index;
 
 
+	private float pause_time;
+
+
 
 
 
@@ -486,6 +489,7 @@ public class GameManager : Singleton<GameManager>
 
 		if (replay) {
 			ReplayManagerUI.Instance.LoadPauseScreen ();
+			pause_time = Time.time;
 		} else {
 			GameMenuScript.Instance.LoadPauseScreen ();
 		}
@@ -524,11 +528,12 @@ public class GameManager : Singleton<GameManager>
 
 		//resume the recording|playback when the game is resumed by the player
 		if (!replay) {
-			/*		//resume the playback
-			hc.PlayRecording ();
-		} else {*/
 			//resume the recording
 			hc.Record ();
+		} else {
+			//hc.PlayRecording ();
+			float pause_duration = Time.time - pause_time;
+			game_start_time += pause_duration;
 		}
 
 

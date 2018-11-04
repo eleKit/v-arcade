@@ -70,7 +70,7 @@ public class DriveYawGesture : MonoBehaviour
 	// Update is called once per frame
 	public void YawUpdate ()
 	{
-		var current_frame = hc.GetFrame ();
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
 		if (current_frame.Hands.Count == 1) {
 
 			transform.Translate (Vector3.up * Time.deltaTime * 6f);
