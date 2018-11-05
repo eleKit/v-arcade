@@ -351,7 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   no_save: 0
-  debugging_save: 0
+  debugging_save: 1
   m_start_buttons:
   - {fileID: 798823923}
   - {fileID: 1467799126}
@@ -5556,7 +5556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   no_save: 0
-  debugging_save: 0
+  debugging_save: 1
   m_start_buttons:
   - {fileID: 2129578253}
   - {fileID: 909447526}
@@ -16046,7 +16046,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   no_save: 0
-  debugging_save: 0
+  debugging_save: 1
   front_buttons:
   - {fileID: 295498879}
   - {fileID: 1681340468}

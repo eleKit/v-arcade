@@ -6853,7 +6853,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: debugging_save
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
