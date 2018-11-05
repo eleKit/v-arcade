@@ -67,11 +67,12 @@ public class DrivePitchGesture : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	public void PitchFixedUpdate ()
+	public void PitchUpdate ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
-			transform.position = transform.position + new Vector3 (0f, 0.1f, 0f);
+			transform.Translate (Vector3.up * Time.deltaTime * 6f);
 
 
 
@@ -80,10 +81,10 @@ public class DrivePitchGesture : MonoBehaviour
 			if (pitch_average.Count >= num_frames_in_average_list) {
 				pitch_average.RemoveFirst ();
 			}
-			pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch);
 
 	
-			CheckPitchPushGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
+			CheckPitchPushGesture (current_frame.Hands.Leftmost.IsLeft);
 
 
 		}

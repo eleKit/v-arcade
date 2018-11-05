@@ -16,8 +16,10 @@ public class ShootingManager : Singleton<ShootingManager>
 	float timer_of_game;
 
 
-
+	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+	//attribute used to load a replay
+	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
 
 	//gameobject of the player used to check if the leap sees the hand so the timer can go on
 	GameObject pl;
@@ -113,6 +115,31 @@ public class ShootingManager : Singleton<ShootingManager>
 
 		DuckPathGenerator.Instance.LoadPath (path.file_path);
 		
+	}
+
+
+	//@Overload for the Replay of a match
+	public void ChooseLevel (ReplayNamesOfPaths path)
+	{
+		path_to_replay = path;
+		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		SetGestureThresholds thresholds_setter = GetComponent<SetGestureThresholds> ();
+
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+		ResetPath ();
+
+		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
+		DuckPathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Shooting));
+
+		/* the extractor.FromMatchDataSetGlobalPlayerData(path.match_data_path) sets the Thresholds in the GlobalPlayerData instance
+		 * 
+		 * the thresholds_setter.SetThresholds () call the function in the GestureRecognizer script 
+		 * that takes the thresholds from the GlobalPlayerData instance and writes them in the thesholds private attributes
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
+		thresholds_setter.SetThresholds ();
+
+
 	}
 
 	//function called after pause the game

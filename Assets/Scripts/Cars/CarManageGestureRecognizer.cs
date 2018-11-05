@@ -5,7 +5,9 @@ using UnityEngine;
 public class CarManageGestureRecognizer : MonoBehaviour
 {
 
-	public HandController hc;
+	public GameObject m_hand_controller;
+
+	private HandController hc;
 
 	DriveYawGesture drive_yaw_gesture;
 	CarControllerScript car_controller_script;
@@ -17,31 +19,41 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		hc = m_hand_controller.GetComponent<HandController> ();
 		ResetGesturesBool ();
 
 		drive_yaw_gesture = this.GetComponent<DriveYawGesture> ();
 		car_controller_script = this.GetComponent<CarControllerScript> ();
 		drive_pitch_gesture = this.GetComponent<DrivePitchGesture> ();
+
 		
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
-		if (ninety_deg_hand) {
-			drive_pitch_gesture.PitchFixedUpdate ();
-		} else if (one_hundred_and_eighty_hand) {
-			drive_yaw_gesture.YawFixedUpdate ();
-		} else if (roll_hand) {
-			car_controller_script.RollFixedUpdate ();
+		if (GameManager.Instance.Get_Is_Playing ()) {
+			if (ninety_deg_hand) {
+				drive_pitch_gesture.PitchUpdate ();
+			} else if (one_hundred_and_eighty_hand) {
+				drive_yaw_gesture.YawUpdate ();
+			} else if (roll_hand) {
+				car_controller_script.RollFixedUpdate ();
+			}
 		}
 	}
 
+	/* these functions are called 
+	 * Game Scene: by a button in the UI menu screen
+	 * Replay Scene: inside the ChooseLevel() by the angle_setter.SetHandAngleInGestureRecognizer(...) of the SetReplayHandAngle.cs
+	 */
 
 	public void NinetyTrue ()
 	{
 		ninety_deg_hand = true;
 		drive_pitch_gesture.PitchStart (hc);
+		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.Ninety);
+
 		one_hundred_and_eighty_hand = false;
 		roll_hand = false;
 	}
@@ -49,8 +61,11 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	public void OneHundredEightyTrue ()
 	{
 		ninety_deg_hand = false;
+
 		one_hundred_and_eighty_hand = true;
 		drive_yaw_gesture.YawStart (hc);
+		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.One_hundred);
+
 		roll_hand = false;
 	}
 
@@ -58,8 +73,10 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	{
 		ninety_deg_hand = false;
 		one_hundred_and_eighty_hand = false;
+
 		roll_hand = true;
 		car_controller_script.RollStart (hc);
+		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.Roll);
 	}
 
 	public void ResetGesturesBool ()

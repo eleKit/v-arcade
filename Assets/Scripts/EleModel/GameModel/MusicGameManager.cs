@@ -6,7 +6,7 @@ using System.IO;
 
 public class MusicGameManager : Singleton<MusicGameManager>
 {
-	[Range (0f, 0.5f)]
+	[Range (0f, 5f)]
 	public float m_button_movement_offset = 0.1f;
 
 	public bool right_trigger;
@@ -22,7 +22,14 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public bool no_more_hands;
 
+	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+
+	//attribute used to load a replay
+	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
+
+	string current_music_name = "";
+
 
 	// Use this for initialization
 	void Start ()
@@ -42,7 +49,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		GameManager.Instance.BaseUpdate ();
 
@@ -50,14 +57,14 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("LeftButton")) {
 				button.transform.position = new Vector3 (
-					button.transform.position.x + m_button_movement_offset,
+					button.transform.position.x + (Time.deltaTime * m_button_movement_offset),
 					button.transform.position.y,
 					button.transform.position.z);
 			}
 
 			foreach (GameObject button in GameObject.FindGameObjectsWithTag ("RightButton")) {
 				button.transform.position = new Vector3 (
-					button.transform.position.x + m_button_movement_offset,
+					button.transform.position.x + (Time.deltaTime * m_button_movement_offset),
 					button.transform.position.y,
 					button.transform.position.z);
 			}
@@ -65,7 +72,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 			if (GameObject.FindGameObjectsWithTag ("RightButton").Length == 0
 			    && GameObject.FindGameObjectsWithTag ("LeftButton").Length == 0
-			    && no_more_hands && !MusicManager.Instance.isPlaying (loaded_path.name)) {
+			    && no_more_hands && !MusicManager.Instance.isPlaying (current_music_name)) {
 				WinLevel ();		
 			}
 		} else {
@@ -82,19 +89,37 @@ public class MusicGameManager : Singleton<MusicGameManager>
 		no_more_hands = false;
 
 		loaded_path = path;
-
-
-
-
+		current_music_name = loaded_path.name;
 
 		MusicPathGenerator.Instance.SetupMusicPath (path.file_path);
-
-
-
 		GameManager.Instance.BaseChooseLevel (path.name);
 
+	}
 
 
+	//@Overload for the Replay of a match
+	public void ChooseLevel (ReplayNamesOfPaths path)
+	{
+		path_to_replay = path;
+		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		SetGestureThresholds thresholds_setter = GetComponent<SetGestureThresholds> ();
+
+		current_music_name = extractor.FromMatchDataToLevelName (path.match_data_path);
+
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+		ResetPath ();
+
+		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
+		MusicPathGenerator.Instance.SetupMusicPath (extractor.FromMatchDataToMusicFilePath (path.match_data_path));
+
+
+		/* the extractor.FromMatchDataSetGlobalPlayerData(path.match_data_path) sets the Thresholds in the GlobalPlayerData instance
+		 * 
+		 * the thresholds_setter.SetThresholds () call the function in the GestureRecognizer script 
+		 * that takes the thresholds from the GlobalPlayerData instance and writes them in the thesholds private attributes
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
+		thresholds_setter.SetThresholds ();
 
 	}
 

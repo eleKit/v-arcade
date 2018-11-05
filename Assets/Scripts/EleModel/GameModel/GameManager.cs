@@ -12,22 +12,19 @@ public class GameManager : Singleton<GameManager>
 	[Header ("Check this bool if this is a replay scene")]
 	public bool replay;
 
-	/* in case of a REPLAY SCENE: 
-	 * 
+	/* in case of a REPLAY SCENE:
+	 *
 	 * all the calls to the GameMenuScript must be substitued with calls to the ReplayManagerUI
-	 * 
+	 *
 	 * all the HandController recording instructions must be substitued with PlayRecording instructions
-	 * 
-	 * the SaveData () method MUST NOT be called (system crashes trying to save a recoding thas is played) 
-	 * 
-	 * 
+	 *
+	 * the SaveData () method MUST NOT be called (system crashes trying to save a recoding thas is played)
+	 *
+	 *
 	 * when a level is loaded (reloaded) the hc.ResetRecording must be called
 	 */
 
 
-
-	[Header ("Use for debug, if checked the match is not saved")]
-	public bool no_save;
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
@@ -44,6 +41,11 @@ public class GameManager : Singleton<GameManager>
 
 	public GameObject m_score_canvas;
 	public Text m_score_text;
+
+
+	[Header ("Win buttons activated only when the file has been saved")]
+	public Button win_UI_button_restart;
+	public Button win_UI_button_menu;
 
 
 	//UI loading time attribute
@@ -68,6 +70,7 @@ public class GameManager : Singleton<GameManager>
 	//bool used to check what type of game the kid is playing
 	GameMatch.GameType current_game_type;
 
+	GameMatch.HandAngle current_hand_angle = GameMatch.HandAngle.None;
 
 
 	//bool to deactivate player if the game is paused
@@ -80,10 +83,32 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	//TODO cancellare fa crashare Unity
+	/* Replay:
+	 * instead of using the LeapRecorder Play() it is used the NextFrame() inside the  GetCurrentFrame () function [see below]
+	 *
+	 * leap_start_time and game_start_time
+	 * are used in the GetCurrentFrame () function
+	 * to calculate the correct instant t when the next frame of the LeapRecorder must be loaded
+	 * in order to obtain a replay perfectly synchronized with the original match
+	 *
+	 * playback_index
+	 * is the index of the replay_frames list, it is used to load the next frame
+	 *
+	 * GetCurrentFrame () function is called by the Gesture Recognizer scripts instead of hc.GetFrame()
+	 * and the behaviuor inside that function is different in case of Replay or Match
+	 */
+
 	private string hand_data_file_path;
 
-	private bool firstTime = true;
+	private bool loaded_file = false;
+
+	private float leap_start_time;
+	private float game_start_time;
+	private List<Frame> replay_frames;
+	private int playback_index;
+
+
+	private float pause_time;
 
 
 
@@ -92,14 +117,132 @@ public class GameManager : Singleton<GameManager>
 	// Use this for initialization
 	void Start ()
 	{
+		if (!replay) {
+			//set the win buttons not interactable
+			SetButtonsInteractable (false);
+		}
+
 		//This bool is very important, without setting this the recording is lost
 		hc.enableRecordPlayback = true;
+		hc.recorderLoop = false;
+		hc.recorderSpeed = 1f;
+		//TODO check what of these is fundamental
+		hc.handMovementScale = new Vector3 (1f, 1f, 1f);
+
+
+
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-		
+
+	}
+
+	/* This function is called in the Update of each Gesture Recognizer script
+	 *
+	 * https://github.com/richjoyce/LeapRecorder/blob/6c6d988f5dc99463360c4d9c660ac439194b7356/LeapRecorder.cpp#L116
+	 *
+	 */
+
+	public Frame GetCurrentFrame ()
+	{
+		/* this is the behaviour in case this is a Replay scene
+			 * (i.e. replay == true)
+			 * and in case the Hand Data have been already loaded inside the LeapRecorder
+			 * (i.e loaded_file == true)
+			 *
+			 *
+			 * leap_start_time, game_start_time, playback_index
+			 * are setup in the LoadLevel() Coroutine
+			 *
+			 */
+		if (loaded_file && replay) {
+
+			//last and next frames setup
+			Frame last = replay_frames [playback_index];
+			Frame next = last;
+
+			float leap_time = next.Timestamp / 1e6f - leap_start_time;
+
+			/*
+			 * equalize the leap_start_time and the leap_time
+			 */
+			if (leap_start_time == 0 && leap_time != 0) {
+				leap_start_time = leap_time;
+			} else if (leap_start_time != 0 && leap_time == 0) {
+				leap_start_time = 0;
+			}
+
+			/*
+			 * setup the game_time as the current time - the time when the UI has been loaded
+			 * in order to not consider the time of navigating the UI before loading the level
+			 *
+			 */
+			float game_time = Time.time - game_start_time;
+
+			/*
+			 * If there is a "jump in time" from the current frame TS and the next frame TS (the replay_frames [playback_index + 1])
+			 * it means that in the Match the player has paused and resumed the game
+			 *
+			 * In the Replay scene this gap is filled adding the time difference in the leap_start_time
+			 * updating the leap_time, and setting the next and last frames as the replay_frames [playback_index + 1]
+			 * like in the last and next setup
+			 *
+			 */
+			if (playback_index + 1 < replay_frames.Count && replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp > 1e6f) {
+				Debug.Log ("Skipping :" + ((replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f).ToString ("F2"));
+				leap_start_time += (replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f;
+				next = last = replay_frames [playback_index + 1];
+				leap_time = next.Timestamp / 1e6f - leap_start_time;
+			}
+
+
+			while (game_time > leap_time) {
+				//if there are other frames in the list
+				if (playback_index + 1 >= replay_frames.Count) {
+					return hc.GetFrame ();
+				}
+
+				//update play_back index
+				playback_index++;
+
+				//load the next frame in the LeapRecorder
+				hc.GetLeapRecorder ().NextFrame ();
+
+				//update last and next frames
+				last = next;
+				next = replay_frames [playback_index];
+
+				//update leap_time as next frame TS - leap_start_time
+				leap_time = next.Timestamp / 1e6f - leap_start_time;
+			}
+
+			/*Debug.Log (
+				"Game time: " + game_time.ToString ("F2")
+				+ " - Leap time: " + leap_time.ToString ("F2")
+				+ " - Delta: " + (leap_time - game_time).ToString ("F2")
+			);*/
+
+			//return the last frame to the Gesture Recognizer script
+			return last;
+		} else {
+			/*
+			 * If this is a Match (i.e. replay == false)
+			 * or the hand data have not been already loaded (i.e.loaded_file == false)
+			 *
+			 */
+			leap_start_time = 0;
+			// return the current frame of LeapController
+			return hc.GetFrame ();
+		}
+	}
+
+
+	//call this by UI Play Mode buttons to set the angle of the game
+	public void SetGameMathcHandAngle (GameMatch.HandAngle hand_angle)
+	{
+		current_hand_angle = hand_angle;
 	}
 
 
@@ -107,6 +250,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		//set the gametype, method called by the NameGameManager class
 		current_game_type = game_type;
+
 
 		//music starts
 		MusicManager.Instance.PlayMusic (music_title);
@@ -145,6 +289,11 @@ public class GameManager : Singleton<GameManager>
 
 	}
 
+	void SetButtonsInteractable (bool b)
+	{
+		win_UI_button_menu.interactable = b;
+		win_UI_button_restart.interactable = b;
+	}
 
 	void ClearScreens ()
 	{
@@ -176,16 +325,18 @@ public class GameManager : Singleton<GameManager>
 	}
 
 
-	//overload of BaseChooseLevel, method used in case of a replay scene
-	public void BaseChooseLevel (ReplayNamesOfPaths replay_path)
+	//@Overload of BaseChooseLevel, method used in case of a replay scene
+	public void BaseChooseLevel (ReplayNamesOfPaths replay_path, string name)
 	{
-		
+
 
 		SfxManager.Instance.Unmute ();
 		SfxManager.Instance.Stop ();
 
 		//save the recording path used to load the replay inside the hand controller
 		hand_data_file_path = replay_path.hand_data_path;
+
+		current_path = name;
 
 		StartCoroutine (LoadLevel ());
 	}
@@ -204,7 +355,7 @@ public class GameManager : Singleton<GameManager>
 
 		Debug.Log ("inside LoadLevel");
 
-		//deactivate BG 
+		//deactivate BG
 		m_background.SetActive (false);
 
 		m_wait_background.SetActive (true);
@@ -242,17 +393,26 @@ public class GameManager : Singleton<GameManager>
 
 		m_score_text.text = "Punti: " + score.ToString ();
 
+
+
 		if (replay) {
 
 			/* the recording is loaded from the chosen file and then the playback starts
 			 */
 			ReplayFromFile ();
-			hc.PlayRecording ();
+			//hc.PlayRecording ();
+			//hc.PauseRecording ();
+			hc.GetLeapRecorder ().Pause ();
+			hc.GetLeapRecorder ().SetIndex (0);
+
+			leap_start_time = 0;
+			game_start_time = Time.time;
+			playback_index = 0;
 
 		} else {
 
 			/* reset the recorder before start playing:
-			 * BaseChooseLevel() method is also called by the RestartLevel function 
+			 * BaseChooseLevel() method is also called by the RestartLevel function
 			* in the NameGameManager
 			 */
 			hc.ResetRecording ();
@@ -294,7 +454,7 @@ public class GameManager : Singleton<GameManager>
 
 
 	/* end common functions */
-		
+
 
 
 
@@ -305,14 +465,16 @@ public class GameManager : Singleton<GameManager>
 	{
 		/* here i'm using the SAME METHOD FOR BOTH REPLAY AND RECORD
 		 * this happens because:
-		 * 
+		 *
 		 * PauseRecording()
 		 * Summary
 		 * Stops playback or recording without resetting the frame counter
 		 */
-	
-		//pause the recording(playback) when the game is in pause
-		hc.PauseRecording ();
+
+		if (!replay) {
+			//pause the recording(playback) when the game is in pause
+			hc.PauseRecording ();
+		}
 
 		is_playing = false;
 
@@ -325,7 +487,12 @@ public class GameManager : Singleton<GameManager>
 
 		player.SetActive (false);
 
-		GameMenuScript.Instance.LoadPauseScreen ();
+		if (replay) {
+			ReplayManagerUI.Instance.LoadPauseScreen ();
+			pause_time = Time.time;
+		} else {
+			GameMenuScript.Instance.LoadPauseScreen ();
+		}
 
 	}
 
@@ -339,11 +506,8 @@ public class GameManager : Singleton<GameManager>
 
 		SfxManager.Instance.Unmute ();
 
-
-
-
-
 	}
+
 
 	IEnumerator Resume ()
 	{
@@ -356,19 +520,20 @@ public class GameManager : Singleton<GameManager>
 			yield return new WaitForSeconds (0.5f);
 		}
 		ClearScreens ();
-		
+
 
 
 		m_score_canvas.SetActive (true);
 
 
 		//resume the recording|playback when the game is resumed by the player
-		if (replay) {
-			//resume the playback
-			hc.PlayRecording ();
-		} else {
+		if (!replay) {
 			//resume the recording
 			hc.Record ();
+		} else {
+			//hc.PlayRecording ();
+			float pause_duration = Time.time - pause_time;
+			game_start_time += pause_duration;
 		}
 
 
@@ -378,7 +543,7 @@ public class GameManager : Singleton<GameManager>
 			MusicManager.Instance.UnPauseAll ();
 		}
 		is_playing = true;
-	
+
 	}
 
 
@@ -389,7 +554,12 @@ public class GameManager : Singleton<GameManager>
 		is_playing = false;
 
 		SfxManager.Instance.Play ("win_jingle");
-		GameMenuScript.Instance.LoadWinScreen (score);
+
+		if (replay) {
+			ReplayManagerUI.Instance.LoadEndScreen ();
+		} else {
+			GameMenuScript.Instance.LoadWinScreen (score);
+		}
 
 		StartCoroutine (WinCoroutine ());
 	}
@@ -398,11 +568,7 @@ public class GameManager : Singleton<GameManager>
 	IEnumerator WinCoroutine ()
 	{
 
-		//menu_GUI.win = true;
-
 		ClearScreens ();
-
-		yield return new WaitForSeconds (0.5f);
 
 
 		m_background.SetActive (true);
@@ -411,17 +577,14 @@ public class GameManager : Singleton<GameManager>
 
 		if (!replay) {
 			//save the current Match and the Hand Data of that match only if this is not a recording (or i'm debugging)
-			if (!no_save) {
-				SaveData ();
-			}
-		}
-			
 
-		//every time the game s
-		if (replay) {
+			yield return StartCoroutine (SaveData ());
+			SetButtonsInteractable (true);
+
+		} else if (replay) {
 			hc.ResetRecording ();
 		}
-			
+
 		is_playing = false;
 
 		yield return new WaitForSeconds (3.5f);
@@ -432,8 +595,8 @@ public class GameManager : Singleton<GameManager>
 
 
 
-	void SaveData ()
-	{ 
+	IEnumerator SaveData ()
+	{
 
 		GameMatch m = new GameMatch ();
 
@@ -444,8 +607,17 @@ public class GameManager : Singleton<GameManager>
 		m.id_path = current_path;
 
 
-
+		//save the game type
 		m.gameType = current_game_type;
+
+		//save the hand orientation
+		m.handAngle = current_hand_angle;
+
+		//set the thresholds used in the match
+		m.left_pitch_scale = GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		m.right_pitch_scale = GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+		m.left_yaw_scale = GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
+		m.right_yaw_scale = GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
 
 
 		//the game data are saved in the  Patients folder > PatientName foldet > GameType folder
@@ -463,7 +635,7 @@ public class GameManager : Singleton<GameManager>
 
 
 		//save match data on web
-		StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate, jsonString));
+		yield return StartCoroutine (SaveMatchDataCoroutine (filePath, m, gameDate, jsonString));
 
 
 		// Now we save motion data
@@ -493,7 +665,7 @@ public class GameManager : Singleton<GameManager>
 		hand_data_file_path = framesPath;
 
 		//save hand data on web
-		StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate, frameString));
+		yield return StartCoroutine (SaveHandDataCoroutine (framesPath, m, gameDate, frameString));
 
 
 	}
@@ -505,7 +677,7 @@ public class GameManager : Singleton<GameManager>
 	 */
 	IEnumerator SaveMatchDataCoroutine (string filePath, GameMatch m, DateTime gameDate, string matchString)
 	{
-		string address; 
+		string address;
 		string webfilename = "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + ".json";
 
 
@@ -534,7 +706,7 @@ public class GameManager : Singleton<GameManager>
 
 	IEnumerator SaveHandDataCoroutine (string framesPath, GameMatch m, DateTime gameDate, string frameString)
 	{
-		string address; 
+		string address;
 		string webfilename = "patient_" + m.patientName + "_" + m.gameType.ToString () + "_" + gameDate.ToString ("yyyyMMddTHHmmss") + "_hand_data.json";
 
 		if (debugging_save) {
@@ -582,8 +754,9 @@ public class GameManager : Singleton<GameManager>
 			hc.GetLeapRecorder ().AddFrame (frame);
 		}
 
+		replay_frames = hc.GetLeapRecorder ().GetFrames ();
 
-		firstTime = false;
+		loaded_file = true;
 	}
 
 

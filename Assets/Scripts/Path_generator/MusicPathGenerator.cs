@@ -51,22 +51,18 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 
 
-	void FixedUpdate ()
+	void Update ()
 	{
 		if (GameManager.Instance.Get_Is_Playing ()) {
 
 			//at every update the time goes down to
-			delta_spawn_time_left += Time.deltaTime;
-			delta_spawn_time_right += Time.deltaTime;
+			delta_spawn_time_left += Time.smoothDeltaTime;
+			delta_spawn_time_right += Time.smoothDeltaTime;
 
 			if (left < instantiationTimer_left.Length) {
 				
 				if (delta_spawn_time_left > instantiationTimer_left [left]) {
 					//do stuff here (like instantiate)
-
-					Debug.Log ("delta spawn time left " + Mathf.Round (delta_spawn_time_left).ToString ());
-					Debug.Log ("delta arrat time left " + Mathf.Round (instantiationTimer_left [left]).ToString ());
-
 
 					Instantiate (left_hand, left_position, Quaternion.identity);
 
@@ -83,10 +79,6 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 				if (delta_spawn_time_right > instantiationTimer_right [right]) {
 					//do stuff here (like instantiate)
-
-					Debug.Log ("delta spawn time right " + Mathf.Round (delta_spawn_time_right).ToString ());
-					Debug.Log ("delta arrat time right " + Mathf.Round (instantiationTimer_right [right]).ToString ());
-
 
 					Instantiate (right_hand, right_position, Quaternion.identity);
 

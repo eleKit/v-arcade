@@ -29,20 +29,14 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 
 
-	void Awake ()
-	{
-		
-		directoryPath = Path.Combine (Application.persistentDataPath, 
-			Path.Combine ("Patients", Path.Combine (GlobalReplayData.globalReplayData.patient_folder_name, gameType.ToString ())));
-
-		there_are_no_replay = false;
-	}
-
-
-
 	// Use this for initialization
 	void Start ()
 	{
+		directoryPath = Path.Combine (Application.persistentDataPath, 
+			Path.Combine ("Patients", Path.Combine (GlobalPlayerData.globalPlayerData.player, gameType.ToString ())));
+
+		there_are_no_replay = false;
+	
 		LoadReplayUI ();
 	}
 	
@@ -81,10 +75,14 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 	public void LoadDoctorMenu ()
 	{
+		MusicManager.Instance.StopAll ();
 		SceneManager.LoadSceneAsync ("Main_Menu_Doctor");
 	}
 
 
+
+
+	//use this to load the first screen in the scene, the one with the list of the player replays
 	public void LoadReplayListScreen ()
 	{
 		ClearScreens ();
@@ -92,9 +90,31 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 		LoadFirstReplayButtons ();
 	}
 
+	/*Use this function inside the replay to clear the game scene 
+	 * and then load the Replay List Screen
+	 */
+	public void FromGameToReplayList ()
+	{
+		switch (gameType) {
+		case GameMatch.GameType.Car:
+			CarManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Shooting:
+			ShootingManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Music:
+			MusicGameManager.Instance.ToMenu ();
+			break;
+		case GameMatch.GameType.Space:
+			SpaceGameManager.Instance.ToMenu ();
+			break;
+		}
+		LoadReplayListScreen ();
+	}
 
 
-	public void LoadPauseScren ()
+
+	public void LoadPauseScreen ()
 	{
 		ClearScreens ();
 		pause_screen.SetActive (true);
@@ -123,19 +143,67 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 			CarManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
 		}
 
-		/*if (shooting) {
-			ShootingReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
-			+ loadreplay
-			}
+		if (gameType.Equals (GameMatch.GameType.Shooting)) {
+			ShootingManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+
+		}
+			
 		
-		if (music) {
-			MusicGameReplayManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
-			 loadreplay
-		}*/
+		if (gameType.Equals (GameMatch.GameType.Music)) {
+			MusicGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+
+		}
+
+		if (gameType.Equals (GameMatch.GameType.Space)) {
+			SpaceGameManager.Instance.ChooseLevel (names_of_replays [button_index + index_of_current_replay_screen]);
+		}
 	}
 
 
+	public void RestartReplay ()
+	{
+		ClearScreens ();
+		Debug.LogError ("RestartLevel function is absent! do the overload");
 
+		//TODO overload the RestartLevel () in order to use the replay instead of the path
+		/*if (car) {
+			CarManager.Instance.RestartLevel ();
+		}
+		if (music) {
+			MusicGameManager.Instance.RestartLevel ();
+		}
+		if (shooting) {
+			ShootingManager.Instance.RestartLevel ();
+		}
+		if (space) {
+			SpaceGameManager.Instance.RestartLevel ();
+		}
+		*/
+
+	}
+
+	/* observe that ResumeLevel() is the same for game and replay:
+	 * see GameManager > BaseResumeLevel ()
+	 */
+	public void ResumeReplay ()
+	{
+		ClearScreens ();
+
+		switch (gameType) {
+		case GameMatch.GameType.Car:
+			CarManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Music:
+			MusicGameManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Shooting:
+			ShootingManager.Instance.ResumeLevel ();
+			break;
+		case GameMatch.GameType.Space:
+			SpaceGameManager.Instance.ResumeLevel ();
+			break;
+		}
+	}
 
 
 	public void PushedOnArrow ()
@@ -183,6 +251,16 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 					replay_list_buttons [i].interactable = false;
 				}
 			}
+		} else {
+			/* if the names_of_replays is null then:
+			 * It doesn't exist the Replays folder of the game
+			 * So all the buttons must be non-interactable
+			 */
+			for (int i = 0; i < replay_list_buttons.Length; i++) {
+				//if there are no more replays
+				replay_list_buttons [i].GetComponentInChildren<Text> ().text = "";
+				replay_list_buttons [i].interactable = false;
+			}
 		}
 
 	}
@@ -220,12 +298,8 @@ public class ReplayManagerUI : Singleton<ReplayManagerUI>
 
 				// using the 
 				string match_date = Path.GetFileName (replay_paths [i]).Split ('_') [1];
-				string match_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");
 
-
-				names_of_replays [i].match_data_path = Path.GetFileName (match_path);
-
-			
+				names_of_replays [i].match_data_path = Path.Combine (directoryPath, gameType.ToString () + "_" + match_date + ".json");			
 
 
 

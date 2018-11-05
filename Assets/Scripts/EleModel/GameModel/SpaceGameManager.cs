@@ -15,7 +15,11 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 	float timer_of_game;
 
+	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
+	//attribute used to load a replay
+	ReplayNamesOfPaths path_to_replay = new ReplayNamesOfPaths ();
+
 
 	//gameobject of the player used to check if the leap sees the hand so the timer can go on
 	GameObject pl;
@@ -62,8 +66,8 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 
 		//Timer text update
 		if (GameManager.Instance.Get_Is_Playing () &&
-		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().transparent_white)
-		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesture> ().medium_white))) {
+		    !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().transparent_white)
+		    || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().medium_white))) {
 			timer_of_game -= Time.deltaTime;
 			int timer = (int)Mathf.Round (timer_of_game);
 			int min = timer / 60;
@@ -117,6 +121,35 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 			GameManager.Instance.player_initial_pos;
 
 		SpacePathGenerator.Instance.LoadPath (path.file_path);
+
+	}
+
+	//@Overload for the Replay of a match
+	public void ChooseLevel (ReplayNamesOfPaths path)
+	{
+		path_to_replay = path;
+		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		SetReplayHandAngle angle_setter = GetComponent<SetReplayHandAngle> ();
+
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+
+		GameManager.Instance.player.transform.position = 
+			GameManager.Instance.player_initial_pos;
+		
+		ResetPath ();
+		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
+		SpacePathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Space));
+
+
+		/* the Yaw and Pitch Thresholds must be set in the GlobalPlayerData instance (xusing extractor.FromMatchDataSetGlobalPlayerData)
+		 * BEFORE the angle_setter.SetHandAngleInGestureRecognizer call
+		 * because this function calls the YawStart() in the GestureRecongizerManager
+		 * that set the Thresholds that taken from the GlobalPlayerData instance 
+		 * in the GestureRecognizer script  
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
+		//Set the hand angle in the gesture recognizer to use the correct Custom_Gesture recognizer
+		angle_setter.SetHandAngleInGestureRecognizer (extractor.FromMatchDataToHandAngle (path.match_data_path));
 
 	}
 

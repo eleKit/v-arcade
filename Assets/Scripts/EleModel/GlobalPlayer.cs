@@ -53,13 +53,18 @@ public class GlobalPlayer
 
 	public void ComputeGesturesDeltas ()
 	{
+		/* 
+		 * now thresholds are chosen directly by the doctor at the end of the Tuning Session,
+		 * after the doctor sets the sliders the data are saved for each direction of each hand and then this function
+		 * is called.
+		 */
 			
-		left_yaw_scale = Mathf.Min (Mathf.Abs (yaw_left_max), Mathf.Abs (yaw_left_min)) / YAW_SCALE;
-		right_yaw_scale = Mathf.Min (Mathf.Abs (yaw_right_max), Mathf.Abs (yaw_right_min)) / YAW_SCALE;
+		left_yaw_scale = Mathf.Min (Mathf.Abs (yaw_left_max), Mathf.Abs (yaw_left_min));
+		right_yaw_scale = Mathf.Min (Mathf.Abs (yaw_right_max), Mathf.Abs (yaw_right_min));
 
 
-		left_pitch_scale = Mathf.Min (Mathf.Abs (pitch_left_max), Mathf.Abs (pitch_left_min)) / PITCH_SCALE;
-		right_pitch_scale = Mathf.Min (Mathf.Abs (pitch_right_max), Mathf.Abs (pitch_right_min)) / PITCH_SCALE;
+		left_pitch_scale = Mathf.Min (Mathf.Abs (pitch_left_max), Mathf.Abs (pitch_left_min));
+		right_pitch_scale = Mathf.Min (Mathf.Abs (pitch_right_max), Mathf.Abs (pitch_right_min));
 
 
 		

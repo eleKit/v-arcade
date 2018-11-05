@@ -105,17 +105,16 @@ public class ShootingGesture : MonoBehaviour
 	{
 		
 		frames_since_last_reconnection = 0;
+		SetShootingThresholds ();
 
-		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
-
-		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 
 	}
 
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
 
 			//change pointer colour
@@ -135,8 +134,8 @@ public class ShootingGesture : MonoBehaviour
 				yaw_average.RemoveFirst ();
 			}
 
-			pitch_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
 
 			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
@@ -157,8 +156,8 @@ public class ShootingGesture : MonoBehaviour
 			if (yaw_list.Count >= K_yaw)
 				yaw_list.RemoveFirst ();
 			
-			pitch_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+			pitch_list.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+			yaw_list.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
 		} else {
 			//if no hand is visible change colour in black
@@ -196,10 +195,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.y - y_movement) >= y_min_player_position) {
-				Vector3 new_position = transform.position - new Vector3 (0, y_movement, 0);
-
-				transform.position = new_position;
+			if (transform.position.y + (Vector3.down * Time.deltaTime * 3f).y >= y_min_player_position) {
+				transform.Translate (Vector3.down * Time.deltaTime * 3f);
 			}
 
 
@@ -207,10 +204,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.y + y_movement) <= y_max_player_position) {
-				Vector3 new_position = transform.position + new Vector3 (0, y_movement, 0);
-
-				transform.position = new_position;
+			if (transform.position.y + (Vector3.up * Time.deltaTime * 3f).y <= y_max_player_position) {
+				transform.Translate (Vector3.up * Time.deltaTime * 3f);
 			}
 
 
@@ -220,10 +215,8 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.x - x_movement) >= x_min_player_posiion) {
-				Vector3 new_position = transform.position - new Vector3 (x_movement, 0, 0);
-
-				transform.position = new_position;
+			if (transform.position.x + (Vector3.left * Time.deltaTime * 3f).x >= x_min_player_posiion) {
+				transform.Translate (Vector3.left * Time.deltaTime * 3f);
 			}
 
 
@@ -231,14 +224,22 @@ public class ShootingGesture : MonoBehaviour
 
 
 
-			if ((transform.position.x + x_movement) <= x_max_player_position) {
-				Vector3 new_position = transform.position + new Vector3 (x_movement, 0, 0);
-
-				transform.position = new_position;
+			if (transform.position.x + (Vector3.right * Time.deltaTime * 3f).x <= x_max_player_position) {
+				transform.Translate (Vector3.right * Time.deltaTime * 3f);
 			}
 
 
 		}
+	}
+
+
+
+
+	public void SetShootingThresholds ()
+	{
+		pitch_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
+
 	}
 
 

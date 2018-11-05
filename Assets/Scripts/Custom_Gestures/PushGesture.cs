@@ -51,57 +51,46 @@ public class PushGesture : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
-		right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
-
-		if (hc.GetFrame ().Hands.Count == 2) {
-			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
-			}
-			if (hc.GetFrame ().Hands.Rightmost.IsRight) {
-				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
-			}
-		}
-
-		
+		SetPushThresholds ();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		if (hc.GetFrame ().Hands.Count == 2) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 2) {
 
 
 			//save left hand pitch and check left push gesture
-			if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+			if (current_frame.Hands.Leftmost.IsLeft) {
 				
 				if (left_pitch_average.Count >= num_frames_in_average_list) {
 					left_pitch_average.RemoveFirst ();
 				}
-				left_pitch_average.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+				left_pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
 
 				if (left_pitch.Count >= K) {
 					CheckLeftPushGesture ();
 					left_pitch.RemoveFirst ();
 				}
-				left_pitch.AddLast (hc.GetFrame ().Hands.Leftmost.Direction.Pitch + tuning_offset);
+				left_pitch.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
 			}
 
 
 
 			//save right hand pitch and check right push gesture
-			if (hc.GetFrame ().Hands.Rightmost.IsRight) {
+			if (current_frame.Hands.Rightmost.IsRight) {
 
 				if (right_pitch_average.Count >= num_frames_in_average_list) {
 					right_pitch_average.RemoveFirst ();
 				}
-				right_pitch_average.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
+				right_pitch_average.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
 
 				if (right_pitch.Count >= K) {
 					CheckRightPushGesture ();
 					right_pitch.RemoveFirst ();
 				}
-				right_pitch.AddLast (hc.GetFrame ().Hands.Rightmost.Direction.Pitch + tuning_offset);
+				right_pitch.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
 			}
 				
 		} else {
@@ -140,6 +129,19 @@ public class PushGesture : MonoBehaviour
 			}
 		}
 		
+	}
+
+
+
+
+
+
+	public void SetPushThresholds ()
+	{
+		left_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
+		right_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale;
+
+
 	}
 
 

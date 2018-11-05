@@ -18,6 +18,9 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	public int coeff_trajectory_lenght = 30;
 	float trajectory_length;
 
+	//set to false when a pitch match is going on
+	bool yaw = true;
+
 	SpacePath space_path;
 
 	// Use this for initialization
@@ -30,6 +33,16 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	void Update ()
 	{
 		
+	}
+
+	public void TrueYawBool ()
+	{
+		yaw = true;
+	}
+
+	public void FalseYawBool ()
+	{
+		yaw = false;
 	}
 
 
@@ -70,7 +83,11 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 
 
 				//if (i < Mathf.RoundToInt (3 / 4 * space_path.space_sections [h].num_enemies)) {
-				Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
+				if (yaw) {
+					Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
+				} else {
+					Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.Euler (0f, 0f, 90f));
+				}
 				/*} else {
 					Instantiate (m_big_enemies_prefabs [Random.Range (0, m_big_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
 				}*/

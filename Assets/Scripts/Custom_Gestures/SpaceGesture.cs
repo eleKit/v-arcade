@@ -19,41 +19,25 @@ public class SpaceGesture : MonoBehaviour
 
 
 
-	//no more than K previous frames are taken into account
-	[Range (10, 100)]
-	public int K_yaw = 10;
-
-
+	//if connection is lost are waited k_lost frames before starting again to check gestures
 	[Range (10, 100)]
 	public int K_lost = 30;
 
+	//no more than K previous frames are taken into account
+	[Range (0, 20)]
+	public int num_frames_in_yaw_average_list = 6;
 
+	//spaceship movements speed
 	[Range (0f, 30f)]
 	public float speed = 10f;
 
 
-	[Range (0, 20)]
-	public int num_frames_in_yaw_average_list = 6;
+	private Color transparent_white;
+	private Color medium_white;
+	private Color solid_white;
 
-
-	[Range (0, 10)]
-	public float x_movement = 1;
-
-
-	public HandController hc;
-
-	[Header ("Colors used when leap does/does not see the hands")]
-	public Color transparent_white = new Color (1f, 1f, 1f, 0.2f);
-	public Color medium_white = new Color (1f, 1f, 1f, 0.5f);
-	public Color solid_white = new Color (1f, 1f, 1f, 1f);
-
-	private LinkedList<float> yaw_list = new LinkedList<float> ();
+	private HandController hc;
 	private LinkedList<float> yaw_average = new LinkedList<float> ();
-
-
-	//# min frames between a gesture recongnized and the next
-	const int N = 60;
-
 
 	private int frames_since_last_reconnection;
 
@@ -74,64 +58,73 @@ public class SpaceGesture : MonoBehaviour
 	 */
 	private Animator m_animator;
 
+	/* set transparent_white if no hand is visible
+	 * set medium_white if the hand is back visible in that moment
+	 * set solid_white if the gesture recognizer is active in checking gestures
+	 */
+	private SpriteRenderer m_renderer;
+
 
 
 
 	// Use this for initialization
-	void Start ()
+	public void YawStart (HandController hand_controller, Color t_white, Color m_white, Color s_white)
 	{
 		m_animator = this.GetComponent<Animator> ();
+		m_renderer = this.GetComponent<SpriteRenderer> ();
+
 		frames_since_last_reconnection = 0;
+
+		//retreive hand thresholds
 		left_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale;
 		right_yaw_threshold = -GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale;
 
+		hc = hand_controller;
+		transparent_white = t_white;
+		medium_white = m_white;
+		solid_white = s_white;
 	}
 
-	// Update is called once per frame
-	void FixedUpdate ()
+
+
+	//method called by the SpaceGestureREcognizerManager
+	public void YawUpdate ()
 	{
-		if (hc.GetFixedFrame ().Hands.Count == 1) {
+		var current_frame = GameManager.Instance.GetCurrentFrame ();
+		if (current_frame.Hands.Count == 1) {
 
 
 			//change pointer colour
-			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (transparent_white)) {
-				gameObject.GetComponent<SpriteRenderer> ().color = medium_white;
+			if (m_renderer.color.Equals (transparent_white)) {
+				m_renderer.color = medium_white;
 			}
 
 			frames_since_last_reconnection++;	
 
 
 			//save average list
+			if (yaw_average.Count >= num_frames_in_yaw_average_list && frames_since_last_reconnection >= K_lost) {
 
+				CheckMoveSpaceshipGesture (current_frame.Hands.Leftmost.IsLeft);
+
+				//change pointer colour
+				if (m_renderer.color.Equals (medium_white)) {
+					m_renderer.color = solid_white;
+				}
+			}
 			if (yaw_average.Count >= num_frames_in_yaw_average_list) {
+
 				yaw_average.RemoveFirst ();
 			}
 
-			yaw_average.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
+			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw);
 
 
-			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
-			if (yaw_list.Count >= K_yaw && frames_since_last_reconnection >= K_lost) {
-				CheckMoveSpaceshipGesture (hc.GetFixedFrame ().Hands.Leftmost.IsLeft);
 
-				//change pointer colour
-				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (medium_white)) {
-					gameObject.GetComponent<SpriteRenderer> ().color = solid_white;
-				}
-
-			}
-
-			//save new data
-			if (yaw_list.Count >= K_yaw)
-				yaw_list.RemoveFirst ();
-
-			yaw_list.AddLast (hc.GetFixedFrame ().Hands.Leftmost.Direction.Yaw);
 
 		} else {
 			//if no hand is visible change colour in black
-			gameObject.GetComponent<SpriteRenderer> ().color = transparent_white;
-
-			yaw_list.Clear ();
+			m_renderer.color = transparent_white;
 			yaw_average.Clear ();
 
 			frames_since_last_reconnection = 0;
@@ -150,9 +143,6 @@ public class SpaceGesture : MonoBehaviour
 		} else {
 			threshold = right_yaw_threshold;
 		}
-
-		float max_yaw = yaw_list.Max ();
-		float min_yaw = yaw_list.Min ();
 
 		float current_yaw = yaw_average.Average ();
 

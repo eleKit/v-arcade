@@ -22,4 +22,10 @@ public class CarColourUI : MonoBehaviour
 		player.GetComponent<Animator> ().runtimeAnimatorController = animator;
 	}
 	#endif
+
+
+	public void SetCarScale (float scale)
+	{
+		player.GetComponent<Transform> ().localScale = new Vector3 (scale, scale, 1f);
+	}
 }

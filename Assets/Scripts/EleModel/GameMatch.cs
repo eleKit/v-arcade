@@ -15,7 +15,19 @@ public class GameMatch
 
 	;
 
+
+	public enum HandAngle
+	{
+		One_hundred,
+		Ninety,
+		Roll,
+		None}
+
+	;
+
 	public GameType gameType;
+
+	public HandAngle handAngle;
 
 	public long timestamp;
 
@@ -23,7 +35,11 @@ public class GameMatch
 
 	public string id_path;
 
-	public int score;
+	public float left_yaw_scale;
+	public float right_yaw_scale;
+
+	public float left_pitch_scale;
+	public float right_pitch_scale;
 
 }
 

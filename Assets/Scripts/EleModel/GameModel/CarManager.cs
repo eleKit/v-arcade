@@ -12,7 +12,7 @@ public class CarManager : Singleton<CarManager>
 	//attribute used to set the winning point coordinates
 	public GameObject winning_Point;
 
-	public Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
+	Vector3 initial_pos = new Vector3 (0f, -5.7f, 0f);
 
 	//attribute used to load a level in a match
 	FileNamesOfPaths loaded_path = new FileNamesOfPaths ();
@@ -81,6 +81,23 @@ public class CarManager : Singleton<CarManager>
 	public void ChooseLevel (ReplayNamesOfPaths path)
 	{
 		path_to_replay = path;
+		MatchDataExtractor extractor = GetComponent<MatchDataExtractor> ();
+		SetReplayHandAngle angle_setter = GetComponent<SetReplayHandAngle> ();
+
+		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+		ResetPlayer ();
+		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
+		CarPathGenerator.Instance.LoadPath (extractor.FromMatchDataToLevelFilePath (path.match_data_path, GameMatch.GameType.Car));
+
+		/* the Yaw and Pitch Thresholds must be set in the GlobalPlayerData instance (xusing extractor.FromMatchDataSetGlobalPlayerData)
+		 * BEFORE the angle_setter.SetHandAngleInGestureRecognizer call
+		 * because this function calls the YawStart() in the GestureRecongizerManager
+		 * that set the Thresholds that taken from the GlobalPlayerData instance 
+		 * in the GestureRecognizer script  
+		 */
+		extractor.FromMatchDataSetGlobalPlayerData (path.match_data_path);
+		//Set the hand angle in the gesture recognizer to use the correct Custom_Gesture recognizer
+		angle_setter.SetHandAngleInGestureRecognizer (extractor.FromMatchDataToHandAngle (path.match_data_path));
 		
 	}
 
