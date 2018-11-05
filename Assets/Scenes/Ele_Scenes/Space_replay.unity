@@ -3732,6 +3732,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 507f9b2d0402b4a2fa47c453b40c19ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transparent_white: {r: 1, g: 1, b: 1, a: 0.2}
+  medium_white: {r: 1, g: 1, b: 1, a: 0.5}
+  solid_white: {r: 1, g: 1, b: 1, a: 1}
   m_hand_controller: {fileID: 1479169044}
 --- !u!212 &501320300 stripped
 SpriteRenderer:
@@ -9802,7 +9805,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: debugging_save
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1214965947684362, guid: 0966008679beb4f28ba2e5467bd53e6f, type: 2}
       propertyPath: m_IsActive

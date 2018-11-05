@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -8164,17 +8164,17 @@ MonoBehaviour:
     - {fileID: 1871731938920652, guid: bb6ffe04da8434316b4c194f8e819dc2, type: 2}
     - {fileID: 11500000, guid: 50f4f4b68d51548838827c78f6a7a97c, type: 3}
     - {fileID: 1386329938}
-    - {fileID: 1592472881}
-    - {fileID: 1592472878}
-    - {fileID: 1592472880}
-    - {fileID: 1592472879}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 176714235}
     - {fileID: 176714237}
     - {fileID: 176714236}
-    - {fileID: 4274919062842500, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d, type: 2}
-    - {fileID: 1270878130404646, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d, type: 2}
-    - {fileID: 212942761220925808, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d, type: 2}
-    - {fileID: 61278425287888656, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 1251500201}
     - {fileID: 1251500202}
     - {fileID: 1251500204}
@@ -10315,7 +10315,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: debugging_save
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
@@ -10599,26 +10599,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1588415434}
---- !u!1 &1592472878 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1270878130404646, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 687453840}
---- !u!61 &1592472879 stripped
-BoxCollider2D:
-  m_PrefabParentObject: {fileID: 61278425287888656, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 687453840}
---- !u!212 &1592472880 stripped
-SpriteRenderer:
-  m_PrefabParentObject: {fileID: 212942761220925808, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 687453840}
---- !u!4 &1592472881 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4274919062842500, guid: 6aa35d1a9c1b743a58c1ff75fa88c96d,
-    type: 2}
-  m_PrefabInternal: {fileID: 687453840}
 --- !u!1 &1593392098 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1820827174391334, guid: 2cd00f5381f774c78bc1b93d6d3976c5,

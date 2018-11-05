@@ -6088,7 +6088,7 @@ Prefab:
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
       propertyPath: debugging_save
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114380086930790568, guid: 0966008679beb4f28ba2e5467bd53e6f,
         type: 2}
@@ -9243,7 +9243,6 @@ MonoBehaviour:
   K_lost: 30
   num_frames_in_pitch_average_list: 6
   speed: 5
-  x_movement: 1.65
 --- !u!1 &1170413928 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1923029551665296, guid: ef62540567cbd473497af13cc23da86d,
