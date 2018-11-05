@@ -6,12 +6,18 @@ using POLIMIGameCollective;
 
 public class CarPathGenerator : Singleton<CarPathGenerator>
 {
-	public GameObject diamond;
+	public GameObject blue_diamond;
+	public GameObject red_diamond;
+	public GameObject green_diamond;
+	public GameObject yellow_diamond;
 
 
 	public GameObject goal;
 
 	bool yaw = true;
+
+	bool blue = true;
+	bool green, red, yellow;
 
 	//this two attributes are the whole length of the game must not be changed
 	float trajectory_length;
@@ -22,6 +28,8 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 
 	CarPath car_path;
+
+	GameObject diamond;
 
 	//5f is the maximum amplitude possible
 
@@ -50,8 +58,44 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 		yaw = false;
 	}
 
+	/* functions used to setup the correct diamond prefab to instantiate
+	 * the diamond prefab must be the one of the same colour of the car
+	 */
 
-	//TODO this is called by UI and used to load the path data
+	public void CarYellowBool ()
+	{
+		blue = false;
+		yellow = true;
+		green = false;
+		red = false;
+	}
+
+	public void CarBlueBool ()
+	{
+		blue = true;
+		yellow = false;
+		green = false;
+		red = false;
+	}
+
+	public void CarGreenBool ()
+	{
+		blue = false;
+		yellow = false;
+		green = true;
+		red = false;
+	}
+
+	public void CarRedBool ()
+	{
+		blue = false;
+		yellow = false;
+		green = false;
+		red = true;
+	}
+
+
+	//This is called by UI and used to load the path data
 	public void LoadPath (string filePath)
 	{
 		
@@ -63,12 +107,23 @@ public class CarPathGenerator : Singleton<CarPathGenerator>
 
 		LoadDiamonds ();
 
+
 	}
 
 
 
 	void LoadDiamonds ()
 	{
+		if (blue) {
+			diamond = blue_diamond;
+		} else if (yellow) {
+			diamond = yellow_diamond;
+		} else if (green) {
+			diamond = green_diamond;
+		} else if (red) {
+			diamond = red_diamond;
+		}
+
 		//diamond coordinates
 		float y = 1f;
 		float x = 0;
