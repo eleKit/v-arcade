@@ -86,3 +86,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Ele_Scenes/Path_generator.unity
     guid: c821e20aa3b824382b50862b5bebfb7a
+  - enabled: 0
+    path: Assets/Scenes/Ele_Scenes/Car_replay.unity
+    guid: 31985dcbe8c0a40fe8a639b77e0df697
+  - enabled: 0
+    path: Assets/Scenes/Ele_Scenes/Music_replay.unity
+    guid: 5e298dfad803b4f969c5a2497cab1fc6
+  - enabled: 0
+    path: Assets/Scenes/Ele_Scenes/Shooting_replay.unity
+    guid: 46b15b106564f425db5e36cd46be60da
+  - enabled: 0
+    path: Assets/Scenes/Ele_Scenes/Space_replay.unity
+    guid: 43fbee1d33f7943ef9fed8d470a3096b
