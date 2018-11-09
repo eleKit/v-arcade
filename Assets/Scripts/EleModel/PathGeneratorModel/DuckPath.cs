@@ -17,5 +17,11 @@ public class DuckPath
 
 	public string doctorName;
 
+	//false if this is a training generated level
+	public bool standard;
+
+	//standard_level_attribute
+	public DuckStandard standard_model;
+
 
 }

@@ -116,7 +116,7 @@ public class CoinCollectScript : MonoBehaviour
 
 		if (shooting) {
 			if (other.gameObject.CompareTag ("Player")) {
-				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (Color.white)) {
+				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (other.gameObject.GetComponent<ShootingGesture> ().solid_white)) {
 
 					ShootingManager.Instance.AddPoints ();
 					StartCoroutine (Fall ());

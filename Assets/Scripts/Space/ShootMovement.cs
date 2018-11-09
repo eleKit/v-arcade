@@ -8,12 +8,17 @@ public class ShootMovement : MonoBehaviour
 	[Range (0, 10)]
 	public float y_movement = 1;
 
+	public bool enemy_attack = false;
+
 	float max_boundary = 10f;
 
 
 	// Use this for initialization
 	void Start ()
 	{
+		if (enemy_attack) {
+			y_movement = y_movement * (-1f);
+		}
 		
 	}
 	

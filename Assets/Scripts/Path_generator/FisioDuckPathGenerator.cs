@@ -135,6 +135,8 @@ public class FisioDuckPathGenerator : Singleton<FisioDuckPathGenerator>
 
 			duck_path.id_path = name_path;
 
+			duck_path.standard = false;
+
 
 			Directory.CreateDirectory (directoryPath);
 			string filePath = Path.Combine (

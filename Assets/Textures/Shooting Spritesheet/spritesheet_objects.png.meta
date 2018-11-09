@@ -11,6 +11,7 @@ TextureImporter:
     21300008: Coloured_target
     21300010: Wood
     21300012: Iron
+    21300014: red_target
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -211,6 +212,20 @@ TextureImporter:
         height: 127
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: red_target
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 305
+        width: 143
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

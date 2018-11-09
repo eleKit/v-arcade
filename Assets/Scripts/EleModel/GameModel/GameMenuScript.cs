@@ -80,7 +80,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	}
 
 
-	void ChooseLevelsType (bool training)
+	public void ChooseTrainingLevelsType (bool training)
 	{
 		if (training) {
 			LoadLevelNames (current_game_type);

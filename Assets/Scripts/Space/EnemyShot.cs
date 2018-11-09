@@ -10,6 +10,13 @@ public class EnemyShot : MonoBehaviour
 	public GameObject hit;
 
 	public bool big_alien;
+	public int max_big_alien_hits = 1;
+
+	public bool mini_boss;
+	public int max_mini_boss_hits = 4;
+
+	public bool boss;
+	public int max_boss_hits = 9;
 
 	public bool is_shot;
 
@@ -28,8 +35,8 @@ public class EnemyShot : MonoBehaviour
 		if (!big_alien) {
 			
 			ExplodeAlien (other);
-		} else {
-			if (num_shots >= 1 && !is_shot) {
+		} else if (big_alien) {
+			if (num_shots >= max_big_alien_hits && !is_shot) {
 				
 				ExplodeAlien (other);
 
@@ -41,9 +48,39 @@ public class EnemyShot : MonoBehaviour
 				Instantiate (hit, transform.position, Quaternion.identity);
 
 			}
+		} else if (mini_boss) {
+
+			if (num_shots >= max_mini_boss_hits && !is_shot) {
+
+				ExplodeAlien (other);
+
+			} else if (!is_shot) {
+
+				num_shots++;
+				SfxManager.Instance.Play ("rumble");
+				other.gameObject.SetActive (false);
+				Instantiate (hit, transform.position, Quaternion.identity);
+
+			}
+			
+		} else if (boss) {
+			if (num_shots >= max_boss_hits && !is_shot) {
+
+				ExplodeAlien (other);
+
+			} else if (!is_shot) {
+
+				num_shots++;
+				SfxManager.Instance.Play ("rumble");
+				other.gameObject.SetActive (false);
+				Instantiate (hit, transform.position, Quaternion.identity);
+
+			}
 		}
 
 	}
+
+
 
 	IEnumerator WaitBeforeDeactivate ()
 	{
