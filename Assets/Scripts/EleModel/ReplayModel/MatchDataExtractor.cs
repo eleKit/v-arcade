@@ -39,13 +39,32 @@ public class MatchDataExtractor : MonoBehaviour
 	//extracts the Level Name string from the file containing the GameMatch element
 	public string FromMatchDataToLevelName (string match_data_path)
 	{
+		/* N.B. the level name is an attribute of the GameMatch class, 
+		 * there is no difference between a standard level and a training one
+		 */
 
 		string matchString = File.ReadAllText (match_data_path);
 
 		GameMatch match_data = JsonUtility.FromJson<GameMatch> (matchString);
 
 		return match_data.id_path;
-		
+
+	}
+
+
+	//returns true if the MatchData refers to a Training level
+	public bool CheckFromMatchDataIfTrainingLevel (string match_data_path)
+	{
+		/* N.B. the level type is an attribute of the GameMatch class, 
+		 * there is no difference between a standard level and a training one
+		 */
+
+		string matchString = File.ReadAllText (match_data_path);
+
+		GameMatch match_data = JsonUtility.FromJson<GameMatch> (matchString);
+
+		return (match_data.levelType.Equals (GameMatch.LevelType.Training));
+
 	}
 
 	/* set in the GlobalPlayedData instance the attributes of the yaw and pitch thresholds, 
@@ -91,24 +110,35 @@ public class MatchDataExtractor : MonoBehaviour
 	}
 
 	//used to extract the path of the any game level that uses the Persistent Data Path
+	/* in case of a standard level the name is taken from a folder in the assets
+	 * otherwise if it is a training level it is taken from the persistent data path
+	 */
 	public string FromMatchDataToLevelFilePath (string match_data_path, GameMatch.GameType g_type)
 	{
-		
-		//the directory of all the levels of the g_type game
-		string game_level_paths_directory = Path.Combine (directoryPath, g_type.ToString ());
+		string game_level_paths_directory = "";
+		if (CheckFromMatchDataIfTrainingLevel (match_data_path)) {
+			//the Training directory of all the levels of the g_type game
+			game_level_paths_directory = Path.Combine (directoryPath, g_type.ToString ());
+		} else {
+			//the Standard directory of all the levels of the g_type game
+			game_level_paths_directory = Path.Combine (standard_levels_dataPath, g_type.ToString ());
+		}
 
-		// the name of the level i'm searching for
+		// the name of the level I'm searching for
 		string level_name = FromMatchDataToLevelName (match_data_path);
 
 		//if (Directory.Exists (game_level_paths_directory)) {
 
 		//find all the levels with that level_name part of whole path name
+		/* Training levels and Standard levels paths are of type NameGame_NameLevel_TS.json
+		 */
 		string[] game_paths = Directory.GetFiles (game_level_paths_directory, 
 			                      g_type.ToString () + "_" + FromNameToFilename (level_name) + "_*.json");
 
 		int index = 0;
 
 
+		//TODO check if this is useful!!
 		for (int i = 0; i < game_paths.Length; i++) {
 			//check for the level with the correspondent name inside the directory of levels
 			string i_level_name = Path.GetFileName (game_paths [i]).Split ('_') [1];

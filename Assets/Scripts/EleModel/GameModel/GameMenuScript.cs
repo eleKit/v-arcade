@@ -387,8 +387,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				for (int i = 0; i < file_names_of_paths.Length; i++) {
 					file_names_of_paths [i] = new FileNamesOfPaths ();
 					file_names_of_paths [i].file_path = game_paths [i];
-					//standard level paths are of type NameLevel.json
-					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
+					//standard level paths are of type NameGame_NameLevel_TS.json
+					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
 				}
 
 			}
