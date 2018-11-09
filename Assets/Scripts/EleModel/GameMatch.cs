@@ -15,6 +15,13 @@ public class GameMatch
 
 	;
 
+	public enum LevelType
+	{
+		Training,
+		Standard}
+
+	;
+
 
 	public enum HandAngle
 	{
@@ -28,6 +35,8 @@ public class GameMatch
 	public GameType gameType;
 
 	public HandAngle handAngle;
+
+	public LevelType levelType;
 
 	public long timestamp;
 

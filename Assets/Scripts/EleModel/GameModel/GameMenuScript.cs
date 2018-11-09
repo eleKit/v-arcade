@@ -32,27 +32,26 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public Button[] m_level_button;
 
-	//bool used to check what type of game is playing
-	bool car, music, shooting, space;
+	//set the current game type
+	GameMatch.GameType current_game_type;
 
 	bool there_are_no_level;
 
-	//retreive the name levels from file into list, convert the list into a new array
-
 	int index_of_current_level_screen;
 
+	//training levels data path (it is a persistent data path
 	string directoryPath;
 
-	string music_dataPath = "Assets/MusicTexts";
+	//music levels data path
+	const string music_dataPath = "Assets/MusicTexts";
+	//standard levels data path
+	const string standard_levels_dataPath = "Assets/LevelsTexts";
 
+	//binds the string with the name of a level with the string containing the path of that level
 	FileNamesOfPaths[] file_names_of_paths;
 
 	void Awake ()
 	{
-		car = false;
-		shooting = false;
-		music = false;
-		space = false;
 		there_are_no_level = false;
 	}
 
@@ -72,28 +71,24 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	//this is called once at the start of game manager to set the initial paramethers
 	public void LoadUIOfGame (GameMatch.GameType game_type)
 	{
+
+		current_game_type = game_type;
+
 		ButtonsNonInteractable ();
 
-
-		switch (game_type) {
-		case GameMatch.GameType.Car:
-			car = true;
-			break;
-		case GameMatch.GameType.Shooting:
-			shooting = true;
-			break;
-		case GameMatch.GameType.Music:
-			music = true;
-			break;
-		case GameMatch.GameType.Space:
-			space = true;
-			break;
-		}
-
-
-		LoadLevelNames (game_type);
-		LoadFirstLevels ();
 		LoadMenu ();
+	}
+
+
+	void ChooseLevelsType (bool training)
+	{
+		if (training) {
+			LoadLevelNames (current_game_type);
+		} else {
+			LoadStandardLevelNames (current_game_type);
+		}
+		LoadFirstLevels ();
+			
 	}
 
 	void ClearScreens ()
@@ -115,15 +110,15 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 		if (m_win_screen != null)
 			m_win_screen.SetActive (false);
-		if (car || space) {
+		if (current_game_type.Equals (GameMatch.GameType.Car) || current_game_type.Equals (GameMatch.GameType.Space)) {
 			if (m_mode_screen != null)
 				m_mode_screen.SetActive (false);
-			if (car) {
+			if (current_game_type.Equals (GameMatch.GameType.Car)) {
 				if (m_car_colours_screen != null)
 					m_car_colours_screen.SetActive (false);
 			}
 
-			if (space) {
+			if (current_game_type.Equals (GameMatch.GameType.Space)) {
 				if (m_space_colours_screen != null)
 					m_space_colours_screen.SetActive (false);
 			}
@@ -158,16 +153,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	 */
 	public void FromGameToMenu ()
 	{
-		if (car) {
+		if (current_game_type.Equals (GameMatch.GameType.Car)) {
 			CarManager.Instance.ToMenu ();
 		}
-		if (shooting) {
+		if (current_game_type.Equals (GameMatch.GameType.Shooting)) {
 			ShootingManager.Instance.ToMenu ();
 		}
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			MusicGameManager.Instance.ToMenu ();
 		}
-		if (space) {
+		if (current_game_type.Equals (GameMatch.GameType.Space)) {
 			SpaceGameManager.Instance.ToMenu ();
 		}
 		LoadMenu ();
@@ -202,7 +197,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	public void LoadModeScreen ()
 	{
-		if (car || space) {
+		if (current_game_type.Equals (GameMatch.GameType.Car) || current_game_type.Equals (GameMatch.GameType.Space)) {
 			ClearScreens ();
 			m_mode_screen.SetActive (true);
 		} else {
@@ -227,16 +222,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	{
 		ClearScreens ();
 
-		if (car) {
+		if (current_game_type.Equals (GameMatch.GameType.Car)) {
 			CarManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
-		if (shooting) {
+		if (current_game_type.Equals (GameMatch.GameType.Shooting)) {
 			ShootingManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			MusicGameManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
-		if (space) {
+		if (current_game_type.Equals (GameMatch.GameType.Space)) {
 			SpaceGameManager.Instance.ChooseLevel (file_names_of_paths [button_index + index_of_current_level_screen]);
 		}
 	}
@@ -245,16 +240,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public void RestartGame ()
 	{
 		ClearScreens ();
-		if (car) {
+		if (current_game_type.Equals (GameMatch.GameType.Car)) {
 			CarManager.Instance.RestartLevel ();
 		}
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			MusicGameManager.Instance.RestartLevel ();
 		}
-		if (shooting) {
+		if (current_game_type.Equals (GameMatch.GameType.Shooting)) {
 			ShootingManager.Instance.RestartLevel ();
 		}
-		if (space) {
+		if (current_game_type.Equals (GameMatch.GameType.Space)) {
 			SpaceGameManager.Instance.RestartLevel ();
 		}
 
@@ -264,16 +259,16 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	public void ResumeGame ()
 	{
 		ClearScreens ();
-		if (car) {
+		if (current_game_type.Equals (GameMatch.GameType.Car)) {
 			CarManager.Instance.ResumeLevel ();
 		}
-		if (music) {
+		if (current_game_type.Equals (GameMatch.GameType.Music)) {
 			MusicGameManager.Instance.ResumeLevel ();
 		}
-		if (shooting) {
+		if (current_game_type.Equals (GameMatch.GameType.Shooting)) {
 			ShootingManager.Instance.ResumeLevel ();
 		}
-		if (space) {
+		if (current_game_type.Equals (GameMatch.GameType.Space)) {
 			SpaceGameManager.Instance.ResumeLevel ();
 		}
 	}
@@ -298,9 +293,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				index_of_current_level_screen = index_of_current_level_screen + (m_level_button.Length * direction);
 				LoadNameButtons ();
 			} else if (index_of_current_level_screen + (m_level_button.Length * direction) < 0) {
-				if (car) {
+				if (current_game_type.Equals (GameMatch.GameType.Car)) {
 					LoadCarColourScreen ();
-				} else if (space) {
+				} else if (current_game_type.Equals (GameMatch.GameType.Space)) {
 					LoadSpaceColourScreen ();
 				} else {
 					LoadMenu ();
@@ -323,7 +318,6 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	void LoadNameButtons ()
 	{
 		if (file_names_of_paths != null) {
-			//TODO retreive name buttons
 			MakeButtonsInteractable ();
 
 			for (int i = 0; i < m_level_button.Length; i++) {
@@ -342,7 +336,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 	void LoadLevelNames (GameMatch.GameType game_type)
 	{
-		if (!music) {
+		if (!(current_game_type.Equals (GameMatch.GameType.Music))) {
 			directoryPath = Path.Combine (Application.persistentDataPath,
 				Path.Combine ("Paths", game_type.ToString ()));
 
@@ -354,6 +348,7 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				for (int i = 0; i < file_names_of_paths.Length; i++) {
 					file_names_of_paths [i] = new FileNamesOfPaths ();
 					file_names_of_paths [i].file_path = game_paths [i];
+					//training level paths are of type NameGame_NameLevel_TS.json
 					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
 				}
 
@@ -369,11 +364,35 @@ public class GameMenuScript : Singleton<GameMenuScript>
 				for (int i = 0; i < file_names_of_paths.Length; i++) {
 					file_names_of_paths [i] = new FileNamesOfPaths ();
 					file_names_of_paths [i].file_path = game_paths [i];
+					//music level paths are of type NameMusic.txt
 					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
 				}
 			}
 		}
 
+
+	}
+
+
+	void LoadStandardLevelNames (GameMatch.GameType game_type)
+	{
+		if (!(current_game_type.Equals (GameMatch.GameType.Music))) {
+			string stantard_directory_path = Path.Combine (standard_levels_dataPath, game_type.ToString ());
+
+			if (Directory.Exists (stantard_directory_path)) {
+				string[] game_paths = Directory.GetFiles (stantard_directory_path, "*.json");
+
+				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+
+				for (int i = 0; i < file_names_of_paths.Length; i++) {
+					file_names_of_paths [i] = new FileNamesOfPaths ();
+					file_names_of_paths [i].file_path = game_paths [i];
+					//standard level paths are of type NameLevel.json
+					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
+				}
+
+			}
+		}
 
 	}
 

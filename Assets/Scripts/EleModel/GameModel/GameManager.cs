@@ -67,10 +67,12 @@ public class GameManager : Singleton<GameManager>
 	//name of the path chosen
 	public string current_path = "";
 
-	//bool used to check what type of game the kid is playing
+	//used to check what type of game the kid is playing
 	GameMatch.GameType current_game_type;
-
+	//used to check what kind of gesture is recognized (only in case of games with multiple gestures)
 	GameMatch.HandAngle current_hand_angle = GameMatch.HandAngle.None;
+	//used to check if the level is standard or training
+	GameMatch.LevelType current_level_type = GameMatch.LevelType.Training;
 
 
 	//bool to deactivate player if the game is paused
@@ -245,11 +247,19 @@ public class GameManager : Singleton<GameManager>
 		current_hand_angle = hand_angle;
 	}
 
+	//call this by UI Level Type buttons to set the level type of the game
+	public void SetGameMathcHandAngle (GameMatch.LevelType level_type)
+	{
+		//set the level type
+		current_level_type = level_type;
+	}
+
 
 	public void BaseStart (string music_title, GameMatch.GameType game_type)
 	{
-		//set the gametype, method called by the NameGameManager class
+		//set the gametype
 		current_game_type = game_type;
+		//N.B the angle type and the level type are set apart only by games which have more than one gesture recognizer script
 
 
 		//music starts
@@ -612,6 +622,9 @@ public class GameManager : Singleton<GameManager>
 
 		//save the hand orientation
 		m.handAngle = current_hand_angle;
+
+		//save the level type
+		m.levelType = current_level_type;
 
 		//set the thresholds used in the match
 		m.left_pitch_scale = GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale;
