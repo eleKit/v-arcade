@@ -248,10 +248,15 @@ public class GameManager : Singleton<GameManager>
 	}
 
 	//call this by UI Level Type buttons to set the level type of the game
-	public void SetGameMathcHandAngle (GameMatch.LevelType level_type)
+	public void SetGameMatchLevelTypeAsTraining (bool training)
 	{
 		//set the level type
-		current_level_type = level_type;
+		if (training) {
+			current_level_type = GameMatch.LevelType.Training;
+		} else {
+			current_level_type = GameMatch.LevelType.Standard;
+		}
+		Debug.Log (current_level_type.ToString ());
 	}
 
 
@@ -444,9 +449,13 @@ public class GameManager : Singleton<GameManager>
 		return score;
 	}
 
-	public void BaseAddPoints ()
+	public void BaseAddPoints (int points)
 	{
-		score = score + 10;
+		if (score + points < 0) {
+			score = 0;
+		} else {
+			score = score + points;
+		}
 		m_score_text.text = "Punti: " + score.ToString ();
 
 	}

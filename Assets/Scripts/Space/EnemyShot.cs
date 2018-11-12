@@ -9,6 +9,9 @@ public class EnemyShot : MonoBehaviour
 
 	public GameObject hit;
 
+	[Header ("points to add every time, if negative points are subtracted")]
+	public int points = 10;
+
 	public bool big_alien;
 	public int max_big_alien_hits = 1;
 
@@ -16,7 +19,7 @@ public class EnemyShot : MonoBehaviour
 	public int max_mini_boss_hits = 4;
 
 	public bool boss;
-	public int max_boss_hits = 9;
+	public int max_boss_hits = 19;
 
 	public bool is_shot;
 
@@ -102,7 +105,7 @@ public class EnemyShot : MonoBehaviour
 		other.gameObject.SetActive (false);
 		Collider2D coll = GetComponent <Collider2D> ();
 		coll.enabled = false;
-		SpaceGameManager.Instance.AddPoints ();
+		SpaceGameManager.Instance.AddPoints (points);
 
 		StartCoroutine (WaitBeforeDeactivate ());
 	}

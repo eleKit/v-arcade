@@ -160,9 +160,9 @@ public class ShootingManager : Singleton<ShootingManager>
 		return GameManager.Instance.BaseGetScore ();
 	}
 
-	public void AddPoints ()
+	public void AddPoints (int points)
 	{
-		GameManager.Instance.BaseAddPoints ();
+		GameManager.Instance.BaseAddPoints (points);
 
 	}
 

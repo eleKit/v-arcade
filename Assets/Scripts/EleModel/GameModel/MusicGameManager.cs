@@ -181,7 +181,7 @@ public class MusicGameManager : Singleton<MusicGameManager>
 
 	public void AddPoints (bool left)
 	{
-		GameManager.Instance.BaseAddPoints ();
+		GameManager.Instance.BaseAddPoints (10);
 		StartCoroutine (Yeah (left));
 
 	}

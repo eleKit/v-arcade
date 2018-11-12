@@ -22,8 +22,8 @@ public class CoinCollectScript : MonoBehaviour
 	[Range (0, 10)]
 	public float max_duck_time = 0.5f;
 
-
-
+	[Header ("points to add every time, if negative points are subtracted")]
+	public int points = 10;
 
 	// Use this for initialization
 	void Start ()
@@ -75,7 +75,7 @@ public class CoinCollectScript : MonoBehaviour
 		
 		if (car) {
 			this.gameObject.SetActive (false);
-			CarManager.Instance.AddPoints ();
+			CarManager.Instance.AddPoints (points);
 			Debug.Log ("Collect diamond");
 			SfxManager.Instance.Play ("pickup");
 			Debug.Log ("music");
@@ -118,7 +118,7 @@ public class CoinCollectScript : MonoBehaviour
 			if (other.gameObject.CompareTag ("Player")) {
 				if (other.gameObject.GetComponent<SpriteRenderer> ().color.Equals (other.gameObject.GetComponent<ShootingGesture> ().solid_white)) {
 
-					ShootingManager.Instance.AddPoints ();
+					ShootingManager.Instance.AddPoints (points);
 					StartCoroutine (Fall ());
 					Debug.Log ("duck shooted");
 				}
