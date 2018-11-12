@@ -8,8 +8,7 @@ public class SpaceshipHit : MonoBehaviour
 
 	public GameObject explosion;
 
-	[Header ("points to add every time, if negative points are subtracted")]
-	public int points = -10;
+	int points = -10;
 
 
 	// Use this for initialization
