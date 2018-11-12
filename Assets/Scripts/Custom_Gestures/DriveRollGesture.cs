@@ -102,7 +102,7 @@ public class DriveRollGesture : MonoBehaviour
 		if (current_roll < threshold) {
 
 
-			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) >= x_min_player_position) {
+			if ((transform.position.x + (Vector3.right * Time.deltaTime * speed).x) <= x_max_player_position) {
 				transform.Translate (Vector3.right * Time.deltaTime * speed);
 			}
 
@@ -110,7 +110,7 @@ public class DriveRollGesture : MonoBehaviour
 		} else if (current_roll > (-threshold)) {
 
 
-			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) <= x_max_player_position) {
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_position) {
 
 				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
