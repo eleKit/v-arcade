@@ -18,6 +18,8 @@ public class MovingTargetScript : MonoBehaviour
 
 	float min_x_coord = -10;
 
+	GameObject pl = null;
+
 	/* the targets must appear in the scene in specific order, since they are always moving
 	 * the correct order depends on the position where they are instantiated
 	 */
@@ -32,15 +34,20 @@ public class MovingTargetScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (stop && transform.position.x < stop_x_coord) {
-		} else if (transform.position.x < min_x_coord) {
-			this.gameObject.SetActive (false);
-		} else {
-			transform.position = new Vector3 (
-				transform.position.x - (Time.deltaTime * speed),
-				transform.position.y,
-				transform.position.z);
-		}
+		if (pl == null) {
+			pl = GameObject.FindGameObjectWithTag ("Player");
+		} else if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
+		           || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().medium_white))) {
+			if (stop && transform.position.x < stop_x_coord) {
+			} else if (transform.position.x < min_x_coord) {
+				this.gameObject.SetActive (false);
+			} else {
+				transform.position = new Vector3 (
+					transform.position.x - (Time.deltaTime * speed),
+					transform.position.y,
+					transform.position.z);
+			}
 		
+		}
 	}
 }
