@@ -120,7 +120,6 @@ public class CoinCollectScript : MonoBehaviour
 
 					ShootingManager.Instance.AddPoints (points);
 					StartCoroutine (Fall ());
-					Debug.Log ("duck shooted");
 				}
 			}
 		}

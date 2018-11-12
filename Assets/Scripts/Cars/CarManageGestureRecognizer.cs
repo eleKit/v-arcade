@@ -10,7 +10,7 @@ public class CarManageGestureRecognizer : MonoBehaviour
 	private HandController hc;
 
 	DriveYawGesture drive_yaw_gesture;
-	CarControllerScript car_controller_script;
+	DriveRollGesture car_controller_script;
 	DrivePitchGesture drive_pitch_gesture;
 
 	bool ninety_deg_hand, one_hundred_and_eighty_hand, roll_hand;
@@ -23,7 +23,7 @@ public class CarManageGestureRecognizer : MonoBehaviour
 		ResetGesturesBool ();
 
 		drive_yaw_gesture = this.GetComponent<DriveYawGesture> ();
-		car_controller_script = this.GetComponent<CarControllerScript> ();
+		car_controller_script = this.GetComponent<DriveRollGesture> ();
 		drive_pitch_gesture = this.GetComponent<DrivePitchGesture> ();
 
 		
@@ -38,7 +38,7 @@ public class CarManageGestureRecognizer : MonoBehaviour
 			} else if (one_hundred_and_eighty_hand) {
 				drive_yaw_gesture.YawUpdate ();
 			} else if (roll_hand) {
-				car_controller_script.RollFixedUpdate ();
+				car_controller_script.RollUpdate ();
 			}
 		}
 	}

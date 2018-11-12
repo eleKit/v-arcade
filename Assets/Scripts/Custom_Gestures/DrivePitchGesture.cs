@@ -52,7 +52,7 @@ public class DrivePitchGesture : MonoBehaviour
 
 	//The spaceship has a minimum position and a maximum one, it must not escape from the screen
 	private float x_max_player_position = 11.5f;
-	private float x_min_player_posiion = -11.5f;
+	private float x_min_player_position = -11.5f;
 
 
 
@@ -122,7 +122,7 @@ public class DrivePitchGesture : MonoBehaviour
 		} else if (current_pitch > (-threshold)) {
 
 			
-			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_posiion) {
+			if ((transform.position.x + (Vector3.left * Time.deltaTime * speed).x) >= x_min_player_position) {
 
 				transform.Translate (Vector3.left * Time.deltaTime * speed);
 			}
