@@ -35,49 +35,51 @@ public class EnemyShot : MonoBehaviour
 	// Use this for initialization
 	void OnTriggerEnter2D (Collider2D other)
 	{
-		if (!big_alien) {
+		if (other.gameObject.CompareTag ("Shot")) {
+			if (!big_alien) {
 			
-			ExplodeAlien (other);
-		} else if (big_alien) {
-			if (num_shots >= max_big_alien_hits && !is_shot) {
-				
 				ExplodeAlien (other);
-
-			} else if (!is_shot) {
+			} else if (big_alien) {
+				if (num_shots >= max_big_alien_hits && !is_shot) {
 				
-				num_shots++;
-				SfxManager.Instance.Play ("rumble");
-				other.gameObject.SetActive (false);
-				Instantiate (hit, transform.position, Quaternion.identity);
+					ExplodeAlien (other);
 
-			}
-		} else if (mini_boss) {
+				} else if (!is_shot) {
+				
+					num_shots++;
+					SfxManager.Instance.Play ("rumble");
+					other.gameObject.SetActive (false);
+					Instantiate (hit, transform.position, Quaternion.identity);
 
-			if (num_shots >= max_mini_boss_hits && !is_shot) {
+				}
+			} else if (mini_boss) {
 
-				ExplodeAlien (other);
+				if (num_shots >= max_mini_boss_hits && !is_shot) {
 
-			} else if (!is_shot) {
+					ExplodeAlien (other);
 
-				num_shots++;
-				SfxManager.Instance.Play ("rumble");
-				other.gameObject.SetActive (false);
-				Instantiate (hit, transform.position, Quaternion.identity);
+				} else if (!is_shot) {
 
-			}
+					num_shots++;
+					SfxManager.Instance.Play ("rumble");
+					other.gameObject.SetActive (false);
+					Instantiate (hit, transform.position, Quaternion.identity);
+
+				}
 			
-		} else if (boss) {
-			if (num_shots >= max_boss_hits && !is_shot) {
+			} else if (boss) {
+				if (num_shots >= max_boss_hits && !is_shot) {
 
-				ExplodeAlien (other);
+					ExplodeAlien (other);
 
-			} else if (!is_shot) {
+				} else if (!is_shot) {
 
-				num_shots++;
-				SfxManager.Instance.Play ("rumble");
-				other.gameObject.SetActive (false);
-				Instantiate (hit, transform.position, Quaternion.identity);
+					num_shots++;
+					SfxManager.Instance.Play ("rumble");
+					other.gameObject.SetActive (false);
+					Instantiate (hit, transform.position, Quaternion.identity);
 
+				}
 			}
 		}
 

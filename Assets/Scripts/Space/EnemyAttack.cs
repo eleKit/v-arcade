@@ -8,7 +8,7 @@ public class EnemyAttack : MonoBehaviour
 
 	public GameObject shot;
 	//player GO
-	GameObject pl;
+	GameObject pl = null;
 
 
 	[Range (0f, 5f)]
@@ -18,10 +18,7 @@ public class EnemyAttack : MonoBehaviour
 
 	bool coroutine_started;
 
-	void Awake ()
-	{
-		pl = GameObject.FindGameObjectWithTag ("Player");
-	}
+
 
 	// Use this for initialization
 	void Start ()
@@ -33,19 +30,22 @@ public class EnemyAttack : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (pl == null) {
+			pl = GameObject.FindGameObjectWithTag ("Player");
+		} else {
+			if (GameManager.Instance.Get_Is_Playing ()) {
+				if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().transparent_white)
+				    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().medium_white))) {
 
-		if (GameManager.Instance.Get_Is_Playing ()) {
-			if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().transparent_white)
-			    || pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<SpaceGesturesManager> ().medium_white))) {
+					spawn_time += Time.deltaTime;
+				}
 
-				spawn_time += Time.deltaTime;
-			}
+				if (spawn_time > delta_t && !coroutine_started) {
 
-			if (spawn_time > delta_t && !coroutine_started) {
-
-				StartCoroutine (Shoot ());
-			}
+					StartCoroutine (Shoot ());
+				}
 		
+			}
 		}
 	}
 

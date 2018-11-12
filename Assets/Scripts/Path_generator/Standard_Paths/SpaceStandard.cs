@@ -15,9 +15,16 @@ public class SpaceStandard
 
 	public const float FRONT_Y = 10f;
 
+	public const float EXTREME_FRONT_Y = 5f;
+
 
 
 	//These coupled array have always the same size:
+
+	//x starting coord of front targets
+	public float[] extreme_front_enemies_x;
+	//this contains the indexes that corresponds to the array of the GO in the DuchPathGenerator
+	public int[] extreme_front_generation_indexes;
 
 	//x starting coord of front targets
 	public float[] front_enemies_x;

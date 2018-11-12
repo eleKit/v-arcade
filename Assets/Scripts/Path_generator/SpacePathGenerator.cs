@@ -13,9 +13,8 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 
 
 	[Header ("GameObject of standard levels")]
-	public GameObject[] front_targets;
-	public GameObject[] middle_targets;
-	public GameObject[] back_targets;
+	public GameObject[] targets;
+
 
 	//these two attributes are the whole length of the game must not be changed
 
@@ -102,21 +101,28 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 		
 			}
 		} else {
+
+			//extreme front
+			for (int i = 0; i < space_path.standard_model.extreme_front_generation_indexes.Length; i++) {
+				Instantiate (targets [space_path.standard_model.extreme_front_generation_indexes [i]],
+					new Vector3 (space_path.standard_model.extreme_front_enemies_x [i], SpaceStandard.EXTREME_FRONT_Y, 0f), Quaternion.identity);
+			} 
+
 			//front
 			for (int i = 0; i < space_path.standard_model.front_generation_indexes.Length; i++) {
-				Instantiate (front_targets [space_path.standard_model.front_generation_indexes [i]],
+				Instantiate (targets [space_path.standard_model.front_generation_indexes [i]],
 					new Vector3 (space_path.standard_model.front_enemies_x [i], SpaceStandard.FRONT_Y, 0f), Quaternion.identity);
 			} 
 
 			//middle
 			for (int i = 0; i < space_path.standard_model.middle_generation_indexes.Length; i++) {
-				Instantiate (middle_targets [space_path.standard_model.middle_generation_indexes [i]],
+				Instantiate (targets [space_path.standard_model.middle_generation_indexes [i]],
 					new Vector3 (space_path.standard_model.middle_enemies_x [i], SpaceStandard.MIDDLE_Y, 0f), Quaternion.identity);
 			} 
 
 			//back
 			for (int i = 0; i < space_path.standard_model.back_generation_indexes.Length; i++) {
-				Instantiate (back_targets [space_path.standard_model.back_generation_indexes [i]],
+				Instantiate (targets [space_path.standard_model.back_generation_indexes [i]],
 					new Vector3 (space_path.standard_model.back_enemies_x [i], SpaceStandard.BACK_Y, 0f), Quaternion.identity);
 				
 			

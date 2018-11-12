@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
+
+	[Header ("this bool is used only for a boss enemy in the Standard mode")]
+	public bool boss;
+
 	[Range (1, 200)]
 	public int m_num_of_enemies_movements = 3;
 
 
-	[Range (-10, 0)]
+	[Range (-10, 10)]
 	public float y_movement = 1;
 
 	//delta time between enemies movements
@@ -41,20 +45,37 @@ public class EnemyMovement : MonoBehaviour
 	{
 		if (SpaceGameManager.Instance.GetTimer () < t1 && !already_going_down && !GetComponent<EnemyShot> ().is_shot) {
 
-			already_going_down = true;
+			if (!boss) {
+				already_going_down = true;
 
-			Vector3 next_pos = transform.position + new Vector3 (0f, y_movement, 0f); 
-			transform.position = next_pos;
-			t1 = t1 - delta_t;
+				Vector3 next_pos = transform.position + new Vector3 (0f, y_movement, 0f); 
+				transform.position = next_pos;
+				t1 = t1 - delta_t;
 
-			already_going_down = false;
+				already_going_down = false;
 
-			if (transform.position.y < min_boundary) {
-				Destroy (gameObject);
+				if (transform.position.y < min_boundary) {
+					Destroy (gameObject);
+				}
+			} else {
+				already_going_down = true;
+
+				Vector3 next_pos = transform.position + new Vector3 (y_movement, 0f, 0f); 
+				transform.position = next_pos;
+				t1 = t1 - delta_t;
+
+				already_going_down = false;
+
+				if ((min_boundary < 0 && transform.position.x < min_boundary) ||
+				    (min_boundary > 0 && (-transform.position.x) < (-min_boundary))) {
+					y_movement = -y_movement;
+					min_boundary = -min_boundary;
+				
+				}
+
+
 			}
 
-
 		}
-
 	}
 }

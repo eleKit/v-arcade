@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1648548224428618}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 9, z: 0}
+  m_LocalPosition: {x: 0.1, y: 16.93, z: 0}
   m_LocalScale: {x: 8, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -67,7 +67,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32, y: 0.33}
+  m_Size: {x: 0.9441464, y: 0.86036634}
   m_EdgeRadius: 0
 --- !u!114 &114374402570648474
 MonoBehaviour:
@@ -114,8 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c3dc28962cb4cab9a1fcca5141b047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_num_of_enemies_movements: 100
-  y_movement: -0.5
+  boss: 1
+  m_num_of_enemies_movements: 50
+  y_movement: -1.5
 --- !u!212 &212097344009818900
 SpriteRenderer:
   m_ObjectHideFlags: 1
