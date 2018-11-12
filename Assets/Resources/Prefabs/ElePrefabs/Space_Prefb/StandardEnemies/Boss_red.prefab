@@ -82,12 +82,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 1715540233132746, guid: a1054bd5f1a3d455fa10ec974b0ec82b, type: 2}
   hit: {fileID: 1771209642181526, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
+  points: 10
   big_alien: 0
   max_big_alien_hits: 1
   mini_boss: 0
   max_mini_boss_hits: 4
   boss: 1
-  max_boss_hits: 9
+  max_boss_hits: 19
   is_shot: 0
 --- !u!114 &114638508831938692
 MonoBehaviour:

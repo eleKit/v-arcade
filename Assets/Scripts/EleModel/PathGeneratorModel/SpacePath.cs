@@ -16,6 +16,12 @@ public class SpacePath
 
 	public string doctorName;
 
+	//false if this is a training generated level
+	public bool standard;
+
 	public const float Y_OFFSET_COORD = 10f;
 	//the enemy must start from upper than the top of the scene
+
+	//standard levels attribute
+	public SpaceStandard standard_model;
 }

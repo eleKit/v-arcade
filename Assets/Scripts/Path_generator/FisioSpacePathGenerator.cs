@@ -361,6 +361,7 @@ public class FisioSpacePathGenerator :Singleton<FisioSpacePathGenerator>
 			space_path.doctorName = GlobalDoctorData.globalDoctorData.doctor;
 
 			space_path.id_path = name_path;
+			space_path.standard = false;
 
 			
 			Directory.CreateDirectory (directoryPath);
