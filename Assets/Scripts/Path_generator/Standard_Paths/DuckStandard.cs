@@ -8,11 +8,11 @@ using System;
 public class DuckStandard
 {
 	//y fixed coord targets
-	public const float BACK_Y = 3f;
+	public const float BACK_Y = 3.5f;
 
-	public const float MIDDLE_Y = 0.5f;
+	public const float MIDDLE_Y = 1f;
 
-	public const float FRONT_Y = -1.5f;
+	public const float FRONT_Y = -1f;
 
 
 
