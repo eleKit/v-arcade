@@ -9749,6 +9749,44 @@ MonoBehaviour:
   K_lost: 30
   num_frames_in_pitch_average_list: 6
   speed: 5
+--- !u!61 &1170100724
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1170100717}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.010408744, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.48, y: 0.5}
+    newSize: {x: 0.48, y: 0.5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3134602, y: 0.5}
+  m_EdgeRadius: 0
+--- !u!114 &1170100725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1170100717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db04bdf1d7e2447369bc59e982a641d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 1771209642181526, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
+  points: -10
 --- !u!1 &1170413928 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1923029551665296, guid: ef62540567cbd473497af13cc23da86d,

@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c3dc28962cb4cab9a1fcca5141b047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: 0
   m_num_of_enemies_movements: 100
   y_movement: -0.5
 --- !u!114 &114740278865562180
@@ -94,6 +95,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosion: {fileID: 1715540233132746, guid: a1054bd5f1a3d455fa10ec974b0ec82b, type: 2}
   hit: {fileID: 1771209642181526, guid: 3d5132ec6afdf432ab1323475271e12d, type: 2}
+  points: 20
+  standard_alien: 0
   big_alien: 1
   max_big_alien_hits: 1
   mini_boss: 0

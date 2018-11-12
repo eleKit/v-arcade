@@ -109,6 +109,10 @@ public class SpaceGameManager : Singleton<SpaceGameManager>
 		foreach (GameObject shot in GameObject.FindGameObjectsWithTag ("Shot")) {
 			Destroy (shot);
 		}
+
+		foreach (GameObject shot in GameObject.FindGameObjectsWithTag ("Enemy_Shot")) {
+			Destroy (shot);
+		}
 	}
 
 

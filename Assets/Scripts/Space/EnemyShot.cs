@@ -12,6 +12,8 @@ public class EnemyShot : MonoBehaviour
 	[Header ("points to add every time, if negative points are subtracted")]
 	public int points = 10;
 
+	public bool standard_alien;
+
 	public bool big_alien;
 	public int max_big_alien_hits = 1;
 
@@ -21,9 +23,9 @@ public class EnemyShot : MonoBehaviour
 	public bool boss;
 	public int max_boss_hits = 19;
 
-	public bool is_shot;
+	public bool is_shot = false;
 
-	int num_shots;
+	int num_shots = 0;
 
 	void Awake ()
 	{
@@ -31,13 +33,11 @@ public class EnemyShot : MonoBehaviour
 		num_shots = 0;
 	}
 
-
 	// Use this for initialization
 	void OnTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.CompareTag ("Shot")) {
-			if (!big_alien) {
-			
+			if (standard_alien) {
 				ExplodeAlien (other);
 			} else if (big_alien) {
 				if (num_shots >= max_big_alien_hits && !is_shot) {
@@ -53,7 +53,7 @@ public class EnemyShot : MonoBehaviour
 
 				}
 			} else if (mini_boss) {
-
+				
 				if (num_shots >= max_mini_boss_hits && !is_shot) {
 
 					ExplodeAlien (other);
@@ -62,6 +62,7 @@ public class EnemyShot : MonoBehaviour
 
 					num_shots++;
 					SfxManager.Instance.Play ("rumble");
+					SpaceGameManager.Instance.AddPoints (points);
 					other.gameObject.SetActive (false);
 					Instantiate (hit, transform.position, Quaternion.identity);
 
@@ -76,6 +77,7 @@ public class EnemyShot : MonoBehaviour
 
 					num_shots++;
 					SfxManager.Instance.Play ("rumble");
+					SpaceGameManager.Instance.AddPoints (points);
 					other.gameObject.SetActive (false);
 					Instantiate (hit, transform.position, Quaternion.identity);
 
