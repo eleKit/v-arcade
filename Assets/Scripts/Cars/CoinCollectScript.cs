@@ -173,7 +173,7 @@ public class CoinCollectScript : MonoBehaviour
 	IEnumerator Fall ()
 	{
 		SfxManager.Instance.Play ("rumble");
-		yield return new WaitForSeconds (max_duck_time);
+		//yield return new WaitForSeconds (max_duck_time);
 
 		Rigidbody2D rb2d = GetComponent<Rigidbody2D> ();
 		Collider2D coll2d = GetComponent<Collider2D> ();
@@ -183,7 +183,7 @@ public class CoinCollectScript : MonoBehaviour
 		rb2d.isKinematic = false;
 		Destroy (coll2d);
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (0.5f);
 		gameObject.SetActive (false);
 
 	}

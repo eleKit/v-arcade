@@ -110,6 +110,7 @@ public class ShootingManager : Singleton<ShootingManager>
 		loaded_path = path;
 		GameManager.Instance.BaseChooseLevel (path.name);
 
+		//set player initial position
 		GameManager.Instance.player.transform.position = 
 			GameManager.Instance.player_initial_pos;
 
@@ -126,6 +127,10 @@ public class ShootingManager : Singleton<ShootingManager>
 		SetGestureThresholds thresholds_setter = GetComponent<SetGestureThresholds> ();
 
 		GameManager.Instance.BaseChooseLevel (path, extractor.FromMatchDataToLevelName (path.match_data_path));
+
+		//set player initial position
+		GameManager.Instance.player.transform.position = GameManager.Instance.player_initial_pos;
+		
 		ResetPath ();
 
 		//load the level from the GameMatch data extracted from the ReplayNamesOfPaths class element
