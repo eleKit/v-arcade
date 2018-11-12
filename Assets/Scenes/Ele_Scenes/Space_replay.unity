@@ -4235,6 +4235,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212805774301810066, guid: 14a98dac12d1a41549a16164e825a022,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114470315329339644, guid: 14a98dac12d1a41549a16164e825a022, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 14a98dac12d1a41549a16164e825a022, type: 2}
@@ -4703,10 +4708,27 @@ MonoBehaviour:
   - {fileID: 1575528852473362, guid: bf0377e5407904c5cb7780d983ed5489, type: 2}
   - {fileID: 1188492214906012, guid: ed3903a199e1b4ad89c9a656f0b0d08f, type: 2}
   - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
-  m_big_enemies_prefabs:
-  - {fileID: 1938866940328846, guid: faab1b4ff50df41a981cf10d1393aafa, type: 2}
+  front_targets:
+  - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
   - {fileID: 1250724776379892, guid: 459061aeccac24fb780328cbf1cf74b8, type: 2}
-  - {fileID: 1124357569596776, guid: 833c0b3b413364493aeedb9b090c060f, type: 2}
+  - {fileID: 1880401533545670, guid: c25834f9bca884ff19473c5ec06bebca, type: 2}
+  - {fileID: 1459370603510022, guid: e24d60ac33ceb420cae3942c996f6fb4, type: 2}
+  - {fileID: 1884853795636782, guid: 11b805d101eed4f04aaf011408e9e6aa, type: 2}
+  - {fileID: 1648548224428618, guid: 143c78937fa0349b385ee4b5d3f78c39, type: 2}
+  middle_targets:
+  - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
+  - {fileID: 1250724776379892, guid: 459061aeccac24fb780328cbf1cf74b8, type: 2}
+  - {fileID: 1880401533545670, guid: c25834f9bca884ff19473c5ec06bebca, type: 2}
+  - {fileID: 1459370603510022, guid: e24d60ac33ceb420cae3942c996f6fb4, type: 2}
+  - {fileID: 1884853795636782, guid: 11b805d101eed4f04aaf011408e9e6aa, type: 2}
+  - {fileID: 1648548224428618, guid: 143c78937fa0349b385ee4b5d3f78c39, type: 2}
+  back_targets:
+  - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
+  - {fileID: 1250724776379892, guid: 459061aeccac24fb780328cbf1cf74b8, type: 2}
+  - {fileID: 1880401533545670, guid: c25834f9bca884ff19473c5ec06bebca, type: 2}
+  - {fileID: 1459370603510022, guid: e24d60ac33ceb420cae3942c996f6fb4, type: 2}
+  - {fileID: 1884853795636782, guid: 11b805d101eed4f04aaf011408e9e6aa, type: 2}
+  - {fileID: 1648548224428618, guid: 143c78937fa0349b385ee4b5d3f78c39, type: 2}
   coeff_trajectory_lenght: 4
 --- !u!4 &686542601
 Transform:

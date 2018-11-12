@@ -135,9 +135,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04558444, y: 0}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.67012525
+  m_Radius: 1.1
 --- !u!114 &114910422961913036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   max_duck_time: 0.5
+  points: 10
 --- !u!212 &212318060032436754
 SpriteRenderer:
   m_ObjectHideFlags: 1
