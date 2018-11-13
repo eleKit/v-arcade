@@ -9,32 +9,30 @@ using System.IO;
 
 public class SaveTuningManager : MonoBehaviour
 {
+	
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
 	[Header ("Use for debug, if checked the match is not saved")]
 	public bool no_save;
 
+	[Header ("Use to save the values in the PersistentDataPath")]
+	public TuningManager tuning_manager;
+
+
 	[Header ("Left result sliders and text")]
-	public Slider left_extension_slider;
-	public Text left_extension_text;
-	public Slider left_flexion_slider;
-	public Text left_flexion_text;
-	public Slider left_ulnar_slider;
-	public Text left_ulnar_text;
-	public Slider left_radial_slider;
-	public Text left_radial_text;
+	public Slider left_flexion_extension_slider;
+	public Text left_flexion_extension_text;
+	public Slider left_ulnar_radial_slider;
+	public Text left_ulnar_radial_text;
+
 
 
 	[Header ("Right result sliders and text")]
-	public Slider right_extension_slider;
-	public Text right_extension_text;
-	public Slider right_flexion_slider;
-	public Text right_flexion_text;
-	public Slider right_ulnar_slider;
-	public Text right_ulnar_text;
-	public Slider right_radial_slider;
-	public Text right_radial_text;
+	public Slider right_flexion_extension_slider;
+	public Text right_flexion_extension_text;
+	public Slider right_ulnar_radial_slider;
+	public Text right_ulnar_radial_text;
 
 
 	[Header ("Save&Go to main menu button")]
@@ -46,15 +44,11 @@ public class SaveTuningManager : MonoBehaviour
 	// Use this for initialization
 	void Awake ()
 	{
-		left_extension_text.text = left_extension_slider.value.ToString ("N1");
-		left_flexion_text.text = left_flexion_slider.value.ToString ("N1");
-		left_radial_text.text = left_radial_slider.value.ToString ("N1");
-		left_ulnar_text.text = left_ulnar_slider.value.ToString ("n1");
+		left_flexion_extension_text.text = left_flexion_extension_slider.value.ToString ("N2");
+		left_ulnar_radial_text.text = left_ulnar_radial_slider.value.ToString ("n1");
 
-		right_extension_text.text = right_extension_slider.value.ToString ("N1");
-		right_flexion_text.text = right_flexion_slider.value.ToString ("N1");
-		right_radial_text.text = right_radial_slider.value.ToString ("N1");
-		right_ulnar_text.text = right_ulnar_slider.value.ToString ("N1");
+		right_flexion_extension_text.text = right_flexion_extension_slider.value.ToString ("N2");
+		right_ulnar_radial_text.text = right_ulnar_radial_slider.value.ToString ("N2");
 		
 
 		
@@ -69,45 +63,30 @@ public class SaveTuningManager : MonoBehaviour
 
 
 
-	public void LeftExtensionSlider ()
+	public void LeftFlexionExtensionSlider ()
 	{
-		left_extension_text.text = left_extension_slider.value.ToString ("N1");
+		left_flexion_extension_text.text = left_flexion_extension_slider.value.ToString ("N2");
 	}
 
-	public void LeftFlexionSlider ()
+
+
+	public void LeftUlnarRadialSlider ()
 	{
-		left_flexion_text.text = left_flexion_slider.value.ToString ("N1");
+		left_ulnar_radial_text.text = left_ulnar_radial_slider.value.ToString ("N2");
 	}
 
-	public void LeftUlnarSlider ()
+	public void RightFlexionExtensionSlider ()
 	{
-		left_ulnar_text.text = left_ulnar_slider.value.ToString ("N1");
+		right_flexion_extension_text.text = right_flexion_extension_slider.value.ToString ("N2");
 	}
 
-	public void LeftRadialSlider ()
+
+
+	public void RightUlnarRadialSlider ()
 	{
-		left_radial_text.text = left_radial_slider.value.ToString ("N1");
+		right_ulnar_radial_text.text = right_ulnar_radial_slider.value.ToString ("N2");
 	}
 
-	public void RightExtensionSlider ()
-	{
-		right_extension_text.text = right_extension_slider.value.ToString ("N1");
-	}
-
-	public void RightFlexionSlider ()
-	{
-		right_flexion_text.text = right_flexion_slider.value.ToString ("N1");
-	}
-
-	public void RightUlnarSlider ()
-	{
-		right_ulnar_text.text = right_ulnar_slider.value.ToString ("N1");
-	}
-
-	public void RightRadialSlider ()
-	{
-		right_radial_text.text = right_radial_slider.value.ToString ("N1");
-	}
 
 	public void SaveDataAndLoadMain ()
 	{
@@ -129,34 +108,33 @@ public class SaveTuningManager : MonoBehaviour
 	IEnumerator SaveTuningData ()
 	{
 		//save data in the global player object
-		GlobalPlayerData.globalPlayerData.player_data.pitch_left_max = left_extension_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.pitch_left_min = left_flexion_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_left_max = left_radial_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_left_min = left_ulnar_slider.value * Mathf.Deg2Rad;
+		GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale = left_flexion_extension_slider.value * Mathf.Deg2Rad;
+		GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale = left_ulnar_radial_slider.value * Mathf.Deg2Rad;
 
-		GlobalPlayerData.globalPlayerData.player_data.pitch_right_max = right_extension_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.pitch_right_min = right_flexion_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_right_max = right_ulnar_slider.value * Mathf.Deg2Rad;
-		GlobalPlayerData.globalPlayerData.player_data.yaw_right_min = right_radial_slider.value * Mathf.Deg2Rad;
+		GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale = right_flexion_extension_slider.value * Mathf.Deg2Rad;
+		GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale = right_ulnar_radial_slider.value * Mathf.Deg2Rad;
 
-		GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
+		//GlobalPlayerData.globalPlayerData.player_data.ComputeGesturesDeltas ();
 
-		//save data on file (and web) as TuningSession class type 
+		/* Save Data on the PErsistentDataPath and online 
+		 * 
+		 * save data on file (and web) as TuningSession class type 
+		 */
 		TuningSession s = new TuningSession ();
 
 		DateTime gameDate = DateTime.UtcNow;
 		s.patientName = GlobalPlayerData.globalPlayerData.player;
 		s.timestamp = gameDate.ToFileTimeUtc ();
 
-		s.pitch_left_max = left_extension_slider.value * Mathf.Deg2Rad;
-		s.pitch_left_min = left_flexion_slider.value * Mathf.Deg2Rad;
-		s.pitch_right_max = right_extension_slider.value * Mathf.Deg2Rad;
-		s.pitch_right_min = right_flexion_slider.value * Mathf.Deg2Rad;
+		s.pitch_left_max = tuning_manager.data_left_extension;
+		s.pitch_left_min = tuning_manager.data_left_flexion;
+		s.pitch_right_max = tuning_manager.data_right_extension;
+		s.pitch_right_min = tuning_manager.data_right_flexion;
 
-		s.yaw_left_max = left_radial_slider.value * Mathf.Deg2Rad;
-		s.yaw_left_min = left_ulnar_slider.value * Mathf.Deg2Rad;
-		s.yaw_right_max = right_ulnar_slider.value * Mathf.Deg2Rad;
-		s.yaw_right_min = right_radial_slider.value * Mathf.Deg2Rad;
+		s.yaw_left_max = tuning_manager.data_left_radial;
+		s.yaw_left_min = tuning_manager.data_left_ulnar;
+		s.yaw_right_max = tuning_manager.data_right_ulnar;
+		s.yaw_right_min = tuning_manager.data_right_radial;
 
 		string directoryPath = Path.Combine (Application.persistentDataPath,
 			                       Path.Combine ("Tunings", s.patientName));

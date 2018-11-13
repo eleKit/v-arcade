@@ -58,19 +58,21 @@ public class TuningManager : MonoBehaviour
 	public GameObject handController;
 
 
+
+	[Header ("accessed by the SaveTuningManager to save the hand values on the PersistendDataPath")]
+	public float data_left_extension = 0f;
+	public float data_right_extension = 0f;
+
+	public float data_left_flexion = 0f;
+	public float data_right_flexion = 0f;
+
+	public float data_left_radial = 0f;
+	public float data_right_radial = 0f;
+
+	public float data_left_ulnar = 0f;
+	public float data_right_ulnar = 0f;
+
 	private HandController hc;
-
-	float data_left_estension = 0f;
-	float data_right_estension = 0f;
-
-	float data_left_flexion = 0f;
-	float data_right_flexion = 0f;
-
-	float data_left_radial = 0f;
-	float data_right_radial = 0f;
-
-	float data_left_ulnar = 0f;
-	float data_right_ulnar = 0f;
 
 	//save the past yaw down angles of left and right hand in the previous K frames
 	private List<float> left_flexion = new List<float> ();
@@ -491,8 +493,8 @@ public class TuningManager : MonoBehaviour
 
 
 
-			data_left_estension = left_estension.Average ();
-			data_right_estension = right_estension.Average ();
+			data_left_extension = left_estension.Average ();
+			data_right_extension = right_estension.Average ();
 
 			data_left_flexion = left_flexion.Average ();
 			data_right_flexion = right_flexion.Average ();
@@ -508,13 +510,13 @@ public class TuningManager : MonoBehaviour
 			m_right_result.SetActive (true);
 
 			m_right_result_text.text =
-				"Estensione destra: " + Mathf.Abs (data_right_estension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+				"Estensione destra: " + Mathf.Abs (data_right_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Flessione destra: " + Mathf.Abs (data_right_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Dev ulnare destra: " + Mathf.Abs (data_right_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Dev radiale destra: " + Mathf.Abs (data_right_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
 
 			m_left_result_text.text =
-				"Estensione sinistra: " + Mathf.Abs (data_left_estension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+				"Estensione sinistra: " + Mathf.Abs (data_left_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
 			+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
