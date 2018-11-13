@@ -39,13 +39,15 @@ public class SaveTuningManager : MonoBehaviour
 	public GameObject m_menu_button;
 	[Header ("Repeat tuning button")]
 	public GameObject m_repeat_tuning_button;
+	[Header ("Skip tuning button")]
+	public GameObject m_skip_tuning_button;
 
 
 	// Use this for initialization
 	void Awake ()
 	{
 		left_flexion_extension_text.text = left_flexion_extension_slider.value.ToString ("N2");
-		left_ulnar_radial_text.text = left_ulnar_radial_slider.value.ToString ("n1");
+		left_ulnar_radial_text.text = left_ulnar_radial_slider.value.ToString ("N2");
 
 		right_flexion_extension_text.text = right_flexion_extension_slider.value.ToString ("N2");
 		right_ulnar_radial_text.text = right_ulnar_radial_slider.value.ToString ("N2");
@@ -92,6 +94,7 @@ public class SaveTuningManager : MonoBehaviour
 	{
 		m_menu_button.GetComponent<Button> ().interactable = false;
 		m_repeat_tuning_button.GetComponent<Button> ().interactable = false;
+		m_skip_tuning_button.GetComponent<Button> ().interactable = false;
 
 		StartCoroutine (LoadMain ());
 	}

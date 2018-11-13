@@ -457,70 +457,7 @@ public class TuningManager : MonoBehaviour
 		case Tuning_Phase.End_phase:
 			
 			ClearScreens ();
-			m_results_canvas.SetActive (true);
-
-			//check for errors
-			if (left_estension.Count == 0) {
-				left_estension.Add (0f);
-			}
-			if (right_estension.Count == 0) {
-				right_estension.Add (0f);
-			} 
-			if (left_flexion.Count == 0) {
-				left_flexion.Add (0f);
-			} 
-			if (right_flexion.Count == 0) {
-				right_flexion.Add (0f);
-			} 
-			if (left_radial.Count == 0) {
-				left_radial.Add (0f);
-			} 
-			if (right_radial.Count == 0) {
-				right_radial.Add (0f);
-			} 
-			if (left_ulnar.Count == 0) {
-				left_ulnar.Add (0f);
-			} 
-			if (right_ulnar.Count == 0) {
-				right_ulnar.Add (0f);
-			}
-
-			
-			
-
-	
-			current_phase = Tuning_Phase.Finished_tuning;
-
-
-
-			data_left_extension = left_estension.Average ();
-			data_right_extension = right_estension.Average ();
-
-			data_left_flexion = left_flexion.Average ();
-			data_right_flexion = right_flexion.Average ();
-
-			data_left_radial = left_radial.Average ();
-			data_right_radial = right_radial.Average ();
-
-			data_left_ulnar = left_ulnar.Average ();
-			data_right_ulnar = right_ulnar.Average ();
-
-			m_left_result.SetActive (true);
-
-			m_right_result.SetActive (true);
-
-			m_right_result_text.text =
-				"Estensione destra: " + Mathf.Abs (data_right_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Flessione destra: " + Mathf.Abs (data_right_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Dev ulnare destra: " + Mathf.Abs (data_right_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Dev radiale destra: " + Mathf.Abs (data_right_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
-
-			m_left_result_text.text =
-				"Estensione sinistra: " + Mathf.Abs (data_left_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
-			+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
-			
+			EndTuning ();
 			break;
 
 			
@@ -531,7 +468,79 @@ public class TuningManager : MonoBehaviour
 	}
 
 
+	public void SkipTuning ()
+	{
+		current_phase = Tuning_Phase.End_phase;
+		previous_phase = Tuning_Phase.End_phase;
+	}
 
+
+
+	void EndTuning ()
+	{
+
+		m_results_canvas.SetActive (true);
+
+		//check for errors
+		if (left_estension.Count == 0) {
+			left_estension.Add (0f);
+		}
+		if (right_estension.Count == 0) {
+			right_estension.Add (0f);
+		} 
+		if (left_flexion.Count == 0) {
+			left_flexion.Add (0f);
+		} 
+		if (right_flexion.Count == 0) {
+			right_flexion.Add (0f);
+		} 
+		if (left_radial.Count == 0) {
+			left_radial.Add (0f);
+		} 
+		if (right_radial.Count == 0) {
+			right_radial.Add (0f);
+		} 
+		if (left_ulnar.Count == 0) {
+			left_ulnar.Add (0f);
+		} 
+		if (right_ulnar.Count == 0) {
+			right_ulnar.Add (0f);
+		}
+
+		current_phase = Tuning_Phase.Finished_tuning;
+
+
+
+		data_left_extension = left_estension.Average ();
+		data_right_extension = right_estension.Average ();
+
+		data_left_flexion = left_flexion.Average ();
+		data_right_flexion = right_flexion.Average ();
+
+		data_left_radial = left_radial.Average ();
+		data_right_radial = right_radial.Average ();
+
+		data_left_ulnar = left_ulnar.Average ();
+		data_right_ulnar = right_ulnar.Average ();
+
+		m_left_result.SetActive (true);
+
+		m_right_result.SetActive (true);
+
+		m_right_result_text.text =
+			"Estensione destra: " + Mathf.Abs (data_right_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Flessione destra: " + Mathf.Abs (data_right_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Dev ulnare destra: " + Mathf.Abs (data_right_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Dev radiale destra: " + Mathf.Abs (data_right_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
+
+		m_left_result_text.text =
+			"Estensione sinistra: " + Mathf.Abs (data_left_extension * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Flessione sinistra: " + Mathf.Abs (data_left_flexion * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Dev ulnare sinistra: " + Mathf.Abs (data_left_ulnar * Mathf.Rad2Deg).ToString ("N1") + "°" + "\n"
+		+ "Dev radiale sinista: " + Mathf.Abs (data_left_radial * Mathf.Rad2Deg).ToString ("N1") + "°";
+		
+		
+	}
 
 	//called by Start() and by the Restart Tuning button
 	public void StartLevel ()
