@@ -470,8 +470,10 @@ public class TuningManager : MonoBehaviour
 
 	public void SkipTuning ()
 	{
-		current_phase = Tuning_Phase.End_phase;
-		previous_phase = Tuning_Phase.End_phase;
+		if (!(current_phase.Equals (Tuning_Phase.Finished_tuning))) {
+			current_phase = Tuning_Phase.End_phase;
+			previous_phase = Tuning_Phase.End_phase;
+		}
 	}
 
 
