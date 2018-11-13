@@ -8,13 +8,17 @@ public class MatchDataExtractor : MonoBehaviour
 	string directoryPath;
 
 	//music levels data path
-	const string music_dataPath = "Assets/MusicTexts";
+	const string music_folder_name = "MusicTexts";
+	string music_dataPath = "";
 	//standard levels data path
-	const string standard_levels_dataPath = "Assets/LevelsTexts";
+	const string standard_levels_folder_name = "LevelsTexts";
+	string standard_levels_dataPath = "";
 
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
+		standard_levels_dataPath = Path.Combine (Application.persistentDataPath, standard_levels_folder_name);
+		music_dataPath = Path.Combine (Application.persistentDataPath, music_folder_name);
 
 	}
 

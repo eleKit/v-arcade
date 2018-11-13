@@ -43,9 +43,11 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	string directoryPath;
 
 	//music levels data path
-	const string music_dataPath = "Assets/MusicTexts";
+	const string music_folder_name = "MusicTexts";
+	string music_dataPath = "";
 	//standard levels data path
-	const string standard_levels_dataPath = "Assets/LevelsTexts";
+	const string standard_levels_folder_name = "LevelsTexts";
+	string standard_levels_dataPath = "";
 
 	//binds the string with the name of a level with the string containing the path of that level
 	FileNamesOfPaths[] file_names_of_paths;
@@ -58,6 +60,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	// Use this for initialization
 	void Start ()
 	{
+		standard_levels_dataPath = Path.Combine (Application.persistentDataPath, standard_levels_folder_name);
+		music_dataPath = Path.Combine (Application.persistentDataPath, music_folder_name);
 
 
 	}

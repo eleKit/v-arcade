@@ -40,7 +40,7 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 
 
 
-	string dataPath = "Assets/MusicTexts";
+	//string dataPath = "Assets/MusicTexts";
 
 
 	// Use this for initialization
