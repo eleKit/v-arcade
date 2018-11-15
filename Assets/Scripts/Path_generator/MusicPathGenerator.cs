@@ -125,23 +125,22 @@ public class MusicPathGenerator : Singleton<MusicPathGenerator>
 	void ReadPath (string filename)
 	{
 		
-		StreamReader reader = new StreamReader (filename); 
+		TextAsset txt = Resources.Load<TextAsset> (filename);
+		string textFile = txt.text;
+		
+		//StreamReader reader = new StreamReader (filename); 
 
 		/* the first line contains the spauning seconds of the left hand buttons
 		 * the second line the ones of the right hand buttons
 		 */
 
-		if (!reader.EndOfStream) {
-			string inp_ln = reader.ReadLine ();
-			instantiationTimer_left = Array.ConvertAll (inp_ln.Split (','), float.Parse);
-		}
+		string left_array_string = textFile.Split ('\n') [0];
+		string right_array_string = textFile.Split ('\n') [1];
 
-		if (!reader.EndOfStream) {
-			string inp_ln = reader.ReadLine ();
-			instantiationTimer_right = Array.ConvertAll (inp_ln.Split (','), float.Parse);
-		}
+		instantiationTimer_left = Array.ConvertAll (left_array_string.Split (','), float.Parse);
 
-		reader.Close ();  
+		instantiationTimer_right = Array.ConvertAll (right_array_string.Split (','), float.Parse);
+
 
 	}
 }

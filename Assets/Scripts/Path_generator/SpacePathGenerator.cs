@@ -27,10 +27,15 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 
 	SpacePath space_path;
 
+	//string where i save the persistent data path to check if it is a training level
+	string training_path;
+	//if the level is a standard one it is saved inside the Resources folder and loaded with Resource.Load
+
 	// Use this for initialization
 	void Start ()
 	{
 		trajectory_length = Mathf.PI * coeff_trajectory_lenght;
+		training_path = Application.persistentDataPath;
 	}
 	
 	// Update is called once per frame
@@ -54,81 +59,100 @@ public class SpacePathGenerator : Singleton<SpacePathGenerator>
 	public void LoadPath (string filePath)
 	{
 
+		if (filePath.Contains (training_path)) {
+			string spacePath = File.ReadAllText (filePath);
 
-		string spacePath = File.ReadAllText (filePath);
+			Debug.Log (spacePath);
 
-		space_path = JsonUtility.FromJson<SpacePath> (spacePath);
+			space_path = JsonUtility.FromJson<SpacePath> (spacePath);
 
-		LoadEnemies ();
+			LoadEnemies ();
+		} else {
+			TextAsset txt = Resources.Load<TextAsset> (filePath);
+			Debug.Log (filePath);
+			string textFile = txt.text;
+
+			space_path = JsonUtility.FromJson<SpacePath> (textFile);
+
+			Debug.Log (textFile);
+
+			LoadStandardEnemies ();
+
+		}
 
 	}
 
 
 	void LoadEnemies ()
 	{
-		if (!space_path.standard) {
-			//diamond coordinates
-			float y = SpacePath.Y_OFFSET_COORD;
-			float x = 0f;
+		
+		//diamond coordinates
+		float y = SpacePath.Y_OFFSET_COORD;
+		float x = 0f;
 
-			float y_start = y;
+		float y_start = y;
 
-			for (int h = 0; h < space_path.space_sections.Length; h++) {
+		for (int h = 0; h < space_path.space_sections.Length; h++) {
 
-				for (int i = 0; i < space_path.space_sections [h].num_enemies; i++) {
-
-
-					y = i * (trajectory_length / space_path.space_sections [h].num_enemies);
-					x = space_path.curve_amplitude *
-					(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * space_path.space_sections [h].curve_position))
-					+ space_path.space_sections [h].curve_position);
-
-					//new y is traslated of y_start based on the end of the previous curve
-					y = y + y_start;
+			for (int i = 0; i < space_path.space_sections [h].num_enemies; i++) {
 
 
-					//if (i < Mathf.RoundToInt (3 / 4 * space_path.space_sections [h].num_enemies)) {
-					if (yaw) {
-						Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
-					} else {
-						Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.Euler (0f, 0f, 90f));
-					}
+				y = i * (trajectory_length / space_path.space_sections [h].num_enemies);
+				x = space_path.curve_amplitude *
+				(Mathf.Sin (((Mathf.PI * 2) / trajectory_length) * y - ((Mathf.PI / 2) * space_path.space_sections [h].curve_position))
+				+ space_path.space_sections [h].curve_position);
 
+				//new y is traslated of y_start based on the end of the previous curve
+				y = y + y_start;
+
+
+				//if (i < Mathf.RoundToInt (3 / 4 * space_path.space_sections [h].num_enemies)) {
+				if (yaw) {
+					Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.identity);
+				} else {
+					Instantiate (m_enemies_prefabs [Random.Range (0, m_enemies_prefabs.Length)], new Vector3 (x, y, 0), Quaternion.Euler (0f, 0f, 90f));
 				}
 
-				//y starts from the previous end curve + 5f of offset
-				y_start = y + 5f;
-		
 			}
-		} else {
 
-			//extreme front
-			for (int i = 0; i < space_path.standard_model.extreme_front_generation_indexes.Length; i++) {
-				Instantiate (targets [space_path.standard_model.extreme_front_generation_indexes [i]],
-					new Vector3 (space_path.standard_model.extreme_front_enemies_x [i], SpaceStandard.EXTREME_FRONT_Y, 0f), Quaternion.identity);
-			} 
+			//y starts from the previous end curve + 5f of offset
+			y_start = y + 5f;
+		
+		} 
+	}
 
-			//front
-			for (int i = 0; i < space_path.standard_model.front_generation_indexes.Length; i++) {
-				Instantiate (targets [space_path.standard_model.front_generation_indexes [i]],
-					new Vector3 (space_path.standard_model.front_enemies_x [i], SpaceStandard.FRONT_Y, 0f), Quaternion.identity);
-			} 
+	void LoadStandardEnemies ()
+	{
 
-			//middle
-			for (int i = 0; i < space_path.standard_model.middle_generation_indexes.Length; i++) {
-				Instantiate (targets [space_path.standard_model.middle_generation_indexes [i]],
-					new Vector3 (space_path.standard_model.middle_enemies_x [i], SpaceStandard.MIDDLE_Y, 0f), Quaternion.identity);
-			} 
 
-			//back
-			for (int i = 0; i < space_path.standard_model.back_generation_indexes.Length; i++) {
-				Instantiate (targets [space_path.standard_model.back_generation_indexes [i]],
-					new Vector3 (space_path.standard_model.back_enemies_x [i], SpaceStandard.BACK_Y, 0f), Quaternion.identity);
+
+		//extreme front
+		for (int i = 0; i < space_path.standard_model.extreme_front_generation_indexes.Length; i++) {
+			Instantiate (targets [space_path.standard_model.extreme_front_generation_indexes [i]],
+				new Vector3 (space_path.standard_model.extreme_front_enemies_x [i], SpaceStandard.EXTREME_FRONT_Y, 0f), Quaternion.identity);
+		} 
+
+		//front
+		for (int i = 0; i < space_path.standard_model.front_generation_indexes.Length; i++) {
+			Instantiate (targets [space_path.standard_model.front_generation_indexes [i]],
+				new Vector3 (space_path.standard_model.front_enemies_x [i], SpaceStandard.FRONT_Y, 0f), Quaternion.identity);
+		} 
+
+		//middle
+		for (int i = 0; i < space_path.standard_model.middle_generation_indexes.Length; i++) {
+			Instantiate (targets [space_path.standard_model.middle_generation_indexes [i]],
+				new Vector3 (space_path.standard_model.middle_enemies_x [i], SpaceStandard.MIDDLE_Y, 0f), Quaternion.identity);
+		} 
+
+		//back
+		for (int i = 0; i < space_path.standard_model.back_generation_indexes.Length; i++) {
+			Instantiate (targets [space_path.standard_model.back_generation_indexes [i]],
+				new Vector3 (space_path.standard_model.back_enemies_x [i], SpaceStandard.BACK_Y, 0f), Quaternion.identity);
 				
 			
-			}
+		}
 
 	
-		}
 	}
 }
+

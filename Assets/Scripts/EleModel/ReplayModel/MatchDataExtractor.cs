@@ -9,19 +9,13 @@ public class MatchDataExtractor : MonoBehaviour
 
 	//music levels data path
 	const string music_folder_name = "MusicTexts";
-	string music_dataPath = "";
 	//standard levels data path
 	const string standard_levels_folder_name = "LevelsTexts";
-	string standard_levels_dataPath = "";
 
-	const string titles_standard_levels_or_music_file_name = "List.txt";
-	const string resources_folder = "Resources";
 
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
-		standard_levels_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, standard_levels_folder_name));
-		music_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, music_folder_name));
 
 
 	}
@@ -111,7 +105,8 @@ public class MatchDataExtractor : MonoBehaviour
 		// the name of the level i'm searching for
 		string music_name = FromMatchDataToLevelName (match_data_path);
 
-		string music_path = Path.Combine (music_dataPath, music_name + ".txt");
+		//The music path is loaded with Resource.Load method that doesn't accept the .txt
+		string music_path = Path.Combine (music_folder_name, music_name);
 
 		return music_path;
 
@@ -124,40 +119,52 @@ public class MatchDataExtractor : MonoBehaviour
 	public string FromMatchDataToLevelFilePath (string match_data_path, GameMatch.GameType g_type)
 	{
 		string game_level_paths_directory = "";
-		if (CheckFromMatchDataIfTrainingLevel (match_data_path)) {
-			//the Training directory of all the levels of the g_type game
-			game_level_paths_directory = Path.Combine (directoryPath, g_type.ToString ());
-		} else {
-			//the Standard directory of all the levels of the g_type game
-			game_level_paths_directory = Path.Combine (standard_levels_dataPath, g_type.ToString ());
-		}
 
 		// the name of the level I'm searching for
 		string level_name = FromMatchDataToLevelName (match_data_path);
 
-		//if (Directory.Exists (game_level_paths_directory)) {
 
-		//find all the levels with that level_name part of whole path name
-		/* Training levels and Standard levels paths are of type NameGame_NameLevel_TS.json
-		 */
-		string[] game_paths = Directory.GetFiles (game_level_paths_directory, 
-			                      g_type.ToString () + "_" + FromNameToFilename (level_name) + "_*.json");
-
-		int index = 0;
+		if (CheckFromMatchDataIfTrainingLevel (match_data_path)) {
+			//the Training directory of all the levels of the g_type game
+			game_level_paths_directory = Path.Combine (directoryPath, g_type.ToString ());
 
 
-		//TODO check if this is useful!!
-		for (int i = 0; i < game_paths.Length; i++) {
-			//check for the level with the correspondent name inside the directory of levels
-			string i_level_name = Path.GetFileName (game_paths [i]).Split ('_') [1];
-			if (i_level_name.Equals (FromNameToFilename (level_name))) {
-				index = i;
+			/* find all the levels with that level_name part of whole path name:
+			 * it may happen that a level title is contain in a different longer level title
+			 */
+			string[] game_paths = Directory.GetFiles (game_level_paths_directory, 
+				                      g_type.ToString () + "_" + FromNameToFilename (level_name) + "_*.json");
+
+			//search for the file with the exact level name
+			int index = 0;
+
+
+			//TODO check if this is useful!!
+			for (int i = 0; i < game_paths.Length; i++) {
+				//check for the level with the correspondent name inside the directory of levels
+				string i_level_name = Path.GetFileName (game_paths [i]).Split ('_') [1];
+				if (i_level_name.Equals (FromNameToFilename (level_name))) {
+					index = i;
+				}
+
 			}
-						
+
+		
+			return game_paths [index];
+
+		} else {
+			//the Standard directory of all the levels of the g_type game
+			game_level_paths_directory = Path.Combine (standard_levels_folder_name, g_type.ToString ());
+
+			//The Standard path is loaded with Resource.Load method that doesn't accept the .json
+			string standard_path = Path.Combine (game_level_paths_directory, g_type.ToString () + "_" + FromNameToFilename (level_name));
+			Debug.Log (standard_path);
+			return standard_path;
+
 		}
 
-		Debug.Log (game_paths [index]);
-		return game_paths [index];
+
+
 			
 			
 	}
