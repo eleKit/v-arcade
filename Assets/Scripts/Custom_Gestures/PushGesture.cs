@@ -57,47 +57,49 @@ public class PushGesture : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		var current_frame = GameManager.Instance.GetCurrentFrame ();
-		if (current_frame.Hands.Count == 2) {
+		if (GameManager.Instance.Get_Is_Playing ()) {
+			var current_frame = GameManager.Instance.GetCurrentFrame ();
+			if (current_frame.Hands.Count == 2) {
 
 
-			//save left hand pitch and check left push gesture
-			if (current_frame.Hands.Leftmost.IsLeft) {
+				//save left hand pitch and check left push gesture
+				if (current_frame.Hands.Leftmost.IsLeft) {
 				
-				if (left_pitch_average.Count >= num_frames_in_average_list) {
-					left_pitch_average.RemoveFirst ();
+					if (left_pitch_average.Count >= num_frames_in_average_list) {
+						left_pitch_average.RemoveFirst ();
+					}
+					left_pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
+
+					if (left_pitch.Count >= K) {
+						CheckLeftPushGesture ();
+						left_pitch.RemoveFirst ();
+					}
+					left_pitch.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
 				}
-				left_pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
 
-				if (left_pitch.Count >= K) {
-					CheckLeftPushGesture ();
-					left_pitch.RemoveFirst ();
+
+
+				//save right hand pitch and check right push gesture
+				if (current_frame.Hands.Rightmost.IsRight) {
+
+					if (right_pitch_average.Count >= num_frames_in_average_list) {
+						right_pitch_average.RemoveFirst ();
+					}
+					right_pitch_average.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
+
+					if (right_pitch.Count >= K) {
+						CheckRightPushGesture ();
+						right_pitch.RemoveFirst ();
+					}
+					right_pitch.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
 				}
-				left_pitch.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + tuning_offset);
-			}
-
-
-
-			//save right hand pitch and check right push gesture
-			if (current_frame.Hands.Rightmost.IsRight) {
-
-				if (right_pitch_average.Count >= num_frames_in_average_list) {
-					right_pitch_average.RemoveFirst ();
-				}
-				right_pitch_average.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
-
-				if (right_pitch.Count >= K) {
-					CheckRightPushGesture ();
-					right_pitch.RemoveFirst ();
-				}
-				right_pitch.AddLast (current_frame.Hands.Rightmost.Direction.Pitch + tuning_offset);
-			}
 				
-		} else {
-			left_pitch.Clear ();
-			left_pitch_average.Clear ();
-			right_pitch.Clear ();
-			right_pitch_average.Clear ();
+			} else {
+				left_pitch.Clear ();
+				left_pitch_average.Clear ();
+				right_pitch.Clear ();
+				right_pitch_average.Clear ();
+			}
 		}
 
 	}

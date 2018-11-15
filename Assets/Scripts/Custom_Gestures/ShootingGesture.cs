@@ -113,62 +113,64 @@ public class ShootingGesture : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		var current_frame = GameManager.Instance.GetCurrentFrame ();
-		if (current_frame.Hands.Count == 1) {
+		if (GameManager.Instance.Get_Is_Playing ()) {
+			var current_frame = GameManager.Instance.GetCurrentFrame ();
+			if (current_frame.Hands.Count == 1) {
 
-
-			//change pointer colour
-			if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (transparent_white)) {
-				gameObject.GetComponent<SpriteRenderer> ().color = medium_white;
-			}
-
-			frames_since_last_reconnection++;	
-
-
-			//save average list
-			if (pitch_average.Count >= num_frames_in_pitch_average_list) {
-				pitch_average.RemoveFirst ();
-			}
-
-			if (yaw_average.Count >= num_frames_in_yaw_average_list) {
-				yaw_average.RemoveFirst ();
-			}
-
-			pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
-
-
-			//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
-			if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw
-			    && frames_since_last_reconnection >= K_lost) {
-				CheckShootGesture ();
 
 				//change pointer colour
-				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (medium_white)) {
-					gameObject.GetComponent<SpriteRenderer> ().color = solid_white;
+				if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (transparent_white)) {
+					gameObject.GetComponent<SpriteRenderer> ().color = medium_white;
 				}
 
-			} 
+				frames_since_last_reconnection++;	
 
-			//save new data
-			if (pitch_list.Count >= K_pitch)
-				pitch_list.RemoveFirst ();
-			if (yaw_list.Count >= K_yaw)
-				yaw_list.RemoveFirst ();
+
+				//save average list
+				if (pitch_average.Count >= num_frames_in_pitch_average_list) {
+					pitch_average.RemoveFirst ();
+				}
+
+				if (yaw_average.Count >= num_frames_in_yaw_average_list) {
+					yaw_average.RemoveFirst ();
+				}
+
+				pitch_average.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+				yaw_average.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+
+
+				//check gestures if lists are full of hand angle data and if a gesture has not been done just before this update
+				if (pitch_list.Count >= K_pitch && yaw_list.Count >= K_yaw
+				    && frames_since_last_reconnection >= K_lost) {
+					CheckShootGesture ();
+
+					//change pointer colour
+					if (gameObject.GetComponent<SpriteRenderer> ().color.Equals (medium_white)) {
+						gameObject.GetComponent<SpriteRenderer> ().color = solid_white;
+					}
+
+				} 
+
+				//save new data
+				if (pitch_list.Count >= K_pitch)
+					pitch_list.RemoveFirst ();
+				if (yaw_list.Count >= K_yaw)
+					yaw_list.RemoveFirst ();
 			
-			pitch_list.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
-			yaw_list.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
+				pitch_list.AddLast (current_frame.Hands.Leftmost.Direction.Pitch + pitch_tuning_offset);
+				yaw_list.AddLast (current_frame.Hands.Leftmost.Direction.Yaw + yaw_tuning_offset);
 
-		} else {
-			//if no hand is visible change colour in black
-			gameObject.GetComponent<SpriteRenderer> ().color = transparent_white;
+			} else {
+				//if no hand is visible change colour in black
+				gameObject.GetComponent<SpriteRenderer> ().color = transparent_white;
 
-			pitch_list.Clear ();
-			pitch_average.Clear ();
-			yaw_list.Clear ();
-			yaw_average.Clear ();
+				pitch_list.Clear ();
+				pitch_average.Clear ();
+				yaw_list.Clear ();
+				yaw_average.Clear ();
 
-			frames_since_last_reconnection = 0;
+				frames_since_last_reconnection = 0;
+			}
 		}
 	}
 
