@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -4708,7 +4708,13 @@ MonoBehaviour:
   - {fileID: 1575528852473362, guid: bf0377e5407904c5cb7780d983ed5489, type: 2}
   - {fileID: 1188492214906012, guid: ed3903a199e1b4ad89c9a656f0b0d08f, type: 2}
   - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
-  targets: []
+  targets:
+  - {fileID: 1162043497031788, guid: adb1e8c64744449cfa954df2d7716f7e, type: 2}
+  - {fileID: 1250724776379892, guid: 459061aeccac24fb780328cbf1cf74b8, type: 2}
+  - {fileID: 1880401533545670, guid: c25834f9bca884ff19473c5ec06bebca, type: 2}
+  - {fileID: 1459370603510022, guid: e24d60ac33ceb420cae3942c996f6fb4, type: 2}
+  - {fileID: 1884853795636782, guid: 11b805d101eed4f04aaf011408e9e6aa, type: 2}
+  - {fileID: 1648548224428618, guid: 143c78937fa0349b385ee4b5d3f78c39, type: 2}
   coeff_trajectory_lenght: 4
 --- !u!4 &686542601
 Transform:

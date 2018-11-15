@@ -49,6 +49,9 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	const string standard_levels_folder_name = "LevelsTexts";
 	string standard_levels_dataPath = "";
 
+	const string titles_standard_levels_or_music_file_name = "List.txt";
+	const string resources_folder = "Resources";
+
 	//binds the string with the name of a level with the string containing the path of that level
 	FileNamesOfPaths[] file_names_of_paths;
 
@@ -60,8 +63,8 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	// Use this for initialization
 	void Start ()
 	{
-		standard_levels_dataPath = Path.Combine (Application.persistentDataPath, standard_levels_folder_name);
-		music_dataPath = Path.Combine (Application.persistentDataPath, music_folder_name);
+		standard_levels_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, standard_levels_folder_name));
+		music_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, music_folder_name));
 
 
 	}
@@ -358,19 +361,22 @@ public class GameMenuScript : Singleton<GameMenuScript>
 
 			}
 		} else {
-			if (Directory.Exists (music_dataPath)) {
-				string[] game_paths = Directory.GetFiles (music_dataPath, "*.txt");
+
+			Debug.Log (Path.Combine (music_dataPath, titles_standard_levels_or_music_file_name));
+			StreamReader reader = new StreamReader (Path.Combine (music_dataPath, titles_standard_levels_or_music_file_name)); 
+
+			string inp_ln = reader.ReadLine ();
+			string[] game_paths = inp_ln.Split (',');
 
 
-				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
 
 
-				for (int i = 0; i < file_names_of_paths.Length; i++) {
-					file_names_of_paths [i] = new FileNamesOfPaths ();
-					file_names_of_paths [i].file_path = game_paths [i];
-					//music level paths are of type NameMusic.txt
-					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
-				}
+			for (int i = 0; i < file_names_of_paths.Length; i++) {
+				file_names_of_paths [i] = new FileNamesOfPaths ();
+				file_names_of_paths [i].file_path = Path.Combine (music_dataPath, game_paths [i]);
+				//music level paths are of type NameMusic.txt
+				file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('.') [0]);
 			}
 		}
 
@@ -381,21 +387,24 @@ public class GameMenuScript : Singleton<GameMenuScript>
 	void LoadStandardLevelNames (GameMatch.GameType game_type)
 	{
 		if (!(current_game_type.Equals (GameMatch.GameType.Music))) {
-			string stantard_directory_path = Path.Combine (standard_levels_dataPath, game_type.ToString ());
+			string standard_directory_path = Path.Combine (standard_levels_dataPath, game_type.ToString ());
 
-			if (Directory.Exists (stantard_directory_path)) {
-				string[] game_paths = Directory.GetFiles (stantard_directory_path, "*.json");
+			StreamReader reader = new StreamReader (Path.Combine (standard_directory_path, titles_standard_levels_or_music_file_name)); 
 
-				file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
+			string inp_ln = reader.ReadLine ();
+			string[] game_paths = inp_ln.Split (',');
 
-				for (int i = 0; i < file_names_of_paths.Length; i++) {
-					file_names_of_paths [i] = new FileNamesOfPaths ();
-					file_names_of_paths [i].file_path = game_paths [i];
-					//standard level paths are of type NameGame_NameLevel_TS.json
-					file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
-				}
+			file_names_of_paths = new FileNamesOfPaths[game_paths.Length];
 
+			for (int i = 0; i < file_names_of_paths.Length; i++) {
+				file_names_of_paths [i] = new FileNamesOfPaths ();
+				file_names_of_paths [i].file_path = Path.Combine (standard_directory_path, game_paths [i]);
+				//standard level paths are of type NameGame_NameLevel_TS.json
+				file_names_of_paths [i].name = FromFilenameToName (Path.GetFileName (game_paths [i]).Split ('_') [1]);
+				Debug.Log (file_names_of_paths [i].name);
 			}
+
+
 		}
 
 	}

@@ -14,11 +14,15 @@ public class MatchDataExtractor : MonoBehaviour
 	const string standard_levels_folder_name = "LevelsTexts";
 	string standard_levels_dataPath = "";
 
+	const string titles_standard_levels_or_music_file_name = "List.txt";
+	const string resources_folder = "Resources";
+
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
-		standard_levels_dataPath = Path.Combine (Application.persistentDataPath, standard_levels_folder_name);
-		music_dataPath = Path.Combine (Application.persistentDataPath, music_folder_name);
+		standard_levels_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, standard_levels_folder_name));
+		music_dataPath = Path.Combine (Application.dataPath, Path.Combine (resources_folder, music_folder_name));
+
 
 	}
 
