@@ -36,7 +36,7 @@ public class MovingTargetScript : MonoBehaviour
 	{
 		if (pl == null) {
 			pl = GameObject.FindGameObjectWithTag ("Player");
-		} else if (!(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
+		} else if (GameManager.Instance.Get_Is_Playing () && !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
 		           || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().medium_white))) {
 			if (stop && transform.position.x < stop_x_coord) {
 			} else if (transform.position.x < min_x_coord) {
