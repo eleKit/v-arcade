@@ -28,12 +28,16 @@ public class SetThresholds : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		left_flexion_extension_text.text = (GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale * Mathf.Rad2Deg).ToString ("N2");
-		left_ulnar_radial_text.text = (GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale * Mathf.Rad2Deg).ToString ("N2");
+		left_flexion_extension_slider.value = GlobalPlayerData.globalPlayerData.player_data.left_pitch_scale * Mathf.Rad2Deg;
+		left_ulnar_radial_slider.value = GlobalPlayerData.globalPlayerData.player_data.left_yaw_scale * Mathf.Rad2Deg;
+		right_flexion_extension_slider.value = GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale * Mathf.Rad2Deg;
+		right_ulnar_radial_slider.value = GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale * Mathf.Rad2Deg;
 
-		right_flexion_extension_text.text = (GlobalPlayerData.globalPlayerData.player_data.right_pitch_scale * Mathf.Rad2Deg).ToString ("N2");
-		right_ulnar_radial_text.text = (GlobalPlayerData.globalPlayerData.player_data.right_yaw_scale * Mathf.Rad2Deg).ToString ("N2");
 
+		LeftFlexionExtensionSlider ();
+		LeftUlnarRadialSlider ();
+		RightFlexionExtensionSlider ();
+		RightUlnarRadialSlider ();
 
 		LoadMain ();
 	}
