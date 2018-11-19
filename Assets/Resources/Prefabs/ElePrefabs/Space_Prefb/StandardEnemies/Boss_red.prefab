@@ -89,7 +89,7 @@ MonoBehaviour:
   mini_boss: 0
   max_mini_boss_hits: 4
   boss: 1
-  max_boss_hits: 19
+  max_boss_hits: 9
   is_shot: 0
 --- !u!114 &114638508831938692
 MonoBehaviour:
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shot: {fileID: 1570643329429802, guid: a0328a3d89a2b45b098d3213a5ebe54f, type: 2}
-  delta_t: 3
+  delta_t: 5
 --- !u!114 &114728744657570084
 MonoBehaviour:
   m_ObjectHideFlags: 1

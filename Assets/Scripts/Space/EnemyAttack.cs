@@ -55,7 +55,7 @@ public class EnemyAttack : MonoBehaviour
 		coroutine_started = true;
 
 		Instantiate (shot, this.transform.position, Quaternion.identity);
-		SfxManager.Instance.Play ("laser");
+		//SfxManager.Instance.Play ("laser");
 
 
 		yield return new WaitForSeconds (0.5f);

@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shot: {fileID: 1570643329429802, guid: a0328a3d89a2b45b098d3213a5ebe54f, type: 2}
-  delta_t: 3
+  delta_t: 5
 --- !u!114 &114625956295741492
 MonoBehaviour:
   m_ObjectHideFlags: 1
