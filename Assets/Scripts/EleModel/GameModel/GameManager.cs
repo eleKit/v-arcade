@@ -194,9 +194,11 @@ public class GameManager : Singleton<GameManager>
 			 */
 			if (playback_index + 1 < replay_frames.Count && replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp > 1e6f) {
 				Debug.Log ("Skipping :" + ((replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f).ToString ("F2"));
+				Debug.Log ("game time:" + game_time);
 				leap_start_time += (replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f;
 				next = last = replay_frames [playback_index + 1];
 				leap_time = next.Timestamp / 1e6f - leap_start_time;
+				playback_index++;
 			}
 
 
