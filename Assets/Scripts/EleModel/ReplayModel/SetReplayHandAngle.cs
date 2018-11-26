@@ -53,7 +53,7 @@ public class SetReplayHandAngle : MonoBehaviour
 				break;
 			case GameMatch.HandAngle.Roll:
 				//Do nothing, there is an error
-				Debug.LogError ("wrong HandAngle!");
+				space_g_recognizer.RollTrue ();
 				break;
 			case GameMatch.HandAngle.None:
 				//Do nothing, there is an error
