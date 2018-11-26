@@ -16,8 +16,9 @@ public class SpaceGesturesManager : MonoBehaviour
 
 	SpaceGesture space_yaw_gesture;
 	SpacePitchGesture space_pitch_gesture;
+	SpaceRollGesture space_roll_gesture;
 
-	bool ninety_deg_hand, one_hundred_and_eighty_hand;
+	bool ninety_deg_hand, one_hundred_and_eighty_hand, roll_hand;
 
 	// Use this for initialization
 	//Awake is called even if the GO in the scene is not active like in this case)
@@ -29,6 +30,7 @@ public class SpaceGesturesManager : MonoBehaviour
 
 		space_yaw_gesture = this.GetComponent<SpaceGesture> ();
 		space_pitch_gesture = this.GetComponent<SpacePitchGesture> ();
+		space_roll_gesture = this.GetComponent<SpaceRollGesture> ();
 
 	}
 	
@@ -40,6 +42,8 @@ public class SpaceGesturesManager : MonoBehaviour
 				space_pitch_gesture.PitchUpdate ();
 			} else if (one_hundred_and_eighty_hand) {
 				space_yaw_gesture.YawUpdate ();
+			} else if (roll_hand) {
+				space_roll_gesture.RollUpdate ();
 			}
 		}
 		
@@ -52,16 +56,20 @@ public class SpaceGesturesManager : MonoBehaviour
 
 	public void NinetyTrue ()
 	{
+		one_hundred_and_eighty_hand = false;
+		roll_hand = false;
+
 		ninety_deg_hand = true;
 		space_pitch_gesture.PitchStart (hc, transparent_white, medium_white, solid_white);
 		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.Ninety);
 
-		one_hundred_and_eighty_hand = false;
+
 	}
 
 	public void OneHundredEightyTrue ()
 	{
 		ninety_deg_hand = false;
+		roll_hand = false;
 
 		one_hundred_and_eighty_hand = true;
 		space_yaw_gesture.YawStart (hc, transparent_white, medium_white, solid_white);
@@ -69,9 +77,22 @@ public class SpaceGesturesManager : MonoBehaviour
 
 	}
 
+	public void RollTrue ()
+	{
+		ninety_deg_hand = false;
+		one_hundred_and_eighty_hand = false;
+
+		roll_hand = true;
+
+		space_roll_gesture.RollStart (hc, transparent_white, medium_white, solid_white);
+		GameManager.Instance.SetGameMathcHandAngle (GameMatch.HandAngle.Roll);
+
+	}
+
 	public void ResetGesturesBool ()
 	{
 		ninety_deg_hand = false;
 		one_hundred_and_eighty_hand = false;
+		roll_hand = false;
 	}
 }

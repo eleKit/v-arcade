@@ -5249,7 +5249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945eacb55a2944692b4e4e07a78a9383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugging_save: 0
+  debugging_save: 1
   no_save: 0
   tuning_manager: {fileID: 1830976553}
   left_flexion_extension_slider: {fileID: 491451115}

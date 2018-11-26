@@ -80,7 +80,7 @@ public class InsertPlayerName : MonoBehaviour
 				WelcomeMenuUI.Instance.AccessDone ();
 
 				button.GetComponent<Button> ().interactable = false;
-				SceneManager.LoadSceneAsync ("Tuning_scene");
+				SceneManager.LoadSceneAsync ("Main_Menu_Patient");
 			}
 
 		}
