@@ -38,6 +38,7 @@ public class LoadDataToWeb : MonoBehaviour
 		for (int i = 0; i < data_paths.Length; i++) {
 			if (!data_paths [i].Equals ("")) {
 				yield return StartCoroutine (SaveDataCoroutine (data_paths [i]));
+				Debug.Log ("saving " + data_paths [i]);
 			}
 		}
 

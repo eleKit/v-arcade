@@ -45,11 +45,12 @@ public class WebConnectionController : MonoBehaviour
 	IEnumerator DoWebWork ()
 	{
 		m_welcome_text.text = "Scaricamento dati...";
+		//to correctly save the data before load and then download new data
+		yield return this.GetComponent<LoadDataToWeb> ().LoadData ();
 		yield return this.GetComponent<LoadNicknamesFromWeb> ().LoadFileOfNicknames ();
 		yield return this.GetComponent<LoadPathsFromWeb> ().LoadFilenames ();
-		yield return this.GetComponent<LoadDataToWeb> ().LoadData ();
 		Debug.Log (" end downloading paths");
-		yield return new WaitForSeconds (0.5f);
+		//yield return new WaitForSeconds (0.5f);
 		m_welcome_text.text = "Benvenuti!";
 		go_on_button.interactable = true;
 	}
