@@ -47,9 +47,20 @@ public class LoadAndDownloadDataController : MonoBehaviour
 		m_load_data_button.interactable = true;
 	}
 
-	public void LoadReplayFromWeb ()
+	public void DownloadReplays ()
 	{
-		//TODO load replay from web
+		StartCoroutine (LoadReplaysFromWeb ());
+	}
+
+	IEnumerator LoadReplaysFromWeb ()
+	{
+		m_download_data_button.interactable = false;
+		//to correctly save the data before load and then download new data
+		yield return this.GetComponent<DownloadAllReplay> ().LoadReplayFilenames ();
+		Debug.Log (" end downloading from web");
+		//yield return new WaitForSeconds (0.5f);
+		//m_notification_text.text = "Finito!";
+		m_download_data_button.interactable = true;
 	}
 
 }

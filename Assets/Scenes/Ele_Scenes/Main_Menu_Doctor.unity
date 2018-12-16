@@ -911,7 +911,7 @@ Prefab:
     - target: {fileID: 114313887259376206, guid: fbe54dbf3972f4bb8a322b278eb53f15,
         type: 2}
       propertyPath: debugging_save
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbe54dbf3972f4bb8a322b278eb53f15, type: 2}
@@ -5528,6 +5528,7 @@ GameObject:
   - component: {fileID: 1582565761}
   - component: {fileID: 1582565760}
   - component: {fileID: 1582565759}
+  - component: {fileID: 1582565762}
   m_Layer: 0
   m_Name: LoadAndDownloadData
   m_TagString: Untagged
@@ -5573,6 +5574,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1582565762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1582565758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47553e84b834b47a7a7c29a3cbb2106a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugging_save: 1
 --- !u!1 &1586298351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5969,7 +5982,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1582565760}
-        m_MethodName: LoadReplayFromWeb
+        m_MethodName: DownloadReplays
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
