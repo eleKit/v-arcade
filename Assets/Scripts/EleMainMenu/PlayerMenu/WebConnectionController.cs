@@ -16,22 +16,16 @@ public class WebConnectionController : MonoBehaviour
 	{
 		go_on_button.interactable = false;
 
-		string HtmlText = GetHtmlFromUri ("http://google.com");
-		if (HtmlText == "") {
-			Debug.Log ("no connection");
-			m_welcome_text.text = "Benvenuti!";
-			go_on_button.interactable = true;
-
-		} else if (!HtmlText.Contains ("schema.org/WebPage")) {
-			//Redirecting since the beginning of googles html contains that 
-			//phrase and it was not found
-			m_welcome_text.text = "Benvenuti!";
-			go_on_button.interactable = true;
-		} else {
+		string HtmlText = GetHtmlFromUri ("http://data.polimigamecollective.org/demarchi/ES2.php?");
+		if (HtmlText.Contains ("ES2.php and MySQL database are working correctly.")) {
 			Debug.Log ("connection success");
 
 			StartCoroutine (DoWebWork ());
 
+		} else {
+			Debug.Log ("no connection " + HtmlText);
+			m_welcome_text.text = "Benvenuti!";
+			go_on_button.interactable = true;
 		}
 
 	}
