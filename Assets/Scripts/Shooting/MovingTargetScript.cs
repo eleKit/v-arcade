@@ -11,12 +11,12 @@ public class MovingTargetScript : MonoBehaviour
 
 	//if the target is a stopping target
 	public bool stop = false;
+	public bool move_from_left_to_right = false;
+
+	public float stop_x_coord = 0.2f;
 
 
-	public float stop_x_coord = 0f;
-
-
-	float min_x_coord = -10;
+	float min_x_coord = 10;
 
 	GameObject pl = null;
 
@@ -28,18 +28,29 @@ public class MovingTargetScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		/* 
+		 * this script was created for targets moving from right to left, 
+		 * if the target moves in the scene in the other direction the variables must have the opposite sign
+		 * 
+		 */
+		if (move_from_left_to_right) {
+			speed = -speed;
+		}
+
+		min_x_coord = this.transform.position.x + 1;
 		
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		
 		if (pl == null) {
 			pl = GameObject.FindGameObjectWithTag ("Player");
 		} else if (GameManager.Instance.Get_Is_Playing () && !(pl.GetComponent<SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().transparent_white)
 		           || pl.GetComponent <SpriteRenderer> ().color.Equals (pl.GetComponent<ShootingGesture> ().medium_white))) {
-			if (stop && transform.position.x < stop_x_coord) {
-			} else if (transform.position.x < min_x_coord) {
+			if (stop && Mathf.Abs (transform.position.x) < stop_x_coord) {
+			} else if (Mathf.Abs (transform.position.x) > Mathf.Abs (min_x_coord)) {
 				this.gameObject.SetActive (false);
 			} else {
 				transform.position = new Vector3 (
