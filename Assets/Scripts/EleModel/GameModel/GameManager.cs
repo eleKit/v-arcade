@@ -672,9 +672,14 @@ public class GameManager : Singleton<GameManager>
 
 		LeapRecorder recorder = hc.GetLeapRecorder ();
 
-
+		/* I save only the frames that contain hand data
+		 * before it was: 
+		 * frame_sequence.addFrame (f);
+		 */
 		foreach (Frame f in recorder.GetFrames ()) {
-			frame_sequence.addFrame (f);
+			if (f.Hands.Count > 0) {
+				frame_sequence.addFrame (f);
+			}
 		}
 
 		string framesPath = Path.Combine (
