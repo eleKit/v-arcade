@@ -192,6 +192,12 @@ public class GameManager : Singleton<GameManager>
 			 * like in the last and next setup
 			 *
 			 */
+
+			/* TODO i have a problem with the skip function 
+			* if, during the game, i save only the leap frames with at least one hand in it,
+			* during the replay the skip starts not every time i deleted a frame, mut only when the if condition is achieved
+			* and the timing of the replay gets lost
+			*/
 			if (playback_index + 1 < replay_frames.Count && replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp > 1e6f) {
 				Debug.Log ("Skipping :" + ((replay_frames [playback_index + 1].Timestamp - replay_frames [playback_index].Timestamp) / 1e6f).ToString ("F2"));
 				Debug.Log ("game time:" + game_time);
@@ -199,7 +205,7 @@ public class GameManager : Singleton<GameManager>
 				next = last = replay_frames [playback_index + 1];
 				leap_time = next.Timestamp / 1e6f - leap_start_time;
 				playback_index++;
-			}
+			} 
 
 
 			while (game_time > leap_time) {
@@ -672,19 +678,20 @@ public class GameManager : Singleton<GameManager>
 
 		LeapRecorder recorder = hc.GetLeapRecorder ();
 
-		foreach (Frame f in recorder.GetFrames ()) {
+		/*foreach (Frame f in recorder.GetFrames ()) {
 			frame_sequence.addFrame (f);
 		}
+		*/
 
 		/* I save only the frames that contain hand data
 		* before it was: 
-		*	
-		* foreach (Frame f in recorder.GetFrames ()) {
-		*	if (f.Hands.Count > 0) {
-		*		frame_sequence.addFrame (f);
-		*	}
-		*}
-		*/
+		*/	
+		foreach (Frame f in recorder.GetFrames ()) {
+			if (f.Hands.Count > 0) {
+				frame_sequence.addFrame (f);
+			}
+		}
+
 
 		string framesPath = Path.Combine (
 			                    directoryPath,
