@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 
 public class LoadDataToWeb : MonoBehaviour
@@ -13,16 +14,51 @@ public class LoadDataToWeb : MonoBehaviour
 
 	string[] data_paths;
 
+
+	public GameObject m_there_are_saved_match;
+
+	public Button m_save_now;
+
+	public Text m_im_saving_text;
+
+	public Text m_there_are_match_text;
+
+
 	// Use this for initialization
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+		if (Directory.GetFiles (directoryPath).Length == 0) {
+			m_there_are_saved_match.SetActive (false);
+		} else {
+			m_there_are_saved_match.SetActive (true);
+			m_im_saving_text.text = "";
+			m_there_are_match_text.text = "Ci sono " + Directory.GetFiles (directoryPath).Length + " partite non salvate!";
+			m_save_now.interactable = true;
+		}
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 
+	}
+
+	//called from the button save in the Welcome scene
+	public void SaveOnWeb ()
+	{
+		StartCoroutine (Save ());
+		Debug.Log ("Salvo");
+	}
+
+	IEnumerator Save ()
+	{
+		m_save_now.interactable = false;
+		m_im_saving_text.text = "Sto salvando...";
+		yield return this.LoadData ();
+		m_im_saving_text.text = "Finito!";
+		m_there_are_match_text.text = "";
+		m_save_now.interactable = true;
 	}
 
 

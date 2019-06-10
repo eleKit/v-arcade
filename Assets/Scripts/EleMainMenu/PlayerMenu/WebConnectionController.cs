@@ -40,7 +40,7 @@ public class WebConnectionController : MonoBehaviour
 	{
 		m_welcome_text.text = "Scaricamento dati...";
 		//to correctly save the data before load and then download new data
-		yield return this.GetComponent<LoadDataToWeb> ().LoadData ();
+		//yield return this.GetComponent<LoadDataToWeb> ().LoadData ();
 		yield return this.GetComponent<LoadNicknamesFromWeb> ().LoadFileOfNicknames ();
 		yield return this.GetComponent<LoadPathsFromWeb> ().LoadFilenames ();
 		Debug.Log (" end downloading paths");
