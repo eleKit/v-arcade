@@ -17,6 +17,9 @@ public class LoadNicknamesFromWeb : MonoBehaviour
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "Patient_List");
+		if (!Directory.Exists (directoryPath)) {
+			Directory.CreateDirectory (directoryPath);
+		}
 		filePath = Path.Combine (directoryPath, "patients_list.json");
 
 

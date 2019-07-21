@@ -1510,6 +1510,10 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 1444415547852076, guid: b906004ab5eae4e0bab8075a0fe06182, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b906004ab5eae4e0bab8075a0fe06182, type: 2}
   m_IsPrefabParent: 0
@@ -7271,22 +7275,22 @@ Prefab:
     - target: {fileID: 224271959463929464, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224271959463929464, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224271959463929464, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 224271959463929464, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -185.23077
       objectReference: {fileID: 0}
     - target: {fileID: 224478371067878056, guid: ca5927aa9bc904545837ce56b916263b,
         type: 2}
@@ -7387,6 +7391,10 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: RestartReplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912144393257100, guid: ca5927aa9bc904545837ce56b916263b, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ca5927aa9bc904545837ce56b916263b, type: 2}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEngine.UI;
 
 public class DownloadAllReplay : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class DownloadAllReplay : MonoBehaviour
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
+	public GameObject download_data_go;
+
+	public Button m_download_now;
+	public Text m_im_downloading_text;
 
 	List<GameMatch.GameType> game_types = new List<GameMatch.GameType> { GameMatch.GameType.Car, GameMatch.GameType.Music, 
 		GameMatch.GameType.Shooting, GameMatch.GameType.Space
@@ -36,6 +41,10 @@ public class DownloadAllReplay : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		download_data_go.SetActive (true);
+
+		m_download_now.interactable = true;
+		m_im_downloading_text.text = "";
 		patients_list = new PatientsList ();
 		//find patients' list on persistent data path
 		directoryPatientsList = Path.Combine (Application.persistentDataPath, "Patient_List");
@@ -70,7 +79,9 @@ public class DownloadAllReplay : MonoBehaviour
 	//this is called from the LoadAndDownloadDataController
 	public IEnumerator LoadReplayFilenames ()
 	{
-
+		
+		m_download_now.interactable = false;
+		m_im_downloading_text.text = "Sto salvando...";
 
 		string address;
 		if (debugging_save) {
@@ -106,6 +117,9 @@ public class DownloadAllReplay : MonoBehaviour
 
 		yield return StartCoroutine (DownloadAllReplays ());
 
+		m_download_now.interactable = true;
+		m_im_downloading_text.text = "Finito!";
+
 
 	}
 
@@ -138,7 +152,7 @@ public class DownloadAllReplay : MonoBehaviour
 								Directory.CreateDirectory (complete_directory_path);
 							}
 
-							string tmp = string.Join ("_", webfile.Split ('_').Skip (1).ToArray ());
+							string tmp = string.Join ("_", webfile.Split ('_').Skip (2).ToArray ());
 							string filepath = Path.Combine (complete_directory_path, tmp);
 							if (!File.Exists (filepath)) {
 								yield return StartCoroutine (DownloadEntireFile (webfile, filepath));

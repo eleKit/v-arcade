@@ -28,12 +28,16 @@ public class LoadDataToWeb : MonoBehaviour
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, "TMP_web_saving");
+		if (!Directory.Exists (directoryPath)) {
+			Directory.CreateDirectory (directoryPath);
+		}
+
 		if (Directory.GetFiles (directoryPath).Length == 0) {
 			m_there_are_saved_match.SetActive (false);
 		} else {
 			m_there_are_saved_match.SetActive (true);
 			m_im_saving_text.text = "";
-			m_there_are_match_text.text = "Ci sono " + Directory.GetFiles (directoryPath).Length + " partite non salvate!";
+			m_there_are_match_text.text = "Ci sono " + Directory.GetFiles (directoryPath).Length + " file non salvati!";
 			m_save_now.interactable = true;
 		}
 	}

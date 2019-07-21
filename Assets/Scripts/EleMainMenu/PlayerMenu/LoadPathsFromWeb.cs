@@ -24,6 +24,9 @@ public class LoadPathsFromWeb : MonoBehaviour
 		
 
 		directoryPath = Path.Combine (Application.persistentDataPath, "Paths");
+		if (!Directory.Exists (directoryPath)) {
+			Directory.CreateDirectory (directoryPath);
+		}
 
 
 		

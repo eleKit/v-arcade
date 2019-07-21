@@ -13,6 +13,8 @@ public class DoctorMenuUI : MonoBehaviour
 	[Header ("Use for debug, if checked the match is saved into test server")]
 	public bool debugging_save;
 
+	public GameObject load_and_save_data_on_web;
+
 	public GameObject m_actions_screen;
 	public GameObject m_manage_patients_screen;
 
@@ -44,10 +46,26 @@ public class DoctorMenuUI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		
 
 		directoryPath = Path.Combine (Application.persistentDataPath, "Patient_List");
-		filePath = Path.Combine (directoryPath, "patients_list.json");
+		if (!Directory.Exists (directoryPath)) {
+			Directory.CreateDirectory (directoryPath);
+		}
 
+		StartCoroutine (LoadNick ());
+
+		//filePath = Path.Combine (directoryPath, "patients_list.json");
+
+
+	}
+
+	IEnumerator LoadNick ()
+	{
+		yield return FindObjectOfType<LoadNicknamesFromWeb> ().LoadFileOfNicknames ();
+		yield return FindObjectOfType<LoadPathsFromWeb> ().LoadFilenames ();
+		load_and_save_data_on_web.SetActive (true);
+		filePath = Path.Combine (directoryPath, "patients_list.json");
 		LoadActionsMenu ();
 
 		patients = RetreivePatientsName ();
