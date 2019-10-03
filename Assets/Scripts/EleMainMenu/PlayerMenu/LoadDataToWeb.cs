@@ -34,6 +34,7 @@ public class LoadDataToWeb : MonoBehaviour
 
 		if (Directory.GetFiles (directoryPath).Length == 0) {
 			m_there_are_saved_match.SetActive (false);
+			m_there_are_match_text.text = "Non ci sono match da salvare";
 		} else {
 			m_there_are_saved_match.SetActive (true);
 			m_im_saving_text.text = "";

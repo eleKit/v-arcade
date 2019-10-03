@@ -9,6 +9,14 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 {
 
 	public HandController hc;
+
+	[Header ("Patient Nickname")]
+	public string patientName;
+	[Header ("Game")]
+	public GameMatch.GameType gameType;
+	[Header ("Filename.json")]
+	public string filename;
+
 	string directoryPath;
 	string hand_data_file_path;
 
@@ -31,16 +39,21 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 	private List<float> left_ulnar = new List<float> ();
 	private List<float> right_ulnar = new List<float> ();
 
+	private string csv = "estension,flexion,radial,ulnar,timer\n";
+
+	private float levelTimer;
+
 	// Use this for initialization
 	void Start ()
 	{
 		directoryPath = Path.Combine (Application.persistentDataPath, 
-			Path.Combine ("Patients", Path.Combine ("luca", GameMatch.GameType.Space.ToString ())));
+			Path.Combine ("Patients", Path.Combine (patientName, gameType.ToString ())));
 
-		hand_data_file_path = Path.Combine (directoryPath, "Space_20181126T130420_hand_data.json");
+		hand_data_file_path = Path.Combine (directoryPath, filename);
 
 		ReplayFromFile ();
 
+		levelTimer = 0;
 	}
 
 
@@ -48,40 +61,82 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		
 		if (!saved_data && loaded_data) {
 			if (hc.GetLeapRecorder ().GetProgress () >= 1) {
 				Debug.Log ("Registrazione finita");
-				SaveData ();
+				//SaveData ();
+				SaveTXT ();
 			} else if (hc.GetFrame ().Hands.Count >= 1) {
 				if (hc.GetFrame ().Hands.Leftmost.Direction.Pitch > 0) {
 
-					left_estension.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+					//left_estension.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+
+
 					//right_estension.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
 
 
+					csv = csv +
+					hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + "," +
+					"" + ",";
+
 				} else {
 
-					left_flexion.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
-					//right_flexion.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+					//left_flexion.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
 
+
+					//right_flexion.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
+					csv = csv +
+					"" + "," +
+					hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + ",";
 
 				}
 
-				if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
-					left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
 
-				} else {
+					if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
+						//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 
-					left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						csv = csv +
+						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
+						"" + "";
+
+					} else {
+
+						//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						csv = csv +
+						"" + "," +
+						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
 
 
 
-				} 
-				/*if (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll > 0) {
+					} 
+					/*if (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll > 0) {
 					left_estension.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
 				} else {
 					left_flexion.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
 				} */
+				} else {
+
+					if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
+						//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						csv = csv +
+						"" + "," +
+						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
+					} else {
+						//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+
+						csv = csv +
+						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
+						"" + "";
+					}
+
+				}
+
+				levelTimer += Time.deltaTime;
+				csv = csv + "," + levelTimer.ToString ();
+				csv = csv + "\n";
+
 			}
 		}
 
@@ -159,5 +214,27 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 
 	}
 
+
+
+	void SaveTXT ()
+	{
+		saved_data = true;
+		DateTime gameDate = DateTime.UtcNow;
+
+
+		string directoryPath = Path.Combine (Application.persistentDataPath,
+			                       Path.Combine ("Dati Paper", patientName));
+
+		Directory.CreateDirectory (directoryPath);
+
+		string filePath = Path.Combine (
+			                  directoryPath,
+			                  filename.Split ('.') [0] + ".txt");
+
+		File.WriteAllText (filePath, csv);
+		Debug.Log ("saved txt");
+
+		
+	}
 
 }

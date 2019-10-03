@@ -121,7 +121,7 @@ public class GameManager : Singleton<GameManager>
 	{
 		if (!replay) {
 			//set the win buttons not interactable
-			SetButtonsInteractable (false);
+			SetButtonsInteractable (true);
 		}
 
 		//This bool is very important, without setting this the recording is lost
