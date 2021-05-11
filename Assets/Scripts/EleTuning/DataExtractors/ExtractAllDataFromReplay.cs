@@ -10,6 +10,8 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 
 	public HandController hc;
 
+	public bool roll;
+
 	[Header ("Patient Nickname")]
 	public string patientName;
 	[Header ("Game")]
@@ -39,7 +41,8 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 	private List<float> left_ulnar = new List<float> ();
 	private List<float> right_ulnar = new List<float> ();
 
-	private string csv = "estension,flexion,radial,ulnar,timer\n";
+	private string csv = "";
+	//"estension,flexion,radial,ulnar,timer\n";
 
 	private float levelTimer;
 
@@ -68,75 +71,87 @@ public class ExtractAllDataFromReplay : MonoBehaviour
 				//SaveData ();
 				SaveTXT ();
 			} else if (hc.GetFrame ().Hands.Count >= 1) {
-				if (hc.GetFrame ().Hands.Leftmost.Direction.Pitch > 0) {
 
-					//left_estension.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+				if (roll) {
 
-
-					//right_estension.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-
-
-					csv = csv +
-					hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + "," +
-					"" + ",";
-
+					csv = csv + hc.GetFrame ().Hands.Leftmost.PalmNormal.Roll.ToString ();
+					levelTimer += Time.deltaTime;
+					csv = csv + "," + levelTimer.ToString ();
+					csv = csv + "\n";
+					
 				} else {
 
-					//left_flexion.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+
+					if (hc.GetFrame ().Hands.Leftmost.Direction.Pitch > 0) {
+
+						//left_estension.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
 
 
-					//right_flexion.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
-					csv = csv +
-					"" + "," +
-					hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + ",";
+						//right_estension.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
 
-				}
-
-				if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
-
-					if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
-						//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 
 						csv = csv +
-						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
-						"" + "";
+						hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + "," +
+						"" + ",";
 
 					} else {
 
-						//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+						//left_flexion.Add (hc.GetFrame ().Hands.Leftmost.Direction.Pitch);
+
+
+						//right_flexion.Add (hc.GetFrame ().Hands.Rightmost.Direction.Pitch);
 						csv = csv +
 						"" + "," +
-						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
+						hc.GetFrame ().Hands.Leftmost.Direction.Pitch.ToString () + ",";
+
+					}
+
+					if (hc.GetFrame ().Hands.Leftmost.IsLeft) {
+
+						if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
+							//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+
+							csv = csv +
+							hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
+							"" + "";
+
+						} else {
+
+							//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+							csv = csv +
+							"" + "," +
+							hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
 
 
 
-					} 
-					/*if (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll > 0) {
+						} 
+						/*if (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll > 0) {
 					left_estension.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
 				} else {
 					left_flexion.Add (hc.GetFrame ().Hands.Rightmost.PalmNormal.Roll);
 				} */
-				} else {
-
-					if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
-						//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
-						csv = csv +
-						"" + "," +
-						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
 					} else {
-						//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
 
-						csv = csv +
-						hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
-						"" + "";
+						if (hc.GetFrame ().Hands.Leftmost.Direction.Yaw > 0) {
+							//left_ulnar.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+							csv = csv +
+							"" + "," +
+							hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "";
+						} else {
+							//left_radial.Add (hc.GetFrame ().Hands.Leftmost.Direction.Yaw);
+
+							csv = csv +
+							hc.GetFrame ().Hands.Leftmost.Direction.Yaw.ToString () + "," +
+							"" + "";
+						}
+
 					}
 
+					levelTimer += Time.deltaTime;
+					csv = csv + "," + levelTimer.ToString ();
+					csv = csv + "\n";
+
 				}
-
-				levelTimer += Time.deltaTime;
-				csv = csv + "," + levelTimer.ToString ();
-				csv = csv + "\n";
-
 			}
 		}
 
