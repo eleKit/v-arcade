@@ -18,7 +18,7 @@ The four SG, from top left to bottom right: Rich Race, Music Beats, Shooting Gal
 The hand tracking data collected through the leap motion (the Leap frames) are stored and saved in the server allowing the therapist to watch through the therapist app a digital hand performing the same gestures made by the child. 
 
 A screenshot of the replay of a Rich Race game from therapists' application:
-![alt text]([https://github.com/eleKit/v-arcade/blob/master/car-replay.png)
+![alt text](https://github.com/eleKit/v-arcade/blob/master/car-replay.png)
 
 The therapist, with their app, can also personalize the exercises generating new levels for each game in addition to the stanard levels present in each game: the therapist can decide the amplitude of the curve that the child should perform wioth the hand movement and the direction of the movement (if moving the hand to the left or to the right).
 
