@@ -1,6 +1,6 @@
 V-Arcade is a framework with serious games to support upper limbs rehabilitation for children.
 
-This framework has been developed with Unity 2017 and it compatible with Leap Motion V2, MacOs and Windows. 
+This framework has been developed with Unity 2017 and it is compatible with Leap Motion V2, MacOs and Windows. 
 
 The framework contains:
 
