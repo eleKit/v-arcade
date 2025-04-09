@@ -28,7 +28,7 @@ A screenhot of the level generation of an Alien Invasion exercise from therapist
 ![alt text](https://github.com/eleKit/v-arcade/blob/master/Space-path-generator.png)
 
 
-This framework was presented at Segah conference: 
+Please cite as:
 
 [E. Chitti et al., "V-Arcade: design and development of a serious games framework to support the upper limbs rehabilitation," 2021 IEEE 9th International Conference on Serious Games and Applications for Health(SeGAH), Dubai, United Arab Emirates, 2021, pp. 1-8, doi: 10.1109/SEGAH52098.2021.9551858](https://ieeexplore.ieee.org/document/9551858)
 
