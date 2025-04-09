@@ -11,7 +11,7 @@ The framework contains:
 This github contains the Unity project with both the therapist and the child applications that can be build separately.
 
 The four serious games are: Rich Race, Music Beats, Alien Invasion and Shooting Gallery; each serious game offers different physiotherapy exercises. 
-The child plays with the game through the Leap Motion Controller that tracks child's hand movements converting it in movements of the character. In Rich Race the child controls a car and has to drive in a circuit, in Music Beats the child plays with both hands and should beat them following music rythm, in Shooting Gallery the child contro0ls the poiter of a gun and has to hit each target with the pointer, in Alien Invasion the child controls a spaceship and has to shoot to all the aliens.
+The child plays with the game through the Leap Motion Controller that tracks child's hand movements converting it in movements of the character. In Rich Race the child controls a car and has to drive in a circuit, in Music Beats the child plays with both hands and should beat them following music rythm, in Shooting Gallery the child controls the pointer of a gun and has to hit each target with the pointer, in Alien Invasion the child controls a spaceship and has to shoot to all the aliens.
 
 The four SG, from top left to bottom right: Rich Race, Music Beats, Shooting Gallery and Alien Invasion:
 ![alt text](https://github.com/eleKit/v-arcade/blob/master/4-serious-games.png)
