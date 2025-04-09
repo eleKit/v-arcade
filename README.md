@@ -8,6 +8,8 @@ The framework contains:
 
 - A "therapist app"  specific for the therapist to manage children's progresses remotely and a server to store data about the exercises' performed by children
 
+This github contains the Unity project with both the therapist and the child applications that can be build separately.
+
 The four serious games are: Rich Race, Music Beats, Alien Invasion and Shooting Gallery; each serious game offers different physiotherapy exercises. 
 The child plays with the game through the Leap Motion Controller that tracks child's hand movements converting it in movements of the character. In Rich Race the child controls a car and has to drive in a circuit, in Music Beats the child plays with both hands and should beat them following music rythm, in Shooting Gallery the child contro0ls the poiter of a gun and has to hit each target with the pointer, in Alien Invasion the child controls a spaceship and has to shoot to all the aliens.
 
@@ -15,12 +17,12 @@ The four SG, from top left to bottom right: Rich Race, Music Beats, Shooting Gal
 ![alt text](https://github.com/eleKit/v-arcade/blob/master/4-serious-games.png)
 
 
-The hand tracking data collected through the leap motion (the Leap frames) are stored and saved in the server allowing the therapist to watch through the therapist app a digital hand performing the same gestures made by the child. 
+The hand tracking data are collected through the leap motion (the Leap frames) and they can be stored and saved in a server allowing the therapist to watch through the therapist app a digital hand performing the same gestures made by the child. 
 
 A screenshot of the replay of a Rich Race game from therapists' application:
 ![alt text](https://github.com/eleKit/v-arcade/blob/master/car-replay.png)
 
-The therapist, with their app, can also personalize the exercises generating new levels for each game in addition to the stanard levels present in each game: the therapist can decide the amplitude of the curve that the child should perform wioth the hand movement and the direction of the movement (if moving the hand to the left or to the right).
+The therapist, with their app, can also personalize the exercises by generating new levels for each game in addition to the standard-preloaded levels present in each game: the therapist can decide the amplitude of the curve that the child should perform wioth the hand movement and the direction of the movement (if moving the hand to the left or to the right).
 
 A screenhot of the level generation of an Alien Invasion exercise from therapists' application:
 ![alt text](https://github.com/eleKit/v-arcade/blob/master/Space-path-generator.png)
